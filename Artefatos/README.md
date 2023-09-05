@@ -12,7 +12,15 @@ Este diretório mantém os artefatos do projeto.
     	* **Documento_de_Visao.docx**: Documento de visão.
 	* **Acordo_Stakeholder_assinado.pdf**: Termo de compromisso assinado pelo cliente.
 	* **Documento_de_Visao.pdf**: Documento de visão.
-  
+
+
+* `/forms` - diretório de formulários-modelo da escola
+    * **FICHA_DE_MATRICULA_CONTRA_TURNO.pdf**
+    * **FICHA_DE_MATRICULA.pdf**
+    * **RECIBO_DE_MENSALIDADE.pdf**
+    * **RECIBO_DE_PAGAMENTO_DE_ESTAGIARIAS.pdf**
+	
+
 * `/sprints` - diretório com a planilha de planejamento das sprints
 	* **Planejamento_sprints.xlsx**
 	 
