@@ -2,15 +2,17 @@
 
 Este diretório mantém os artefatos do projeto. 
 
+* `/atas` - diretório de atas de reunião com o cliente
+	* **Ata_11_ago_2023.docx**: Ata de reunião do dia 11 de agosto de 2023.
+	* **Ata_18_ago_2023.docx**: Ata de reunião do dia 18 de agosto de 2023.
 
-Liste os artefatos produzidos, com suas localizações e descrição do conteúdo.
-
-Por exemplo, pode-se criar um diretório "atas", que seria descrito da seguinte forma:
-* `/atas`
-	* **Ata_xx_ago_2020.docx**: Ata de reunião do dia xx de agosto de 2020.
-
-Pode-se também criar um diretório "canvas", que seria descrito da seguinte forma:
-* `/canvas`
-	* **BusinessModelCanvas.pdf**: Canvas do modelo de negócios.
-
-Assim, sucessivamente para outros artefatos como `processos` e `DER`, etc.
+* `/docs` - diretório com os principais documentos do projeto
+    * `/editaveis` - diretório com documentos em formato `.docx`
+    	* **Acordo_Stakeholder.docx**: Modelo de termo de compromisso do cliente.
+    	* **Documento_de_Visao.docx**: Documento de visão.
+	* **Acordo_Stakeholder_assinado.pdf**: Termo de compromisso assinado pelo cliente.
+	* **Documento_de_Visao.pdf**: Documento de visão.
+  
+* `/sprints` - diretório com a planilha de planejamento das sprints
+	* **Planejamento_sprints.xlsx**
+	 
