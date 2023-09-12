@@ -1,3 +1,48 @@
-* {
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 85vh;
+}
+
+.form {
   background-color: lightcoral;
+  width: 400px;
+  border-radius: 10px;
+  padding: 1em 0;
+}
+
+.form h1 {
+  padding: 0.7em;
+  text-align: center;
+}
+
+.form div {
+  padding: 1em 1em;
+}
+
+.form div input {
+  padding: 1em 0;
+  border: none;
+  border-bottom: 1px solid black;
+  width: 100%;
+  outline: none;
+  background-color: transparent;
+}
+
+.form div p {
+  text-align: right;
+}
+
+.form div button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5em;
+  width: 90%;
+  border: none;
+  border-radius: 30px;
+}
+
+.form div button:hover {
+  cursor: pointer;
 }
