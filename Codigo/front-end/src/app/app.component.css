@@ -1,5 +1,4 @@
-.container {
+.container-fluid {
   min-height: 85vh;
-  margin: 1em 0;
-  background-color: lightblue;
+  background-color: #D4FEFD;
 }
