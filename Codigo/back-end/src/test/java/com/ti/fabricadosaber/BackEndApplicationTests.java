@@ -1,4 +1,4 @@
-package com.ti.fabricaDoSaber;
+package com.ti.fabricadosaber;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
