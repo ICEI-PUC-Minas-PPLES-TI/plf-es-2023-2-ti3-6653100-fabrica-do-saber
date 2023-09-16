@@ -1,38 +1,46 @@
 package com.ti.fabricadosaber.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
-@Table(name = "user")
+@Table(name = User.TABLE_NAME)
 @Getter
 @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-	@Id
-	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    public static final String TABLE_NAME = "user";
+
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-	@Column
+
+    @Column(name = "full_name", length = 45, nullable = false)
+    @NotBlank
+    @Size(min = 5, max = 45)
     private String fullName;
-	@Column
+
+    @Column
     private String email;
-	@Column
+
+    @Column(name = "password", length = 45, nullable = false, updatable = false)
+    @NotBlank
+    @Size(min = 6, max = 45)
+//	A notacao @JsonProperty.Acess.WRITE_ONLY define que o password seja apenas inserido no banco de dados
+//	Em momento algum ele sera retornado por meio de uma requisicao GET da API, por exemplo
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-	@Column
+
+    @Column
     private LocalDate createDate;
-	
+
 }
