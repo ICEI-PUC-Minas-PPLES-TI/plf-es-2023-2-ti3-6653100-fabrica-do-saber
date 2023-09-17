@@ -2,14 +2,11 @@ package com.ti.fabricadosaber.models;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -32,8 +29,16 @@ public class Student {
 	public static final String TABLE_NAME = "student";
 	
 	@Id
-	@Column(name = "registration", unique = true )
-	private int registration;
+	@Column(name = "id", unique = true )
+	private int id;
+
+	@OneToOne
+	@JoinColumn(name = "responsible1_id")
+	private Responsible responsible1;
+
+	@OneToOne
+	@JoinColumn(name = "responsible2_id")
+	private Responsible responsible2;
 
 	@Column(name = "full_name", length = 45, nullable = false, updatable = true)
 	@NotBlank
@@ -91,11 +96,6 @@ public class Student {
 	@Pattern(regexp = "\\d{5}-\\d{3}")
 	private String postalCode;
 	
-	@Column(name = "parent_name", length = 45, nullable = false, updatable = true)
-	@Size(min = 5, max = 45)
-	@NotBlank
-	private String parentName;
-	
 	@Column(name = "cpf", length = 14, nullable = false, unique = true, updatable = false)
 	@NotBlank
 	@CPF(message = "CPF inválido")
@@ -104,18 +104,7 @@ public class Student {
 	@Column(name = "rg", length = 45, nullable = false, unique = true, updatable = false)
 	@NotBlank
 	private String rg;
-	
-	@Column(name = "occupation", length = 45, nullable = false, updatable = true)
-	@NotBlank
-	private String occupation;
-	
-	@Column(name = "company", length = 45, nullable = false, updatable = true)
-	private String company;
-	
-	@Column(name = "phone_number", length = 45, nullable = false, unique = true, updatable = true)
-	@NotBlank
-	@Pattern(regexp = "\\d{2}) \\d{5}-\\d{4}")
-	private String phoneNumber;
+
 	
 	@Column(name = "email", length = 45, nullable = false, unique = true, updatable = true)
 	@NotBlank
