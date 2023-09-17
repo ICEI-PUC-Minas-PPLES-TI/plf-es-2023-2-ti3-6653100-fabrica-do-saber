@@ -30,11 +30,11 @@ public class Student {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "responsible1_id")
+	@JoinColumn(name = "responsible1_id", nullable = false, updatable = true)
 	private Responsible responsible1;
 
 	@OneToOne
-	@JoinColumn(name = "responsible2_id")
+	@JoinColumn(name = "responsible2_id", nullable = true, updatable = true)
 	private Responsible responsible2;
 
 	@Column(name = "full_name", length = 45, nullable = false, updatable = true)
