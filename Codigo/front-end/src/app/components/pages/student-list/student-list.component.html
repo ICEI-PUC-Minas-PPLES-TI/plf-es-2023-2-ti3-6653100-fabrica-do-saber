@@ -2,53 +2,68 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card">
+
+        <!-- Search bar -->
+        <div class="container">
+          <div class="row">
+            <div class="col-md-5">
+              <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                       id="search-input" (input)="filterStudentList($event)">
+              </form>
+            </div>
+          </div>
+        </div>
+
         <div class="card-body">
-          <h5 class="card-title text-uppercase mb-0">Alunos cadastrados</h5>
+          <h5 class="card-title">Alunos cadastrados</h5>
         </div>
         <div class="table-responsive">
           <table class="table no-wrap user-table mb-0">
             <thead>
             <tr>
-              <th scope="col" class="border-0 text-uppercase font-medium">Nome</th>
-              <th scope="col" class="border-0 text-uppercase font-medium">Contato</th>
-              <th scope="col" class="border-0 text-uppercase font-medium">Idade</th>
-              <th scope="col" class="border-0 text-uppercase font-medium">Turma</th>
-              <th scope="col" class="border-0 text-uppercase font-medium">Tipo cadastro</th>
-              <th scope="col" class="border-0 text-uppercase font-medium">Gerenciar</th>
+              <th scope="col" class="border-0 font-medium">Nome</th>
+              <th scope="col" class="border-0 font-medium">Contato</th>
+              <th scope="col" class="border-0 font-medium">Idade</th>
+              <th scope="col" class="border-0 font-medium">Turma</th>
+              <th scope="col" class="border-0 font-medium">Status Cadastro</th>
+              <th scope="col" class="border-0 font-medium">Algo</th>
+              <th scope="col" class="border-0 font-medium">Gerenciar</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr *ngFor="let student of students">
               <td>
-                <h5 class="font-medium mb-0">Guilherme</h5>
-                <span class="text-muted">Belo Horizonte, MG</span>
+                <h6 class="text-black">{{student.name}}</h6>
               </td>
               <td>
-                <span class="text-muted">(31) 98822-3975</span><br>
-                <span class="text-muted">Josefina da Silva</span>
+                <span class="black">{{student.contactNumber}}</span><br>
+                <span class="text-muted">{{student.contactName}}</span>
               </td>
               <td>
-                <span class="text-muted">5 anos</span><br>
-                <span class="text-muted">05/09/2018</span>
+                <span class="text-black">{{student.age}}</span><br>
+                <span class="text-muted">{{student.birthDate}}</span>
               </td>
               <td>
-                <span class="text-muted">5 serie</span><br>
-                <span class="text-muted">[###]</span>
+                <span class="text-black">{{student.class}}</span><br>
               </td>
               <td>
                 <select class="form-control category-select" id="form-select">
-                  <option>Aluno regular</option>
-                  <option>Creche de férias</option>
+                  <option>Ativo</option>
+                  <option>Desativado</option>
                 </select>
               </td>
               <td>
-                <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2" title="Editar">
+                <span class="text-black">{{student.class}}</span><br>
+              </td>
+              <td>
+                <button type="button" class="btn btn-outline-info btn-lg btn-circle" title="Editar">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2" title="Imprimir">
+                <button type="button" class="btn btn-outline-info btn-lg btn-circle" title="Imprimir">
                   <i class="fa fa-upload"></i>
                 </button>
-                <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2" title="Excluir">
+                <button type="button" class="btn btn-outline-info btn-lg btn-circle" title="Excluir">
                   <i class="fa fa-trash"></i>
                 </button>
               </td>
