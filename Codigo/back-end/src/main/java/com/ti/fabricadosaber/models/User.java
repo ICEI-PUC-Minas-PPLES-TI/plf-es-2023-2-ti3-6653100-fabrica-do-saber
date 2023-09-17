@@ -32,9 +32,9 @@ public class User {
     public static final String TABLE_NAME = "user";
 
     @Id
-    @Column
+    @Column(name = "id", unique = true )
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "full_name", length = 45, nullable = false)
     @NotBlank
