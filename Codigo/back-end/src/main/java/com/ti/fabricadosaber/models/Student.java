@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -26,8 +25,9 @@ public class Student {
 	public static final String TABLE_NAME = "student";
 	
 	@Id
-	@Column(name = "id", unique = true )
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true)
+	private Long id;
 
 	@OneToOne
 	@JoinColumn(name = "responsible1_id")
