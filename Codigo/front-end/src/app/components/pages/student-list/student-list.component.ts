@@ -8,8 +8,10 @@ import {Student} from '../../../interfaces/Student';
 })
 export class StudentListComponent {
 
+  studentStatus: string[] = ['Ativo', 'Desativado', '...'];
   originalStudents: Student[] = [
     {
+      id: 6,
       name: 'Josefina da Silva',
       contactNumber: 31984173698,
       contactName: 'Paulinho',
@@ -19,7 +21,8 @@ export class StudentListComponent {
       status: 'Ativo'
     },
     {
-      name: 'Joao da Silva',
+      id: 2,
+      name: 'Joao Pereira',
       contactNumber: 31923198688,
       contactName: 'Maria',
       age: 4,
@@ -28,10 +31,11 @@ export class StudentListComponent {
       status: 'Ativo'
     },
     {
+      id: 5,
       name: 'Carlitos da Silva',
       contactNumber: 31923198688,
       contactName: 'Maria',
-      age: 3,
+      age: 5,
       birthDate: '28/10/2020',
       class: 'Turma B',
       status: 'Ativo'
@@ -40,9 +44,33 @@ export class StudentListComponent {
   students = [...this.originalStudents];
 
   filterStudentList(event: Event): void {
-    const searchInput = event.target as HTMLInputElement;
-    const inputValue = searchInput.value.toLowerCase();
+    const searchInput: HTMLInputElement = event.target as HTMLInputElement;
+    const inputValue: string = searchInput.value.toLowerCase();
     this.students = this.originalStudents.filter((student: Student) => student.name.toLowerCase().includes(inputValue));
+  }
+
+  sortStudentsByName() {
+    this.students = this.originalStudents.sort(function (a: Student, b: Student): number {
+      let nameA: string = a.name.toLowerCase();
+      let nameB: string = b.name.toLowerCase();
+      if (nameA < nameB)
+        return -1;
+      if (nameA > nameB)
+        return 1;
+      return 0;
+    });
+  }
+
+  sortStudentsById() {
+    this.students = this.originalStudents.sort(function (a: Student, b: Student): number {
+      let idA: number = a.id;
+      let idB: number = b.id;
+      if (idA < idB)
+        return -1;
+      if (idA > idB)
+        return 1;
+      return 0;
+    });
   }
 
 }

@@ -12,6 +12,19 @@
                        id="search-input" (input)="filterStudentList($event)">
               </form>
             </div>
+
+            <div class="col-md-7">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                  Ordenar
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" (click)="sortStudentsByName()">Ordem alfabética</a></li>
+                  <li><a class="dropdown-item" (click)="sortStudentsById()">Id</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -27,7 +40,7 @@
               <th scope="col" class="border-0 font-medium">Idade</th>
               <th scope="col" class="border-0 font-medium">Turma</th>
               <th scope="col" class="border-0 font-medium">Status Cadastro</th>
-              <th scope="col" class="border-0 font-medium">Algo</th>
+              <th scope="col" class="border-0 font-medium">Turma</th>
               <th scope="col" class="border-0 font-medium">Gerenciar</th>
             </tr>
             </thead>
@@ -49,8 +62,7 @@
               </td>
               <td>
                 <select class="form-control category-select" id="form-select">
-                  <option>Ativo</option>
-                  <option>Desativado</option>
+                  <option *ngFor="let status of studentStatus">{{status}}</option>
                 </select>
               </td>
               <td>

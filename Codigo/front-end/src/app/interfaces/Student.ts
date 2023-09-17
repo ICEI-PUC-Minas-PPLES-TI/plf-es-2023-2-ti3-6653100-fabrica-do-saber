@@ -1,4 +1,5 @@
 export interface Student {
+  id: number,
   name: String,
   contactNumber: number,
   contactName: String,
