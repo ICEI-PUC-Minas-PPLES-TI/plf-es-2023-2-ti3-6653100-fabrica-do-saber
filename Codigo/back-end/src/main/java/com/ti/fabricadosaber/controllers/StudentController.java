@@ -41,7 +41,7 @@ public class StudentController {
     public ResponseEntity<Void> create(@Valid @RequestBody Student obj) {
         this.studentService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-        .path("/(id)").buildAndExpand(obj.getId()).toUri();
+        .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

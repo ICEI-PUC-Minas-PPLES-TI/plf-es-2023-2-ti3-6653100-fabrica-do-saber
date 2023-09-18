@@ -1,10 +1,8 @@
 package com.ti.fabricadosaber.services;
 
 import com.ti.fabricadosaber.models.Responsible;
-import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.repositories.ResponsibleRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +24,7 @@ public class ResponsibleService {
     }
 
     @Transactional
-    public Responsible createResponsible(Responsible obj) {
+    public Responsible create(Responsible obj) {
 
         obj.setId(null);
         obj = this.responsibleRepository.save(obj);
@@ -35,11 +33,11 @@ public class ResponsibleService {
 
     // atualizando os dados do responsavel
     @Transactional
-    public Responsible updaResponsible(Responsible obj) {
+    public Responsible update(Responsible obj) {
 
         Responsible newObj = findById(obj.getId());
 
-        newObj.setNome(obj.getNome());
+        newObj.setName(obj.getName());
         newObj.setCpf(obj.getCpf());
         newObj.setEmail(obj.getEmail());
         newObj.setOccupation(obj.getOccupation());
@@ -49,7 +47,7 @@ public class ResponsibleService {
         return this.responsibleRepository.save(newObj);
     }
 
-    public void deleteResonsible(Long id) {
+    public void delete(Long id) {
         Responsible responsible = findById(id);
         try {
             this.responsibleRepository.delete(responsible);
@@ -58,9 +56,4 @@ public class ResponsibleService {
         }
     }
 
-    public void delete(Long id) {
-    }
-
-    public void update(@Valid Student obj) {
-    }
 }

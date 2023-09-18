@@ -39,17 +39,15 @@ public class ResponsibleController {
     }
 
 @PostMapping
-    @Validated(CreateResponsible.class)
     public ResponseEntity<Void> create(@Valid @RequestBody Responsible obj) {
-        this.ResponsibleService.create(obj);
+        this.responsibleService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
         .path("/(id)").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
      @PutMapping("/(id)")
-    @Validated(UpdateStudent.class)
-    public ResponseEntity<Void> update(@Valid @RequestBody Student obj, @PathVariable Long id) {
+    public ResponseEntity<Void> update(@Valid @RequestBody Responsible obj, @PathVariable Long id) {
         obj.setId(id);
         this.responsibleService.update(obj);
         return ResponseEntity.noContent().build();

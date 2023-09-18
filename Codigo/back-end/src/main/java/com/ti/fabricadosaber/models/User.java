@@ -41,9 +41,10 @@ public class User {
     @Size(min = 5, max = 45)
     private String fullName;
 
-    @Column(name = "email", length = 45, nullable = false, unique = true, updatable = true)
+    @Column(name = "email", length = 45, nullable = false, unique = true)
     @Email(message = "E-mail inválido")
     private String email;
+
 
     @Column(name = "password", length = 45, nullable = false, updatable = false)
     @NotBlank

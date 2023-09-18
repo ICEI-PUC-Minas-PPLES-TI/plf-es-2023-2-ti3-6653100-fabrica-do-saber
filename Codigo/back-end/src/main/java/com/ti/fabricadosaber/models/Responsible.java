@@ -32,7 +32,7 @@ public class Responsible {
     @Column(name = "nome", length = 100, nullable = false)
     @NotBlank
     @Size(min = 2, max = 100)
-    private String nome;
+    private String name;
 
 
     @Column(name = "cpf", length = 14, nullable = false, unique = true, updatable = false)
@@ -48,9 +48,10 @@ public class Responsible {
     private String occupation;
 
     @Column(name = "phone_number", length = 45, nullable = false, unique = true, updatable = true)
-    @NotBlank 
-    @Pattern(regexp = "\\d{2}) \\d{5}-\\d{4}")
+    @NotBlank
+    @Pattern(regexp = "\\d{2} \\d{5}-\\d{4}")
     private String phoneNumber;
+
 
     @Column(name = "company", length = 45, nullable = false, updatable = true)
     private String company;
