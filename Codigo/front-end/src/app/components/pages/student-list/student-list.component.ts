@@ -43,34 +43,34 @@ export class StudentListComponent {
   ];
   students = [...this.originalStudents];
 
+  constructor() {
+    this.students = this.originalStudents.sort(this.byName);
+  }
+
   filterStudentList(event: Event): void {
     const searchInput: HTMLInputElement = event.target as HTMLInputElement;
     const inputValue: string = searchInput.value.toLowerCase();
     this.students = this.originalStudents.filter((student: Student) => student.name.toLowerCase().includes(inputValue));
   }
 
-  sortStudentsByName() {
-    this.students = this.originalStudents.sort(function (a: Student, b: Student): number {
-      let nameA: string = a.name.toLowerCase();
-      let nameB: string = b.name.toLowerCase();
-      if (nameA < nameB)
-        return -1;
-      if (nameA > nameB)
-        return 1;
-      return 0;
-    });
+  sortStudents(comparator: (a: Student, b: Student) => number): void {
+    this.students = this.originalStudents.sort(comparator);
   }
 
-  sortStudentsById() {
-    this.students = this.originalStudents.sort(function (a: Student, b: Student): number {
-      let idA: number = a.id;
-      let idB: number = b.id;
-      if (idA < idB)
-        return -1;
-      if (idA > idB)
-        return 1;
-      return 0;
-    });
+  byName(a: Student, b: Student): number {
+    let nameA: string = a.name.toLowerCase();
+    let nameB: string = b.name.toLowerCase();
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+    return 0;
+  }
+
+  byId(a: Student, b: Student): number {
+    let idA: number = a.id;
+    let idB: number = b.id;
+    if (idA < idB) return -1;
+    if (idA > idB) return 1;
+    return 0;
   }
 
 }
