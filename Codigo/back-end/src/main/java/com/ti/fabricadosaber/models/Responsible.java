@@ -31,6 +31,10 @@ public class Responsible {
     @NotBlank
     private String cpf;
 
+    @Column(name = "rg", length = 45, nullable = false, unique = true, updatable = false)
+	@NotBlank
+	private String rg;
+
     @Column(name = "email", length = 45, nullable = false, unique = true)
     @NotBlank
     private String email;
