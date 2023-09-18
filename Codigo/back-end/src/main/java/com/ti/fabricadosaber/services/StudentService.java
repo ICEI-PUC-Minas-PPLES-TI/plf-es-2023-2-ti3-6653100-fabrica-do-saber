@@ -19,7 +19,7 @@ public class StudentService {
     public Student findById(Long id) {
         Optional<Student> student = this.studentRepository.findById(id);
         return student.orElseThrow(() -> new RuntimeException(
-                "Usuário não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
+                "Aluno não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
     }
 
     @Transactional

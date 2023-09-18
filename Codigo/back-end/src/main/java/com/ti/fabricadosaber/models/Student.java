@@ -23,6 +23,9 @@ import lombok.Setter;
 public class Student {
 	
 	public static final String TABLE_NAME = "student";
+
+	public interface CreateStudent {}
+	public interface UpdateStudent {}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +41,8 @@ public class Student {
 	private Responsible responsible2;
 
 	@Column(name = "full_name", length = 45, nullable = false, updatable = true)
-	@NotBlank
-	@Size(min = 5, max = 45)
+	@NotBlank(groups = {CreateStudent.class, UpdateStudent.class})
+	@Size(groups = {CreateStudent.class, UpdateStudent.class}, min = 5, max = 45)
 	private String fullName;
 
 	@Column(name = "year_registration", length = 10, nullable = false, updatable = true)
@@ -47,37 +50,37 @@ public class Student {
 	private LocalDate yearRegistration;
 	
 	@Column(name = "grade", length = 45, nullable = false, updatable = true)
-	@NotBlank
+	@NotBlank(groups = {CreateStudent.class, UpdateStudent.class})
 	private String grade;
 	
 	@Column(name = "education", length = 45, nullable = false, updatable = true)
-	@NotBlank
-	@Size(min = 5, max = 45)
+	@NotBlank(groups = {CreateStudent.class, UpdateStudent.class})
+	@Size(groups = {CreateStudent.class, UpdateStudent.class}, min = 5, max = 45)
 	private String education;
 	
 	@Column(name = "date_of_birth", length = 10, nullable = false, updatable = true)
-	@NotBlank
+	@NotBlank(groups = {CreateStudent.class, UpdateStudent.class})
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private LocalDate dateOfBirth;
 	
 	@Column(name = "city_birth", length = 45, nullable = false, updatable = true)
-	@NotBlank
+	@NotBlank(groups = {CreateStudent.class, UpdateStudent.class})
 	private String cityBirth;
 	
 	@Column(name = "state", length = 45, nullable = false, updatable = true)
-	@NotBlank
+	@NotBlank(groups = {CreateStudent.class, UpdateStudent.class})
 	private String state;
 	
 	@Column(name = "nationality", length = 45, nullable = false, updatable = true)
-	@NotBlank
+	@NotBlank(groups = {CreateStudent.class, UpdateStudent.class})
 	private String nationality;
 	
 	@Column(name = "religion", length = 45, nullable = false, updatable = true)
-	@NotBlank
+	@NotBlank(groups = {CreateStudent.class, UpdateStudent.class})
 	private String religion;
 	
 	@Column(name = "race", length = 45, nullable = false, updatable = true)
-	@NotBlank
+	@NotBlank(groups = {CreateStudent.class, UpdateStudent.class})
 	private String race;
 
 }
