@@ -1,8 +1,11 @@
 package com.ti.fabricadosaber.services;
 
 import com.ti.fabricadosaber.models.Responsible;
+import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.repositories.ResponsibleRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -53,5 +56,11 @@ public class ResponsibleService {
         } catch (Exception error) {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
         }
+    }
+
+    public void delete(Long id) {
+    }
+
+    public void update(@Valid Student obj) {
     }
 }
