@@ -4,6 +4,7 @@ package com.ti.fabricadosaber.services;
 import com.ti.fabricadosaber.models.User;
 import com.ti.fabricadosaber.repositories.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -35,10 +36,13 @@ public class UserService {
 
     // Atualizando somente a senha
     @Transactional
-    public User update(User user) {
-        User newObj = findById(user.getId()); //Usuário existe no BD?
-        newObj.setPassword(newObj.getPassword());
-        return this.userRepository.save(newObj);
+    public User update(User obj) {
+        User existingStudent = findById(obj.getId());
+
+        // Copia as propriedades não nulas do updatedStudent para o existingStudent
+        BeanUtils.copyProperties(obj, existingStudent, "id");
+
+        return this.userRepository.save(existingStudent);
     }
 
 

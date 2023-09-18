@@ -62,9 +62,9 @@ public class Student {
 	private String education;
 
 	@Column(name = "date_of_birth", length = 10, nullable = false, updatable = true)
-	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dateOfBirth;
+
 
 	@Column(name = "city_birth", length = 45, nullable = false, updatable = true)
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })

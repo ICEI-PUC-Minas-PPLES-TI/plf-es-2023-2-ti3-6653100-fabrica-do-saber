@@ -53,7 +53,7 @@ public class Responsible {
 
     @Column(name = "number", length = 45, nullable = false, updatable = true)
     @NotBlank
-    private int number;
+    private String number;
 
     @Column(name = "neighbourhood", length = 45, nullable = false, updatable = true)
     @NotBlank
