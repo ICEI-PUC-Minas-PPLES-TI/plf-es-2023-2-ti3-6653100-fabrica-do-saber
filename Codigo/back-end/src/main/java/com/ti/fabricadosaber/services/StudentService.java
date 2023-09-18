@@ -1,5 +1,6 @@
 package com.ti.fabricadosaber.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class StudentService {
         Optional<Student> student = this.studentRepository.findById(id);
         return student.orElseThrow(() -> new RuntimeException(
                 "Aluno não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
+    }
+
+    public List<Student> findAll() {
+        return studentRepository.findAll();
     }
 
     @Transactional

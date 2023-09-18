@@ -1,6 +1,7 @@
 package com.ti.fabricadosaber.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,12 @@ public class StudentController {
     public ResponseEntity<Student> findById(@PathVariable Long id) {
         Student obj = this.studentService.findById(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Student>> findAll() {
+        List<Student> list = studentService.findAll();
+        return ResponseEntity.ok().body(list);
     }
 
     @PostMapping
