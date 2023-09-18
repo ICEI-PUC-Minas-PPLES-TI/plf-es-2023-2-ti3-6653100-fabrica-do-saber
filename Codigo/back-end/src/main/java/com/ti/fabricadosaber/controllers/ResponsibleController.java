@@ -15,45 +15,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 import com.ti.fabricadosaber.models.Responsible;
-import com.ti.fabricadosaber.models.Student;
-import com.ti.fabricadosaber.models.Student.UpdateStudent;
 import com.ti.fabricadosaber.services.ResponsibleService;
 
 import jakarta.validation.Valid;
-
 
 @RestController
 @RequestMapping("/responsible")
 @Validated
 public class ResponsibleController {
-    
+
     @Autowired
     private ResponsibleService responsibleService;
 
-    @GetMapping("/(id)")
-    public ResponseEntity <Responsible> findById( @PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Responsible> findById(@PathVariable Long id) {
         Responsible objResponsible = this.responsibleService.findById(id);
         return ResponseEntity.ok().body(objResponsible);
     }
 
-@PostMapping
+    @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody Responsible obj) {
         this.responsibleService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-        .path("/(id)").buildAndExpand(obj.getId()).toUri();
+                .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
-     @PutMapping("/(id)")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody Responsible obj, @PathVariable Long id) {
         obj.setId(id);
         this.responsibleService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/(id)")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.responsibleService.delete(id);
         return ResponseEntity.noContent().build();

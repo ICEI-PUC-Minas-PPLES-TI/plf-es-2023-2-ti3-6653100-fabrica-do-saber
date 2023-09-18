@@ -26,11 +26,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/student")
 @Validated
 public class StudentController {
-    
+
     @Autowired
     private StudentService studentService;
 
-    @GetMapping("/(id)")
+    @GetMapping("/{id}")
     public ResponseEntity<Student> findById(@PathVariable Long id) {
         Student obj = this.studentService.findById(id);
         return ResponseEntity.ok().body(obj);
@@ -41,11 +41,11 @@ public class StudentController {
     public ResponseEntity<Void> create(@Valid @RequestBody Student obj) {
         this.studentService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-        .path("/{id}").buildAndExpand(obj.getId()).toUri();
+                .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/(id)")
+    @PutMapping("/{id}")
     @Validated(UpdateStudent.class)
     public ResponseEntity<Void> update(@Valid @RequestBody Student obj, @PathVariable Long id) {
         obj.setId(id);
@@ -53,9 +53,9 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/(id)")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.studentService.delete(id);
         return ResponseEntity.noContent().build();
     }
- }
+}
