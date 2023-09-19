@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +23,10 @@ public class ResponsibleService {
 
         return responsible.orElseThrow(() -> new RuntimeException(
                 "Responsavel não encontrado! id: " + id + ", Tipo: " + Responsible.class.getName()));
+    }
+
+    public List<Responsible> findAll() {
+        return responsibleRepository.findAll();
     }
 
     @Transactional
