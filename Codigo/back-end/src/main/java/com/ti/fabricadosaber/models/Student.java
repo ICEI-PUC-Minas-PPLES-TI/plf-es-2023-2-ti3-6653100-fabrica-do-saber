@@ -45,7 +45,7 @@ public class Student {
 			inverseJoinColumns = @JoinColumn(name = "responsible_id", referencedColumnName = "id")
 	)
 	@NotNull(message="Pelo menos um responsável deve ser fornecido!")
-	private Set<Responsible> responsibles = new HashSet<>();
+	private Set<Responsible> responsibles = null;
 
 //	@ManyToOne
 //	@JoinColumn(name = "responsible1_id", nullable = true)

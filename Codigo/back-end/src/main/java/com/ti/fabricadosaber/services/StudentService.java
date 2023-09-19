@@ -48,8 +48,8 @@ public class StudentService {
 
     @Transactional
     public Student create(Student obj) {
-        // Verificar se o número de responsáveis está dentro do limite
-        if (obj.getResponsibles() != null && obj.getResponsibles().size() <= 2) {
+
+        if (/*obj.getResponsibles() != null &&*/ obj.getResponsibles().size() <= 2) {
             obj.setId(null);
             obj = this.studentRepository.save(obj);
             return obj;
@@ -79,7 +79,7 @@ public class StudentService {
     public Student update(Student obj) {
         Student newObj = findById(obj.getId());
 
-        if (obj.getResponsibles() != null && obj.getResponsibles().size() <= 2) {
+        if (/*obj.getResponsibles() != null &&*/ obj.getResponsibles().size() <= 2) {
             BeanUtils.copyProperties(obj, newObj, "id");
             return this.studentRepository.save(newObj);
         } else {
