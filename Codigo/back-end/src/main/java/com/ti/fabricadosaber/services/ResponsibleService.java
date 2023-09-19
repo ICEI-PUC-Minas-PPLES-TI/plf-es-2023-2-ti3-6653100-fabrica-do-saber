@@ -26,9 +26,6 @@ public class ResponsibleService {
                 "Responsavel não encontrado! id: " + id + ", Tipo: " + Responsible.class.getName()));
     }
 
-    public List<Responsible> findAll() {
-        return responsibleRepository.findAll();
-    }
 
     @Transactional
     public Responsible create(Responsible obj) {

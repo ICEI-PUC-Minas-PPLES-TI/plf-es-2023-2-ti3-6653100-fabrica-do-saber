@@ -42,11 +42,6 @@ public class ResponsibleController {
         return ResponseEntity.ok().body(objResponsible);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Responsible>> findAll() {
-        List<Responsible> list = responsibleService.findAll();
-        return ResponseEntity.ok().body(list);
-    }
 
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody Responsible obj) {
