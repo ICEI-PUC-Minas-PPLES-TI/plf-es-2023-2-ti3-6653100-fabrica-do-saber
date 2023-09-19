@@ -26,5 +26,9 @@ export class StudentEditComponent {
     return this.studentService.getStudentById(id);
   }
 
+  updateStudent() {
+    console.log("estudante atualizado!");
+  }
+
 
 }
