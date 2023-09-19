@@ -3,6 +3,8 @@ package com.ti.fabricadosaber.services;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.validation.ValidationException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,17 +26,23 @@ public class StudentService {
     }
 
     public List<Student> findAll() {
+
         return studentRepository.findAll();
     }
 
     @Transactional
     public Student create(Student obj) {
-        obj.setId(null);
-        obj = this.studentRepository.save(obj);
-        return obj;
+        // Verificar se o número de responsáveis está dentro do limite
+        if (obj.getResponsibles() != null && obj.getResponsibles().size() <= 2) {
+            obj.setId(null);
+            obj = this.studentRepository.save(obj);
+            return obj;
+        } else {
+            throw new ValidationException("Um estudante pode ter no máximo dois responsáveis.");
+        }
     }
 
-    @Transactional
+/*    @Transactional
     public Student update(Student obj) {
         Student newObj = findById(obj.getId());
         newObj.setResponsible1(obj.getResponsible1());
@@ -50,7 +58,21 @@ public class StudentService {
         newObj.setReligion(obj.getReligion());
         newObj.setRace(obj.getRace());
         return this.studentRepository.save(newObj);
+    }*/
+
+    public Student update(Student obj) {
+        Student newObj = findById(obj.getId());
+
+        if (obj.getResponsibles() != null && obj.getResponsibles().size() <= 2) {
+            BeanUtils.copyProperties(obj, newObj, "id");
+            return this.studentRepository.save(newObj);
+        } else {
+            throw new ValidationException("Um estudante pode ter no máximo dois responsáveis.");
+        }
     }
+
+
+
 
     public void delete(Long id) {
         Student student = findById(id);

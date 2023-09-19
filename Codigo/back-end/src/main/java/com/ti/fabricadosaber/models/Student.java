@@ -1,6 +1,8 @@
 package com.ti.fabricadosaber.models;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -35,13 +37,21 @@ public class Student {
 	@Column(name = "id", unique = true)
 	private Long id;
 
-	@OneToOne
-	@JoinColumn(name = "responsible1_id", nullable = false, updatable = true)
-	private Responsible responsible1;
+	@ManyToMany
+	@JoinTable(
+			name = "student_responsible",
+			joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "responsible_id", referencedColumnName = "id")
+	)
+	private Set<Responsible> responsibles = new HashSet<>();
 
-	@OneToOne
-	@JoinColumn(name = "responsible2_id", nullable = true, updatable = true)
-	private Responsible responsible2;
+//	@ManyToOne
+//	@JoinColumn(name = "responsible1_id", nullable = true)
+//	private Responsible responsible1;
+//
+//	@ManyToOne
+//	@JoinColumn(name = "responsible2_id", nullable = true)
+//	private Responsible responsible2;
 
 	@Column(name = "full_name", length = 45, nullable = false, updatable = true)
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
