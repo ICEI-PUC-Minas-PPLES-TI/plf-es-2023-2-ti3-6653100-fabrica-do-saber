@@ -15,13 +15,12 @@
 
             <div class="col-md-7">
               <div class="dropdown">
+                Ordenar por
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                  Ordenar
-                </button>
+                        aria-expanded="false">{{filterText}}</button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" (click)="sortStudents(byName)">Ordem alfabética</a></li>
-                  <li><a class="dropdown-item" (click)="sortStudents(byId)">Id</a></li>
+                  <li *ngFor="let filter of filters"><a class="dropdown-item"
+                                                        (click)="filter.function()">{{filter.name}}</a></li>
                 </ul>
               </div>
             </div>
