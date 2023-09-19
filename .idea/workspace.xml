@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="4feb245e-d94b-46b7-9e23-5782ecf3b0f7" name="Changes" comment="" />
+    <list default="true" id="c39c8acc-68b7-4eab-a50b-3cce970c0380" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,10 +13,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 7
-}</component>
-  <component name="ProjectId" id="2VGQLFJIItRh4rDsVGU7IPcetNp" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2VFSU0wTzRwU3vKeIY6VfyHWpLD" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,26 +26,19 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "back-end",
-    "last_opened_file_path": "L:/repositories/plf-es-2023-1-ti2-0924100-skanboo",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
+    "git-widget-placeholder": "doc",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4feb245e-d94b-46b7-9e23-5782ecf3b0f7" name="Changes" comment="" />
-      <created>1694459879298</created>
+      <changelist id="c39c8acc-68b7-4eab-a50b-3cce970c0380" name="Changes" comment="" />
+      <created>1694430347512</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1694459879298</updated>
-      <workItem from="1694459880306" duration="560000" />
-      <workItem from="1694460485107" duration="104000" />
+      <updated>1694430347512</updated>
+      <workItem from="1694430350953" duration="5000" />
     </task>
     <servers />
   </component>
