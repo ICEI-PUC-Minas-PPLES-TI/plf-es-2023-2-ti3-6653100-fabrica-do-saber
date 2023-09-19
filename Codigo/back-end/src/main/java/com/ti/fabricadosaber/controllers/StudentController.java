@@ -2,7 +2,9 @@ package com.ti.fabricadosaber.controllers;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
+import com.ti.fabricadosaber.models.Responsible;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,9 +40,14 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Student>> findAll() {
-        List<Student> list = studentService.findAll();
-        return ResponseEntity.ok().body(list);
+    public ResponseEntity<List<Student>> listAllStudents() {
+        List<Student> students = studentService.listAllStudents();
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/{id}/responsibles")
+    public Set<Responsible> listResponsiblesForStudent(@PathVariable Long id) {
+        return studentService.listResponsiblesForStudent(id);
     }
 
     @PostMapping

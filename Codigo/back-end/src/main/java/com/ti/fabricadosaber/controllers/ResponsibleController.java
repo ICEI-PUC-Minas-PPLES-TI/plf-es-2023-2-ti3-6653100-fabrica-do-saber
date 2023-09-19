@@ -1,6 +1,7 @@
 package com.ti.fabricadosaber.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,13 @@ public class ResponsibleController {
 
     @Autowired
     private ResponsibleService responsibleService;
+
+    @GetMapping
+    public ResponseEntity<List<Responsible>> listAllResponsibles() {
+        List<Responsible> responsibles = responsibleService.listAllResponsibles();
+        return ResponseEntity.ok(responsibles);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Responsible> findById(@PathVariable Long id) {

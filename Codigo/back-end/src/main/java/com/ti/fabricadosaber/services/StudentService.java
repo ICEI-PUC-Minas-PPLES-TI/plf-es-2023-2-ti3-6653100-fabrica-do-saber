@@ -2,10 +2,14 @@ package com.ti.fabricadosaber.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+import com.ti.fabricadosaber.models.Responsible;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.ti.fabricadosaber.models.Student;
@@ -25,9 +29,21 @@ public class StudentService {
                 "Aluno não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
     }
 
-    public List<Student> findAll() {
 
-        return studentRepository.findAll();
+    public List<Student> listAllStudents() {
+        try {
+            return studentRepository.findAll();
+        } catch(EmptyResultDataAccessException error) {
+            throw new RuntimeException("Nenhum estudante cadastrado", error);
+        }
+    }
+
+    public Set<Responsible> listResponsiblesForStudent(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Estudante com o ID " + id + " não encontrado"));
+
+
+        return student.getResponsibles();
     }
 
     @Transactional

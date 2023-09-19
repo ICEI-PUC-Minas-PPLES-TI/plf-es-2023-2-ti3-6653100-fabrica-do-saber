@@ -5,7 +5,10 @@ import com.ti.fabricadosaber.repositories.ResponsibleRepository;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +34,7 @@ public class ResponsibleService {
         return obj;
     }
 
-    // atualizando os dados do responsavel
+
     @Transactional
     public Responsible update(Responsible obj) {
 
@@ -53,6 +56,15 @@ public class ResponsibleService {
             this.responsibleRepository.delete(responsible);
         } catch (Exception error) {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
+        }
+    }
+
+
+    public List<Responsible> listAllResponsibles() {
+        try {
+            return responsibleRepository.findAll();
+        } catch (EmptyResultDataAccessException ex) {
+            throw new RuntimeException("Nenhum responsável cadastrado.", ex);
         }
     }
 

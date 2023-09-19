@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,6 +44,7 @@ public class Student {
 			joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "responsible_id", referencedColumnName = "id")
 	)
+	@NotNull(message="Pelo menos um responsável deve ser fornecido!")
 	private Set<Responsible> responsibles = new HashSet<>();
 
 //	@ManyToOne
