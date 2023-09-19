@@ -68,7 +68,7 @@
                 <span class="text-black">{{student.class}}</span><br>
               </td>
               <td>
-                <button type="button" class="btn btn-outline-info btn-lg btn-circle" title="Editar">
+                <button type="button" class="btn btn-outline-info btn-lg btn-circle" title="Editar" [routerLink]="['/student-edit', student.id]">
                   <i class="fa fa-edit"></i>
                 </button>
                 <button type="button" class="btn btn-outline-info btn-lg btn-circle" title="Imprimir">

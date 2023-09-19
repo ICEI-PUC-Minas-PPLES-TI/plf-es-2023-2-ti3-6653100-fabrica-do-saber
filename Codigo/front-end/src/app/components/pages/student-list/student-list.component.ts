@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Student} from '../../../interfaces/Student';
+import {StudentService} from "../../../services/student.service";
 
 @Component({
   selector: 'app-student-list',
@@ -9,48 +10,7 @@ import {Student} from '../../../interfaces/Student';
 export class StudentListComponent {
 
   studentStatus: string[] = ['Ativo', 'Desativado', '...'];
-  originalStudents: Student[] = [
-    {
-      id: 6,
-      name: 'Josefina da Silva',
-      contactNumber: 31984173698,
-      contactName: 'Paulinho',
-      age: 5,
-      birthDate: '20/04/2018',
-      class: 'Turma A',
-      status: 'Ativo'
-    },
-    {
-      id: 2,
-      name: 'Joao Pereira',
-      contactNumber: 31923198688,
-      contactName: 'Maria',
-      age: 4,
-      birthDate: '28/10/2020',
-      class: 'Turma B',
-      status: 'Ativo'
-    },
-    {
-      id: 5,
-      name: 'Carlitos da Silva',
-      contactNumber: 31923198688,
-      contactName: 'Maria',
-      age: 5,
-      birthDate: '28/10/2020',
-      class: 'Turma B',
-      status: 'Ativo'
-    },
-    {
-      id: 2,
-      name: 'Juanito Jones',
-      contactNumber: 31923198688,
-      contactName: 'Maria',
-      age: 5,
-      birthDate: '28/10/2020',
-      class: 'Turma B',
-      status: 'Ativo'
-    },
-  ];
+  originalStudents: Student[] = [];
   students: Student[] = [...this.originalStudents];
   filters = [
     {
@@ -64,8 +24,9 @@ export class StudentListComponent {
   ];
   filterText: string = '';
 
-  constructor() {
+  constructor(private studentService: StudentService) {
     this.filterText = this.filters[0].name;
+    this.originalStudents = this.studentService.getStudents();
     this.sortStudentsByName();
   }
 
