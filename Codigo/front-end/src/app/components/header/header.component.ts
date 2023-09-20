@@ -5,4 +5,17 @@ import { Component } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent { }
+export class HeaderComponent {
+  menuItems = [
+    { label: 'Página Inicial', link: '/' },
+    { label: 'Login', link: '/login' },
+    { label: 'Alunos Cadastrados', link: '/student-list' },
+    { label: 'Cadastrar Aluno', link: '/student-create' }
+  ];
+
+  isMenuOpen = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+ }
