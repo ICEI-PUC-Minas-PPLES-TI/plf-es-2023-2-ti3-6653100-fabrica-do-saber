@@ -12,6 +12,7 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { StudentCreateComponent } from './components/pages/student-create/student-create.component';
 import { StudentEditComponent } from './components/pages/student-edit/student-edit.component';
 import { StudentListComponent } from './components/pages/student-list/student-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { StudentListComponent } from './components/pages/student-list/student-li
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
