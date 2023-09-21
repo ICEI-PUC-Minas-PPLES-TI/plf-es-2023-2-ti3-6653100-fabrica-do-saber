@@ -1,3 +1,51 @@
-<p>
-  student-create works!
-</p>
+<section id="list" class="container">
+  <h5 class="pt-3 d-flex justify-content-center">Novo Aluno</h5>
+  <form class="container card row py-4">
+    <div class="col-12 py-2">
+      <input type="text" class="form-control" id="inputfullName" placeholder="Nome Completo" required>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="col-md-2 py-2">
+        <input type="text" class="form-control" id="inputSerie" placeholder="Série" required>
+      </div>
+      <div class="col-md-3 py-2">
+        <input type="text" class="form-control" id="inputTypeStudy" placeholder="Ensino" required>
+      </div>
+      <div class="col-md-3 py-2">
+        <input type="text" class="form-control" id="inputfullName" placeholder="Nacionalidade" required>
+      </div>
+      <div class="col-md-2 py-2">
+        <input type="date" class="form-control" id="inputfullName" placeholder="Data de Nascimento" required>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="col-8 py-2">
+        <input type="text" class="form-control" id="inputAddress" placeholder="Endereço" required>
+      </div>
+      <div class="col-3 py-2">
+        <input type="text" class="form-control" id="inputNumber" placeholder="Número" required>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="col-md-5 py-2">
+        <input type="text" class="form-control" id="inputCity" placeholder="Cidade" required>
+      </div>
+      <div class="col-md-4 py-2">
+        <select id="inputState" class="form-select" required>
+          <option selected>Escolha um estado...</option>
+          <option *ngFor="let state of states">{{ state }}</option>
+        </select>
+      </div>
+      <div class="col-md-2 py-2">
+        <input type="text" class="form-control" id="inputZip" placeholder="CEP" required>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-success me-2">Cadastrar</button>
+      <button type="submit" class="btn btn-outline-danger">Cancelar</button>
+    </div>
+  </form>
+
+
+</section>
