@@ -1,0 +1,25 @@
+<section id="createUser" class="container">
+  <h5 class="pt-3 d-flex justify-content-center">Novo Usuário</h5>
+  <div class="d-flex justify-content-center">
+    <form class="container card row col-4 py-4">
+      <!-- User Data -->
+        <div class="col-sm-12">
+          <input type="email" class="form-control" id="inputEmail" placeholder="E-mail">
+        </div>
+
+        <div class="col-sm-12 py-2">
+          <input type="password" class="form-control" id="inputPassword" placeholder="Senha">
+        </div>
+
+
+      <!-- Command buttons -->
+      <div class="col-12 d-flex justify-content-end">
+        <button type="submit" class="btn btn-outline-success me-2">Cadastrar</button>
+        <button type="submit" class="btn btn-outline-danger" (click)="cancel()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+
+</section>
+
