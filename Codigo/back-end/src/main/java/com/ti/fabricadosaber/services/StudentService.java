@@ -54,7 +54,7 @@ public class StudentService {
             obj = this.studentRepository.save(obj);
             return obj;
         } else {
-            throw new ValidationException("Um estudante pode ter no máximo dois responsáveis.");
+            throw new RuntimeException("Um estudante pode ter no máximo dois responsáveis.");
         }
     }
 
