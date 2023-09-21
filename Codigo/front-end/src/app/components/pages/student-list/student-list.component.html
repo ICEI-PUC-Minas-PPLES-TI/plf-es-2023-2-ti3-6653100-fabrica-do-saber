@@ -6,7 +6,7 @@
     <div class="col-md-3">
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input"
-          (input)="filterStudentList($event)">
+               (input)="filterStudentList($event)">
       </form>
     </div>
 
@@ -14,9 +14,11 @@
       <div class="col">
         Ordenar por
         <div ngbDropdown class="d-inline-block">
-          <button type="button" class="btn btn-outline-primary" id="dropdownBasic" ngbDropdownToggle>{{filterText}}</button>
+          <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
+                  ngbDropdownToggle>{{filterText}}</button>
           <ul ngbDropdownMenu>
-            <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item" (click)="filter.function()">{{filter.name}}</a>
+            <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item"
+                                                                  (click)="filter.function()">{{filter.name}}</a>
             </li>
           </ul>
         </div>
@@ -24,49 +26,48 @@
     </div>
   </div>
 
-
   <div class="table-responsive">
     <table class="table no-wrap user-table mb-0">
       <thead>
-        <tr>
-          <th scope="col" class="border-0 font-medium" *ngFor="let header of headers">
-            {{ header }}
-          </th>
-        </tr>
+      <tr>
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
+          {{ header }}
+        </th>
+      </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let student of students">
-          <tr>
-            <td>
-              <h6 class="text-black">{{ student.name }}</h6>
-            </td>
-            <td>
-              <span class="black">{{ student.contactNumber }}</span><br>
-              <span class="text-muted">{{ student.contactName }}</span>
-            </td>
-            <td>
-              <span class="text-black">{{ student.age }}</span><br>
-              <span class="text-muted">{{ student.birthDate }}</span>
-            </td>
-            <td>
-              <span class="text-black">{{ student.class }}</span><br>
-            </td>
-            <td>
-              <select class="form-control category-select" id="form-select">
-                <option *ngFor="let status of studentStatus" [value]="status">{{ status }}</option>
-              </select>
-            </td>
-            <td>
-              <span class="text-black">{{ student.class }}</span><br>
-            </td>
-            <td>
-              <button *ngFor="let botao of botoes" type="button" class="btn btn-outline-info btn-circle"
-                [routerLink]="[botao.route, student.id]" title="{{ botao.title }}">
-                <i [class]="botao.iconClass"></i>
-              </button>
-            </td>
-          </tr>
-        </ng-container>
+      <ng-container *ngFor="let student of students">
+        <tr>
+          <td>
+            <h6 class="text-black">{{ student.fullName }}</h6>
+          </td>
+          <td>
+            <span class="black">{{ student.responsibles[0].phoneNumber }}</span><br>
+            <span class="text-muted">{{ student.responsibles[0].name}}</span>
+          </td>
+          <td>
+            <span class="text-black">{{student.dateOfBirth | age}}</span><br>
+            <span class="text-muted">{{ student.dateOfBirth }}</span>
+          </td>
+          <td>
+            <span class="text-black">{{student.grade}}</span><br>
+          </td>
+          <td>
+            <select class="form-control category-select" id="form-select">
+              <option *ngFor="let status of studentStatus" [value]="status">{{ status }}</option>
+            </select>
+          </td>
+          <td>
+            <span class="text-black">{{student.yearRegistration}}</span><br>
+          </td>
+          <td>
+            <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
+                    [routerLink]="[button.route, student.id]" title="{{ button.title }}">
+              <i [class]="button.iconClass"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
       </tbody>
     </table>
   </div>

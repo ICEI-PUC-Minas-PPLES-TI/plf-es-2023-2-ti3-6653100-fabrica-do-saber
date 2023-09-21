@@ -1,52 +1,64 @@
-import { Component } from '@angular/core';
-import { Student } from '../../../interfaces/Student';
-import { StudentService } from "../../../services/student.service";
+import {Component} from '@angular/core';
+import {Student} from '../../../interfaces/Student';
+import {StudentService} from "../../../services/student.service";
 
 @Component({
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
-  styleUrls: ['./student-list.component.css']
+  styleUrls: ['./student-list.component.css'],
 })
 
 export class StudentListComponent {
-  headers = ['Nome', 'Contato', 'Idade', 'Turma', 'Status Cadastro', 'Turma', 'Gerenciar'];
-  studentStatus: string[] = ['Ativo', 'Desativado', '...'];
-  originalStudents: Student[] = [];
-  students: Student[] = [...this.originalStudents];
-  botoes = [
-    { iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit' },
-    { iconClass: 'fa fa-upload', title: 'Imprimir', route: '#' },
-    { iconClass: 'fa fa-trash', title: 'Excluir', route: '#' }
-  ];
 
-  filters = [
-    {
-      name: 'ordem alfabética',
-      function: this.sortStudentsByName.bind(this)
-    },
-    {
-      name: 'id',
-      function: this.sortStudentsById.bind(this)
-    }
+  originalStudents: Student[] = [];
+  students: Student[] = [];
+
+  // Table variables
+  tableHeaders = ['Nome', 'Responsável', 'Idade', 'Turma', 'Status Cadastro', 'Data de registro', 'Gerenciar'];
+  studentStatus: string[] = ['Ativo', 'Desativado', '...'];
+  buttons = [
+    {iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit'},
+    {iconClass: 'fa fa-upload', title: 'Imprimir', route: '#'},
+    {iconClass: 'fa fa-trash', title: 'Excluir', route: '#'}
   ];
-  filterText: string = '';
+  filters = [
+    {name: 'ordem alfabética', function: this.sortStudentsByName.bind(this)},
+    {name: 'id', function: this.sortStudentsById.bind(this)}
+  ];
+  filterText!: string;
 
   constructor(private studentService: StudentService) {
+  }
+
+  ngOnInit(): void {
+    this.getStudents();
     this.filterText = this.filters[0].name;
-    this.originalStudents = this.studentService.getStudents();
-    this.sortStudentsByName();
+  }
+
+  getStudents(): void {
+    this.studentService.getStudents().subscribe((students: Student[]): void => {
+      this.originalStudents = students;
+      this.students = [...this.originalStudents];
+      this.sortStudentsByName();
+    });
   }
 
   filterStudentList(event: Event): void {
     const searchInput: HTMLInputElement = event.target as HTMLInputElement;
     const inputValue: string = searchInput.value.toLowerCase();
-    this.students = this.originalStudents.filter((student: Student) => student.name.toLowerCase().includes(inputValue));
+
+    this.students = this.originalStudents.filter((student: Student) => {
+      const studentFullNameMatch = student.fullName.toLowerCase().includes(inputValue);
+      const guardianFullNameMatch = student.responsibles[0].name.toLowerCase().includes(inputValue);
+
+      return studentFullNameMatch || guardianFullNameMatch;
+    });
   }
 
   sortStudentsByName(): void {
     this.students = this.originalStudents.sort(function (a: Student, b: Student): number {
-      let nameA: string = a.name.toLowerCase();
-      let nameB: string = b.name.toLowerCase();
+      let nameA: string = a.fullName.toLowerCase();
+      let nameB: string = b.fullName.toLowerCase();
       if (nameA < nameB)
         return -1;
       if (nameA > nameB)
