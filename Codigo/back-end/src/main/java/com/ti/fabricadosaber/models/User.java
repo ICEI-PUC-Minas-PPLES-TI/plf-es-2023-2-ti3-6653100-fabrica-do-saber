@@ -46,7 +46,7 @@ public class User {
     private String email;
 
 
-    @Column(name = "password", length = 45, nullable = false, updatable = false)
+    @Column(name = "password", length = 45, nullable = false)
     @NotBlank
     @Size(min = 6, max = 45)
 //	A notacao @JsonProperty.Acess.WRITE_ONLY define que o password seja apenas inserido no banco de dados
