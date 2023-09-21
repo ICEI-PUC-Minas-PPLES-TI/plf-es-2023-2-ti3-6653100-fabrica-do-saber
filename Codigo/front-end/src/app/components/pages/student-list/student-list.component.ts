@@ -9,10 +9,16 @@ import { StudentService } from "../../../services/student.service";
 })
 
 export class StudentListComponent {
-
+  headers = ['Nome', 'Contato', 'Idade', 'Turma', 'Status Cadastro', 'Turma', 'Gerenciar'];
   studentStatus: string[] = ['Ativo', 'Desativado', '...'];
   originalStudents: Student[] = [];
   students: Student[] = [...this.originalStudents];
+  botoes = [
+    { iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit' },
+    { iconClass: 'fa fa-upload', title: 'Imprimir', route: '#' },
+    { iconClass: 'fa fa-trash', title: 'Excluir', route: '#' }
+  ];
+
   filters = [
     {
       name: 'ordem alfabética',

@@ -1,28 +1,4 @@
-body {
-  background: #edf1f5;
-  margin-top: 20px;
-}
-
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 0 solid transparent;
-  border-radius: 0;
-}
-
-.btn-circle.btn-lg,
-.btn-group-lg>.btn-circle.btn {
-  width: 50px;
-  height: 50px;
-  padding: 14px 15px;
-  font-size: 18px;
-  line-height: 23px;
-}
+@import "~font-awesome/css/font-awesome.css";
 
 .text-muted {
   color: #8898aa !important;
@@ -36,7 +12,7 @@ button:not(:disabled) {
 }
 
 .btn-circle {
-  border-radius: 100%;
+  border-radius: 50%;
   margin-right: 0.5em;
 }
 

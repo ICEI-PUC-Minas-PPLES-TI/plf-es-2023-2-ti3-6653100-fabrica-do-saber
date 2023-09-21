@@ -1,89 +1,73 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
+<section id="list" class="container">
+  <h5 class="pt-3">Alunos cadastrados</h5>
 
-        <!-- Search bar -->
-        <div class="container">
-          <div class="row">
-            <div class="col-md-5">
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                  id="search-input" (input)="filterStudentList($event)">
-              </form>
-            </div>
+  <!-- Search bar -->
+  <div class="d-flex justify-content-between mt-3 mb-3">
+    <div class="col-md-3">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input"
+          (input)="filterStudentList($event)">
+      </form>
+    </div>
 
-            <div class="col-md-7">
-              <div class="dropdown">
-                Ordenar por
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">{{filterText}}</button>
-                <ul class="dropdown-menu">
-                  <li *ngFor="let filter of filters"><a class="dropdown-item"
-                      (click)="filter.function()">{{filter.name}}</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <h5 class="card-title">Alunos cadastrados</h5>
-        </div>
-        <div class="table-responsive">
-          <table class="table no-wrap user-table mb-0">
-            <thead>
-              <tr>
-                <th scope="col" class="border-0 font-medium">Nome</th>
-                <th scope="col" class="border-0 font-medium">Contato</th>
-                <th scope="col" class="border-0 font-medium">Idade</th>
-                <th scope="col" class="border-0 font-medium">Turma</th>
-                <th scope="col" class="border-0 font-medium">Status Cadastro</th>
-                <th scope="col" class="border-0 font-medium">Turma</th>
-                <th scope="col" class="border-0 font-medium">Gerenciar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let student of students">
-                <td>
-                  <h6 class="text-black">{{student.name}}</h6>
-                </td>
-                <td>
-                  <span class="black">{{student.contactNumber}}</span><br>
-                  <span class="text-muted">{{student.contactName}}</span>
-                </td>
-                <td>
-                  <span class="text-black">{{student.age}}</span><br>
-                  <span class="text-muted">{{student.birthDate}}</span>
-                </td>
-                <td>
-                  <span class="text-black">{{student.class}}</span><br>
-                </td>
-                <td>
-                  <select class="form-control category-select" id="form-select">
-                    <option *ngFor="let status of studentStatus">{{status}}</option>
-                  </select>
-                </td>
-                <td>
-                  <span class="text-black">{{student.class}}</span><br>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-outline-info btn-lg btn-circle" title="Editar"
-                    [routerLink]="['/student-edit', student.id]">
-                    <i class="fa fa-edit"></i>
-                  </button>
-                  <button type="button" class="btn btn-outline-info btn-lg btn-circle" title="Imprimir">
-                    <i class="fa fa-upload"></i>
-                  </button>
-                  <button type="button" class="btn btn-outline-info btn-lg btn-circle" title="Excluir">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="row col-md-6">
+      <div class="col">
+        Ordenar por
+        <div ngbDropdown class="d-inline-block">
+          <button type="button" class="btn btn-outline-primary" id="dropdownBasic" ngbDropdownToggle>{{filterText}}</button>
+          <ul ngbDropdownMenu>
+            <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item" (click)="filter.function()">{{filter.name}}</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+
+  <div class="table-responsive">
+    <table class="table no-wrap user-table mb-0">
+      <thead>
+        <tr>
+          <th scope="col" class="border-0 font-medium" *ngFor="let header of headers">
+            {{ header }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let student of students">
+          <tr>
+            <td>
+              <h6 class="text-black">{{ student.name }}</h6>
+            </td>
+            <td>
+              <span class="black">{{ student.contactNumber }}</span><br>
+              <span class="text-muted">{{ student.contactName }}</span>
+            </td>
+            <td>
+              <span class="text-black">{{ student.age }}</span><br>
+              <span class="text-muted">{{ student.birthDate }}</span>
+            </td>
+            <td>
+              <span class="text-black">{{ student.class }}</span><br>
+            </td>
+            <td>
+              <select class="form-control category-select" id="form-select">
+                <option *ngFor="let status of studentStatus" [value]="status">{{ status }}</option>
+              </select>
+            </td>
+            <td>
+              <span class="text-black">{{ student.class }}</span><br>
+            </td>
+            <td>
+              <button *ngFor="let botao of botoes" type="button" class="btn btn-outline-info btn-circle"
+                [routerLink]="[botao.route]" title="{{ botao.title }}">
+                <i [class]="botao.iconClass"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</section>
