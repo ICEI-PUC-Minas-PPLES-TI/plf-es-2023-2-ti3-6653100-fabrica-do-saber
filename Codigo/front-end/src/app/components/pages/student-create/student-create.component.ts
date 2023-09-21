@@ -1,4 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-student-create',
@@ -6,6 +8,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./student-create.component.css']
 })
 export class StudentCreateComponent {
+  constructor(private router: Router, private toastr: ToastrService) {}
 
   states = [
     'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal',
@@ -25,5 +28,11 @@ export class StudentCreateComponent {
 
   toggleAddressFields() {
     this.showAddressFields = !this.showAddressCheckbox.nativeElement.checked;
+  }
+
+  // Cancel Button
+  cancel() {
+    this.toastr.error('Ação Cancelada');
+    this.router.navigate(['/']);
   }
 }
