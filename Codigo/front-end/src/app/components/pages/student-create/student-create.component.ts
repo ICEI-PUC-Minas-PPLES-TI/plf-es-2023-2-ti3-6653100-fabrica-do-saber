@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-student-create',
@@ -15,4 +15,15 @@ export class StudentCreateComponent {
     'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'
   ];
 
+  races = ['Amarelo', 'Branco', 'Indígena', 'Pardo', 'Preto', 'Outra', 'Prefiro não declarar'];
+
+  religions = ['Candomblé', 'Catolicismo', 'Espiritismo', 'Protestantismo', 'Umbanda', 'Outra', 'Não possui', 'Prefiro não declarar'];
+
+  // Address Checkbox
+  @ViewChild('showAddressCheckbox') showAddressCheckbox!: ElementRef<HTMLInputElement>;
+  showAddressFields = true;
+
+  toggleAddressFields() {
+    this.showAddressFields = !this.showAddressCheckbox.nativeElement.checked;
+  }
 }
