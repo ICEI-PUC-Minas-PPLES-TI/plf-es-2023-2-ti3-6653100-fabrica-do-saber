@@ -61,7 +61,7 @@
             </td>
             <td>
               <button *ngFor="let botao of botoes" type="button" class="btn btn-outline-info btn-circle"
-                [routerLink]="[botao.route]" title="{{ botao.title }}">
+                [routerLink]="[botao.route, student.id]" title="{{ botao.title }}">
                 <i [class]="botao.iconClass"></i>
               </button>
             </td>
