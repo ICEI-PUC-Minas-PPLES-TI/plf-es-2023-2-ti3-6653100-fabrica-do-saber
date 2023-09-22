@@ -42,23 +42,22 @@
             <h6 class="text-black">{{ student.fullName }}</h6>
           </td>
           <td>
-            <span class="black">{{ student.responsibles[0].phoneNumber }}</span><br>
-            <span class="text-muted">{{ student.responsibles[0].name}}</span>
+            <span class="text-black">{{student.birthDate | age}}</span><br>
+            <span class="text-muted">{{ student.birthDate }}</span>
           </td>
           <td>
-            <span class="text-black">{{student.dateOfBirth | age}}</span><br>
-            <span class="text-muted">{{ student.dateOfBirth }}</span>
+            <span class="black">{{ student.guardians[0].phoneNumber }}</span><br>
+            <span class="text-muted">{{ student.guardians[0].fullName}}</span>
+          </td>
+          <td>
+            <span class="black">{{ student.guardians[1].phoneNumber }}</span><br>
+            <span class="text-muted">{{ student.guardians[1].fullName}}</span>
           </td>
           <td>
             <span class="text-black">{{student.grade}}</span><br>
           </td>
           <td>
-            <select class="form-control category-select" id="form-select">
-              <option *ngFor="let status of studentStatus" [value]="status">{{ status }}</option>
-            </select>
-          </td>
-          <td>
-            <span class="text-black">{{student.yearRegistration}}</span><br>
+            <span class="text-black">{{student.registrationDate}}</span><br>
           </td>
           <td>
             <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"

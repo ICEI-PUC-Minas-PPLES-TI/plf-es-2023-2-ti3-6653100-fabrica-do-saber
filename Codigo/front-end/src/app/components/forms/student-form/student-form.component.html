@@ -1,0 +1,112 @@
+<section id="list" class="container">
+
+  <h5 class="pt-3 d-flex justify-content-center">{{title}}</h5>
+  <form class="container card row py-4">
+
+    <!-- Student information -->
+    <div class="col-12 py-2">
+      <h6>Informações do aluno</h6>
+    </div>
+
+    <div id="student-div">
+      <div class="col-12 py-2">
+        <input type="text" class="form-control" id="studentFullName"
+               [placeholder]="studentFullName || 'Nome completo do aluno'" required>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <div class="col-md-4 py-2">
+          <input type="text" class="form-control" id="studentGrade" [placeholder]="studentGrade || 'Turma'" required>
+        </div>
+        <div class="col-md-3 py-2">
+          <input type="text" class="form-control" id="studentNationality"
+                 [placeholder]="studentNationality || 'Nacionalidade'" required>
+        </div>
+        <div class="col-md-2 py-2">
+          <input type="date" class="form-control" id="studentBirthDate"
+                 [placeholder]="studentBirthDate || 'Data de nascimento'" required>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <div class="col-6 py-2">
+          <input type="text" class="form-control" id="studentStreetAddress"
+                 [placeholder]="studentStreetAddress || 'Endereço da rua'" required>
+        </div>
+        <div class="col-3 py-2">
+          <input type="text" class="form-control" id="studentAddressNumber"
+                 [placeholder]="studentAddressNumber || 'Número do endereço'"
+                 required>
+        </div>
+        <div class="col-md-2 py-2">
+          <input type="text" class="form-control" id="studentZipCode" [placeholder]="studentZipCode || 'CEP'" required>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <div class="col-md-3 py-2">
+          <input type="text" class="form-control" id="studentHometown"
+                 [placeholder]="studentHometown || 'Cidade de nascimento'" required>
+        </div>
+        <div class="col-md-3 py-2">
+          <app-state-select></app-state-select>
+        </div>
+        <div class="col-md-2 py-2 form-group">
+          <select class="form-control" id="religionSelect">
+            <option selected disabled>Religião</option>
+            <option *ngFor="let religion of religions" [value]="religion">{{ religion }}</option>
+          </select>
+        </div>
+        <div class="col-md-2 py-2 form-group">
+          <select class="form-control" id="raceSelect">
+            <option selected disabled>Raça</option>
+            <option *ngFor="let race of races" [value]="race">{{ race }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guardians information -->
+    <div id="guardian-div">
+      <app-guardian-info
+        [title]="'Informações do pai'"
+        [showCheckbox] = showCheckbox
+        [fullName]="fatherFullName"
+        [cpf]="fatherCpf"
+        [rg]="fatherRg"
+        [email]="fatherEmail"
+        [occupation]="fatherOccupation"
+        [company]="fatherCompany"
+        [phoneNumber]="fatherPhoneNumber"
+        [streetAddress]="fatherStreetAddress"
+        [addressNumber]="fatherAddressNumber"
+        [neighborhood]="fatherNeighborhood"
+        [cityOfResidence]="fatherCityOfResidence"
+        [zipCode]="fatherZipCode"
+      ></app-guardian-info>
+      <app-guardian-info
+        [title]="'Informações da mãe'"
+        [showCheckbox] = showCheckbox
+        [fullName]="motherFullName"
+        [cpf]="motherCpf"
+        [rg]="motherRg"
+        [email]="motherEmail"
+        [occupation]="motherOccupation"
+        [company]="motherCompany"
+        [phoneNumber]="motherPhoneNumber"
+        [streetAddress]="motherStreetAddress"
+        [addressNumber]="motherAddressNumber"
+        [neighborhood]="motherNeighborhood"
+        [cityOfResidence]="motherCityOfResidence"
+        [zipCode]="motherZipCode"
+      ></app-guardian-info>
+    </div>
+
+    <!-- Command buttons -->
+    <div class="col-12 d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-success me-2">Cadastrar</button>
+      <button type="submit" class="btn btn-outline-danger" (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+
+</section>

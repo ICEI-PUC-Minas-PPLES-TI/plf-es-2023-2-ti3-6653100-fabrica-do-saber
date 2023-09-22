@@ -1,44 +1,41 @@
-<div class="container">
-  <div class="row">
-
-    <div class="col-md-6">
-      <div class="input-group mb-3">
-        <span class="input-group-text">Nome</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-          aria-describedby="basic-addon1" value="{{student.fullName || '' }}">
-      </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text">Idade</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-          aria-describedby="basic-addon1" value="{{student.dateOfBirth || ''}}">
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="input-group mb-3">
-        <span class="input-group-text">Data nascimento</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-          aria-describedby="basic-addon1" value="{{student.dateOfBirth || ''}}">
-      </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text">Turma</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-          aria-describedby="basic-addon1" value="{{student.grade || '' }}">
-      </div>
-    </div>
-
-    <div class="input-group mb-3">
-      <span class="input-group-text">Responsável</span>
-      <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-        aria-describedby="basic-addon1" value="{{student.responsibles[0].name || '' }}">
-    </div>
-
-    <div class="input-group mb-3">
-      <span class="input-group-text">Número responsável</span>
-      <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-        aria-describedby="basic-addon1" value="{{student.responsibles[0].phoneNumber || '' }}">
-    </div>
-  </div>
-
-  <button type="button" class="btn btn-primary" (click)="updateStudent()">Salvar mudanças</button>
-</div>
+<<app-student-form
+  [title]="'Editar aluno'"
+  [studentFullName]="student.fullName"
+  [studentGrade]="student.grade"
+  [studentBirthDate]="student.birthDate"
+  [studentHometown]="student.hometown"
+  [studentHomeState]="student.homeState"
+  [studentNationality]="student.nationality"
+  [studentReligion]="student.religion"
+  [studentRace]="student.race"
+  [studentStreetAddress]="student.streetAddress"
+  [studentAddressNumber]="student.addressNumber"
+  [studentNeighborhood]="student.neighborhood"
+  [studentCityOfResidence]="student.cityOfResidence"
+  [studentZipCode]="student.zipCode"
+  [showCheckbox] = "false"
+  [fatherFullName]="student.guardians[0].fullName"
+  [fatherCpf]="student.guardians[0].cpf"
+  [fatherRg]="student.guardians[0].rg"
+  [fatherEmail]="student.guardians[0].email"
+  [fatherOccupation]="student.guardians[0].occupation"
+  [fatherCompany]="student.guardians[0].company"
+  [fatherPhoneNumber]="student.guardians[0].phoneNumber"
+  [fatherStreetAddress]="student.guardians[0].streetAddress"
+  [fatherAddressNumber]="student.guardians[0].addressNumber"
+  [fatherNeighborhood]="student.guardians[0].neighborhood"
+  [fatherCityOfResidence]="student.guardians[0].cityOfResidence"
+  [fatherZipCode]="student.guardians[0].zipCode"
+  [motherFullName]="student.guardians[1].fullName"
+  [motherCpf]="student.guardians[1].cpf"
+  [motherRg]="student.guardians[1].rg"
+  [motherEmail]="student.guardians[1].email"
+  [motherOccupation]="student.guardians[1].occupation"
+  [motherCompany]="student.guardians[1].company"
+  [motherPhoneNumber]="student.guardians[1].phoneNumber"
+  [motherStreetAddress]="student.guardians[1].streetAddress"
+  [motherAddressNumber]="student.guardians[1].addressNumber"
+  [motherNeighborhood]="student.guardians[1].neighborhood"
+  [motherCityOfResidence]="student.guardians[1].cityOfResidence"
+  [motherZipCode]="student.guardians[1].zipCode"
+></app-student-form>

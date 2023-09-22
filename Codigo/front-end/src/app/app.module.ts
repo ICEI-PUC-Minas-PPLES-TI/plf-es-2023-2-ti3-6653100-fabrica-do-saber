@@ -17,6 +17,9 @@ import { StudentCreateComponent } from './components/pages/student-create/studen
 import { StudentEditComponent } from './components/pages/student-edit/student-edit.component';
 import { StudentListComponent } from './components/pages/student-list/student-list.component';
 import { AgePipe } from './pipes/age.pipe';
+import { StudentFormComponent } from './components/forms/student-form/student-form.component';
+import { GuardianInfoComponent } from './components/forms/guardian-info/guardian-info.component';
+import { StateSelectComponent } from './components/forms/state-select/state-select.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { AgePipe } from './pipes/age.pipe';
     StudentCreateComponent,
     StudentEditComponent,
     StudentListComponent,
-    AgePipe
+    AgePipe,
+    StudentFormComponent,
+    GuardianInfoComponent,
+    StateSelectComponent
   ],
   imports: [
     BrowserModule,

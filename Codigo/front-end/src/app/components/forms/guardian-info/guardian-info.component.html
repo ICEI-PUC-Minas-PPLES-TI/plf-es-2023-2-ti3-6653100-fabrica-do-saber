@@ -1,0 +1,70 @@
+<div class="col-12 py-2">
+  <h6>{{title || 'Título da sessão'}}</h6>
+  <input type="text" class="form-control" id="FatherFullName" [placeholder]="fullName || 'Nome completo'"
+         required>
+</div>
+<div class="d-flex justify-content-between">
+  <div class="col-md-6 py-2">
+    <input type="text" class="form-control" id="FatherCpf" [placeholder]="cpf || 'CPF'" required>
+  </div>
+  <div class="col-md-5 py-2">
+    <input type="text" class="form-control" id="FatherRg" [placeholder]="rg || 'RG'" required>
+  </div>
+</div>
+
+<!-- If the responsible doesnt have the same address -->
+<div *ngIf="showCheckbox" class="form-check col-12 d-flex justify-content-end">
+  <input #showAddressCheckbox class="form-check-input" type="checkbox" (change)="toggleAddressFields()">
+  <label class="form-check-label">Mesmo endereço do aluno?</label>
+</div>
+
+<div *ngIf="showAddressFields">
+  <div class="d-flex justify-content-between">
+    <div class="col-8 py-2">
+      <input type="text" class="form-control" id="FatherAddress"
+             [placeholder]="streetAddress || 'Endereço da rua'"
+             required>
+    </div>
+    <div class="col-3 py-2">
+      <input type="text" class="form-control" id="FatherAddressNumber"
+             [placeholder]="addressNumber || 'Número do endereço'"
+             required>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-md-5 py-2">
+      <input type="text" class="form-control" id="FatherCity"
+             [placeholder]="cityOfResidence || 'Cidade de residência'"
+             required>
+    </div>
+    <div class="col-md-4 py-2">
+      <app-state-select></app-state-select>
+    </div>
+    <div class="col-md-2 py-2">
+      <input type="text" class="form-control" id="FatherZipCode" [placeholder]="zipCode || 'CEP'"
+             required>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between">
+  <div class="col-md-4 py-2">
+    <input type="tel" class="form-control" id="FatherPhoneNumber"
+           [placeholder]="phoneNumber || 'Número de telefone'"
+           required>
+  </div>
+  <div class="col-md-7 py-2">
+    <input type="email" class="form-control" id="FatherEmail" [placeholder]="email || 'E-mail'" required>
+  </div>
+</div>
+<div class="d-flex justify-content-between">
+  <div class="col-md-5 py-2">
+    <input type="text" class="form-control" id="FatherOccupation"
+           [placeholder]="occupation || 'Profissão'"
+           required>
+  </div>
+  <div class="col-md-5 py-2">
+    <input type="text" class="form-control" id="FatherCompany" [placeholder]="company || 'Empresa'"
+           required>
+  </div>
+</div>

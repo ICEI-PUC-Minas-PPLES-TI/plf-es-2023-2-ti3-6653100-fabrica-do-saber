@@ -14,8 +14,7 @@ export class StudentListComponent {
   students: Student[] = [];
 
   // Table variables
-  tableHeaders = ['Nome', 'Responsável', 'Idade', 'Turma', 'Status Cadastro', 'Data de registro', 'Gerenciar'];
-  studentStatus: string[] = ['Ativo', 'Desativado', '...'];
+  tableHeaders = ['Nome', 'Idade', 'Pai', 'Mãe', 'Turma', 'Data de registro', 'Gerenciar'];
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit'},
     {iconClass: 'fa fa-upload', title: 'Imprimir', route: '#'},
@@ -48,8 +47,8 @@ export class StudentListComponent {
     const inputValue: string = searchInput.value.toLowerCase();
 
     this.students = this.originalStudents.filter((student: Student) => {
-      const studentFullNameMatch = student.fullName.toLowerCase().includes(inputValue);
-      const guardianFullNameMatch = student.responsibles[0].name.toLowerCase().includes(inputValue);
+      const studentFullNameMatch: boolean = student.fullName.toLowerCase().includes(inputValue);
+      const guardianFullNameMatch: boolean = student.guardians[0].fullName.toLowerCase().includes(inputValue);
 
       return studentFullNameMatch || guardianFullNameMatch;
     });

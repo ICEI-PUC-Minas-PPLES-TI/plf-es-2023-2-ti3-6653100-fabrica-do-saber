@@ -1,28 +1,31 @@
 export interface Student {
-  id: number;
-  responsibles: {
-    id: number;
-    name: string;
+  guardians: {
+    fullName: string;
     cpf: string;
     rg: string;
     email: string;
     occupation: string;
-    phoneNumber: string;
     company: string;
-    streetAdress: string;
-    number: string;
-    neighbourhood: string;
-    cityResidence: string;
-    postalCode: string;
+    phoneNumber: string;
+    streetAddress: string;
+    addressNumber: string;
+    neighborhood: string;
+    cityOfResidence: string;
+    zipCode: string;
   }[];
+  id:number;
   fullName: string;
-  yearRegistration: string;
+  registrationDate: string;
   grade: string;
-  education: string;
-  dateOfBirth: string;
-  cityBirth: string;
-  state: string;
+  birthDate: string;
+  hometown: string;
+  homeState: string;
   nationality: string;
   religion: string;
   race: string;
+  streetAddress: string;
+  addressNumber: string;
+  neighborhood: string;
+  cityOfResidence: string;
+  zipCode: string;
 }
