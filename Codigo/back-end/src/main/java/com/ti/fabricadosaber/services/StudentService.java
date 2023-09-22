@@ -23,6 +23,9 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private GuardianService guardianService;
+
     public Student findById(Long id) {
         Optional<Student> student = this.studentRepository.findById(id);
         return student.orElseThrow(() -> new RuntimeException(
@@ -48,8 +51,15 @@ public class StudentService {
     @Transactional
     public Student create(Student obj) {
 
-        /*todo: essa verificao deveria ser uma funcao a parte. A funcao create deve apenas criar o obj*/
-        if (obj.getGuardians().size() <= 2) {
+        Set<Guardian> guardianList = obj.getGuardians();
+
+        if (guardianList.size() <= 2) {
+
+            for(Guardian guardian:guardianList) {
+                this.guardianService.create(guardian);
+                obj.setGuardians(guardianList);
+            }
+
             obj.setId(null);
             obj = this.studentRepository.save(obj);
             return obj;
