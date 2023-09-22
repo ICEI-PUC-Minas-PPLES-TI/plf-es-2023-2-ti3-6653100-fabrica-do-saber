@@ -54,6 +54,7 @@ public class Student {
 
 	@Column(name = "registration_date", length = 10, nullable = false, updatable = true)
 	@JsonFormat(pattern = "dd/MM/yyyy")
+	/*todo: a data do registro deve ser automatica, e nao inserida pelo usuario*/
 	private LocalDate registrationDate;
 
 	@Column(name = "grade", length = 45, nullable = false, updatable = true)
