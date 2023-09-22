@@ -48,6 +48,7 @@ export class StudentListComponent {
 
     this.students = this.originalStudents.filter((student: Student) => {
       const studentFullNameMatch: boolean = student.fullName.toLowerCase().includes(inputValue);
+      // todo: ajustar apos mudar classe para father e mother
       const guardianFullNameMatch: boolean = student.guardians[0].fullName.toLowerCase().includes(inputValue);
 
       return studentFullNameMatch || guardianFullNameMatch;

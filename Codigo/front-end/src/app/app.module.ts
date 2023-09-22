@@ -9,8 +9,8 @@ import { FormsModule } from "@angular/forms";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/layout/footer/footer.component';
+import { HeaderComponent } from './components/layout/header/header.component';
 import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { StudentCreateComponent } from './components/pages/student-create/student-create.component';
@@ -20,6 +20,7 @@ import { AgePipe } from './pipes/age.pipe';
 import { StudentFormComponent } from './components/forms/student-form/student-form.component';
 import { GuardianInfoComponent } from './components/forms/guardian-info/guardian-info.component';
 import { StateSelectComponent } from './components/forms/state-select/state-select.component';
+import { CustomButtonComponent } from './components/custom-button/custom-button.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { StateSelectComponent } from './components/forms/state-select/state-sele
     AgePipe,
     StudentFormComponent,
     GuardianInfoComponent,
-    StateSelectComponent
+    StateSelectComponent,
+    CustomButtonComponent
   ],
   imports: [
     BrowserModule,

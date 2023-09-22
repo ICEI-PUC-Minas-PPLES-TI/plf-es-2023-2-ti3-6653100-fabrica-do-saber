@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Student} from "../interfaces/Student";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {API_CONFIG} from "./config";
 import {Observable} from "rxjs";
 
@@ -9,13 +9,18 @@ import {Observable} from "rxjs";
 })
 export class StudentService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  getStudents(): Observable<Student[]>  {
+  createStudent(student: any): Observable<any> {
+    return this.http.post(`${API_CONFIG.baseUrl}/student`, student);
+  }
+
+  getStudents(): Observable<Student[]> {
     return this.http.get<Student[]>(`${API_CONFIG.baseUrl}/student`);
   }
 
-  getStudentById(id: number): Observable<Student>  {
+  getStudentById(id: number): Observable<Student> {
     return this.http.get<Student>(`${API_CONFIG.baseUrl}/student/${id}`)
   }
 }

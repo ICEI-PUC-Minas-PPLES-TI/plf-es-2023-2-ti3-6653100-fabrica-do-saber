@@ -24,7 +24,9 @@
         </div>
         <div class="col-md-2 py-2">
           <input type="date" class="form-control" id="studentBirthDate"
-                 [placeholder]="studentBirthDate || 'Data de nascimento'" required>
+                 [placeholder]="studentBirthDate || 'Data de nascimento'" required
+                 [(ngModel)]="studentBirthDate" name="studentBirthDate"
+                 (change)="onDateChange($event)">
         </div>
       </div>
 
@@ -70,7 +72,7 @@
     <div id="guardian-div">
       <app-guardian-info
         [title]="'Informações do pai'"
-        [showCheckbox] = showCheckbox
+        [showCheckbox]=showCheckbox
         [fullName]="fatherFullName"
         [cpf]="fatherCpf"
         [rg]="fatherRg"
@@ -86,7 +88,7 @@
       ></app-guardian-info>
       <app-guardian-info
         [title]="'Informações da mãe'"
-        [showCheckbox] = showCheckbox
+        [showCheckbox]=showCheckbox
         [fullName]="motherFullName"
         [cpf]="motherCpf"
         [rg]="motherRg"
@@ -104,8 +106,18 @@
 
     <!-- Command buttons -->
     <div class="col-12 d-flex justify-content-end">
-      <button type="submit" class="btn btn-outline-success me-2">Cadastrar</button>
-      <button type="submit" class="btn btn-outline-danger" (click)="cancel()">Cancelar</button>
+      <app-custom-button
+        [type]="'submit'"
+        [class]="'btn btn-outline-success me-2'"
+        (click)="createStudent()"
+        [innerHtml]="'Cadastrar'"
+      ></app-custom-button>
+      <app-custom-button
+        [type]="'submit'"
+        [class]="'btn btn-outline-danger'"
+        (click)="cancel()"
+        [innerHtml]="'Cancelar'"
+      ></app-custom-button>
     </div>
   </form>
 
