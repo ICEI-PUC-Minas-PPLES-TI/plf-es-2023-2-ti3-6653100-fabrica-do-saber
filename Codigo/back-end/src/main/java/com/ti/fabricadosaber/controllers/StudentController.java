@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
-import com.ti.fabricadosaber.models.Responsible;
+import com.ti.fabricadosaber.models.Guardian;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -45,9 +45,9 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
-    @GetMapping("/{id}/responsibles")
-    public Set<Responsible> listResponsiblesForStudent(@PathVariable Long id) {
-        return studentService.listResponsiblesForStudent(id);
+    @GetMapping("/{id}/guardians")
+    public Set<Guardian> listGuardians(@PathVariable Long id) {
+        return studentService.listGuardians(id);
     }
 
     @PostMapping

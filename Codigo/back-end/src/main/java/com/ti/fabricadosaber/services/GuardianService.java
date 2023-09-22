@@ -1,7 +1,7 @@
 package com.ti.fabricadosaber.services;
 
-import com.ti.fabricadosaber.models.Responsible;
-import com.ti.fabricadosaber.repositories.ResponsibleRepository;
+import com.ti.fabricadosaber.models.Guardian;
+import com.ti.fabricadosaber.repositories.GuardianRepository;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,58 +12,53 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ResponsibleService {
+public class GuardianService {
 
     @Autowired
-    private ResponsibleRepository responsibleRepository;
+    private GuardianRepository guardianRepository;
 
     // @Autowired
-    public Responsible findById(Long id) {
+    public Guardian findById(Long id) {
         // lidando com null usando Optional
-        Optional<Responsible> responsible = this.responsibleRepository.findById(id);
+        Optional<Guardian> guardian = this.guardianRepository.findById(id);
 
-        return responsible.orElseThrow(() -> new RuntimeException(
-                "Responsavel não encontrado! id: " + id + ", Tipo: " + Responsible.class.getName()));
+        return guardian.orElseThrow(() -> new RuntimeException(
+                "Responsavel não encontrado! id: " + id + ", Tipo: " + Guardian.class.getName()));
     }
 
-
     @Transactional
-    public Responsible create(Responsible obj) {
-
+    public Guardian create(Guardian obj) {
         obj.setId(null);
-        obj = this.responsibleRepository.save(obj);
-        return obj;
+        return this.guardianRepository.save(obj);
     }
 
-
     @Transactional
-    public Responsible update(Responsible obj) {
+    public Guardian update(Guardian obj) {
 
-        Responsible newObj = findById(obj.getId());
+        Guardian newObj = findById(obj.getId());
 
-        newObj.setName(obj.getName());
+        newObj.setFullName(obj.getFullName());
         newObj.setCpf(obj.getCpf());
         newObj.setEmail(obj.getEmail());
         newObj.setOccupation(obj.getOccupation());
         newObj.setPhoneNumber(obj.getPhoneNumber());
         newObj.setCompany(obj.getCompany());
 
-        return this.responsibleRepository.save(newObj);
+        return this.guardianRepository.save(newObj);
     }
 
     public void delete(Long id) {
-        Responsible responsible = findById(id);
+        Guardian guardian = findById(id);
         try {
-            this.responsibleRepository.delete(responsible);
+            this.guardianRepository.delete(guardian);
         } catch (Exception error) {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
         }
     }
 
-
-    public List<Responsible> listAllResponsibles() {
+    public List<Guardian> listAllGuardians() {
         try {
-            return responsibleRepository.findAll();
+            return guardianRepository.findAll();
         } catch (EmptyResultDataAccessException ex) {
             throw new RuntimeException("Nenhum responsável cadastrado.", ex);
         }
