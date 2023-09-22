@@ -16,51 +16,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ti.fabricadosaber.models.Responsible;
-import com.ti.fabricadosaber.services.ResponsibleService;
+import com.ti.fabricadosaber.models.Guardian;
+import com.ti.fabricadosaber.services.GuardianService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/responsible")
+@RequestMapping("/guardian")
 @Validated
-public class ResponsibleController {
+public class GuardianController {
 
     @Autowired
-    private ResponsibleService responsibleService;
+    private GuardianService guardianService;
 
     @GetMapping
-    public ResponseEntity<List<Responsible>> listAllResponsibles() {
-        List<Responsible> responsibles = responsibleService.listAllResponsibles();
-        return ResponseEntity.ok(responsibles);
+    public ResponseEntity<List<Guardian>> listAllGuardians() {
+        List<Guardian> guardians = guardianService.listAllGuardians();
+        return ResponseEntity.ok(guardians);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Responsible> findById(@PathVariable Long id) {
-        Responsible objResponsible = this.responsibleService.findById(id);
-        return ResponseEntity.ok().body(objResponsible);
+    public ResponseEntity<Guardian> findById(@PathVariable Long id) {
+        Guardian objGuardian = this.guardianService.findById(id);
+        return ResponseEntity.ok().body(objGuardian);
     }
 
 
     @PostMapping
-    public ResponseEntity<Void> create(@Valid @RequestBody Responsible obj) {
-        this.responsibleService.create(obj);
+    public ResponseEntity<Void> create(@Valid @RequestBody Guardian obj) {
+        this.guardianService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@Valid @RequestBody Responsible obj, @PathVariable Long id) {
+    public ResponseEntity<Void> update(@Valid @RequestBody Guardian obj, @PathVariable Long id) {
         obj.setId(id);
-        this.responsibleService.update(obj);
+        this.guardianService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.responsibleService.delete(id);
+        this.guardianService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
