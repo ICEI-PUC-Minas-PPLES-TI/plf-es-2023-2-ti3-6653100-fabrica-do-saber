@@ -10,27 +10,34 @@ export class HomeComponent implements OnInit {
   cards = [
     {
       title: 'Alunos',
-      imageUrl: '../../../assets/img/ger-alunos.png'
+      imageUrl: '../../../assets/img/ger-alunos.png',
+      route: '/student-list'
+      // route: 'student-list'
     },
     {
       title: 'Funcionários',
-      imageUrl: '../../../assets/img/funcionarios.png'
+      imageUrl: '../../../assets/img/funcionarios.png',
+      route: ''
     },
     {
       title: 'Financeiro',
-      imageUrl: '../../../assets/img/financeiro.png'
+      imageUrl: '../../../assets/img/financeiro.png',
+      route: ''
     },
     {
       title: 'Turmas',
-      imageUrl: '../../../assets/img/turmas.png'
+      imageUrl: '../../../assets/img/turmas.png',
+      route: ''
     },
     {
       title: 'Relatórios',
-      imageUrl: '../../../assets/img/relatorios.png'
+      imageUrl: '../../../assets/img/relatorios.png',
+      route: ''
     },
     {
       title: 'Card 6',
-      imageUrl: ''
+      imageUrl: '',
+      route: ''
     }
   ];
 
