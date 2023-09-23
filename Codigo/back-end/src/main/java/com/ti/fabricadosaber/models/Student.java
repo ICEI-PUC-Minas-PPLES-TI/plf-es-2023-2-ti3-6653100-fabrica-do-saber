@@ -59,7 +59,7 @@ public class Student {
 
 	@Column(name = "grade", length = 45, nullable = false, updatable = true)
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
-	private String grade;
+	private String Team;
 
 //	todo: verificar atributo, se nao for necessario, deletar
 //	@Column(name = "education", length = 45, nullable = false, updatable = true)

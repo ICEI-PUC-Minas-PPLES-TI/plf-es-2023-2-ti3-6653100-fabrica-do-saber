@@ -59,7 +59,7 @@ public class Guardian {
 
     @Column(name = "address_number", length = 45, nullable = false, updatable = true)
     @NotBlank
-    private String number;
+    private String adressNumber;
 
     @Column(name = "neighborhood", length = 45, nullable = false, updatable = true)
     @NotBlank
