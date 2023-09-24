@@ -1,0 +1,4 @@
+<select class="form-control" id="raceSelect">
+  <option selected disabled>Raça</option>
+  <option *ngFor="let race of races" [value]="race">{{ race }}</option>
+</select>

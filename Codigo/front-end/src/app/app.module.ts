@@ -21,6 +21,8 @@ import { StudentFormComponent } from './components/forms/student-form/student-fo
 import { GuardianInfoComponent } from './components/forms/guardian-info/guardian-info.component';
 import { StateSelectComponent } from './components/forms/state-select/state-select.component';
 import { CustomButtonComponent } from './components/custom-button/custom-button.component';
+import { RaceSelectComponent } from './components/forms/race-select/race-select.component';
+import { ReligionSelectComponent } from './components/forms/religion-select/religion-select.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { CustomButtonComponent } from './components/custom-button/custom-button.
     StudentFormComponent,
     GuardianInfoComponent,
     StateSelectComponent,
-    CustomButtonComponent
+    CustomButtonComponent,
+    RaceSelectComponent,
+    ReligionSelectComponent
   ],
   imports: [
     BrowserModule,

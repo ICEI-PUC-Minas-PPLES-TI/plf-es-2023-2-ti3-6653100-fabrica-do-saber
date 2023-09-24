@@ -54,16 +54,10 @@
           <app-state-select></app-state-select>
         </div>
         <div class="col-md-2 py-2 form-group">
-          <select class="form-control" id="religionSelect">
-            <option selected disabled>Religião</option>
-            <option *ngFor="let religion of religions" [value]="religion">{{ religion }}</option>
-          </select>
+          <app-religion-select></app-religion-select>
         </div>
         <div class="col-md-2 py-2 form-group">
-          <select class="form-control" id="raceSelect">
-            <option selected disabled>Raça</option>
-            <option *ngFor="let race of races" [value]="race">{{ race }}</option>
-          </select>
+          <app-race-select></app-race-select>
         </div>
       </div>
     </div>

@@ -53,9 +53,6 @@ export class StudentFormComponent {
   constructor(private router: Router, private toastr: ToastrService, private studentService: StudentService) {
   }
 
-  races: String[] = ['Amarelo', 'Branco', 'Indígena', 'Pardo', 'Preto', 'Outra', 'Prefiro não declarar'];
-  religions: String[] = ['Candomblé', 'Catolicismo', 'Espiritismo', 'Protestantismo', 'Umbanda', 'Outra', 'Não possui', 'Prefiro não declarar'];
-
   createStudent(): void {
     // const student = {
     //   guardians: [

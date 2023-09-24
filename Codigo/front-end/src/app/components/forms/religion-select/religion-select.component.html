@@ -1,0 +1,4 @@
+<select class="form-control" id="religionSelect">
+  <option selected disabled>Religião</option>
+  <option *ngFor="let religion of religions" [value]="religion">{{ religion }}</option>
+</select>
