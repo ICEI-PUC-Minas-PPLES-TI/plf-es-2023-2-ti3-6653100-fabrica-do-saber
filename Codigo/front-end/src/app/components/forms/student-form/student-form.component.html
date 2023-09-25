@@ -2,7 +2,6 @@
 
   <h5 class="pt-3 d-flex justify-content-center">{{title}}</h5>
   <form class="container card row py-4">
-
     <!-- Student information -->
     <div class="col-12 py-2">
       <h6>Informações do aluno</h6>
@@ -10,45 +9,52 @@
 
     <div id="student-div">
       <div class="col-12 py-2">
-        <input type="text" class="form-control" id="studentFullName"
-               [placeholder]="studentFullName || 'Nome completo do aluno'" required>
+        <input id="studentFullName" type="text" class="form-control"
+               [placeholder]="student.fullName ? student.fullName : 'Nome completo do aluno'"
+               [(ngModel)]="student.fullName" name="studentFullName" required>
       </div>
 
       <div class="d-flex justify-content-between">
         <div class="col-md-4 py-2">
-          <input type="text" class="form-control" id="studentGrade" [placeholder]="studentGrade || 'Turma'" required>
+          <input id="studentGrade" type="text" class="form-control"
+                 [placeholder]="student.grade ? student.grade : 'Série'"
+                 [(ngModel)]="student.grade" name="studentGrade" required>
         </div>
         <div class="col-md-3 py-2">
-          <input type="text" class="form-control" id="studentNationality"
-                 [placeholder]="studentNationality || 'Nacionalidade'" required>
+          <input id="studentNationality" type="text" class="form-control"
+                 [placeholder]="student.nationality ? student.nationality : 'Nacionalidade'"
+                 [(ngModel)]="student.nationality" name="studentNationality" required>
         </div>
-        <div class="col-md-2 py-2">
-          <input type="date" class="form-control" id="studentBirthDate"
-                 [placeholder]="studentBirthDate || 'Data de nascimento'" required
-                 [(ngModel)]="studentBirthDate" name="studentBirthDate"
-                 (change)="onDateChange($event)">
+        <div class="col-md-3 py-2">
+          <input id="studentBirthDate" type="text" class="form-control"
+                 [placeholder]="student.birthDate ? student.birthDate : 'Data de nascimento (dd/mm/aaaa)'"
+                 [(ngModel)]="student.birthDate" name="studentBirthDate" required>
         </div>
       </div>
 
       <div class="d-flex justify-content-between">
         <div class="col-6 py-2">
-          <input type="text" class="form-control" id="studentStreetAddress"
-                 [placeholder]="studentStreetAddress || 'Endereço da rua'" required>
+          <input id="studentStreetAddress" type="text" class="form-control"
+                 [placeholder]="student.streetAddress ? student.streetAddress : 'Endereço da rua'"
+                 [(ngModel)]="student.streetAddress" name="studentStreetAddress" required>
         </div>
         <div class="col-3 py-2">
-          <input type="text" class="form-control" id="studentAddressNumber"
-                 [placeholder]="studentAddressNumber || 'Número do endereço'"
-                 required>
+          <input id="studentAddressNumber" type="text" class="form-control"
+                 [placeholder]="student.addressNumber ? student.addressNumber : 'Número do endereço'"
+                 [(ngModel)]="student.addressNumber" name="studentAddressNumber" required>
         </div>
         <div class="col-md-2 py-2">
-          <input type="text" class="form-control" id="studentZipCode" [placeholder]="studentZipCode || 'CEP'" required>
+          <input id="studentZipCode" type="text" class="form-control"
+                 [placeholder]="student.zipCode ? student.zipCode : 'CEP'"
+                 [(ngModel)]="student.zipCode" name="studentZipCode" required>
         </div>
       </div>
 
       <div class="d-flex justify-content-between">
         <div class="col-md-3 py-2">
-          <input type="text" class="form-control" id="studentHometown"
-                 [placeholder]="studentHometown || 'Cidade de nascimento'" required>
+          <input id="studentHometown" type="text" class="form-control"
+                 [placeholder]="student.hometown ? student.hometown : 'Cidade de nascimento'"
+                 [(ngModel)]="student.hometown" name="studentHometown" required>
         </div>
         <div class="col-md-3 py-2">
           <app-state-select></app-state-select>
@@ -67,34 +73,34 @@
       <app-guardian-info
         [title]="'Informações do pai'"
         [showCheckbox]=showCheckbox
-        [fullName]="fatherFullName"
-        [cpf]="fatherCpf"
-        [rg]="fatherRg"
-        [email]="fatherEmail"
-        [occupation]="fatherOccupation"
-        [company]="fatherCompany"
-        [phoneNumber]="fatherPhoneNumber"
-        [streetAddress]="fatherStreetAddress"
-        [addressNumber]="fatherAddressNumber"
-        [neighborhood]="fatherNeighborhood"
-        [cityOfResidence]="fatherCityOfResidence"
-        [zipCode]="fatherZipCode"
+        [fullName]="student.guardians[0].fullName"
+        [cpf]="student.guardians[0].cpf"
+        [rg]="student.guardians[0].rg"
+        [email]="student.guardians[0].email"
+        [occupation]="student.guardians[0].occupation"
+        [company]="student.guardians[0].company"
+        [phoneNumber]="student.guardians[0].phoneNumber"
+        [streetAddress]="student.guardians[0].streetAddress"
+        [addressNumber]="student.guardians[0].addressNumber"
+        [neighborhood]="student.guardians[0].neighborhood"
+        [cityOfResidence]="student.guardians[0].cityOfResidence"
+        [zipCode]="student.guardians[0].zipCode"
       ></app-guardian-info>
       <app-guardian-info
         [title]="'Informações da mãe'"
         [showCheckbox]=showCheckbox
-        [fullName]="motherFullName"
-        [cpf]="motherCpf"
-        [rg]="motherRg"
-        [email]="motherEmail"
-        [occupation]="motherOccupation"
-        [company]="motherCompany"
-        [phoneNumber]="motherPhoneNumber"
-        [streetAddress]="motherStreetAddress"
-        [addressNumber]="motherAddressNumber"
-        [neighborhood]="motherNeighborhood"
-        [cityOfResidence]="motherCityOfResidence"
-        [zipCode]="motherZipCode"
+        [fullName]="student.guardians[1].fullName"
+        [cpf]="student.guardians[1].cpf"
+        [rg]="student.guardians[1].rg"
+        [email]="student.guardians[1].email"
+        [occupation]="student.guardians[1].occupation"
+        [company]="student.guardians[1].company"
+        [phoneNumber]="student.guardians[1].phoneNumber"
+        [streetAddress]="student.guardians[1].streetAddress"
+        [addressNumber]="student.guardians[1].addressNumber"
+        [neighborhood]="student.guardians[1].neighborhood"
+        [cityOfResidence]="student.guardians[1].cityOfResidence"
+        [zipCode]="student.guardians[1].zipCode"
       ></app-guardian-info>
     </div>
   </form>

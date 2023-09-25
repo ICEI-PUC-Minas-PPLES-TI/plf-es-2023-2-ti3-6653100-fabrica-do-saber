@@ -18,11 +18,11 @@ import { StudentEditComponent } from './components/pages/student-edit/student-ed
 import { StudentListComponent } from './components/pages/student-list/student-list.component';
 import { AgePipe } from './pipes/age.pipe';
 import { StudentFormComponent } from './components/forms/student-form/student-form.component';
-import { GuardianInfoComponent } from './components/forms/guardian-info/guardian-info.component';
-import { StateSelectComponent } from './components/forms/state-select/state-select.component';
-import { CustomButtonComponent } from './components/custom-button/custom-button.component';
-import { RaceSelectComponent } from './components/forms/race-select/race-select.component';
-import { ReligionSelectComponent } from './components/forms/religion-select/religion-select.component';
+import { GuardianInfoComponent } from './components/forms/components/guardian-info/guardian-info.component';
+import { StateSelectComponent } from './components/forms/components/state-select/state-select.component';
+import { CustomButtonComponent } from './components/forms/components/custom-button/custom-button.component';
+import { RaceSelectComponent } from './components/forms/components/race-select/race-select.component';
+import { ReligionSelectComponent } from './components/forms/components/religion-select/religion-select.component';
 
 @NgModule({
   declarations: [

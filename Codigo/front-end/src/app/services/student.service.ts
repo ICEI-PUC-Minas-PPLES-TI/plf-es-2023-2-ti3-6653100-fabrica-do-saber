@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Student} from "../interfaces/Student";
 import {HttpClient} from "@angular/common/http";
 import {API_CONFIG} from "./config";
-import {Observable} from "rxjs";
+import {catchError, Observable, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,17 @@ export class StudentService {
   constructor(private http: HttpClient) {
   }
 
-  createStudent(student: any): Observable<any> {
-    return this.http.post(`${API_CONFIG.baseUrl}/student`, student);
+  createStudent(student: Student): Observable<any> {
+    return this.http.post<Student>(`${API_CONFIG.baseUrl}/student`, student)
+      .pipe(
+        tap(response => {
+          console.log('Estudante criado com sucesso!', response);
+        }),
+        catchError(err => {
+          console.log('Erro na criacao do estudante', err);
+          throw err;
+        })
+      );
   }
 
   getStudents(): Observable<Student[]> {

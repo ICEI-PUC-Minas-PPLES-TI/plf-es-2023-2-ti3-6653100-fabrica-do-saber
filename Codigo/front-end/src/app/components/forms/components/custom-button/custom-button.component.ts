@@ -10,9 +10,5 @@ export class CustomButtonComponent {
   @Input() type: string = 'button';
   @Input() class: string = '';
   @Input() innerHtml: string = '';
-  @Output() click: EventEmitter<void> = new EventEmitter<void>();
 
-  onClick(): void {
-    this.click.emit();
-  }
 }
