@@ -38,6 +38,7 @@ public class Student {
 	@Column(name = "id", unique = true)
 	private Long id;
 
+	// Deletar esse atributo
 	@ManyToMany
 	@JoinTable(
 			name = "guardian_student",
@@ -52,20 +53,13 @@ public class Student {
 	@Size(groups = { CreateStudent.class, UpdateStudent.class }, min = 5, max = 45)
 	private String fullName;
 
-	@Column(name = "registration_date", length = 10, nullable = false, updatable = true)
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	/*todo: a data do registro deve ser automatica, e nao inserida pelo usuario*/
+	@Column(name = "registration_date", length = 10, nullable = false)
 	private LocalDate registrationDate;
 
-	@Column(name = "grade", length = 45, nullable = false, updatable = true)
+	//Trocar de String para Team e coloar a anotação @ManyToOne
+	@Column(name = "team", length = 45, nullable = false, updatable = true)
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
-	private String Team;
-
-//	todo: verificar atributo, se nao for necessario, deletar
-//	@Column(name = "education", length = 45, nullable = false, updatable = true)
-//	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
-//	@Size(groups = { CreateStudent.class, UpdateStudent.class }, min = 5, max = 45)
-//	private String education;
+	private String team;
 
 	@Column(name = "birth_date", length = 10, nullable = false, updatable = true)
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -91,9 +85,6 @@ public class Student {
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
 	private String race;
 
-	/*------------------------------------*/
-	/*Novos atributos [DELETAR COMENTARIO]*/
-	/*------------------------------------*/
 	@Column(name = "street_address", length = 45, nullable = false, updatable = true)
 	@NotBlank
 	private String streetAddress;
