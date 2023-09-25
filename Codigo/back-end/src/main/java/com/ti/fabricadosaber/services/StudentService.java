@@ -1,5 +1,7 @@
 package com.ti.fabricadosaber.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -61,6 +63,7 @@ public class StudentService {
             }
 
             obj.setId(null);
+            obj.setRegistrationDate(LocalDate.now());
             obj = this.studentRepository.save(obj);
             return obj;
         } else {
@@ -72,7 +75,8 @@ public class StudentService {
         Student newObj = findById(obj.getId());
 
         if (obj.getGuardians().size() <= 2) {
-            BeanUtils.copyProperties(obj, newObj, "id");
+            String[] ignoredProperties = {"id", "registrationDate"};
+            BeanUtils.copyProperties(obj, newObj, ignoredProperties);
             return this.studentRepository.save(newObj);
         } else {
             throw new ValidationException("Um estudante pode ter no máximo dois responsáveis.");
