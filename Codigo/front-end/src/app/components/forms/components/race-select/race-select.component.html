@@ -1,4 +1,4 @@
-<select class="form-control" id="raceSelect">
-  <option selected disabled>Raça</option>
+<select id="inputState" class="form-select" required>
+  <option selected disabled>{{race ? race : 'Estado'}}</option>
   <option *ngFor="let race of races" [value]="race">{{ race }}</option>
 </select>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-religion-select',
@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./religion-select.component.css']
 })
 export class ReligionSelectComponent {
+
+  @Input() relegion !: string;
 
   religions: String[] = ['Candomblé', 'Catolicismo', 'Espiritismo', 'Protestantismo', 'Umbanda', 'Outra', 'Não possui', 'Prefiro não declarar'];
 

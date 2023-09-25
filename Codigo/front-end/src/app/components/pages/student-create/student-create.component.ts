@@ -65,11 +65,6 @@ export class StudentCreateComponent {
   }
 
   createStudent(): void {
-
-    console.log(this.student.fullName);
-    console.log(this.student.grade);
-    console.log(this.student.hometown)
-
     // this.studentService.createStudent(this.student).subscribe();
   }
 

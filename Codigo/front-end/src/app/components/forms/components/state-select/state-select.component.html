@@ -1,4 +1,4 @@
-<select id="inputState" class="form-select" required>
-  <option selected>Escolha um estado...</option>
-  <option *ngFor="let state of states">{{ state }}</option>
+<select id="inputState" class="form-select" required [(ngModel)]="homeState">
+  <option value="" disabled selected>Estado</option>
+  <option *ngFor="let state of states" [ngValue]="state">{{ state }}</option>
 </select>

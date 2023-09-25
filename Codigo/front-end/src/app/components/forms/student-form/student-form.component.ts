@@ -10,7 +10,6 @@ export class StudentFormComponent {
 
   @Input() student!: Student;
   @Input() title!: string;
-  @Input() showCheckbox!: boolean;
 
   constructor() {
   }

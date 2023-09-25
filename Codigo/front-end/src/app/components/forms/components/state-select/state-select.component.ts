@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-state-select',
@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class StateSelectComponent {
 
+  @Input() homeState !: string;
+
   states: String[] = [
     'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal',
     'Espírito Santo', 'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul',
@@ -14,5 +16,4 @@ export class StateSelectComponent {
     'Rio de Janeiro', 'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia',
     'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'
   ];
-
 }

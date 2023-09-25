@@ -1,4 +1,5 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Guardian} from "../../../../interfaces/Guardian";
 
 @Component({
   selector: 'app-guardian-info',
@@ -7,27 +8,9 @@ import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 })
 export class GuardianInfoComponent {
 
+  @Input() guardian!: Guardian;
   @Input() title!: string;
-  @Input() fullName!: string;
-  @Input() cpf!: string;
-  @Input() rg!: string;
-  @Input() email!: string;
-  @Input() occupation!: string;
-  @Input() company!: string;
-  @Input() phoneNumber!: string;
-  @Input() streetAddress!: string;
-  @Input() addressNumber!: string;
-  @Input() neighborhood!: string;
-  @Input() cityOfResidence!: string;
-  @Input() zipCode!: string;
   @Input() showCheckbox!: boolean;
-
-  // Address Checkbox
   @ViewChild('showAddressCheckbox') showAddressCheckbox!: ElementRef<HTMLInputElement>;
-  showAddressFields = true;
-
-  toggleAddressFields() {
-    this.showAddressFields = !this.showAddressCheckbox.nativeElement.checked;
-  }
 
 }

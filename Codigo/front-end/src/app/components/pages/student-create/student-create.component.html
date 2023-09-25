@@ -1,20 +1,24 @@
-<app-student-form
-  [student]="student"
-  [title]="'Cadastrar novo aluno'"
-  [showCheckbox]="true"
-></app-student-form>
+<section id="list" class="container">
+    <form class="container card row py-4">
+        <app-student-form
+                [student]="student"
+                [title]="'Cadastrar novo aluno'"
+        ></app-student-form>
+        <div class="col-12 d-flex justify-content-end">
+            <app-custom-button
+                    [type]="'submit'"
+                    [class]="'btn btn-outline-success me-2'"
+                    [innerHtml]="'Cadastrar'"
+                    (click)="createStudent()"
+            ></app-custom-button>
+            <app-custom-button
+                    [type]="'submit'"
+                    [class]="'btn btn-outline-danger'"
+                    [innerHtml]="'Cancelar'"
+                    (click)="cancel()"
+            ></app-custom-button>
+        </div>
+    </form>
+</section>
 
-<div class="col-12 d-flex justify-content-end">
-  <app-custom-button
-    [type]="'submit'"
-    [class]="'btn btn-outline-success me-2'"
-    (click)="createStudent()"
-    [innerHtml]="'Cadastrar'"
-  ></app-custom-button>
-  <app-custom-button
-    [type]="'submit'"
-    [class]="'btn btn-outline-danger'"
-    (click)="cancel()"
-    [innerHtml]="'Cancelar'"
-  ></app-custom-button>
-</div>
+

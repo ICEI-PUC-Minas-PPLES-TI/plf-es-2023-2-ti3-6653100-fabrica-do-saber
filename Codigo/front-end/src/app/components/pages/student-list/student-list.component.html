@@ -1,73 +1,83 @@
-<section id="list" class="container">
-  <h5 class="pt-3">Alunos cadastrados</h5>
+<section class="container">
+    <h5 class="pt-3">Alunos cadastrados</h5>
 
-  <!-- Search bar -->
-  <div class="d-flex justify-content-between mt-3 mb-3">
-    <div class="col-md-3">
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input"
-               (input)="filterStudentList($event)">
-      </form>
-    </div>
-
-    <div class="row col-md-6">
-      <div class="col">
-        Ordenar por
-        <div ngbDropdown class="d-inline-block">
-          <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
-                  ngbDropdownToggle>{{filterText}}</button>
-          <ul ngbDropdownMenu>
-            <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item"
-                                                                  (click)="filter.function()">{{filter.name}}</a>
-            </li>
-          </ul>
+    <!-- Search bar -->
+    <div class="d-flex justify-content-between mt-3 mb-3">
+        <div class="col-md-4">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                       id="search-input"
+                       (input)="filterStudentList($event)">
+            </form>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="table-responsive">
-    <table class="table no-wrap user-table mb-0">
-      <thead>
-      <tr>
-        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
-          {{ header }}
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <ng-container *ngFor="let student of students">
-        <tr>
-          <td>
-            <h6 class="text-black">{{ student.fullName }}</h6>
-          </td>
-          <td>
-            <span class="text-black">{{student.birthDate | age}}</span><br>
-            <span class="text-muted">{{ student.birthDate }}</span>
-          </td>
-          <td>
-            <span class="black">{{ student.guardians[0].phoneNumber }}</span><br>
-            <span class="text-muted">{{ student.guardians[0].fullName}}</span>
-          </td>
-          <td>
-            <span class="black">{{ student.guardians[1].phoneNumber }}</span><br>
-            <span class="text-muted">{{ student.guardians[1].fullName}}</span>
-          </td>
-          <td>
-            <span class="text-black">{{student.grade}}</span><br>
-          </td>
-          <td>
-            <span class="text-black">{{student.registrationDate}}</span><br>
-          </td>
-          <td>
-            <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
-                    [routerLink]="[button.route, student.id]" title="{{ button.title }}">
-              <i [class]="button.iconClass"></i>
-            </button>
-          </td>
-        </tr>
-      </ng-container>
-      </tbody>
-    </table>
-  </div>
+        <div class="col-md-4">
+            Ordenar por
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
+                        ngbDropdownToggle>{{filterText}}</button>
+                <ul ngbDropdownMenu>
+                    <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item"
+                                                                          (click)="filter.function()">{{filter.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <app-custom-button
+                    [type]="'submit'"
+                    [class]="'btn btn-primary'"
+                    [innerHtml]="'Cadastrar novo aluno'"
+                    [routerLink]="'/student-create'"
+            ></app-custom-button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table no-wrap user-table mb-0">
+            <thead>
+            <tr>
+                <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
+                    {{ header }}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let student of students">
+                <tr>
+                    <td>
+                        <h6 class="text-black">{{ student.fullName }}</h6>
+                    </td>
+                    <td>
+                        <span class="text-black">{{student.birthDate | age}}</span><br>
+                        <span class="text-muted">{{ student.birthDate }}</span>
+                    </td>
+                    <td>
+                        <span class="black">{{ student.guardians[0].phoneNumber }}</span><br>
+                        <span class="text-muted">{{ student.guardians[0].fullName}}</span>
+                    </td>
+                    <td>
+                        <span class="black">{{ student.guardians[1].phoneNumber }}</span><br>
+                        <span class="text-muted">{{ student.guardians[1].fullName}}</span>
+                    </td>
+                    <td>
+                        <span class="text-black">{{student.grade}}</span><br>
+                    </td>
+                    <td>
+                        <span class="text-black">{{student.registrationDate}}</span><br>
+                    </td>
+                    <td>
+                        <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
+                                [routerLink]="button.route ? [button.route, student.id] : null"
+                                (click)="button.function ? button.function(student.id) : null"
+                                title="{{ button.title }}">
+                            <i [class]="button.iconClass"></i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-container>
+            </tbody>
+        </table>
+    </div>
 </section>

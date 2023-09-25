@@ -1,70 +1,71 @@
 <div class="col-12 py-2">
   <h6>{{title || 'Título da sessão'}}</h6>
-  <input type="text" class="form-control" id="FatherFullName" [placeholder]="fullName || 'Nome completo'"
-         required>
+  <input id="guardianFullName" type="text" class="form-control"
+         [placeholder]="guardian.fullName ? guardian.fullName : 'Nome completo'"
+         [(ngModel)]="guardian.fullName" name="studentFullName" required>
 </div>
 <div class="d-flex justify-content-between">
   <div class="col-md-6 py-2">
-    <input type="text" class="form-control" id="FatherCpf" [placeholder]="cpf || 'CPF'" required>
+    <input id="guardianCpf" type="text" class="form-control"
+           [placeholder]="guardian.cpf ? guardian.cpf : 'CPF'"
+           [(ngModel)]="guardian.cpf" name="studentFullName" required>
   </div>
   <div class="col-md-5 py-2">
-    <input type="text" class="form-control" id="FatherRg" [placeholder]="rg || 'RG'" required>
+    <input id="guardianRg" type="text" class="form-control"
+           [placeholder]="guardian.rg ? guardian.rg : 'RG'"
+           [(ngModel)]="guardian.rg" name="studentFullName" required>
   </div>
 </div>
 
-<!-- If the responsible doesnt have the same address -->
-<div *ngIf="showCheckbox" class="form-check col-12 d-flex justify-content-end">
-  <input #showAddressCheckbox class="form-check-input" type="checkbox" (change)="toggleAddressFields()">
-  <label class="form-check-label">Mesmo endereço do aluno?</label>
-</div>
-
-<div *ngIf="showAddressFields">
   <div class="d-flex justify-content-between">
     <div class="col-8 py-2">
-      <input type="text" class="form-control" id="FatherAddress"
-             [placeholder]="streetAddress || 'Endereço da rua'"
-             required>
+      <input id="guardianStreetAddress" type="text" class="form-control"
+             [placeholder]="guardian.streetAddress ? guardian.streetAddress : 'Endereço da rua'"
+             [(ngModel)]="guardian.streetAddress" name="studentStreetAddress" required>
     </div>
     <div class="col-3 py-2">
-      <input type="text" class="form-control" id="FatherAddressNumber"
-             [placeholder]="addressNumber || 'Número do endereço'"
-             required>
+      <input id="guardianAddressNumber" type="text" class="form-control"
+             [placeholder]="guardian.addressNumber ? guardian.addressNumber : 'Número do endereço'"
+             [(ngModel)]="guardian.addressNumber" name="studentStreetAddress" required>
     </div>
   </div>
   <div class="d-flex justify-content-between">
     <div class="col-md-5 py-2">
-      <input type="text" class="form-control" id="FatherCity"
-             [placeholder]="cityOfResidence || 'Cidade de residência'"
-             required>
+      <input id="guardianCityOfResidence" type="text" class="form-control"
+             [placeholder]="guardian.cityOfResidence ? guardian.cityOfResidence : 'Cidade de residência'"
+             [(ngModel)]="guardian.cityOfResidence" name="guardianCityOfResidence" required>
     </div>
     <div class="col-md-4 py-2">
       <app-state-select></app-state-select>
     </div>
     <div class="col-md-2 py-2">
-      <input type="text" class="form-control" id="FatherZipCode" [placeholder]="zipCode || 'CEP'"
-             required>
+      <input id="guardianZipCode" type="text" class="form-control"
+             [placeholder]="guardian.zipCode ? guardian.zipCode : 'CEP'"
+             [(ngModel)]="guardian.zipCode" name="guardianZipCode" required>
     </div>
   </div>
-</div>
 
 <div class="d-flex justify-content-between">
   <div class="col-md-4 py-2">
-    <input type="tel" class="form-control" id="FatherPhoneNumber"
-           [placeholder]="phoneNumber || 'Número de telefone'"
-           required>
+    <input id="guardianPhoneNumber" type="tel" class="form-control"
+           [placeholder]="guardian.phoneNumber ? guardian.phoneNumber : 'Número de telefone'"
+           [(ngModel)]="guardian.phoneNumber" name="guardianPhoneNumber" required>
   </div>
   <div class="col-md-7 py-2">
-    <input type="email" class="form-control" id="FatherEmail" [placeholder]="email || 'E-mail'" required>
+    <input id="guardianEmail" type="tel" class="form-control"
+           [placeholder]="guardian.email ? guardian.email : 'E-mail'"
+           [(ngModel)]="guardian.email" name="guardianEmail" required>
   </div>
 </div>
 <div class="d-flex justify-content-between">
   <div class="col-md-5 py-2">
-    <input type="text" class="form-control" id="FatherOccupation"
-           [placeholder]="occupation || 'Profissão'"
-           required>
+    <input id="guardianOccupation" type="text" class="form-control"
+           [placeholder]="guardian.occupation ? guardian.occupation : 'Profissão'"
+           [(ngModel)]="guardian.occupation" name="guardianOccupation" required>
   </div>
   <div class="col-md-5 py-2">
-    <input type="text" class="form-control" id="FatherCompany" [placeholder]="company || 'Empresa'"
-           required>
+    <input id="guardianCompany" type="text" class="form-control"
+           [placeholder]="guardian.company ? guardian.company : 'Empresa'"
+           [(ngModel)]="guardian.company" name="guardianCompany" required>
   </div>
 </div>
