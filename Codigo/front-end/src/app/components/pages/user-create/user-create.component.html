@@ -1,25 +1,38 @@
 <section id="createUser" class="container">
-  <h5 class="pt-3 d-flex justify-content-center">Novo Usuário</h5>
-  <div class="d-flex justify-content-center">
-    <form class="container card row col-4 py-4">
-      <!-- User Data -->
-        <div class="col-sm-12">
-          <input type="email" class="form-control" id="inputEmail" placeholder="E-mail">
-        </div>
+    <h5 class="pt-3 d-flex justify-content-center">Novo Usuário</h5>
+    <div class="d-flex justify-content-center">
+        <form class="container card row col-4 py-3">
 
-        <div class="col-sm-12 py-2">
-          <input type="password" class="form-control" id="inputPassword" placeholder="Senha">
-        </div>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" id="inputFullName" placeholder="Nome completo"
+                       [(ngModel)]="user.fullName" name="inputFullName">
+            </div>
+
+            <div class="col-sm-12">
+                <input type="email" class="form-control" id="inputEmail" placeholder="E-mail" [(ngModel)]="user.email" name="inputEmail">
+            </div>
+
+            <div class="col-sm-12 py-2">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Senha" [(ngModel)]="user.password" name="inputPassword">
+            </div>
 
 
-      <!-- Command buttons -->
-      <div class="col-12 d-flex justify-content-end">
-        <button type="submit" class="btn btn-outline-success me-2">Cadastrar</button>
-        <button type="submit" class="btn btn-outline-danger" (click)="cancel()">Cancelar</button>
-      </div>
-    </form>
-  </div>
-
+            <div class="col-12 d-flex justify-content-end">
+                <app-custom-button
+                        [type]="'submit'"
+                        [class]="'btn btn-outline-success me-2'"
+                        [innerHtml]="'Cadastrar'"
+                        (click)="createUser()"
+                ></app-custom-button>
+                <app-custom-button
+                        [type]="'submit'"
+                        [class]="'btn btn-outline-danger'"
+                        [innerHtml]="'Cancelar'"
+                        (click)="cancel()"
+                ></app-custom-button>
+            </div>
+        </form>
+    </div>
 
 </section>
 
