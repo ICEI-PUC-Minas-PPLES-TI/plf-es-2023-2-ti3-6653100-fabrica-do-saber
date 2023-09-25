@@ -14,4 +14,12 @@ export class StudentFormComponent {
   constructor() {
   }
 
+  onHomeStateChange(newState: string): void {
+    this.student.homeState = newState;
+  }
+
+  onReligionChange(newReligion: string): void {
+    this.student.religion = newReligion;
+    console.log(this.student.religion)
+  }
 }

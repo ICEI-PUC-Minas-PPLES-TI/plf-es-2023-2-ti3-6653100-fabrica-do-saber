@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-religion-select',
@@ -7,8 +7,13 @@ import {Component, Input} from '@angular/core';
 })
 export class ReligionSelectComponent {
 
-  @Input() relegion !: string;
+  @Input() religion !: string;
+  @Output() religionChange: EventEmitter<string> = new EventEmitter<string>();
 
-  religions: String[] = ['Candomblé', 'Catolicismo', 'Espiritismo', 'Protestantismo', 'Umbanda', 'Outra', 'Não possui', 'Prefiro não declarar'];
+  religions: string[] = ['Candomblé', 'Catolicismo', 'Espiritismo', 'Protestantismo', 'Umbanda', 'Outra', 'Não possui', 'Prefiro não declarar'];
 
+  onReligionChange(event: any): void {
+    this.religion = event.target.value;
+    this.religionChange.emit(this.religion);
+  }
 }

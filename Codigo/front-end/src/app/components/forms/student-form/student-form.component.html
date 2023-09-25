@@ -1,79 +1,81 @@
 <h5 class="pt-3 d-flex justify-content-center">{{title}}</h5>
 <!-- Student information -->
 <div class="col-12 py-2">
-    <h6>Informações do aluno</h6>
+  <h6>Informações do aluno</h6>
 </div>
 
 <div id="student-div">
-    <div class="col-12 py-2">
-        <input id="studentFullName" type="text" class="form-control"
-               [placeholder]="student.fullName ? student.fullName : 'Nome completo do aluno'"
-               [(ngModel)]="student.fullName" name="studentFullName" required>
-    </div>
+  <div class="col-12 py-2">
+    <input id="studentFullName" type="text" class="form-control"
+           [placeholder]="student.fullName ? student.fullName : 'Nome completo do aluno'"
+           [(ngModel)]="student.fullName" name="studentFullName" required>
+  </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-md-4 py-2">
-            <input id="studentGrade" type="text" class="form-control"
-                   [placeholder]="student.grade ? student.grade : 'Série'"
-                   [(ngModel)]="student.grade" name="studentGrade" required>
-        </div>
-        <div class="col-md-3 py-2">
-            <input id="studentNationality" type="text" class="form-control"
-                   [placeholder]="student.nationality ? student.nationality : 'Nacionalidade'"
-                   [(ngModel)]="student.nationality" name="studentNationality" required>
-        </div>
-        <div class="col-md-3 py-2">
-            <input id="studentBirthDate" type="text" class="form-control"
-                   [placeholder]="student.birthDate ? student.birthDate : 'Data de nascimento (dd/mm/aaaa)'"
-                   [(ngModel)]="student.birthDate" name="studentBirthDate" required>
-        </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-md-4 py-2">
+      <input id="studentGrade" type="text" class="form-control"
+             [placeholder]="student.grade ? student.grade : 'Série'"
+             [(ngModel)]="student.grade" name="studentGrade" required>
     </div>
+    <div class="col-md-3 py-2">
+      <input id="studentNationality" type="text" class="form-control"
+             [placeholder]="student.nationality ? student.nationality : 'Nacionalidade'"
+             [(ngModel)]="student.nationality" name="studentNationality" required>
+    </div>
+    <div class="col-md-3 py-2">
+      <input id="studentBirthDate" type="text" class="form-control"
+             [placeholder]="student.birthDate ? student.birthDate : 'Data de nascimento (dd/mm/aaaa)'"
+             [(ngModel)]="student.birthDate" name="studentBirthDate" required>
+    </div>
+  </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-6 py-2">
-            <input id="studentStreetAddress" type="text" class="form-control"
-                   [placeholder]="student.streetAddress ? student.streetAddress : 'Endereço da rua'"
-                   [(ngModel)]="student.streetAddress" name="studentStreetAddress" required>
-        </div>
-        <div class="col-3 py-2">
-            <input id="studentAddressNumber" type="text" class="form-control"
-                   [placeholder]="student.addressNumber ? student.addressNumber : 'Número do endereço'"
-                   [(ngModel)]="student.addressNumber" name="studentAddressNumber" required>
-        </div>
-        <div class="col-md-2 py-2">
-            <input id="studentZipCode" type="text" class="form-control"
-                   [placeholder]="student.zipCode ? student.zipCode : 'CEP'"
-                   [(ngModel)]="student.zipCode" name="studentZipCode" required>
-        </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-6 py-2">
+      <input id="studentStreetAddress" type="text" class="form-control"
+             [placeholder]="student.streetAddress ? student.streetAddress : 'Endereço da rua'"
+             [(ngModel)]="student.streetAddress" name="studentStreetAddress" required>
     </div>
+    <div class="col-3 py-2">
+      <input id="studentAddressNumber" type="text" class="form-control"
+             [placeholder]="student.addressNumber ? student.addressNumber : 'Número do endereço'"
+             [(ngModel)]="student.addressNumber" name="studentAddressNumber" required>
+    </div>
+    <div class="col-md-2 py-2">
+      <input id="studentZipCode" type="text" class="form-control"
+             [placeholder]="student.zipCode ? student.zipCode : 'CEP'"
+             [(ngModel)]="student.zipCode" name="studentZipCode" required>
+    </div>
+  </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-md-3 py-2">
-            <input id="studentHometown" type="text" class="form-control"
-                   [placeholder]="student.hometown ? student.hometown : 'Cidade de nascimento'"
-                   [(ngModel)]="student.hometown" name="studentHometown" required>
-        </div>
-        <div class="col-md-3 py-2">
-            <app-state-select [homeState]="student.homeState"
-            ></app-state-select>
-        </div>
-        <div class="col-md-2 py-2 form-group">
-            <app-religion-select [relegion]="student.religion"></app-religion-select>
-        </div>
-        <div class="col-md-2 py-2 form-group">
-            <app-race-select [race]="student.race"></app-race-select>
-        </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-md-3 py-2">
+      <input id="studentHometown" type="text" class="form-control"
+             [placeholder]="student.hometown ? student.hometown : 'Cidade de nascimento'"
+             [(ngModel)]="student.hometown" name="studentHometown" required>
     </div>
+    <div class="col-md-3 py-2">
+      <app-state-select [homeState]="student.homeState"
+                        (homeStateChange)="onHomeStateChange($event)"></app-state-select>
+    </div>
+    <div class="col-md-2 py-2 form-group">
+      <app-religion-select [religion]="student.religion"
+        (religionChange)="onReligionChange($event)"
+      ></app-religion-select>
+    </div>
+    <div class="col-md-2 py-2 form-group">
+      <app-race-select [race]="student.race"></app-race-select>
+    </div>
+  </div>
 </div>
 
 <!-- Guardians information -->
 <div id="guardian-div">
-    <app-guardian-info
-            [title]="'Informações do pai'"
-            [guardian]="student.guardians[0]"
-    ></app-guardian-info>
-    <app-guardian-info
-            [title]="'Informações da mãe'"
-            [guardian]="student.guardians[1]"
-    ></app-guardian-info>
+  <app-guardian-info
+    [title]="'Informações do pai'"
+    [guardian]="student.guardians[0]"
+  ></app-guardian-info>
+  <app-guardian-info
+    [title]="'Informações da mãe'"
+    [guardian]="student.guardians[1]"
+  ></app-guardian-info>
 </div>

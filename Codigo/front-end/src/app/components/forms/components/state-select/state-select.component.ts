@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-state-select',
@@ -7,13 +7,19 @@ import {Component, Input} from '@angular/core';
 })
 export class StateSelectComponent {
 
-  @Input() homeState !: string;
+  @Input() homeState!: string;
+  @Output() homeStateChange: EventEmitter<string> = new EventEmitter<string>();
 
-  states: String[] = [
+  states: string[] = [
     'Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal',
     'Espírito Santo', 'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul',
     'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí',
     'Rio de Janeiro', 'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia',
     'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'
   ];
+
+  onStateChange(event: any): void {
+    this.homeState = event.target.value;
+    this.homeStateChange.emit(this.homeState);
+  }
 }
