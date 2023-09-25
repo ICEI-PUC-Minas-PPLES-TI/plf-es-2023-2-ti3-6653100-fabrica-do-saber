@@ -49,8 +49,7 @@ public class User {
     @Column(name = "password", length = 45, nullable = false)
     @NotBlank
     @Size(min = 6, max = 45)
-//	A notacao @JsonProperty.Acess.WRITE_ONLY define que o password seja apenas inserido no banco de dados
-//	Em momento algum ele sera retornado por meio de uma requisicao GET da API, por exemplo
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
