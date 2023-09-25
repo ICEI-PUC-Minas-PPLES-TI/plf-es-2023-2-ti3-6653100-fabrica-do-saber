@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {StudentService} from "../../../services/student.service";
+import {StudentService} from "../../../services/student/student.service";
 import {Student} from "../../../interfaces/Student";
 import {Guardian} from "../../../interfaces/Guardian";
 import {ToastrService} from "ngx-toastr";

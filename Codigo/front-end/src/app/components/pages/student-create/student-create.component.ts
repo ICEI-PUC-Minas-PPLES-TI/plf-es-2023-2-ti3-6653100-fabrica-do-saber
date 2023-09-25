@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {StudentService} from '../../../services/student.service';
+import {StudentService} from '../../../services/student/student.service';
 import {Student} from "../../../interfaces/Student";
 
 @Component({
