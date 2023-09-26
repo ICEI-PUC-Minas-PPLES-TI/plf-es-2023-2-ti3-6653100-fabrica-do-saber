@@ -22,7 +22,7 @@ import com.ti.fabricadosaber.services.EmployeeService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/Employee")
+@RequestMapping("/employee")
 @Validated
 public class EmployeeController {
     @Autowired
