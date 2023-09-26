@@ -1,7 +1,6 @@
 package com.ti.fabricadosaber.controllers;
 
 import com.ti.fabricadosaber.models.Parent;
-import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.services.ParentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

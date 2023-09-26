@@ -21,18 +21,18 @@ public class Person {
     @Size(min = 2, max = 100)
     private String fullName;
 
-    @Column(name = "cpf", length = 14, nullable = true, unique = false, updatable = false)
+    @Column(name = "cpf", length = 14, nullable = true, unique = true, updatable = false)
     @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")
     private String cpf;
 
-    @Column(name = "rg", length = 45, nullable = true, unique = false, updatable = false)
+    @Column(name = "rg", length = 45, nullable = true, unique = true, updatable = false)
     @Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}")
     private String rg;
 
-    @Column(name = "email", length = 45, nullable = true, unique = false)
+    @Column(name = "email", length = 45, nullable = true, unique = true)
     private String email;
 
-    @Column(name = "phone_number", length = 45, nullable = true, unique = false, updatable = true)
+    @Column(name = "phone_number", length = 45, nullable = true, unique = true, updatable = true)
     @Pattern(regexp = "\\d{2} \\d{5}-\\d{4}")
     private String phoneNumber;
 
