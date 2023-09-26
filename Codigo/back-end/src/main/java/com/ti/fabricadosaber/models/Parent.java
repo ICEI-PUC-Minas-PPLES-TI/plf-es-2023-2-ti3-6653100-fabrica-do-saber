@@ -18,8 +18,10 @@ public abstract class Parent extends Person {
     private String company;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "company", length = 2, nullable = false)
+    @Column(name = "home_state", length = 2, nullable = false)
     private State homeState;
+
+
 
 }
 
