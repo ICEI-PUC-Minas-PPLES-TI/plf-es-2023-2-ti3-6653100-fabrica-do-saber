@@ -1,23 +1,17 @@
 package com.ti.fabricadosaber.services;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
-import com.ti.fabricadosaber.models.Guardian;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ValidationException;
-import org.springframework.beans.BeanUtils;
+import com.ti.fabricadosaber.repositories.FatherRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.repositories.StudentRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class StudentService {
@@ -26,7 +20,11 @@ public class StudentService {
     private StudentRepository studentRepository;
 
     @Autowired
-    private GuardianService guardianService;
+    private FatherService fatherService;
+
+    @Autowired
+    private MotherService motherService;
+
 
     public Student findById(Long id) {
         Optional<Student> student = this.studentRepository.findById(id);
@@ -42,36 +40,35 @@ public class StudentService {
         }
     }
 
-    public Set<Guardian> listGuardians(Long id) {
+
+
+
+  /*  public Set<Guardian> listGuardians(Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Estudante com o ID " + id + " não encontrado"));
 
 
         return student.getGuardians();
-    }
+    }*/
 
     @Transactional
     public Student create(Student obj) {
 
-        Set<Guardian> guardianList = obj.getGuardians();
 
-        if (guardianList.size() <= 2) {
-
-            for(Guardian guardian:guardianList) {
-                this.guardianService.create(guardian);
-                obj.setGuardians(guardianList);
-            }
-
+        if(obj.getMother() == null && obj.getFather() == null) {
+            throw new RuntimeException("Um estudante tem que ter no mínimo um responsável");
+        } else {
             obj.setId(null);
             obj.setRegistrationDate(LocalDate.now());
+            this.motherService.create(obj.getMother());
+            this.fatherService.create(obj.getFather());
             obj = this.studentRepository.save(obj);
             return obj;
-        } else {
-            throw new RuntimeException("Um estudante pode ter no máximo dois responsáveis.");
         }
+
     }
 
-    public Student update(Student obj) {
+ /*   public Student update(Student obj) {
         Student newObj = findById(obj.getId());
 
         if (obj.getGuardians().size() <= 2) {
@@ -90,5 +87,5 @@ public class StudentService {
         } catch (Exception e) {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
         }
-    }
+    }*/
 }
