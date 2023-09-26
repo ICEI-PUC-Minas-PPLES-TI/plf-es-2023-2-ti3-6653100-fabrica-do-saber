@@ -13,10 +13,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @MappedSuperclass
-@AllArgsConstructor
+/*@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+*/
 @EqualsAndHashCode(callSuper = true)
 public class Employee extends Person {
 
