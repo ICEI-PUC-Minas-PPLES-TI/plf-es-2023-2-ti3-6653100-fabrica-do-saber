@@ -79,9 +79,9 @@ public class StudentService {
         Student newObj = findById(obj.getId());
         String[] ignoreProperties = {"id", "registrationDate"};
 
-        for (Parent p : obj.getParents()) {
-            this.parentService.update(p);
-        }
+//        for (Parent p : obj.getParents()) {
+//            this.parentService.update(p);
+//        }
 
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);
 

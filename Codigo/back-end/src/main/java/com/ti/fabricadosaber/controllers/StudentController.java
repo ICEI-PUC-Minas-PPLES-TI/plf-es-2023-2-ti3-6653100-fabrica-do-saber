@@ -32,6 +32,12 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @GetMapping
+    public ResponseEntity<List<Student>> listAll() {
+        List<Student> studentList = this.studentService.listAllStudents();
+        return ResponseEntity.ok().body(studentList);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Student> findById(@PathVariable Long id) {
         Student obj = this.studentService.findById(id);

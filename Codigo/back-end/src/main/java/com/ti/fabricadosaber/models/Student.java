@@ -52,7 +52,7 @@ public class Student extends Person {
 	@Enumerated(EnumType.STRING)
 	private Religion religion;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private Set<Parent> parents = null;
 
 }
