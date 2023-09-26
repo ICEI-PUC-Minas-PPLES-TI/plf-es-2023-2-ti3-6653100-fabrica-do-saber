@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
-import com.ti.fabricadosaber.models.Guardian;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -39,16 +38,16 @@ public class StudentController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping
+/*    @GetMapping
     public ResponseEntity<List<Student>> listAllStudents() {
         List<Student> students = studentService.listAllStudents();
         return ResponseEntity.ok(students);
-    }
+    }*/
 
-    @GetMapping("/{id}/guardians")
+   /* @GetMapping("/{id}/guardians")
     public Set<Guardian> listGuardians(@PathVariable Long id) {
         return studentService.listGuardians(id);
-    }
+    }*/
 
     @PostMapping
     @Validated(CreateStudent.class)
@@ -59,7 +58,7 @@ public class StudentController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/{id}")
+  /*  @PutMapping("/{id}")
     @Validated(UpdateStudent.class)
     public ResponseEntity<Void> update(@Valid @RequestBody Student obj, @PathVariable Long id) {
         obj.setId(id);
@@ -71,5 +70,5 @@ public class StudentController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.studentService.delete(id);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 }
