@@ -1,13 +1,13 @@
 package com.ti.fabricadosaber.models;
 
 import java.time.LocalDate;
-import java.util.Set;
 
+import com.ti.fabricadosaber.enums.Race;
+import com.ti.fabricadosaber.enums.Religion;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -38,28 +38,27 @@ public class Student {
 	@Column(name = "id", unique = true)
 	private Long id;
 
-	// Deletar esse atributo
-	@ManyToMany
-	@JoinTable(
-			name = "guardian_student",
-			joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "guardian_id", referencedColumnName = "id")
-	)
-	@NotNull(message="Pelo menos um responsável deve ser fornecido!")
-	private Set<Guardian> guardians = null;
 
 	@Column(name = "full_name", length = 45, nullable = false, updatable = true)
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
 	@Size(groups = { CreateStudent.class, UpdateStudent.class }, min = 5, max = 45)
 	private String fullName;
 
-	@Column(name = "registration_date", length = 10, nullable = false)
+	@Column(name = "registration_date", length = 10, nullable = true, updatable = false)
 	private LocalDate registrationDate;
 
-	//Trocar de String para Team e coloar a anotação @ManyToOne
-	@Column(name = "team", length = 45, nullable = false, updatable = true)
+	/*@ManyToOne
+	@JoinColumn(name = "team_id", nullable = false)
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
-	private String team;
+	private Team team;*/
+
+	@ManyToOne
+	@JoinColumn(name = "father_id")
+	private Father father;
+
+	@ManyToOne
+	@JoinColumn(name = "mother_id")
+	private Mother mother;
 
 	@Column(name = "birth_date", length = 10, nullable = false, updatable = true)
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -77,13 +76,15 @@ public class Student {
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
 	private String nationality;
 
-	@Column(name = "religion", length = 45, nullable = false, updatable = true)
-	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
-	private String religion;
-
 	@Column(name = "race", length = 45, nullable = false, updatable = true)
+	@Enumerated(EnumType.STRING) // Especifica que é uma enumeração
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
-	private String race;
+	private Race race;
+
+	@Column(name = "religion", length = 45, nullable = false, updatable = true)
+	@Enumerated(EnumType.STRING) // Especifica que é uma enumeração
+	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
+	private Religion religion;
 
 	@Column(name = "street_address", length = 45, nullable = false, updatable = true)
 	@NotBlank
