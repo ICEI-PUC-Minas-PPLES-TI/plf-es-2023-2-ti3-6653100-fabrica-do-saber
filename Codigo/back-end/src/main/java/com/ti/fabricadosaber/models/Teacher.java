@@ -16,17 +16,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Teacher")
+@Table(name = Teacher.TABLE_NAME)
+/*
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-public class Teacher {
+*/
+
+public class Teacher extends Employee {
+
+    public static final String TABLE_NAME = "teacher";
 
     @OneToMany(mappedBy = "teacher")
-    @Column(name = "teams", nullable = false, updatable = true)
-    @NotNull
-    @NotEmpty
     private List<Team> teams = new ArrayList<Team>();
 }
