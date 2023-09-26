@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -48,8 +49,8 @@ public class Student {
 	private LocalDate registrationDate;
 
 	@ManyToOne
-	@JoinColumn(name = "team_id", nullable = false)
-	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
+	@JoinColumn(name = "team_id", nullable = true)
+//	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
 	private Team team;
 
 	@ManyToOne
@@ -78,12 +79,12 @@ public class Student {
 
 	@Column(name = "race", length = 45, nullable = false, updatable = true)
 	@Enumerated(EnumType.STRING) // Especifica que é uma enumeração
-	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
+	@NotNull
 	private Race race;
 
 	@Column(name = "religion", length = 45, nullable = false, updatable = true)
 	@Enumerated(EnumType.STRING) // Especifica que é uma enumeração
-	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
+//	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
 	private Religion religion;
 
 	@Column(name = "street_address", length = 45, nullable = false, updatable = true)
