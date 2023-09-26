@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,6 +14,6 @@ public class Father extends Parent {
     public static final String TABLE_NAME = "father";
 
     @OneToMany(mappedBy = "father")
-    private List<Student> children;
+    private List<Student> children = new ArrayList<>();
 
 }
