@@ -5,16 +5,7 @@ import java.util.List;
 
 import com.ti.fabricadosaber.enums.Grade;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -49,9 +40,6 @@ public class Team {
     private Integer numberStudents;
 
     @OneToMany(mappedBy = "team")
-    @Column(name = "students", nullable = false, updatable = true)
-    @NotNull
-    @NotEmpty
     private List<Student> students = new ArrayList<Student>();
 
     @Column(name = "room", length = 45, nullable = false, updatable = true)
@@ -60,9 +48,7 @@ public class Team {
     private String room;
 
     @ManyToOne
-    @Column(name = "teacher", nullable = false, updatable = true)
-    @NotNull
-    @NotEmpty
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
     
