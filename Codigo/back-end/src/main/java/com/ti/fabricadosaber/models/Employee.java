@@ -13,30 +13,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @MappedSuperclass
-/*@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-*/
 @EqualsAndHashCode(callSuper = true)
 public class Employee extends Person {
-
-    @Column(name = "birth_date", length = 10, nullable = false, updatable = true)
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate birthDate;
 
     @Column(name = "salary", nullable = false, updatable = true)
     private double salary;
 
-    @Column(name = "hire_date", length = 10, nullable = false, updatable = true)
+    @Column(name = "hire_date", length = 10, nullable = false, updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate hireDate;
 
-    @Column(name = "registration_date", length = 10, nullable = false, updatable = true)
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate registrationDate;
-
-    @Column(name = "termination_date", length = 10, nullable = false, updatable = true)
+    @Column(name = "termination_date", length = 10, nullable = true, updatable = true)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate terminationDate;
 

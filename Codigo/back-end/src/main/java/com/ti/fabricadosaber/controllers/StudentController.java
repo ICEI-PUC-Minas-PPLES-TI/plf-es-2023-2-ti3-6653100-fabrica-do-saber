@@ -38,17 +38,6 @@ public class StudentController {
         return ResponseEntity.ok().body(obj);
     }
 
-/*    @GetMapping
-    public ResponseEntity<List<Student>> listAllStudents() {
-        List<Student> students = studentService.listAllStudents();
-        return ResponseEntity.ok(students);
-    }*/
-
-   /* @GetMapping("/{id}/guardians")
-    public Set<Guardian> listGuardians(@PathVariable Long id) {
-        return studentService.listGuardians(id);
-    }*/
-
     @PostMapping
     @Validated(CreateStudent.class)
     public ResponseEntity<Void> create(@Valid @RequestBody Student obj) {
@@ -58,7 +47,7 @@ public class StudentController {
         return ResponseEntity.created(uri).build();
     }
 
-  /*  @PutMapping("/{id}")
+    @PutMapping("/{id}")
     @Validated(UpdateStudent.class)
     public ResponseEntity<Void> update(@Valid @RequestBody Student obj, @PathVariable Long id) {
         obj.setId(id);
@@ -70,5 +59,5 @@ public class StudentController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.studentService.delete(id);
         return ResponseEntity.noContent().build();
-    }*/
+    }
 }
