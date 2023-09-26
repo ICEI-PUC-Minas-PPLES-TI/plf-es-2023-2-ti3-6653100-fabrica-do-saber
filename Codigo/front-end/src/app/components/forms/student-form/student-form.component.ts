@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Student} from "../../../interfaces/Student";
+import {Student} from '../../../interfaces/Student';
+import {ConsoleLogger} from '@angular/compiler-cli';
 
 @Component({
   selector: 'app-student-form',
@@ -15,11 +16,19 @@ export class StudentFormComponent {
   }
 
   onHomeStateChange(newState: string): void {
-    this.student.homeState = newState;
+    this.student.homeState = this.formatSelect(newState);
   }
 
   onReligionChange(newReligion: string): void {
-    this.student.religion = newReligion;
-    console.log(this.student.religion)
+    this.student.religion = this.formatSelect(newReligion);
+  }
+
+  onRaceChange(newRace: string): void {
+    this.student.race = this.formatSelect(newRace);
+  }
+
+  formatSelect(select: string): string {
+    const parts: string[] = select.split(':');
+    return parts[1].trim();
   }
 }

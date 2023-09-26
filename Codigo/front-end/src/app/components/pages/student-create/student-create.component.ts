@@ -65,9 +65,7 @@ export class StudentCreateComponent {
   }
 
   createStudent(): void {
-    console.log(this.student.race);
-    console.log(this.student.religion);
-    console.log(this.student.homeState);
+    console.log(this.student);
     // this.studentService.createStudent(this.student).subscribe();
   }
 

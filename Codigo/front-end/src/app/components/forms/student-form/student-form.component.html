@@ -54,16 +54,22 @@
              [(ngModel)]="student.hometown" name="studentHometown" required>
     </div>
     <div class="col-md-3 py-2">
-      <app-state-select [homeState]="student.homeState"
-                        (homeStateChange)="onHomeStateChange($event)"></app-state-select>
+      <app-state-select
+        [homeState]="student.homeState"
+        (homeStateChange)="onHomeStateChange($event)">
+      </app-state-select>
     </div>
     <div class="col-md-2 py-2 form-group">
-      <app-religion-select [religion]="student.religion"
-        (religionChange)="onReligionChange($event)"
-      ></app-religion-select>
+      <app-religion-select
+        [religion]="student.religion"
+        (religionChange)="onReligionChange($event)">
+      </app-religion-select>
     </div>
     <div class="col-md-2 py-2 form-group">
-      <app-race-select [race]="student.race"></app-race-select>
+      <app-race-select
+        [race]="student.race"
+        (raceChange)="onRaceChange($event)">
+      </app-race-select>
     </div>
   </div>
 </div>

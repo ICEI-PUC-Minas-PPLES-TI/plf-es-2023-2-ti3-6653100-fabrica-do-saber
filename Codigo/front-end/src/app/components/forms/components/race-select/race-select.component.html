@@ -1,4 +1,4 @@
-<select id="inputState" class="form-select" required>
-  <option selected disabled>{{race ? race : 'Estado'}}</option>
-  <option *ngFor="let race of races" [value]="race">{{ race }}</option>
+<select id="inputState" class="form-select" (change)="onRaceChange($event)" [(ngModel)]="race" required>
+  <option value="" disabled selected>Raça</option>
+  <option *ngFor="let race of races" [ngValue]="race.value">{{ race.name }}</option>
 </select>
