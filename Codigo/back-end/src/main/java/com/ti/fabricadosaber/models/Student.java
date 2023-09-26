@@ -47,10 +47,10 @@ public class Student {
 	@Column(name = "registration_date", length = 10, nullable = true, updatable = false)
 	private LocalDate registrationDate;
 
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "team_id", nullable = false)
 	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
-	private Team team;*/
+	private Team team;
 
 	@ManyToOne
 	@JoinColumn(name = "father_id")
