@@ -17,12 +17,12 @@ import lombok.Setter;
 
 @Entity
 @Table(name = Teacher.TABLE_NAME)
-/*
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-*/
+
+
 
 public class Teacher extends Employee {
 
