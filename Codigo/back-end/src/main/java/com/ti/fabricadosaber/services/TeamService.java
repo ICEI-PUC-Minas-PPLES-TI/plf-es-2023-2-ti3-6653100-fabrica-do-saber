@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.ti.fabricadosaber.models.Student;
+import com.ti.fabricadosaber.models.Teacher;
 import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.repositories.TeamRepository;
 
@@ -19,6 +19,9 @@ public class TeamService {
 
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private TeacherService teacherService;
 
     public Team findById(Long id) {
         Optional<Team> team = this.teamRepository.findById(id);
@@ -36,7 +39,9 @@ public class TeamService {
 
     @Transactional
     public Team create(Team obj) {
+        Teacher teacher = this.teacherService.findById(obj.getTeacher().getId());
         obj.setId(null);
+        obj.setTeacher(teacher);
         obj = this.teamRepository.save(obj);
         return obj;
     }
