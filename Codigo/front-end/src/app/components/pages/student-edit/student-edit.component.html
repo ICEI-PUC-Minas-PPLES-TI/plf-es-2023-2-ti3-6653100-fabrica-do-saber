@@ -6,18 +6,18 @@
                 [title]="'Editar aluno'"
         ></app-student-form>
         <div class="col-12 d-flex justify-content-end">
-            <app-custom-button
+            <app-btn-custom
                     [type]="'submit'"
                     [class]="'btn btn-outline-success me-2'"
                     (click)="updateStudent()"
                     [innerHtml]="'Cadastrar'"
-            ></app-custom-button>
-            <app-custom-button
+            ></app-btn-custom>
+            <app-btn-custom
                     [type]="'submit'"
                     [class]="'btn btn-outline-danger'"
                     (click)="cancel()"
                     [innerHtml]="'Cancelar'"
-            ></app-custom-button>
+            ></app-btn-custom>
         </div>
     </form>
 </section>
