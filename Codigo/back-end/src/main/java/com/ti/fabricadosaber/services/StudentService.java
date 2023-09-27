@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ti.fabricadosaber.models.Parent;
+import com.ti.fabricadosaber.repositories.ParentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,42 +52,57 @@ public class StudentService {
 
     @Transactional
     public Student create(Student obj) {
-
-        if (obj.getParents().size() < 2) {
-            throw new RuntimeException("O estudante deve ter dois responsaveis.");
-        }
+        twoParents(obj);
 
         obj.setId(null);
+        Set<Parent> createdParents = saveParents(obj);
+        obj.setParents(createdParents);
+        obj.setRegistrationDate(LocalDate.now());
+        return studentRepository.save(obj);
+    }
 
+    public  Set<Parent> saveParents(Student obj) {
+        String[] ignoreProperties = {"id", "registrationDate"};
         Set<Parent> createdParents = new HashSet<>();
 
-
+        Parent currentParent;
         for (Parent parent : obj.getParents()) {
-            Parent createdParent = parentService.create(parent);
-            createdParents.add(createdParent);
+            String cpfParent = parent.getCpf();
+            if (parentService.existsByCpf(cpfParent)) {
+                currentParent = this.parentService.findByCpf(cpfParent);
+                BeanUtils.copyProperties(parent, currentParent, ignoreProperties);
+                currentParent = this.parentService.update(currentParent);
+            } else {
+                currentParent = parentService.create(parent);
+            }
+            createdParents.add(currentParent);
         }
 
-        obj.setRegistrationDate(LocalDate.now());
-        obj.setParents(createdParents);
-        obj = this.studentRepository.save(obj);
-        return obj;
+        return createdParents;
+    }
+
+    public void twoParents(Student obj) {
+        if (obj.getParents().size() != 2) {
+            throw new RuntimeException("O estudante deve ter dois responsáveis.");
+        }
     }
 
 
 
     public Student update(Student obj) {
+        twoParents(obj);
 
         Student newObj = findById(obj.getId());
         String[] ignoreProperties = {"id", "registrationDate"};
 
-//        for (Parent p : obj.getParents()) {
-//            this.parentService.update(p);
-//        }
-
+        Set<Parent> updatedParents = saveParents(obj);
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);
+        newObj.setParents(updatedParents);
+        newObj.setRegistrationDate(LocalDate.now());
 
-        return this.studentRepository.save(newObj);
+        return studentRepository.save(newObj);
     }
+
 
     public void delete(Long id) {
         Student student = findById(id);
