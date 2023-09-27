@@ -23,6 +23,14 @@ public class ParentService {
                 "Parente não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
     }
 
+    public boolean existsByCpf(String cpf) {
+        return parentRepository.existsByCpf(cpf);
+    }
+
+    public Parent findByCpf(String cpf) {
+        return parentRepository.findByCpf(cpf);
+    }
+
     @Transactional
     public Parent create(Parent obj) {
 
@@ -30,6 +38,7 @@ public class ParentService {
         obj.setRegistrationDate(LocalDate.now());
         return this.parentRepository.save(obj);
     }
+
 
     public Parent update(Parent obj) {
 
