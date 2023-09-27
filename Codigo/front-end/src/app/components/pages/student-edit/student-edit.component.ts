@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {StudentService} from '../../../services/student/student.service';
 import {Student} from '../../../interfaces/Student';
 import {Parent} from '../../../interfaces/Parent';
-import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-student-edit',
