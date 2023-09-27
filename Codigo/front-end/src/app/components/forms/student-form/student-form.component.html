@@ -26,7 +26,7 @@
     <div class="col-md-3 py-2">
       <input id="studentBirthDate" type="text" class="form-control"
              [placeholder]="student.birthDate ? student.birthDate : 'Data de nascimento (dd/mm/aaaa)'"
-             [(ngModel)]="student.birthDate" name="studentBirthDate" required>
+             [(ngModel)]="student.birthDate" name="studentBirthDate" maxlength="10" appDateFormat required>
     </div>
   </div>
 
@@ -48,15 +48,15 @@
     </div>
     <div class="col-md-2 py-2">
       <input id="studentZipCode" type="text" class="form-control"
-             [placeholder]="student.zipCode ? student.zipCode : 'CEP'"
-             [(ngModel)]="student.zipCode" name="studentZipCode" appZipCodeFormatter required>
+             [placeholder]="student.zipCode ? student.zipCode : 'CEP (00000-000)'"
+             [(ngModel)]="student.zipCode" name="studentZipCode" maxlength="9" appZipCodeFormatter required>
     </div>
   </div>
 
   <div class="d-flex justify-content-between">
     <div class="col-md-3 py-2">
       <input id="studentCityOfResidence" type="text" class="form-control"
-             [placeholder]="student.zipCode ? student.cityOfResidence : 'Cidade de residência'"
+             [placeholder]="student.cityOfResidence ? student.cityOfResidence : 'Cidade de residência'"
              [(ngModel)]="student.cityOfResidence" name="studentCityOfResidence" required>
     </div>
     <div class="col-md-3 py-2">

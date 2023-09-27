@@ -17,18 +17,18 @@
   <div class="d-flex justify-content-between">
     <div class="col-md-4 py-2">
       <input id="parentCpf" type="text" class="form-control"
-             [placeholder]="parent.cpf ? parent.cpf : 'CPF'"
-             [(ngModel)]="parent.cpf" name="parentCpf" appCpfFormat required>
+             [placeholder]="parent.cpf ? parent.cpf : 'CPF (000.000.000-00)'"
+             [(ngModel)]="parent.cpf" name="parentCpf" maxlength="14" appCpfFormat required>
     </div>
     <div class="col-md-3 py-2">
       <input id="parentRg" type="text" class="form-control"
-             [placeholder]="parent.rg ? parent.rg : 'RG'"
-             [(ngModel)]="parent.rg" name="parentRg" required>
+             [placeholder]="parent.rg ? parent.rg : 'RG (00.000.000)'"
+             [(ngModel)]="parent.rg" name="parentRg" maxlength="10" appRgFormatter required>
     </div>
     <div class="col-md-4 py-2">
       <input id="parentBirthDate" type="text" class="form-control"
              [placeholder]="parent.birthDate ? parent.birthDate : 'Data de nascimento (dd/mm/aaaa)'"
-             [(ngModel)]="parent.birthDate" name="parentBirthDate" required>
+             [(ngModel)]="parent.birthDate" name="parentBirthDate" maxlength="10" appDateFormat required>
     </div>
   </div>
 
@@ -64,16 +64,16 @@
     </div>
     <div class="col-md-2 py-2">
       <input id="parentZipCode" type="text" class="form-control"
-             [placeholder]="parent.zipCode ? parent.zipCode : 'CEP'"
-             [(ngModel)]="parent.zipCode" name="parentZipCode" required>
+             [placeholder]="parent.zipCode ? parent.zipCode : 'CEP (00000-000)'"
+             [(ngModel)]="parent.zipCode" name="parentZipCode" maxlength="9" appZipCodeFormatter required>
     </div>
   </div>
 
   <div class="d-flex justify-content-between">
     <div class="col-md-4 py-2">
       <input id="parentPhoneNumber" type="tel" class="form-control"
-             [placeholder]="parent.phoneNumber ? parent.phoneNumber : 'Número de telefone'"
-             [(ngModel)]="parent.phoneNumber" name="parentPhoneNumber" required>
+             [placeholder]="parent.phoneNumber ? parent.phoneNumber : 'Número de telefone (00 00000-0000)'"
+             [(ngModel)]="parent.phoneNumber" name="parentPhoneNumber" maxlength="13" appPhoneNumberFormatter required>
     </div>
     <div class="col-md-7 py-2">
       <input id="parentEmail" type="tel" class="form-control"

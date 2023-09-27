@@ -26,6 +26,9 @@ import { ReligionSelectComponent } from './components/forms/components/religion-
 import { UserCreateComponent } from './components/pages/user-create/user-create.component';
 import { ZipCodeFormatDirective } from './directives/zip-code-format.directive';
 import { CpfFormatDirective } from './directives/cpf-format.directive';
+import { DateFormatDirective } from './directives/date-format.directive';
+import { RgFormatDirective } from './directives/rg-format.directive';
+import { PhoneNumberFormatDirective } from './directives/phone-number-format.directive';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { CpfFormatDirective } from './directives/cpf-format.directive';
     UserCreateComponent,
     ZipCodeFormatDirective,
     ZipCodeFormatDirective,
-    CpfFormatDirective
+    CpfFormatDirective,
+    DateFormatDirective,
+    RgFormatDirective,
+    PhoneNumberFormatDirective
   ],
   imports: [
     BrowserModule,

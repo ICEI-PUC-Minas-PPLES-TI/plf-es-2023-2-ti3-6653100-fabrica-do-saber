@@ -17,11 +17,9 @@ export class StudentCreateComponent {
   @ViewChild('showAddressCheckbox') showAddressCheckbox!: ElementRef<HTMLInputElement>;
 
   constructor(private router: Router, private toastr: ToastrService, private studentService: StudentService) {
-    console.log(this.student.parents);
   }
 
   createStudent(): void {
-    console.log(this.student);
     this.studentService.createStudent(this.student).subscribe();
   }
 
