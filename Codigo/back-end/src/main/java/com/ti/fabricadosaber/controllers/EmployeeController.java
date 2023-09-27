@@ -16,52 +16,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ti.fabricadosaber.models.Guardian;
-import com.ti.fabricadosaber.services.GuardianService;
+import com.ti.fabricadosaber.models.Employee;
+import com.ti.fabricadosaber.services.EmployeeService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/guardian")
+@RequestMapping("/employee")
 @Validated
-public class GuardianController {
-
+public class EmployeeController {
     @Autowired
-    private GuardianService guardianService;
-
-    @GetMapping
-    public ResponseEntity<List<Guardian>> listAllGuardians() {
-        List<Guardian> guardians = guardianService.listAllGuardians();
-        return ResponseEntity.ok(guardians);
-    }
-
+    private EmployeeService employeeService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Guardian> findById(@PathVariable Long id) {
-        Guardian objGuardian = this.guardianService.findById(id);
-        return ResponseEntity.ok().body(objGuardian);
+    public ResponseEntity<Employee> findById(@PathVariable Long id) {
+        Employee obj = this.employeeService.findById(id);
+        return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Employee>> listAllEmployees() {
+        List<Employee> employee = employeeService.listAllEmployees();
+        return ResponseEntity.ok(employee);
+    }
 
     @PostMapping
-    public ResponseEntity<Void> create(@Valid @RequestBody Guardian obj) {
-        this.guardianService.create(obj);
+    public ResponseEntity<Void> create(@Valid @RequestBody Employee obj) {
+        this.employeeService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@Valid @RequestBody Guardian obj, @PathVariable Long id) {
+    public ResponseEntity<Void> update(@Valid @RequestBody Employee obj, @PathVariable Long id) {
         obj.setId(id);
-        this.guardianService.update(obj);
+        this.employeeService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.guardianService.delete(id);
+        this.employeeService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 }

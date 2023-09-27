@@ -37,12 +37,12 @@ public class UserService {
     // Atualizando somente a senha
     @Transactional
     public User update(User obj) {
-        User existingStudent = findById(obj.getId());
+        User existingUser = findById(obj.getId());
 
-        // Copia as propriedades não nulas do updatedStudent para o existingStudent
-        BeanUtils.copyProperties(obj, existingStudent, "id");
+        // Copia as propriedades não nulas do updatedStudent para o existingUser
+        BeanUtils.copyProperties(obj, existingUser, "id");
 
-        return this.userRepository.save(existingStudent);
+        return this.userRepository.save(existingUser);
     }
 
 

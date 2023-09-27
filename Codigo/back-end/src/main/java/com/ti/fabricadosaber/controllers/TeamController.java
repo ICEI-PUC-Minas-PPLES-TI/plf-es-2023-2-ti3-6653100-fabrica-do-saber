@@ -2,7 +2,6 @@ package com.ti.fabricadosaber.controllers;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,52 +17,48 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ti.fabricadosaber.models.Student;
-import com.ti.fabricadosaber.models.Student.CreateStudent;
-import com.ti.fabricadosaber.models.Student.UpdateStudent;
-import com.ti.fabricadosaber.services.StudentService;
+import com.ti.fabricadosaber.models.Team;
+import com.ti.fabricadosaber.services.TeamService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/team")
 @Validated
-public class StudentController {
-
+public class TeamController {
     @Autowired
-    private StudentService studentService;
-
-    @GetMapping
-    public ResponseEntity<List<Student>> listAll() {
-        List<Student> studentList = this.studentService.listAllStudents();
-        return ResponseEntity.ok().body(studentList);
-    }
+    private TeamService teamService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> findById(@PathVariable Long id) {
-        Student obj = this.studentService.findById(id);
+    public ResponseEntity<Team> findById(@PathVariable Long id) {
+        Team obj = this.teamService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Team>> listAllTeams() {
+        List<Team> teams = this.teamService.listAllTeams();
+        return ResponseEntity.ok().body(teams);
+    }
+
     @PostMapping
-    @Validated(CreateStudent.class)
-    public ResponseEntity<Void> create(@Valid @RequestBody Student obj) {
-        this.studentService.create(obj);
+    public ResponseEntity<Team> create(@Valid @RequestBody Team obj) {
+        this.teamService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    @Validated(UpdateStudent.class)
-    public ResponseEntity<Void> update(@Valid @RequestBody Student obj, @PathVariable Long id) {
+    public ResponseEntity<Void> update(@Valid @RequestBody Team obj, @PathVariable Long id) {
         obj.setId(id);
-        this.studentService.update(obj);
+        this.teamService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.studentService.delete(id);
+        this.teamService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

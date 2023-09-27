@@ -1,13 +1,11 @@
 package com.ti.fabricadosaber.repositories;
 
-import com.ti.fabricadosaber.models.Guardian;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-//import java.util.List;
 
+import com.ti.fabricadosaber.models.Employee;
 
 @Repository
-public interface GuardianRepository extends JpaRepository<Guardian, Long> {
-
+public interface EmployeeRepository extends JpaRepository<Employee, Long>{
     
 }
