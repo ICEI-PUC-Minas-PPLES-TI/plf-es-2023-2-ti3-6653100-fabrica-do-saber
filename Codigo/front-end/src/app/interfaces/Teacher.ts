@@ -14,7 +14,6 @@ export interface Teacher {
     homeState: string;
     registrationDate: string;
     birthDate: string;
-
     salary: string;
     hireDate: string;
     terminationDate: string;

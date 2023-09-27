@@ -1,128 +1,119 @@
 <h5 class="pt-3 d-flex justify-content-center">{{title}}</h5>
-<!-- Teacher information -->
+<!-- teacher information -->
 <div class="col-12 py-2">
-    <h6>Informações do professor</h6>
+  <h6>Informações do professor</h6>
 </div>
 
 <div id="teacher-div">
-    <div class="col-12 py-2">
-        <input id="teacherFullName" type="text" class="form-control"
-            [placeholder]="teacher.fullName ? teacher.fullName : 'Nome completo do professor'"
-            [(ngModel)]="teacher.fullName" name="teacherFullName" required>
-    </div>
+  <div class="col-12 py-2">
+    <input id="teacherFullName" type="text" class="form-control"
+           [placeholder]="teacher.fullName ? teacher.fullName : 'Nome completo do professor'"
+           [(ngModel)]="teacher.fullName" name="teacherFullName" required>
+  </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-md-8 py-2">
-            <input id="teacherEmail" type="text" class="form-control"
-                [placeholder]="teacher.email ? teacher.email : 'Email'" [(ngModel)]="teacher.email"
-                name="teacherEmail" required>
-        </div>
-        <div class="col-3 py-2">
-            <input id="teacher" type="text" class="form-control"
-                [placeholder]="teacher.phoneNumber ? teacher.phoneNumber : 'Telefone'"
-                [(ngModel)]="teacher.phoneNumber" name="teacherPhoneNumber" required>
-        </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-md-8 py-2">
+      <input id="teacherEmail" type="text" class="form-control"
+             [placeholder]="teacher.email ? teacher.email : 'Email'" [(ngModel)]="teacher.email"
+             name="teacherEmail" required>
     </div>
+    <div class="col-3 py-2">
+      <input id="teacherPhoneNumber" type="text" class="form-control"
+             [placeholder]="teacher.phoneNumber ? teacher.phoneNumber : 'Telefone'"
+             [(ngModel)]="teacher.phoneNumber" name="teacherPhoneNumber" maxlength="13" appPhoneNumberFormatter
+             required>
+    </div>
+  </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-md-3 py-2">
-            <input id="teacherBirthDate" type="text" class="form-control"
-                [placeholder]="teacher.birthDate ? teacher.birthDate : 'Data de nascimento (dd/mm/aaaa)'"
-                [(ngModel)]="teacher.birthDate" name="teacherBirthDate" required>
-        </div>
-        <div class="col-4 py-2">
-            <input id="teacher" type="text" class="form-control" [placeholder]="teacher.cpf ? teacher.cpf : 'CPF'"
-                [(ngModel)]="teacher.cpf" name="teacherCPF" required>
-        </div>
-        <div class="col-4 py-2">
-            <input id="teacher" type="text" class="form-control" [placeholder]="teacher.rg ? teacher.rg : 'RG'"
-                [(ngModel)]="teacher.rg" name="teacherRG" required>
-        </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-md-3 py-2">
+      <input id="teacherBirthDate" type="text" class="form-control"
+             [placeholder]="teacher.birthDate ? teacher.birthDate : 'Data de nascimento (dd/mm/aaaa)'"
+             [(ngModel)]="teacher.birthDate" name="teacherBirthDate" maxlength="10" appDateFormat required>
     </div>
+    <div class="col-4 py-2">
+      <input id="teacherCpf" type="text" class="form-control" [placeholder]="teacher.cpf ? teacher.cpf : 'CPF'"
+             [(ngModel)]="teacher.cpf" name="teacherCpf" maxlength="14" appCpfFormat required>
+    </div>
+    <div class="col-4 py-2">
+      <input id="teacherRg" type="text" class="form-control" [placeholder]="teacher.rg ? teacher.rg : 'RG'"
+             [(ngModel)]="teacher.rg" name="teacherRg" maxlength="10" appRgFormatter required>
+    </div>
+  </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-md-3 py-2">
-            <input id="teacherZipCode" type="text" class="form-control"
-                [placeholder]="teacher.zipCode ? teacher.zipCode : 'CEP'" [(ngModel)]="teacher.zipCode"
-                name="teacherZipCode" required>
-        </div>
-        <!-- <div class="col-8 py-2">
-            <input id="teacher" type="text" class="form-control"
-                [placeholder]="teacher.homeState ? teacher.homeState : 'Estado'" [(ngModel)]="teacher.homeState"
-                name="teacherHomeState" required>
-        </div> -->
-        <div class="col-md-8 py-2">
-            <app-state-select
-              [homeState]="teacher.homeState"
-              (homeStateChange)="onHomeStateChange($event)">
-            </app-state-select>
-          </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-md-3 py-2">
+      <input id="teacherZipCode" type="text" class="form-control"
+             [placeholder]="teacher.zipCode ? teacher.zipCode : 'CEP'" [(ngModel)]="teacher.zipCode"
+             name="teacherZipCode" maxlength="9" appZipCodeFormatter required>
     </div>
+    <div class="col-md-8 py-2">
+      <app-state-select
+        [homeState]="teacher.homeState"
+        (homeStateChange)="onHomeStateChange($event)">
+      </app-state-select>
+    </div>
+  </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-6 py-2">
-            <input id="teacher" type="text" class="form-control"
-                [placeholder]="teacher.cityOfResidence ? teacher.cityOfResidence : 'Cidade'"
-                [(ngModel)]="teacher.cityOfResidence" name="teacherCityOfResidence" required>
-        </div>
-        <div class="col-5 py-2">
-            <input id="teacher" type="text" class="form-control"
-                [placeholder]="teacher.neighborhood ? teacher.neighborhood : 'Bairro'"
-                [(ngModel)]="teacher.neighborhood" name="teacherNeighborhood" required>
-        </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-6 py-2">
+      <input id="teacherCityOfResidence" type="text" class="form-control"
+             [placeholder]="teacher.cityOfResidence ? teacher.cityOfResidence : 'Cidade'"
+             [(ngModel)]="teacher.cityOfResidence" name="teacherCityOfResidence" required>
     </div>
+    <div class="col-5 py-2">
+      <input id="teacherNeighborhood" type="text" class="form-control"
+             [placeholder]="teacher.neighborhood ? teacher.neighborhood : 'Bairro'"
+             [(ngModel)]="teacher.neighborhood" name="teacherNeighborhood" required>
+    </div>
+  </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-7 py-2">
-            <input id="teacherStreetAddress" type="text" class="form-control"
-                [placeholder]="teacher.streetAddress ? teacher.streetAddress : 'Endereço da rua'"
-                [(ngModel)]="teacher.streetAddress" name="teacherStreetAddress" required>
-        </div>
-        <div class="col-2 py-2">
-            <input id="teacherAddressNumber" type="text" class="form-control"
-                [placeholder]="teacher.addressNumber ? teacher.addressNumber : 'Nº do endereço'"
-                [(ngModel)]="teacher.addressNumber" name="teacherAddressNumber" required>
-        </div>
-        <div class="col-2 py-2">
-            <input id="teacherAddressNumber" type="text" class="form-control"
-                [placeholder]="teacher.addressComplement ? teacher.addressComplement : 'Complemento'"
-                [(ngModel)]="teacher.addressComplement" name="teacherAddressComplement" required>
-        </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-7 py-2">
+      <input id="teacherStreetAddress" type="text" class="form-control"
+             [placeholder]="teacher.streetAddress ? teacher.streetAddress : 'Endereço da rua'"
+             [(ngModel)]="teacher.streetAddress" name="teacherStreetAddress" required>
     </div>
+    <div class="col-2 py-2">
+      <input id="teacherAddressNumber" type="text" class="form-control"
+             [placeholder]="teacher.addressNumber ? teacher.addressNumber : 'Nº do endereço'"
+             [(ngModel)]="teacher.addressNumber" name="teacherAddressNumber" required>
+    </div>
+    <div class="col-2 py-2">
+      <input id="teacherAddressComplement" type="text" class="form-control"
+             [placeholder]="teacher.addressComplement ? teacher.addressComplement : 'Complemento'"
+             [(ngModel)]="teacher.addressComplement" name="teacherAddressComplement" required>
+    </div>
+  </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-3 py-2">
-            <input id="teacher" type="text" class="form-control"
-                [placeholder]="teacher.hireDate ? teacher.hireDate : 'Data de Efetivacao'"
-                [(ngModel)]="teacher.hireDate" name="teacherHireDate" required>
-        </div>
-        <div class="col-3 py-2">
-            <input id="teacher" type="text" class="form-control"
-                [placeholder]="teacher.terminationDate ? teacher.terminationDate : 'Data de desligamento (dd/mm/aaaa)'"
-                [(ngModel)]="teacher.terminationDate" name="teacherTerminationDate" required>
-        </div>
-        <div class="col-5 py-2">
-            <input id="teacher" type="text" class="form-control"
-                [placeholder]="teacher.salary ? teacher.salary : 'Salario'" [(ngModel)]="teacher.salary"
-                name="teacherSalary" required>
-        </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-3 py-2">
+      <input id="teacherHireDate" type="text" class="form-control"
+             [placeholder]="teacher.hireDate ? teacher.hireDate : 'Data de Efetivacao'"
+             [(ngModel)]="teacher.hireDate" name="teacherHireDate" maxlength="10" appDateFormat required>
     </div>
+    <div class="col-5 py-2">
+      <input id="teacher" type="text" class="form-control"
+             [placeholder]="teacher.salary ? teacher.salary : 'Salario'" [(ngModel)]="teacher.salary"
+             name="teacherSalary" required>
+    </div>
+  </div>
 
 
-    <div class="d-flex justify-content-between">
-        <!-- <div class="col-md-3 py-2">
-            <input id="teacherHometown" type="text" class="form-control"
-                [placeholder]="teacher.hometown ? teacher.hometown : 'Cidade de nascimento'"
-                [(ngModel)]="teacher.hometown" name="teacherHometown" required>
-        </div>
-        <div class="col-md-3 py-2">
-            <app-state-select [homeState]="teacher.homeState" (homeStateChange)="onHomeStateChange($event)">
-            </app-state-select>
-        </div> -->
+  <div class="d-flex justify-content-between">
+    <!-- <div class="col-md-3 py-2">
+        <input id="teacherHometown" type="text" class="form-control"
+            [placeholder]="teacher.hometown ? teacher.hometown : 'Cidade de nascimento'"
+            [(ngModel)]="teacher.hometown" name="teacherHometown" required>
     </div>
+    <div class="col-md-3 py-2">
+        <app-state-select [homeState]="teacher.homeState" (homeStateChange)="onHomeStateChange($event)">
+        </app-state-select>
+    </div> -->
+  </div>
 </div>
 
-<!-- 
+<!--
     fullName--
     cpf--
     rg--
