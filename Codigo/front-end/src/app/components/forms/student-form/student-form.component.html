@@ -49,7 +49,7 @@
     <div class="col-md-2 py-2">
       <input id="studentZipCode" type="text" class="form-control"
              [placeholder]="student.zipCode ? student.zipCode : 'CEP'"
-             [(ngModel)]="student.zipCode" name="studentZipCode" required>
+             [(ngModel)]="student.zipCode" name="studentZipCode" appZipCodeFormatter required>
     </div>
   </div>
 
