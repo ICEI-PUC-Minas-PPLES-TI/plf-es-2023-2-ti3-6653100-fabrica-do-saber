@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomButtonComponent } from './custom-button.component';
+import { BtnCustomComponent } from './btn-custom.component';
 
 describe('CustomButtonComponent', () => {
-  let component: CustomButtonComponent;
-  let fixture: ComponentFixture<CustomButtonComponent>;
+  let component: BtnCustomComponent;
+  let fixture: ComponentFixture<BtnCustomComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CustomButtonComponent]
+      declarations: [BtnCustomComponent]
     });
-    fixture = TestBed.createComponent(CustomButtonComponent);
+    fixture = TestBed.createComponent(BtnCustomComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

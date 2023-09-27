@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-custom-button',
-  templateUrl: './custom-button.component.html',
-  styleUrls: ['./custom-button.component.css']
+  selector: 'app-btn-custom',
+  templateUrl: './btn-custom.component.html',
+  styleUrls: ['./btn-custom.component.css']
 })
-export class CustomButtonComponent {
+export class BtnCustomComponent {
 
   @Input() type: string = 'button';
   @Input() class: string = '';
