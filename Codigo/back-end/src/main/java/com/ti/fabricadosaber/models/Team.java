@@ -6,7 +6,6 @@ import java.util.List;
 import com.ti.fabricadosaber.enums.Grade;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -31,7 +30,6 @@ public class Team {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "grade", length = 45, nullable = false, updatable = true)
-    @NotBlank
     private Grade grade;
 
     @Column(name = "number_students", nullable = false, updatable = true)
