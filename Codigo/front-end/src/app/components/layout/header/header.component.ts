@@ -10,6 +10,7 @@ export class HeaderComponent {
     { label: 'Página Inicial', link: '/' },
     { label: 'Login', link: '/login' },
     { label: 'Alunos Cadastrados', link: '/student-list' },
+    { label: 'Professores Cadastrados', link: '/teacher-list' },
     { label: 'Cadastrar Usuário', link: '/user-create' }
   ];
 

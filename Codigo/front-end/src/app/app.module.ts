@@ -23,6 +23,10 @@ import { StateSelectComponent } from './components/forms/components/state-select
 import { CustomButtonComponent } from './components/forms/components/custom-button/custom-button.component';
 import { RaceSelectComponent } from './components/forms/components/race-select/race-select.component';
 import { ReligionSelectComponent } from './components/forms/components/religion-select/religion-select.component';
+import { TeacherCreateComponent } from './components/pages/teacher-create/teacher-create.component';
+import { TeacherListComponent } from './components/pages/teacher-list/teacher-list.component';
+import { TeacherEditComponent } from './components/pages/teacher-edit/teacher-edit.component';
+import { TeacherFormComponent } from './components/forms/teacher-form/teacher-form.component';
 import { UserCreateComponent } from './components/pages/user-create/user-create.component';
 import { ZipCodeFormatDirective } from './directives/zip-code-format.directive';
 import { CpfFormatDirective } from './directives/cpf-format.directive';
@@ -44,6 +48,10 @@ import { CpfFormatDirective } from './directives/cpf-format.directive';
     CustomButtonComponent,
     RaceSelectComponent,
     ReligionSelectComponent,
+    TeacherCreateComponent,
+    TeacherListComponent,
+    TeacherEditComponent,
+    TeacherFormComponent,
     UserCreateComponent,
     ZipCodeFormatDirective,
     ZipCodeFormatDirective,

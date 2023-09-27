@@ -22,14 +22,14 @@ public class EmployeeService {
     public Employee findById(Long id) {
         Optional<Employee> employee = this.employeeRepository.findById(id);
         return employee.orElseThrow(() -> new RuntimeException(
-                "Funcionário não encontrado! id: " + id + ", Tipo: " + Employee.class.getName()));
+                "Professor não encontrado! id: " + id + ", Tipo: " + Employee.class.getName()));
     }
 
     public List<Employee> listAllEmployees() {
         try {
             return this.employeeRepository.findAll();
         } catch (EmptyResultDataAccessException error) {
-            throw new RuntimeException("Nenhum funcionário cadastrado", error);
+            throw new RuntimeException("Nenhum professor cadastrado", error);
         }
     }
 

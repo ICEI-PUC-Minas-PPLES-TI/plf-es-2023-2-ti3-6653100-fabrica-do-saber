@@ -1,0 +1,71 @@
+<section class="container">
+  <h5 class="pt-3">Professores cadastrados</h5>
+
+  <!-- Search bar -->
+  <div class="d-flex justify-content-between mt-3 mb-3">
+      <div class="col-md-4">
+          <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                     id="search-input"
+                     (input)="filterTeacherList($event)">
+          </form>
+      </div>
+
+      <div class="col-md-4">
+          Ordenar por
+          <div ngbDropdown class="d-inline-block">
+              <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
+                      ngbDropdownToggle>{{filterText}}</button>
+              <ul ngbDropdownMenu>
+                  <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item"
+                                                                        (click)="filter.function()">{{filter.name}}</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+
+      <div class="col-md-4">
+          <app-custom-button
+                  [type]="'submit'"
+                  [class]="'btn btn-primary'"
+                  [innerHtml]="'Cadastrar novo professor'"
+                  [routerLink]="'/teacher-create'"
+          ></app-custom-button>
+      </div>
+  </div>
+
+  <div class="table-responsive">
+      <table class="table no-wrap user-table mb-0">
+          <thead>
+          <tr>
+              <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
+                  {{ header }}
+              </th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let teacher of teachers">
+              <tr>
+                  <td>
+                      <h6 class="text-black">{{ teacher.fullName }}</h6>
+                  </td>
+                  <td>
+                      <span class="text-black">{{teacher.email}}</span><br>
+                  </td>
+                  <td>
+                      <span class="text-black">{{teacher.phoneNumber}}</span><br>
+                  </td>
+                  <td>
+                      <!-- <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
+                              [routerLink]="button.route ? [button.route, teacher.id] : null"
+                              (click)="button.function ? button.function(teacher.id) : null"
+                              title="{{ button.title }}">
+                          <i [class]="button.iconClass"></i>
+                      </button> -->
+                  </td>
+              </tr>
+          </ng-container>
+          </tbody>
+      </table>
+  </div>
+</section>
