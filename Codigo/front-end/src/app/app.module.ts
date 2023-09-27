@@ -20,7 +20,7 @@ import {AgePipe} from './pipes/age.pipe';
 import {StudentFormComponent} from './components/forms/student-form/student-form.component';
 import {ParentInfoComponent} from './components/forms/components/parent-info/parent-info.component';
 import {StateSelectComponent} from './components/forms/components/state-select/state-select.component';
-import {CustomButtonComponent} from './components/forms/components/custom-button/custom-button.component';
+import {BtnCustomComponent} from './components/forms/components/btn-custom/btn-custom.component';
 import {RaceSelectComponent} from './components/forms/components/race-select/race-select.component';
 import {ReligionSelectComponent} from './components/forms/components/religion-select/religion-select.component';
 import {TeacherCreateComponent} from './components/pages/teacher-create/teacher-create.component';
@@ -48,7 +48,7 @@ import {PhoneNumberFormatDirective} from './directives/phone-number-format.direc
     StudentFormComponent,
     ParentInfoComponent,
     StateSelectComponent,
-    CustomButtonComponent,
+    BtnCustomComponent,
     RaceSelectComponent,
     ReligionSelectComponent,
     TeacherCreateComponent,
