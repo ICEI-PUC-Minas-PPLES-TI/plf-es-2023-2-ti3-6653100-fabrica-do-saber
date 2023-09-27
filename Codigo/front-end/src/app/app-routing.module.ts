@@ -6,6 +6,9 @@ import { StudentCreateComponent } from "./components/pages/student-create/studen
 import { StudentEditComponent } from "./components/pages/student-edit/student-edit.component";
 import { StudentListComponent } from "./components/pages/student-list/student-list.component";
 import { UserCreateComponent } from './components/pages/user-create/user-create.component';
+import { TeacherCreateComponent } from './components/pages/teacher-create/teacher-create.component';
+import { TeacherEditComponent } from './components/pages/teacher-edit/teacher-edit.component';
+import { TeacherListComponent } from './components/pages/teacher-list/teacher-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,7 +16,10 @@ const routes: Routes = [
   { path: 'student-create', component: StudentCreateComponent },
   { path: 'student-edit/:id', component: StudentEditComponent },
   { path: 'student-list', component: StudentListComponent },
-  { path: 'user-create', component: UserCreateComponent }
+  { path: 'user-create', component: UserCreateComponent },
+  { path: 'teacher-create', component: TeacherCreateComponent },
+  { path: 'teacher-edit', component: TeacherEditComponent },
+  { path: 'teacher-list', component: TeacherListComponent },
 ];
 
 @NgModule({

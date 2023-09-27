@@ -1,4 +1,13 @@
 /* home.component.css */
+.container {
+    height: 70%;
+    width: 70%;
+    padding-left: 6rem;
+    padding-right: 6rem;
+    padding-top: 0;
+    padding-bottom: 6rem;
+}
+
 .card {
     margin-top: 3rem;
     height: 100%;

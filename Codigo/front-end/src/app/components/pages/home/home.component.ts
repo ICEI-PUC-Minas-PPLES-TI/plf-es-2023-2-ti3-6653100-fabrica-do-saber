@@ -12,12 +12,11 @@ export class HomeComponent implements OnInit {
       title: 'Alunos',
       imageUrl: '../../../assets/img/ger-alunos.png',
       route: '/student-list'
-      // route: 'student-list'
     },
     {
       title: 'Funcionários',
       imageUrl: '../../../assets/img/funcionarios.png',
-      route: ''
+      route: '/teacher-list'
     },
     {
       title: 'Financeiro',
