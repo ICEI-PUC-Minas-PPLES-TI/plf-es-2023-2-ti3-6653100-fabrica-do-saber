@@ -22,7 +22,7 @@ export class StudentCreateComponent {
 
   createStudent(): void {
     console.log(this.student);
-    // this.studentService.createStudent(this.student).subscribe();
+    this.studentService.createStudent(this.student).subscribe();
   }
 
   cancel(): void {

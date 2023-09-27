@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {Student} from '../../../interfaces/Student';
-import {StudentService} from '../../../services/student/student.service';
+import { Component } from '@angular/core';
+import { Student } from '../../../interfaces/Student';
+import { StudentService } from '../../../services/student/student.service';
 
 @Component({
   selector: 'app-student-list',
@@ -15,8 +15,7 @@ export class StudentListComponent {
   students: Student[] = [];
 
   /*Table variables*/
-  /*todo: mudar para responsaveis (pai e mae)*/
-  tableHeaders = ['Nome', 'Idade', 'Pai', 'Mãe', 'Turma', 'Data de registro', 'Gerenciar'];
+  tableHeaders: String[] = ['Nome', 'Idade', 'Responsável', 'Responsável', 'Turma', 'Data de registro', 'Gerenciar'];
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit', function: null},
     {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},

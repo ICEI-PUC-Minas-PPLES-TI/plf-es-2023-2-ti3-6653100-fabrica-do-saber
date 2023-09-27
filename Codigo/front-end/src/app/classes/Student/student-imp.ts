@@ -5,7 +5,7 @@ import {ParentsImp} from '../Parent/parents-imp';
 export class StudentImp implements Student {
 
   parents: Parent[] = [];
-  team: number;
+  // team: number;
   id: number;
   fullName: string;
   registrationDate: string;
@@ -23,7 +23,7 @@ export class StudentImp implements Student {
 
   constructor() {
     this.parents = [new ParentsImp(), new ParentsImp()];
-    this.team = 0;
+    // this.team = 0;
     this.id = 0;
     this.fullName = '';
     this.registrationDate = '';
