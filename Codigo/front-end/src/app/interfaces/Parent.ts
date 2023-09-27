@@ -9,6 +9,7 @@ export interface Parent {
   streetAddress: string;
   addressNumber: string;
   neighborhood: string;
+  addressComplement: string,
   cityOfResidence: string;
   zipCode: string;
   homeState: string;

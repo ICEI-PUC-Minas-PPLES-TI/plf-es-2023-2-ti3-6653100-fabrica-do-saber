@@ -44,7 +44,7 @@ export class StudentService {
       );
   }
 
-  deleteStudent(id: number) {
+  deleteStudent(id: number): Observable<Student> {
     return this.http.delete<Student>(`${API_CONFIG.baseUrl}/student/${id}`)
       .pipe(
         tap(response => {
@@ -72,4 +72,5 @@ export class StudentService {
         })
       );
   }
+
 }

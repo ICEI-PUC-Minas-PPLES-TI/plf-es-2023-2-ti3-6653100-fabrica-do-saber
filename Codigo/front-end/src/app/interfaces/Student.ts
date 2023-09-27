@@ -14,6 +14,7 @@ export interface Student {
   race: string;
   streetAddress: string;
   addressNumber: string;
+  addressComplement: string;
   neighborhood: string;
   cityOfResidence: string;
   zipCode: string;

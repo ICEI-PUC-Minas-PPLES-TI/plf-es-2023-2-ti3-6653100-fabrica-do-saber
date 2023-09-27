@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {StudentService} from '../../../services/student/student.service';
-import {StudentImp} from '../../../classes/Student/student-imp';
+import {StudentImp} from '../../../classes/student/student-imp';
 import {Student} from '../../../interfaces/Student';
 
 @Component({

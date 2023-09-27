@@ -18,6 +18,11 @@
 <!--             [placeholder]="student.team ? student.team : 'Turma'"-->
 <!--             [(ngModel)]="student.team" name="studentTeam" required>-->
 <!--    </div>-->
+    <div class="col-md-2 py-2">
+      <input id="studentAddressComplement" type="text" class="form-control"
+             [placeholder]="student.addressComplement ? student.addressComplement : 'Complemento'"
+             [(ngModel)]="student.addressComplement" name="studentAddressComplement" required>
+    </div>
     <div class="col-md-3 py-2">
       <input id="studentNationality" type="text" class="form-control"
              [placeholder]="student.nationality ? student.nationality : 'Nacionalidade'"

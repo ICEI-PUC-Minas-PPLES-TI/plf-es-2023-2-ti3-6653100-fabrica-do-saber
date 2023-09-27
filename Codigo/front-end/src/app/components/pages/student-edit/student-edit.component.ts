@@ -26,7 +26,6 @@ export class StudentEditComponent {
       const id: number = parseInt(<string>params.get('id'));
       this.studentId = id;
       this.getStudentById(id);
-      console.log();
     });
   }
 
@@ -34,7 +33,6 @@ export class StudentEditComponent {
     this.studentService.getStudentById(id).subscribe((student: Student): void => {
       this.student = student;
       [this.parent00, this.parent01] = [this.student.parents[0], this.student.parents[1]];
-      console.log(student);
     });
   }
 
