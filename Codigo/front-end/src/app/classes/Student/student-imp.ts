@@ -1,6 +1,6 @@
 import {Student} from '../../interfaces/Student';
 import {Parent} from '../../interfaces/Parent';
-import {ParentsImp} from '../Parent/parents-imp';
+import {ParentsImp} from '../parent/parents-imp';
 
 export class StudentImp implements Student {
 
@@ -17,6 +17,7 @@ export class StudentImp implements Student {
   race: string;
   streetAddress: string;
   addressNumber: string;
+  addressComplement: string;
   neighborhood: string;
   cityOfResidence: string;
   zipCode: string;
@@ -35,6 +36,7 @@ export class StudentImp implements Student {
     this.race = '';
     this.streetAddress = '';
     this.addressNumber = '';
+    this.addressComplement = '';
     this.neighborhood = '';
     this.cityOfResidence = '';
     this.zipCode = '';

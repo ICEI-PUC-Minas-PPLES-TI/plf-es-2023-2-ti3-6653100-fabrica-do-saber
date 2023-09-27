@@ -11,6 +11,7 @@ export class ParentsImp implements Parent {
   phoneNumber: string;
   streetAddress: string;
   addressNumber: string;
+  addressComplement: string;
   neighborhood: string;
   cityOfResidence: string;
   zipCode: string;
@@ -28,6 +29,7 @@ export class ParentsImp implements Parent {
     this.phoneNumber = '';
     this.streetAddress = '';
     this.addressNumber = '';
+    this.addressComplement = '';
     this.neighborhood = '';
     this.cityOfResidence = '';
     this.zipCode = '';
