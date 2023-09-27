@@ -18,7 +18,7 @@ import {StudentEditComponent} from './components/pages/student-edit/student-edit
 import {StudentListComponent} from './components/pages/student-list/student-list.component';
 import {AgePipe} from './pipes/age.pipe';
 import {StudentFormComponent} from './components/forms/student-form/student-form.component';
-import {GuardianInfoComponent} from './components/forms/components/guardian-info/guardian-info.component';
+import {ParentInfoComponent} from './components/forms/components/parent-info/parent-info.component';
 import {StateSelectComponent} from './components/forms/components/state-select/state-select.component';
 import {CustomButtonComponent} from './components/forms/components/custom-button/custom-button.component';
 import {RaceSelectComponent} from './components/forms/components/race-select/race-select.component';
@@ -37,7 +37,7 @@ import {UserCreateComponent} from "./components/pages/user-create/user-create.co
         StudentListComponent,
         AgePipe,
         StudentFormComponent,
-        GuardianInfoComponent,
+        ParentInfoComponent,
         StateSelectComponent,
         CustomButtonComponent,
         RaceSelectComponent,

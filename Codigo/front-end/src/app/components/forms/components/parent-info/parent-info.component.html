@@ -1,0 +1,74 @@
+<div class="col-12 py-2">
+  <h6>{{title || 'Título da sessão'}}</h6>
+  <input id="guardianFullName" type="text" class="form-control"
+         [placeholder]="parent.fullName ? parent.fullName : 'Nome completo'"
+         [(ngModel)]="parent.fullName" name="studentFullName" required>
+</div>
+<div class="d-flex justify-content-between">
+  <div class="col-md-6 py-2">
+    <input id="guardianCpf" type="text" class="form-control"
+           [placeholder]="parent.cpf ? parent.cpf : 'CPF'"
+           [(ngModel)]="parent.cpf" name="studentFullName" required>
+  </div>
+  <div class="col-md-5 py-2">
+    <input id="guardianRg" type="text" class="form-control"
+           [placeholder]="parent.rg ? parent.rg : 'RG'"
+           [(ngModel)]="parent.rg" name="studentFullName" required>
+  </div>
+</div>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-8 py-2">
+      <input id="guardianStreetAddress" type="text" class="form-control"
+             [placeholder]="parent.streetAddress ? parent.streetAddress : 'Endereço da rua'"
+             [(ngModel)]="parent.streetAddress" name="studentStreetAddress" required>
+    </div>
+    <div class="col-3 py-2">
+      <input id="guardianAddressNumber" type="text" class="form-control"
+             [placeholder]="parent.addressNumber ? parent.addressNumber : 'Número do endereço'"
+             [(ngModel)]="parent.addressNumber" name="studentStreetAddress" required>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-md-5 py-2">
+      <input id="guardianCityOfResidence" type="text" class="form-control"
+             [placeholder]="parent.cityOfResidence ? parent.cityOfResidence : 'Cidade de residência'"
+             [(ngModel)]="parent.cityOfResidence" name="guardianCityOfResidence" required>
+    </div>
+    <div class="col-md-4 py-2">
+      <app-state-select
+        [homeState]="parent.homeState"
+        (homeStateChange)="onHomeStateChange($event)">>
+      </app-state-select>
+    </div>
+    <div class="col-md-2 py-2">
+      <input id="guardianZipCode" type="text" class="form-control"
+             [placeholder]="parent.zipCode ? parent.zipCode : 'CEP'"
+             [(ngModel)]="parent.zipCode" name="guardianZipCode" required>
+    </div>
+  </div>
+
+<div class="d-flex justify-content-between">
+  <div class="col-md-4 py-2">
+    <input id="guardianPhoneNumber" type="tel" class="form-control"
+           [placeholder]="parent.phoneNumber ? parent.phoneNumber : 'Número de telefone'"
+           [(ngModel)]="parent.phoneNumber" name="guardianPhoneNumber" required>
+  </div>
+  <div class="col-md-7 py-2">
+    <input id="guardianEmail" type="tel" class="form-control"
+           [placeholder]="parent.email ? parent.email : 'E-mail'"
+           [(ngModel)]="parent.email" name="guardianEmail" required>
+  </div>
+</div>
+<div class="d-flex justify-content-between">
+  <div class="col-md-5 py-2">
+    <input id="guardianOccupation" type="text" class="form-control"
+           [placeholder]="parent.occupation ? parent.occupation : 'Profissão'"
+           [(ngModel)]="parent.occupation" name="guardianOccupation" required>
+  </div>
+  <div class="col-md-5 py-2">
+    <input id="guardianCompany" type="text" class="form-control"
+           [placeholder]="parent.company ? parent.company : 'Empresa'"
+           [(ngModel)]="parent.company" name="guardianCompany" required>
+  </div>
+</div>

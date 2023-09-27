@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GuardianInfoComponent } from './guardian-info.component';
+import { ParentInfoComponent } from './parent-info.component';
 
 describe('GuardianInfoComponent', () => {
-  let component: GuardianInfoComponent;
-  let fixture: ComponentFixture<GuardianInfoComponent>;
+  let component: ParentInfoComponent;
+  let fixture: ComponentFixture<ParentInfoComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GuardianInfoComponent]
+      declarations: [ParentInfoComponent]
     });
-    fixture = TestBed.createComponent(GuardianInfoComponent);
+    fixture = TestBed.createComponent(ParentInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

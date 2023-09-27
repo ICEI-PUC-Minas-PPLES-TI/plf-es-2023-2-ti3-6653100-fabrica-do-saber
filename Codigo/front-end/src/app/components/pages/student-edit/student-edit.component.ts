@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {StudentService} from "../../../services/student/student.service";
 import {Student} from "../../../interfaces/Student";
-import {Guardian} from "../../../interfaces/Guardian";
+import {Parent} from "../../../interfaces/Parent";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -14,8 +14,8 @@ import {ToastrService} from "ngx-toastr";
 export class StudentEditComponent {
 
     student!: Student;
-    father!: Guardian;
-    mother!: Guardian;
+    father!: Parent;
+    mother!: Parent;
 
     constructor(private route: ActivatedRoute, private studentService: StudentService, private router: Router, private toastr: ToastrService) {
     }
@@ -30,7 +30,7 @@ export class StudentEditComponent {
     getStudentById(id: number): void {
         this.studentService.getStudentById(id).subscribe((student: Student): void => {
             this.student = student;
-            [this.father, this.mother] = [this.student.guardians[0], this.student.guardians[1]];
+            [this.father, this.mother] = [this.student.parents[0], this.student.parents[1]];
         });
     }
 
@@ -39,7 +39,7 @@ export class StudentEditComponent {
     }
 
     cancel(): void {
-        this.toastr.error('Ação cancelada');
+        this.toastr.error('Acao cancelada');
         this.router.navigate(['/student-list']);
     }
 

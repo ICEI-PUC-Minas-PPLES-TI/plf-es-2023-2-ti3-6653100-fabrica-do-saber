@@ -2,7 +2,8 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {StudentService} from '../../../services/student/student.service';
-import {Student} from "../../../interfaces/Student";
+import {StudentImp} from '../../../classes/Student/student-imp';
+import {Student} from '../../../interfaces/Student';
 
 @Component({
   selector: 'app-student-create',
@@ -11,57 +12,12 @@ import {Student} from "../../../interfaces/Student";
 })
 export class StudentCreateComponent {
 
-  student: Student = {
-    guardians: [
-      {
-        fullName: '',
-        cpf: '',
-        rg: '',
-        email: '',
-        occupation: '',
-        company: '',
-        phoneNumber: '',
-        streetAddress: '',
-        addressNumber: '',
-        neighborhood: '',
-        cityOfResidence: '',
-        zipCode: ''
-      },
-      {
-        fullName: '',
-        cpf: '',
-        rg: '',
-        email: '',
-        occupation: '',
-        company: '',
-        phoneNumber: '',
-        streetAddress: '',
-        addressNumber: '',
-        neighborhood: '',
-        cityOfResidence: '',
-        zipCode: ''
-      }
-    ],
-    id: 0,
-    fullName: '',
-    registrationDate: '',
-    grade: '',
-    birthDate: '',
-    hometown: '',
-    homeState: '',
-    nationality: '',
-    religion: '',
-    race: '',
-    streetAddress: '',
-    addressNumber: '',
-    neighborhood: '',
-    cityOfResidence: '',
-    zipCode: ''
-  };
+  student: Student = new StudentImp();
 
   @ViewChild('showAddressCheckbox') showAddressCheckbox!: ElementRef<HTMLInputElement>;
 
   constructor(private router: Router, private toastr: ToastrService, private studentService: StudentService) {
+    console.log(this.student.parents);
   }
 
   createStudent(): void {
