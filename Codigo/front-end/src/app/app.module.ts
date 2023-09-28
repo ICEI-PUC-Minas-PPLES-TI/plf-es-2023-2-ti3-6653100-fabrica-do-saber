@@ -33,6 +33,10 @@ import {CpfFormatDirective} from './directives/cpf-format.directive';
 import {DateFormatDirective} from './directives/date-format.directive';
 import {RgFormatDirective} from './directives/rg-format.directive';
 import {PhoneNumberFormatDirective} from './directives/phone-number-format.directive';
+import { TeamCreateComponent } from './components/pages/team-create/team-create.component';
+import { TeamEditComponent } from './components/pages/team-edit/team-edit.component';
+import { TeamListComponent } from './components/pages/team-list/team-list.component';
+import { TeamFormComponent } from './components/forms/team-form/team-form.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +65,11 @@ import {PhoneNumberFormatDirective} from './directives/phone-number-format.direc
     CpfFormatDirective,
     DateFormatDirective,
     RgFormatDirective,
-    PhoneNumberFormatDirective
+    PhoneNumberFormatDirective,
+    TeamCreateComponent,
+    TeamEditComponent,
+    TeamListComponent,
+    TeamFormComponent
   ],
   imports: [
     BrowserModule,

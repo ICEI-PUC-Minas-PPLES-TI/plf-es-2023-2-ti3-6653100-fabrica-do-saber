@@ -1,0 +1,56 @@
+<h5 class="pt-3 d-flex justify-content-center">{{title}}</h5>
+<!-- Teacher information -->
+<div class="col-12 py-2">
+    <h6>Informações da turma</h6>
+</div>
+
+<div id="team-div">
+
+    <div class="col-12 py-2">
+        <input id="teamFullName" type="text" class="form-control"
+            [placeholder]="team.name ? team.name : 'Nome da turma'" [(ngModel)]="team.name" name="teamName" required>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <div class="col-md-8 py-2">
+            <input id="teamGrade" type="text" class="form-control" [placeholder]="team.grade ? team.grade : 'Série'"
+                [(ngModel)]="team.grade" name="teamGrade" required>
+        </div>
+        <div class="col-3 py-2">
+            <input id="team" type="text" class="form-control" [placeholder]="team.classRoom ? team.classRoom : 'Sala'"
+                [(ngModel)]="team.classRoom" name="teamSala" required>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <!-- <div class="col-md-3 py-2">
+            <input id="teamHometown" type="text" class="form-control"
+                [placeholder]="team.hometown ? team.hometown : 'Cidade de nascimento'"
+                [(ngModel)]="team.hometown" name="teamHometown" required>
+        </div>
+        <div class="col-md-3 py-2">
+            <app-state-select [homeState]="team.homeState" (homeStateChange)="onHomeStateChange($event)">
+            </app-state-select>
+        </div> -->
+    </div>
+</div>
+
+<!-- 
+    fullName--
+    cpf--
+    rg--
+    email--
+    phoneNumber--
+    addressNumber--
+    addressComplement--
+    streetAddress--
+    neighborhood--
+    zipCode--
+    cityOfResidence--
+    homeState--
+    birthDate--
+
+    salary--
+    hireDate--
+    terminationDate--
+ -->

@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     {
       title: 'Turmas',
       imageUrl: '../../../assets/img/turmas.png',
-      route: ''
+      route: '/team-list'
     },
     {
       title: 'Relatórios',

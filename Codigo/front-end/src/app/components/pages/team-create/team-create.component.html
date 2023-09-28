@@ -1,0 +1,25 @@
+<section id="list" class="container">
+    <form class="container card row py-4">
+        <app-team-form
+                [team]="team"
+                [title]="'Cadastrar nova equipe'"
+        ></app-team-form>
+        <div class="col-12 d-flex justify-content-end">
+            <app-btn-custom
+                    [type]="'submit'"
+                    [class]="'btn btn-outline-success me-2'"
+                    [innerHtml]="'Cadastrar'"
+                    (click)="createTeam()"
+            ></app-btn-custom>
+            <app-btn-custom
+                    [type]="'submit'"
+                    [class]="'btn btn-outline-danger'"
+                    [innerHtml]="'Cancelar'"
+                    (click)="cancel()"
+            ></app-btn-custom>
+        </div>
+    </form>
+  </section>
+  
+  
+  

@@ -11,6 +11,7 @@ export class HeaderComponent {
     { label: 'Login', link: '/login' },
     { label: 'Alunos Cadastrados', link: '/student-list' },
     { label: 'Professores Cadastrados', link: '/teacher-list' },
+    { label: 'Turmas Cadastrados', link: '/team-list' },
     { label: 'Cadastrar Usuário', link: '/user-create' }
   ];
 
@@ -19,4 +20,4 @@ export class HeaderComponent {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
- }
+}
