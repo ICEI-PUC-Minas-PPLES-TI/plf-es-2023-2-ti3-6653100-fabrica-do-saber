@@ -37,6 +37,7 @@ import { TeamCreateComponent } from './components/pages/team-create/team-create.
 import { TeamEditComponent } from './components/pages/team-edit/team-edit.component';
 import { TeamListComponent } from './components/pages/team-list/team-list.component';
 import { TeamFormComponent } from './components/forms/team-form/team-form.component';
+import { RelationshipSelectComponent } from './components/forms/components/relationship-select/relationship-select.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { TeamFormComponent } from './components/forms/team-form/team-form.compon
     TeamCreateComponent,
     TeamEditComponent,
     TeamListComponent,
-    TeamFormComponent
+    TeamFormComponent,
+    RelationshipSelectComponent
   ],
   imports: [
     BrowserModule,
