@@ -29,7 +29,7 @@ public class EmployeeService {
         try {
             return this.employeeRepository.findAll();
         } catch (EmptyResultDataAccessException error) {
-            throw new RuntimeException("Nenhum professor cadastrado", error);
+            throw new RuntimeException("Nenhum funcionário cadastrado", error);
         }
     }
 

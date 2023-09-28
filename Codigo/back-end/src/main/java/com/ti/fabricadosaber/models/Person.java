@@ -59,6 +59,7 @@ public class Person {
     private String homeState;
 
     @Column(name = "registration_date", length = 10, nullable = false, updatable = false)
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate registrationDate;
 
     @Column(name = "birth_date", length = 10, nullable = false, updatable = true)
