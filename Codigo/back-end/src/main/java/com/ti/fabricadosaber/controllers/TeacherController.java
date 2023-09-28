@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ti.fabricadosaber.models.Teacher;
+import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.services.TeacherService;
+import com.ti.fabricadosaber.services.TeamService;
 
 import jakarta.validation.Valid;
 
@@ -38,6 +40,12 @@ public class TeacherController {
     public ResponseEntity<List<Teacher>> listAllTeachers() {
         List<Teacher> teachers = this.teacherService.listAllTeachers();
         return ResponseEntity.ok().body(teachers);
+    }
+
+    @GetMapping("/team/{id}")
+    public ResponseEntity<List<Team>> listTeams(@PathVariable Long id) {
+        List<Team> teams = teacherService.listTeams(id);
+        return ResponseEntity.ok().body(teams);
     }
 
     @PostMapping

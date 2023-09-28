@@ -1,5 +1,6 @@
 package com.ti.fabricadosaber.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.ti.fabricadosaber.models.Teacher;
+import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.repositories.TeacherRepository;
 import jakarta.transaction.Transactional;
 
@@ -31,9 +33,18 @@ public class TeacherService {
         }
     }
 
+    public List<Team> listTeams(Long id) {
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new RuntimeException(
+            "Id: " + id + " não encontrado"
+        ));
+
+        return teacher.getTeams();
+    }
+
     @Transactional
     public Teacher create(Teacher obj) {
         obj.setId(null);
+        obj.setRegistrationDate(LocalDate.now());
         obj = this.teacherRepository.save(obj);
         return obj;
     }
@@ -41,7 +52,7 @@ public class TeacherService {
     public Teacher update(Teacher obj) {
         Teacher newObj = findById(obj.getId());
 
-        BeanUtils.copyProperties(obj, newObj, "id");
+        BeanUtils.copyProperties(obj, newObj, "id", "registrationDate");
 
         return this.teacherRepository.save(newObj);
     }
