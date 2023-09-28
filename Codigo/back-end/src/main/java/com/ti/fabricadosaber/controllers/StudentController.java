@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
-import com.ti.fabricadosaber.models.Responsible;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,21 +32,16 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @GetMapping
+    public ResponseEntity<List<Student>> listAll() {
+        List<Student> studentList = this.studentService.listAllStudents();
+        return ResponseEntity.ok().body(studentList);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Student> findById(@PathVariable Long id) {
         Student obj = this.studentService.findById(id);
         return ResponseEntity.ok().body(obj);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Student>> listAllStudents() {
-        List<Student> students = studentService.listAllStudents();
-        return ResponseEntity.ok(students);
-    }
-
-    @GetMapping("/{id}/responsibles")
-    public Set<Responsible> listResponsiblesForStudent(@PathVariable Long id) {
-        return studentService.listResponsiblesForStudent(id);
     }
 
     @PostMapping

@@ -1,44 +1,23 @@
-<div class="container">
-  <div class="row">
-
-    <div class="col-md-6">
-      <div class="input-group mb-3">
-        <span class="input-group-text">Nome</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-               aria-describedby="basic-addon1" value="{{student[0].name}}">
-      </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text">Idade</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-               aria-describedby="basic-addon1" value="{{student[0].age}}">
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="input-group mb-3">
-        <span class="input-group-text">Data nascimento</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-               aria-describedby="basic-addon1" value="{{student[0].birthDate}}">
-      </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text">Turma</span>
-        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-               aria-describedby="basic-addon1" value="{{student[0].class}}">
-      </div>
-    </div>
-
-    <div class="input-group mb-3">
-      <span class="input-group-text">Responsável</span>
-      <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-             aria-describedby="basic-addon1" value="{{student[0].contactName}}">
-    </div>
-
-    <div class="input-group mb-3">
-      <span class="input-group-text">Número responsável</span>
-      <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-             aria-describedby="basic-addon1" value="{{student[0].contactNumber}}">
-    </div>
-  </div>
-
-  <button type="button" class="btn btn-primary" (click)="updateStudent()">Salvar mudanças</button>
-</div>
+<section id="list" class="container">
+    <form class="container card row py-4">
+        <app-student-form
+                *ngIf="student"
+                [student]="student"
+                [title]="'Editar aluno'"
+        ></app-student-form>
+        <div class="col-12 d-flex justify-content-end">
+            <app-btn-custom
+                    [type]="'submit'"
+                    [class]="'btn btn-outline-success me-2'"
+                    (click)="updateStudent()"
+                    [innerHtml]="'Cadastrar'"
+            ></app-btn-custom>
+            <app-btn-custom
+                    [type]="'submit'"
+                    [class]="'btn btn-outline-danger'"
+                    (click)="cancel()"
+                    [innerHtml]="'Cancelar'"
+            ></app-btn-custom>
+        </div>
+    </form>
+</section>

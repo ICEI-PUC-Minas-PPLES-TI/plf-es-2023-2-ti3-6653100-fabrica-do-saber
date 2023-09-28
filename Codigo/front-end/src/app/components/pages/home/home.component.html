@@ -1,1 +1,10 @@
-<p>home works!</p>
+<div class="container mt-6">
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let card of cards">
+      <div class="card" [routerLink]="card.route">
+        <h5 class="card-title">{{ card.title }}</h5>
+        <img src="{{ card.imageUrl }}" class="card-img-top" alt="{{ card.title }}">
+      </div>
+    </div>
+  </div>
+</div>

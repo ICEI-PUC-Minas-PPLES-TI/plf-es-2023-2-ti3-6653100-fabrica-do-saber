@@ -1,0 +1,101 @@
+<div class="col-12 py-2">
+  <h6>{{title || 'Título da sessão'}}</h6>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-md-9 py-2">
+      <input id="parentFullName" type="text" class="form-control"
+             [placeholder]="parent.fullName ? parent.fullName : 'Nome completo'"
+             [(ngModel)]="parent.fullName" name="studentFullName" required>
+    </div>
+    <div class="col-md-2 py-2">
+      <input id="parentRelationship" type="text" class="form-control"
+             [placeholder]="parent.relationship ? parent.relationship : 'Relação'"
+             [(ngModel)]="parent.relationship" name="parentRelationship" required>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-md-4 py-2">
+      <input id="parentCpf" type="text" class="form-control"
+             [placeholder]="parent.cpf ? parent.cpf : 'CPF (000.000.000-00)'"
+             [(ngModel)]="parent.cpf" name="parentCpf" maxlength="14" appCpfFormat required>
+    </div>
+    <div class="col-md-3 py-2">
+      <input id="parentRg" type="text" class="form-control"
+             [placeholder]="parent.rg ? parent.rg : 'RG (00.000.000)'"
+             [(ngModel)]="parent.rg" name="parentRg" maxlength="10" appRgFormatter required>
+    </div>
+    <div class="col-md-4 py-2">
+      <input id="parentBirthDate" type="text" class="form-control"
+             [placeholder]="parent.birthDate ? parent.birthDate : 'Data de nascimento (dd/mm/aaaa)'"
+             [(ngModel)]="parent.birthDate" name="parentBirthDate" maxlength="10" appDateFormat required>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-4 py-2">
+      <input id="parentStreetAddress" type="text" class="form-control"
+             [placeholder]="parent.streetAddress ? parent.streetAddress : 'Endereço da rua'"
+             [(ngModel)]="parent.streetAddress" name="parentStreetAddress" required>
+    </div>
+    <div class="col-2 py-2">
+      <input id="parentAddressNumber" type="text" class="form-control"
+             [placeholder]="parent.addressNumber ? parent.addressNumber : 'Número do endereço'"
+             [(ngModel)]="parent.addressNumber" name="parentAddressNumber" required>
+    </div>
+    <div class="col-md-3 py-2">
+      <input id="parentAddressComplement" type="text" class="form-control"
+             [placeholder]="parent.addressComplement ? parent.addressComplement : 'Complemento'"
+             [(ngModel)]="parent.addressComplement" name="parentAddressComplement" required>
+    </div>
+    <div class="col-2 py-2">
+      <input id="parentNeighborhood" type="text" class="form-control"
+             [placeholder]="parent.neighborhood ? parent.neighborhood : 'Bairro'"
+             [(ngModel)]="parent.neighborhood" name="parentNeighborhood" required>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-md-5 py-2">
+      <input id="parentCityOfResidence" type="text" class="form-control"
+             [placeholder]="parent.cityOfResidence ? parent.cityOfResidence : 'Cidade de residência'"
+             [(ngModel)]="parent.cityOfResidence" name="parentCityOfResidence" required>
+    </div>
+    <div class="col-md-4 py-2">
+      <app-state-select
+        [homeState]="parent.homeState"
+        (homeStateChange)="onHomeStateChange($event)">>
+      </app-state-select>
+    </div>
+    <div class="col-md-2 py-2">
+      <input id="parentZipCode" type="text" class="form-control"
+             [placeholder]="parent.zipCode ? parent.zipCode : 'CEP (00000-000)'"
+             [(ngModel)]="parent.zipCode" name="parentZipCode" maxlength="9" appZipCodeFormatter required>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-md-4 py-2">
+      <input id="parentPhoneNumber" type="tel" class="form-control"
+             [placeholder]="parent.phoneNumber ? parent.phoneNumber : 'Número de telefone (00 00000-0000)'"
+             [(ngModel)]="parent.phoneNumber" name="parentPhoneNumber" maxlength="13" appPhoneNumberFormatter required>
+    </div>
+    <div class="col-md-7 py-2">
+      <input id="parentEmail" type="tel" class="form-control"
+             [placeholder]="parent.email ? parent.email : 'E-mail'"
+             [(ngModel)]="parent.email" name="parentEmail" required>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-md-5 py-2">
+      <input id="parentOccupation" type="text" class="form-control"
+             [placeholder]="parent.occupation ? parent.occupation : 'Profissão'"
+             [(ngModel)]="parent.occupation" name="parentOccupation" required>
+    </div>
+    <div class="col-md-5 py-2">
+      <input id="parentCompany" type="text" class="form-control"
+             [placeholder]="parent.company ? parent.company : 'Empresa'"
+             [(ngModel)]="parent.company" name="parentCompany" required>
+    </div>
+  </div>
+</div>

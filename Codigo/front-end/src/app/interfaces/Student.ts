@@ -1,10 +1,21 @@
+import {Parent} from './Parent';
+
 export interface Student {
-  id: number,
-  name: String,
-  contactNumber: number,
-  contactName: String,
-  age: number,
-  birthDate: String,
-  class: String,
-  status: String,
+  parents: Parent[];
+  // team: number,
+  id: number;
+  fullName: string;
+  registrationDate: string;
+  birthDate: string;
+  hometown: string;
+  homeState: string;
+  nationality: string;
+  religion: string;
+  race: string;
+  streetAddress: string;
+  addressNumber: string;
+  addressComplement: string;
+  neighborhood: string;
+  cityOfResidence: string;
+  zipCode: string;
 }

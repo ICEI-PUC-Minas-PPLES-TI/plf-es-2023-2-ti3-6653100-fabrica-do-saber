@@ -1,0 +1,41 @@
+<section id="createUser" class="container">
+
+    <h5 class="pt-3 d-flex justify-content-center">Novo Usuário</h5>
+
+    <div class="d-flex justify-content-center">
+        <form class="container card row col-4 py-3">
+
+            <div class="col-sm-12">
+                <input type="text" class="form-control" id="inputFullName" placeholder="Nome completo"
+                       [(ngModel)]="user.fullName" name="inputFullName">
+            </div>
+
+            <div class="col-sm-12">
+                <input type="email" class="form-control" id="inputEmail" placeholder="E-mail" [(ngModel)]="user.email"
+                       name="inputEmail">
+            </div>
+
+            <div class="col-sm-12 py-2">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Senha"
+                       [(ngModel)]="user.password" name="inputPassword">
+            </div>
+
+            <div class="col-12 d-flex justify-content-end">
+                <app-btn-custom
+                        [type]="'submit'"
+                        [class]="'btn btn-outline-success me-2'"
+                        [innerHtml]="'Cadastrar'"
+                        (click)="createUser()"
+                ></app-btn-custom>
+                <app-btn-custom
+                        [type]="'submit'"
+                        [class]="'btn btn-outline-danger'"
+                        [innerHtml]="'Cancelar'"
+                        (click)="cancel()"
+                ></app-btn-custom>
+            </div>
+
+        </form>
+    </div>
+</section>
+

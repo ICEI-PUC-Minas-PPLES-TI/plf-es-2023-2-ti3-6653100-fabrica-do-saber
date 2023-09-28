@@ -1,0 +1,4 @@
+<select id="inputState" class="form-select" (change)="onReligionChange($event)" [(ngModel)]="religion" required>
+  <option value="" disabled selected>Religião</option>
+  <option *ngFor="let religion of religions" [ngValue]="religion.value">{{ religion.name }}</option>
+</select>
