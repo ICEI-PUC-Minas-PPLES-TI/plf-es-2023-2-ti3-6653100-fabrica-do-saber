@@ -34,21 +34,17 @@ public class Team {
 
     @Column(name = "number_students", nullable = false, updatable = true)
     @NotNull
-    @NotEmpty
     private Integer numberStudents;
 
     @OneToMany(mappedBy = "team")
     private List<Student> students = new ArrayList<Student>();
 
-    @Column(name = "room", length = 45, nullable = false, updatable = true)
+    @Column(name = "room", length = 45, nullable = false, updatable = true, unique = true)
     @NotNull
     @NotEmpty
     private String room;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-
-    
-    
+    private Teacher teacher; 
 }
