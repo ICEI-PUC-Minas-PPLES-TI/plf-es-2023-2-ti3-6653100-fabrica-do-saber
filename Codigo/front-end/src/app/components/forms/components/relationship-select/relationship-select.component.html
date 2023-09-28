@@ -1,0 +1,4 @@
+<select id="inputState" class="form-select" (change)="onRelationShipChange($event)" [(ngModel)]="relationship" required >
+  <option value="" disabled selected>Relacionamento</option>
+  <option *ngFor="let r of relationships" [ngValue]="r.value">{{ r.name }}</option>
+</select>

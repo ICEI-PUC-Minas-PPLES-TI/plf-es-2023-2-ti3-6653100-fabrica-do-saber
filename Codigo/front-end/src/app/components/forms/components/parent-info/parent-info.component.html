@@ -8,9 +8,10 @@
              [(ngModel)]="parent.fullName" name="studentFullName" required>
     </div>
     <div class="col-md-2 py-2">
-      <input id="parentRelationship" type="text" class="form-control"
-             [placeholder]="parent.relationship ? parent.relationship : 'Relação'"
-             [(ngModel)]="parent.relationship" name="parentRelationship" required>
+      <app-relationship-select
+        [relationship]="parent.relationship"
+        (relationshipStateChange)="onRelationshipStateChange($event)">>
+      </app-relationship-select>
     </div>
   </div>
 
