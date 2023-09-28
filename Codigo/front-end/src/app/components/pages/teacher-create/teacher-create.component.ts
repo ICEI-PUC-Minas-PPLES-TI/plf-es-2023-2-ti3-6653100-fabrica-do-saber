@@ -1,10 +1,9 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-// import {TeacherService} from '../../../services/teacher/teacher.service';
+import {TeacherService} from '../../../services/teacher/teacher.service';
 import {Teacher} from '../../../interfaces/Teacher';
 import {TeacherImp} from '../../../classes/teacher/teacher-imp';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {TeacherService} from '../../../services/teacher/teacher.service';
 
 @Component({
   selector: 'app-teacher-create',
@@ -21,9 +20,8 @@ export class TeacherCreateComponent {
   }
 
   createTeacher(): void {
-    console.log(this.teacher);
-    // this.teacherService.createTeacher(this.teacher).subscribe();
-    // this.router.navigate(['/teacher-list']);
+    this.teacherService.createTeacher(this.teacher).subscribe();
+    this.router.navigate(['/teacher-list']);
   }
 
   cancel(): void {

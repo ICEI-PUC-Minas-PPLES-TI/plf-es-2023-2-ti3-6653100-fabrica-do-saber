@@ -27,7 +27,6 @@ export class TeacherEditComponent {
   getStudentById(id: number): void {
     this.teacherService.getTeacherById(id).subscribe((teacher: Teacher): void => {
       this.teacher = teacher;
-      console.log(this.teacher);
     });
   }
 
