@@ -20,7 +20,9 @@ export class StudentCreateComponent {
   }
 
   createStudent(): void {
+    /*todo: trocar botao de cadastrar para atualizar na pagina student-edit*/
     this.studentService.createStudent(this.student).subscribe();
+    this.router.navigate(['/student-list']);
   }
 
   cancel(): void {

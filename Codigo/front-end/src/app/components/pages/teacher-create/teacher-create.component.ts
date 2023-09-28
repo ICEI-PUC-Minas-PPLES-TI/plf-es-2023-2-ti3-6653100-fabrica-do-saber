@@ -23,6 +23,7 @@ export class TeacherCreateComponent {
   createTeacher(): void {
     console.log(this.teacher);
     // this.teacherService.createTeacher(this.teacher).subscribe();
+    // this.router.navigate(['/teacher-list']);
   }
 
   cancel(): void {
