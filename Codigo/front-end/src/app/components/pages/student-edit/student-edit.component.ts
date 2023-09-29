@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {StudentService} from '../../../services/student/student.service';
 import {Student} from '../../../interfaces/Student';
 import {Parent} from '../../../interfaces/Parent';
+import {catchError, tap} from 'rxjs';
 
 @Component({
   selector: 'app-student-edit',
@@ -35,9 +36,16 @@ export class StudentEditComponent {
     });
   }
 
-  updateStudent() {
-    this.studentService.updateStudent(this.studentId, this.student).subscribe();
-    this.router.navigate(['/student-list']);
+  updateStudent(): void {
+    this.studentService.updateStudent(this.studentId, this.student)
+      .pipe(
+        tap((response): void => {
+          this.router.navigate(['/student-list']);
+        }),
+        catchError(err => {
+          throw err;
+        }))
+      .subscribe();
   }
 
   cancel(): void {

@@ -19,11 +19,9 @@ export class StudentService {
       .pipe(
         tap(response => {
           console.log('Estudante criado com sucesso!', response);
-          this.toastr.success('Estudante criado com sucesso!', 'Sucesso');
         }),
         catchError(err => {
           console.log('Erro na criação do estudante', err);
-          this.toastr.error('Erro na criação do estudante', 'Erro');
           throw err;
         })
       );
@@ -34,11 +32,9 @@ export class StudentService {
       .pipe(
         tap(response => {
           console.log('Estudante atualizado com sucesso!', response);
-          this.toastr.success('Estudante atualizado com sucesso!', 'Sucesso');
         }),
         catchError(err => {
           console.log('Erro na atualização do estudante', err);
-          this.toastr.error('Erro na atualização do estudante', 'Erro');
           throw err;
         })
       );
@@ -49,11 +45,9 @@ export class StudentService {
       .pipe(
         tap(response => {
           console.log('Estudante excluido com sucesso!', response);
-          this.toastr.success('Estudante excluido com sucesso!', 'Sucesso');
         }),
         catchError(err => {
           console.log('Erro na exclusão do estudante', err);
-          this.toastr.error('Erro na exclusão do estudante', 'Erro');
           throw err;
         })
       );

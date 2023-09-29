@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Teacher} from '../../../interfaces/Teacher';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TeacherService} from '../../../services/teacher/teacher.service';
+import {catchError, tap} from 'rxjs';
 
 @Component({
   selector: 'app-teacher-edit',
@@ -27,16 +28,28 @@ export class TeacherEditComponent {
   getTeacherById(id: number): void {
     this.teacherService.getTeacherById(id).subscribe((teacher: Teacher): void => {
       this.teacher = teacher;
+      console.log(this.teacher.salary);
     });
   }
 
-  updateTeacher():void {
-    this.teacher.salary = this.teacherService.formatCurrency(this.teacher.salary);
-    this.teacherService.updateTeacher(this.teacherId, this.teacher).subscribe();
-    this.router.navigate(['/teacher-list']);
+  updateTeacher(): void {
+    /*todo: melhorar tratamento de salario do professor*/
+    this.teacher.salary = this.checkSalaryUpdate(this.teacher.salary);
+    this.teacherService.updateTeacher(this.teacherId, this.teacher)
+      .pipe(
+        tap((response): void => {
+        }),
+        catchError(err => {
+          throw err;
+        }))
+      .subscribe();
   }
 
   cancel(): void {
     this.router.navigate(['/teacher-list']);
+  }
+
+  checkSalaryUpdate(salary: any): any {
+    return typeof salary === 'string' ? this.teacherService.formatCurrency(salary) : salary;
   }
 }

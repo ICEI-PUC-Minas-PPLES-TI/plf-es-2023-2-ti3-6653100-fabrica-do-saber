@@ -9,14 +9,14 @@
   <div id="teacher-info">
     <div class="d-flex justify-content-between">
       <div class="col-8 py-2">
-        <label for="teacherFullName">Nome Completo</label>
+        <label for="teacherFullName">Nome Completo*</label>
         <input id="teacherFullName" type="text" class="form-control"
                [placeholder]="teacher.fullName ? teacher.fullName : ''"
                [(ngModel)]="teacher.fullName" name="teacherFullName" required>
       </div>
 
       <div class="col-md-3 py-2">
-        <label for="teacherBirthDate">Data de Nascimento</label>
+        <label for="teacherBirthDate">Data de Nascimento*</label>
         <input id="teacherBirthDate" type="text" class="form-control"
                [placeholder]="teacher.birthDate ? teacher.birthDate : 'Ex.: dd/mm/aaaa'"
                [(ngModel)]="teacher.birthDate" name="teacherBirthDate" maxlength="10" appDateFormat required>
@@ -26,14 +26,14 @@
 
     <div class="d-flex justify-content-between">
       <div class="col-3 py-2">
-        <label for="teacherCpf">CPF</label>
+        <label for="teacherCpf">CPF*</label>
         <input id="teacherCpf" type="text" class="form-control"
                [placeholder]="teacher.cpf ? teacher.cpf : 'Ex.: 000.000.000-00'"
                [(ngModel)]="teacher.cpf" name="teacherCpf" maxlength="14" appCpfFormat required>
       </div>
 
       <div class="col-2 py-2">
-        <label for="teacherRg">RG</label>
+        <label for="teacherRg">RG*</label>
         <input id="teacherRg" type="text" class="form-control"
                [placeholder]="teacher.rg ? teacher.rg : 'Ex.: 00.000.000'"
                [(ngModel)]="teacher.rg" name="teacherRg" maxlength="10" appRgFormatter required>
@@ -43,35 +43,34 @@
         <label for="teacherPhoneNumber">Telefone de Contato</label>
         <input id="teacherPhoneNumber" type="text" class="form-control"
                [placeholder]="teacher.phoneNumber ? teacher.phoneNumber : 'Ex.: 00 00000-0000'"
-               [(ngModel)]="teacher.phoneNumber" name="teacherPhoneNumber" maxlength="13" appPhoneNumberFormatter
-               required>
+               [(ngModel)]="teacher.phoneNumber" name="teacherPhoneNumber" maxlength="13" appPhoneNumberFormatter>
       </div>
 
       <div class="col-md-3 py-2">
         <label for="teacherEmail">E-mail</label>
         <input id="teacherEmail" type="text" class="form-control"
                [placeholder]="teacher.email ? teacher.email : ''" [(ngModel)]="teacher.email"
-               name="teacherEmail" required>
+               name="teacherEmail">
       </div>
     </div>
 
     <div class="d-flex justify-content-between">
       <div class="col-md-3 py-2">
-        <label for="teacherCityOfResidence">Cidade de Residência</label>
+        <label for="teacherCityOfResidence">Cidade de Residência*</label>
         <input id="teacherCityOfResidence" type="text" class="form-control"
                [placeholder]="teacher.cityOfResidence ? teacher.cityOfResidence : ''"
                [(ngModel)]="teacher.cityOfResidence" name="teacherCityOfResidence" required>
       </div>
 
       <div class="col-md-3 py-2">
-        <label for="teacherStreetAddress">Endereço da Rua</label>
+        <label for="teacherStreetAddress">Endereço da Rua*</label>
         <input id="teacherStreetAddress" type="text" class="form-control"
                [placeholder]="teacher.streetAddress ? teacher.streetAddress : ''"
                [(ngModel)]="teacher.streetAddress" name="teacherStreetAddress" required>
       </div>
 
       <div class="col-md-3 py-2">
-        <label for="teacherAddressNumber">Número do Endereço</label>
+        <label for="teacherAddressNumber">Número do Endereço*</label>
         <input id="teacherAddressNumber" type="text" class="form-control"
                [placeholder]="teacher.addressNumber ? teacher.addressNumber : ''"
                [(ngModel)]="teacher.addressNumber" name="teacherAddressNumber" required>
@@ -81,13 +80,13 @@
         <label for="teacherAddressComplement">Complemento</label>
         <input id="teacherAddressComplement" type="text" class="form-control"
                [placeholder]="teacher.addressComplement ? teacher.addressComplement : ''"
-               [(ngModel)]="teacher.addressComplement" name="teacherAddressComplement" required>
+               [(ngModel)]="teacher.addressComplement" name="teacherAddressComplement">
       </div>
     </div>
 
     <div class="d-flex justify-content-between">
       <div class="col-md-4 py-2">
-        <label for="teacherNeighborhood">Bairro</label>
+        <label for="teacherNeighborhood">Bairro*</label>
         <input id="teacherNeighborhood" type="text" class="form-control"
                [placeholder]="teacher.neighborhood ? teacher.neighborhood : ''"
                [(ngModel)]="teacher.neighborhood" name="teacherNeighborhood" required>
@@ -102,7 +101,7 @@
       </div>
 
       <div class="col-md-3 py-2">
-        <label for="teacherZipCode">CEP</label>
+        <label for="teacherZipCode">CEP*</label>
         <input id="teacherZipCode" type="text" class="form-control"
                [placeholder]="teacher.zipCode ? teacher.zipCode : 'Ex.: 00000-000'" [(ngModel)]="teacher.zipCode"
                name="teacherZipCode" maxlength="9" appZipCodeFormatter required>
@@ -112,19 +111,23 @@
 
     <div class="d-flex justify-content-between">
       <div class="col-5 py-2">
-        <label for="teacherHireDate">Data de Contratação</label>
+        <label for="teacherHireDate">Data de Contratação*</label>
         <input id="teacherHireDate" type="text" class="form-control"
                [placeholder]="teacher.hireDate ? teacher.hireDate : 'Ex.: dd/mm/aaaa'"
                [(ngModel)]="teacher.hireDate" name="teacherHireDate" maxlength="10" appDateFormat required>
       </div>
 
       <div class="col-5 py-2">
-        <label for="teacherSalary">Salário</label>
+        <label for="teacherSalary">Salário*</label>
         <input id="teacherSalary" type="text" class="form-control"
                [placeholder]="teacher.salary ? teacher.salary : 'R$'" [(ngModel)]="teacher.salary"
                name="teacherSalary" appCurrencyFormat required>
       </div>
     </div>
+  </div>
+
+  <div class="col-12 py-2">
+    <p class="text-muted">* Informações obrigatórias</p>
   </div>
 
 </div>

@@ -73,7 +73,7 @@ import { CurrencyFormatDirective } from './directives/currency-format.directive'
     TeamListComponent,
     TeamFormComponent,
     RelationshipSelectComponent,
-    CurrencyFormatDirective
+    CurrencyFormatDirective,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +82,8 @@ import { CurrencyFormatDirective } from './directives/currency-format.directive'
     FormsModule,
     NgbModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-center-center',
+      /*todo: revisar apos adicionar configuracoes de toastr*/
+      positionClass: 'toast-center',
     }),
     HttpClientModule
   ],
