@@ -63,7 +63,7 @@ public class TeamService {
         Student student = studentService.findById(studentId);
         
         if (student.getTeam() != null) {
-            throw new RuntimeException("Aluno já existe na turma " + team.getRoom());
+            throw new RuntimeException("Aluno já existe na turma " + team.getClassroom());
         }
 
         student.setTeam(team);
@@ -85,7 +85,7 @@ public class TeamService {
         Student student = studentService.findById(studentId);
 
         if(student.getTeam() == null) {
-            throw new RuntimeException("Aluno já foi deletado da turma " + team.getRoom());
+            throw new RuntimeException("Aluno já foi deletado da turma " + team.getClassroom());
         }
         student.setTeam(null);
         team.getStudents().remove(student);

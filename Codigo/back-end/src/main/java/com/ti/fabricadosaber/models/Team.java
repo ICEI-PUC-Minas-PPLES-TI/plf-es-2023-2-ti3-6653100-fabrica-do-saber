@@ -29,6 +29,9 @@ public class Team {
 	@Column(name = "id", unique = true)
     private Long id;
 
+    @Column(name = "name", nullable = false, updatable = true)
+    private String name;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "grade", length = 45, nullable = false, updatable = true)
     private Grade grade;
@@ -40,10 +43,10 @@ public class Team {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Student> students = new ArrayList<Student>();
 
-    @Column(name = "room", length = 45, nullable = false, updatable = true, unique = true)
+    @Column(name = "classroom", length = 45, nullable = false, updatable = true, unique = true)
     @NotNull
     @NotEmpty
-    private String room;
+    private String classroom;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
