@@ -3,6 +3,7 @@ package com.ti.fabricadosaber.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ti.fabricadosaber.enums.Grade;
 
 import jakarta.persistence.*;
@@ -32,11 +33,11 @@ public class Team {
     @Column(name = "grade", length = 45, nullable = false, updatable = true)
     private Grade grade;
 
-    @Column(name = "number_students", nullable = false, updatable = true)
-    @NotNull
+    @Column(name = "number_students", nullable = true, updatable = true)
     private Integer numberStudents;
 
     @OneToMany(mappedBy = "team")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Student> students = new ArrayList<Student>();
 
     @Column(name = "room", length = 45, nullable = false, updatable = true, unique = true)

@@ -93,7 +93,7 @@ public class StudentService {
         twoParents(obj);
 
         Student newObj = findById(obj.getId());
-        String[] ignoreProperties = {"id", "registrationDate"};
+        String[] ignoreProperties = {"id", "registrationDate", "team"};
 
         Set<Parent> updatedParents = saveParents(obj);
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);

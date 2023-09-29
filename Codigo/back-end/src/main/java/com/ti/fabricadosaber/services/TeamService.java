@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.models.Teacher;
 import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.repositories.TeamRepository;
@@ -22,20 +23,29 @@ public class TeamService {
 
     @Autowired
     private TeacherService teacherService;
-    
+
+    @Autowired
+    private StudentService studentService;
 
     public Team findById(Long id) {
         Optional<Team> team = this.teamRepository.findById(id);
         return team.orElseThrow(() -> new RuntimeException(
-            "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
+                "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
     }
 
     public List<Team> listAllTeams() {
         try {
             return teamRepository.findAll();
-        } catch(EmptyResultDataAccessException error) {
+        } catch (EmptyResultDataAccessException error) {
             throw new RuntimeException("Nenhuma turma cadastrada", error);
         }
+    }
+
+    public List<Student> listStudents(Long id) {
+        Team team = teamRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Turma com o id " + id + " não encontrada."));
+
+        return team.getStudents();
     }
 
     @Transactional
@@ -45,14 +55,42 @@ public class TeamService {
         obj.setTeacher(teacher);
         obj = this.teamRepository.save(obj);
         return obj;
+
+    }
+
+    public Team addStudentToTeam(Long teamId, Long studentId) {
+        Team team = findById(teamId);
+        Student student = studentService.findById(studentId);
+        
+        if (student.getTeam() != null) {
+            throw new RuntimeException("Aluno já existe na turma " + team.getRoom());
+        }
+
+        student.setTeam(team);
+        team.getStudents().add(student);
+        team.setNumberStudents(team.getStudents().size());
+        return teamRepository.save(team);
     }
 
     public Team update(Team obj) {
         Team newObj = findById(obj.getId());
+        String[] ignoreProperties = { "id", "students", "numberStudents" };
 
-        BeanUtils.copyProperties(obj, newObj, "id");
-
+        BeanUtils.copyProperties(obj, newObj, ignoreProperties);
         return this.teamRepository.save(newObj);
+    }
+
+    public Team deleteStudent(Long teamId, Long studentId) {
+        Team team = findById(teamId);
+        Student student = studentService.findById(studentId);
+
+        if(student.getTeam() == null) {
+            throw new RuntimeException("Aluno já foi deletado da turma " + team.getRoom());
+        }
+        student.setTeam(null);
+        team.getStudents().remove(student);
+        team.setNumberStudents(team.getStudents().size());
+        return teamRepository.save(team);
     }
 
     public void delete(Long id) {
@@ -64,5 +102,5 @@ public class TeamService {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
         }
     }
-    
+
 }
