@@ -17,6 +17,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@AttributeOverride(name = "cpf", column = @Column(nullable = true))
+@AttributeOverride(name = "phoneNumber", column = @Column(nullable = true))
+@AttributeOverride(name = "rg", column = @Column(nullable = true))
+@AttributeOverride(name = "email", column = @Column(nullable = true))
 public class Student extends Person {
 
 	public static final String TABLE_NAME = "student";
@@ -31,6 +35,7 @@ public class Student extends Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true)
 	private Long id;
+
 
 	@ManyToOne
 	@JoinColumn(name = "team_id", nullable = true, updatable = true)
