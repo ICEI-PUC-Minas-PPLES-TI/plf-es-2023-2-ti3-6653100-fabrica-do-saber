@@ -64,14 +64,14 @@
              [(ngModel)]="parent.cityOfResidence" name="parentCityOfResidence" required>
     </div>
 
-    <div class="col-3 py-2">
+    <div class="col-md-3 py-2">
       <label for="parentStreetAddress">Endereço da Rua</label>
       <input id="parentStreetAddress" type="text" class="form-control"
              [placeholder]="parent.streetAddress ? parent.streetAddress : ''"
              [(ngModel)]="parent.streetAddress" name="parentStreetAddress" required>
     </div>
 
-    <div class="col-3 py-2">
+    <div class="col-md-3 py-2">
       <label for="parentAddressNumber">Número do Endereço</label>
       <input id="parentAddressNumber" type="text" class="form-control"
              [placeholder]="parent.addressNumber ? parent.addressNumber : ''"
@@ -87,7 +87,7 @@
   </div>
 
   <div class="d-flex justify-content-between">
-    <div class="col-4 py-2">
+    <div class="col-md-4 py-2">
       <label for="parentNeighborhood">Bairro</label>
       <input id="parentNeighborhood" type="text" class="form-control"
              [placeholder]="parent.neighborhood ? parent.neighborhood : ''"
@@ -102,7 +102,7 @@
       </app-state-select>
     </div>
 
-    <div class="col-md-2 py-2">
+    <div class="col-md-3 py-2">
       <label for="parentZipCode">CEP</label>
       <input id="parentZipCode" type="text" class="form-control"
              [placeholder]="parent.zipCode ? parent.zipCode : 'Ex.: 00000-000'"
@@ -124,4 +124,5 @@
              [(ngModel)]="parent.company" name="parentCompany" required>
     </div>
   </div>
+
 </div>

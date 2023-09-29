@@ -20,17 +20,18 @@ export class TeacherEditComponent {
     this.route.paramMap.subscribe((params): void => {
       const id: number = parseInt(<string>params.get('id'));
       this.teacherId = id;
-      this.getStudentById(id);
+      this.getTeacherById(id);
     });
   }
 
-  getStudentById(id: number): void {
+  getTeacherById(id: number): void {
     this.teacherService.getTeacherById(id).subscribe((teacher: Teacher): void => {
       this.teacher = teacher;
     });
   }
 
-  updateStudent() {
+  updateTeacher():void {
+    this.teacher.salary = this.teacherService.formatCurrency(this.teacher.salary);
     this.teacherService.updateTeacher(this.teacherId, this.teacher).subscribe();
     this.router.navigate(['/teacher-list']);
   }

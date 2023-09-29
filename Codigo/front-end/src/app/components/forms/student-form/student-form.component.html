@@ -9,7 +9,7 @@
   <div id="student-info">
     <div class="d-flex justify-content-between">
       <div class="col-md-6 py-2">
-        <label for="studentFullName">Nome completo do aluno</label>
+        <label for="studentFullName">Nome Completo</label>
         <input id="studentFullName" type="text" class="form-control"
                [placeholder]="student.fullName ? student.fullName : ''"
                [(ngModel)]="student.fullName" name="studentFullName" required>
@@ -129,4 +129,5 @@
       [parent]="student.parents[1]"
     ></app-parent-info>
   </div>
+
 </div>

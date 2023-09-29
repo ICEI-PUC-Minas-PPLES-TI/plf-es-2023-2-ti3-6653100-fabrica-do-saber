@@ -74,4 +74,12 @@ export class TeacherService {
       );
   }
 
+  formatCurrency(currency: string): string {
+
+    const currencyValueStr: string = currency.split('R$')[1];
+    const currencyValueNum: number = parseFloat(currencyValueStr.replace(',', '.')) * 10;
+
+    return currencyValueNum.toFixed(2);
+  }
+
 }

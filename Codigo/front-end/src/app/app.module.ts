@@ -38,6 +38,7 @@ import { TeamEditComponent } from './components/pages/team-edit/team-edit.compon
 import { TeamListComponent } from './components/pages/team-list/team-list.component';
 import { TeamFormComponent } from './components/forms/team-form/team-form.component';
 import { RelationshipSelectComponent } from './components/forms/components/relationship-select/relationship-select.component';
+import { CurrencyFormatDirective } from './directives/currency-format.directive';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { RelationshipSelectComponent } from './components/forms/components/relat
     TeamEditComponent,
     TeamListComponent,
     TeamFormComponent,
-    RelationshipSelectComponent
+    RelationshipSelectComponent,
+    CurrencyFormatDirective
   ],
   imports: [
     BrowserModule,
