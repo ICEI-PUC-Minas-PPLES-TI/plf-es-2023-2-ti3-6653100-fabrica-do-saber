@@ -1,4 +1,4 @@
-<div class="student-form">
+<form class="student-form">
 
   <h5 class="pt-3 d-flex justify-content-center">{{title || 'Título da sessão'}}</h5>
 
@@ -9,14 +9,14 @@
   <div id="student-info">
     <div class="d-flex justify-content-between">
       <div class="col-md-6 py-2">
-        <label for="studentFullName">Nome completo do aluno</label>
+        <label for="studentFullName">Nome Completo*</label>
         <input id="studentFullName" type="text" class="form-control"
                [placeholder]="student.fullName ? student.fullName : ''"
                [(ngModel)]="student.fullName" name="studentFullName" required>
       </div>
 
       <div class="col-md-3 py-2">
-        <label for="studentBirthDate">Data de Nascimento</label>
+        <label for="studentBirthDate">Data de Nascimento*</label>
         <input id="studentBirthDate" type="text" class="form-control"
                [placeholder]="student.birthDate ? student.birthDate : 'Ex.: dd/mm/aaaa'"
                [(ngModel)]="student.birthDate" name="studentBirthDate" maxlength="10" appDateFormat required>
@@ -28,13 +28,13 @@
         <label for="studentTeam">Turma</label>
         <input id="studentTeam" type="text" class="form-control"
                [placeholder]="student.fullName ? student.fullName : ''"
-               [(ngModel)]="student.fullName" name="studentTeam" required>
+               [(ngModel)]="student.fullName" name="studentTeam">
       </div>
     </div>
 
     <div class="d-flex justify-content-between">
       <div class="col-md-4 py-2">
-        <label for="studentNationality">Nacionalidade</label>
+        <label for="studentNationality">Nacionalidade*</label>
         <input id="studentNationality" type="text" class="form-control"
                [placeholder]="student.nationality ? student.nationality : ''"
                [(ngModel)]="student.nationality" name="studentNationality" required>
@@ -67,21 +67,21 @@
 
     <div class="d-flex justify-content-between">
       <div class="col-md-3 py-2">
-        <label for="studentHometown">Cidade de Nascimento</label>
+        <label for="studentHometown">Cidade de Nascimento*</label>
         <input id="studentHometown" type="text" class="form-control"
                [placeholder]="student.hometown ? student.hometown : ''"
                [(ngModel)]="student.hometown" name="studentHometown" required>
       </div>
 
       <div class="col-md-3 py-2">
-        <label for="studentCityOfResidence">Cidade de Residência</label>
+        <label for="studentCityOfResidence">Cidade de Residência*</label>
         <input id="studentCityOfResidence" type="text" class="form-control"
                [placeholder]="student.cityOfResidence ? student.cityOfResidence : ''"
                [(ngModel)]="student.cityOfResidence" name="studentCityOfResidence" required>
       </div>
 
       <div class="col-4 py-2">
-        <label for="studentStreetAddress">Endereço da Rua</label>
+        <label for="studentStreetAddress">Endereço da Rua*</label>
         <input id="studentStreetAddress" type="text" class="form-control"
                [placeholder]="student.streetAddress ? student.streetAddress : ''"
                [(ngModel)]="student.streetAddress" name="studentStreetAddress" required>
@@ -90,7 +90,7 @@
 
     <div class="d-flex justify-content-between">
       <div class="col-3 py-2">
-        <label for="studentAddressNumber">Número do Endereço</label>
+        <label for="studentAddressNumber">Número do Endereço*</label>
         <input id="studentAddressNumber" type="text" class="form-control"
                [placeholder]="student.addressNumber ? student.addressNumber : ''"
                [(ngModel)]="student.addressNumber" name="studentAddressNumber" required>
@@ -100,17 +100,17 @@
         <label for="studentAddressComplement">Complemento</label>
         <input id="studentAddressComplement" type="text" class="form-control"
                [placeholder]="student.addressComplement ? student.addressComplement : ''"
-               [(ngModel)]="student.addressComplement" name="studentAddressComplement" required>
+               [(ngModel)]="student.addressComplement" name="studentAddressComplement">
       </div>
 
       <div class="col-3 py-2">
-        <label for="studentNeighborhood">Bairro</label>
+        <label for="studentNeighborhood">Bairro*</label>
         <input id="studentNeighborhood" type="text" class="form-control"
                [placeholder]="student.neighborhood ? student.neighborhood : ''"
                [(ngModel)]="student.neighborhood" name="studentNeighborhood" required>
       </div>
       <div class="col-md-2 py-2">
-        <label for="studentZipCode">CEP</label>
+        <label for="studentZipCode">CEP*</label>
         <input id="studentZipCode" type="text" class="form-control"
                [placeholder]="student.zipCode ? student.zipCode : 'Ex.: 00000-000'"
                [(ngModel)]="student.zipCode" name="studentZipCode" maxlength="9" appZipCodeFormatter required>
@@ -118,7 +118,7 @@
     </div>
   </div>
 
-  <div class="parent-info">
+  <form class="parent-info">
     <app-parent-info
       [title]="'Responsável 01'"
       [parent]="student.parents[0]"
@@ -128,5 +128,10 @@
       [title]="'Responsável 02'"
       [parent]="student.parents[1]"
     ></app-parent-info>
+  </form>
+
+  <div class="col-12 py-2">
+    <p class="text-muted">* Informações obrigatórias</p>
   </div>
-</div>
+
+</form>

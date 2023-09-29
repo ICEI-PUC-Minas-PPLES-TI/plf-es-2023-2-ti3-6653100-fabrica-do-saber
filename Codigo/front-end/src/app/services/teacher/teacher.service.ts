@@ -20,11 +20,9 @@ export class TeacherService {
       .pipe(
         tap(response => {
           console.log('Professor criado com sucesso!', response);
-          this.toastr.success('Professor criado com sucesso!', 'Sucesso');
         }),
         catchError(err => {
           console.log('Erro na criação do professor', err);
-          this.toastr.error('Erro na criação do professor', 'Erro');
           throw err;
         })
       );
@@ -35,11 +33,9 @@ export class TeacherService {
       .pipe(
         tap(response => {
           console.log('Professor atualizado com sucesso!', response);
-          this.toastr.success('Professor atualizado com sucesso!', 'Sucesso');
         }),
         catchError(err => {
           console.log('Erro na atualização do professor', err);
-          this.toastr.error('Erro na atualização do professor', 'Erro');
           throw err;
         })
       );
@@ -50,11 +46,9 @@ export class TeacherService {
       .pipe(
         tap(response => {
           console.log('Professor excluido com sucesso!', response);
-          this.toastr.success('Professor excluido com sucesso!', 'Sucesso');
         }),
         catchError(err => {
           console.log('Erro na exclusão do professor', err);
-          this.toastr.error('Erro na exclusão do professor', 'Erro');
           throw err;
         })
       );
@@ -72,6 +66,14 @@ export class TeacherService {
           throw err;
         })
       );
+  }
+
+  formatCurrency(currency: string): string {
+
+    const currencyValueStr: string = currency.split('R$')[1];
+    const currencyValueNum: number = parseFloat(currencyValueStr.replace(',', '.')) * 10;
+
+    return currencyValueNum.toFixed(2);
   }
 
 }

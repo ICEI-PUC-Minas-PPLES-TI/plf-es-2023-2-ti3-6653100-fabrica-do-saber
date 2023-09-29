@@ -1,9 +1,9 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
 import {StudentService} from '../../../services/student/student.service';
 import {StudentImp} from '../../../classes/student/student-imp';
 import {Student} from '../../../interfaces/Student';
+import {catchError, tap} from 'rxjs';
 
 @Component({
   selector: 'app-student-create',
@@ -14,18 +14,23 @@ export class StudentCreateComponent {
 
   student: Student = new StudentImp();
 
-  @ViewChild('showAddressCheckbox') showAddressCheckbox!: ElementRef<HTMLInputElement>;
 
-  constructor(private router: Router, private toastr: ToastrService, private studentService: StudentService) {
+  constructor(private router: Router, private studentService: StudentService) {
   }
 
   createStudent(): void {
-    this.studentService.createStudent(this.student).subscribe();
-    this.router.navigate(['/student-list']);
+    this.studentService.createStudent(this.student)
+      .pipe(
+        tap((response): void => {
+          this.router.navigate(['/student-list']);
+        }),
+        catchError(err => {
+          throw err;
+        }))
+      .subscribe();
   }
 
   cancel(): void {
-    this.toastr.error('Ação cancelada');
     this.router.navigate(['/student-list']);
   }
 

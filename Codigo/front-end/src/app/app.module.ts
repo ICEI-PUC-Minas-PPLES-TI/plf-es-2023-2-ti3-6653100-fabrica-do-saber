@@ -39,6 +39,7 @@ import { TeamListComponent } from './components/pages/team-list/team-list.compon
 import { TeamFormComponent } from './components/forms/team-form/team-form.component';
 import { RelationshipSelectComponent } from './components/forms/components/relationship-select/relationship-select.component';
 import { StudentSelectComponent } from './components/forms/components/student-select/student-select.component';
+import { CurrencyFormatDirective } from './directives/currency-format.directive';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { StudentSelectComponent } from './components/forms/components/student-se
     TeamListComponent,
     TeamFormComponent,
     RelationshipSelectComponent,
-    StudentSelectComponent
+    StudentSelectComponent,
+    CurrencyFormatDirective,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,8 @@ import { StudentSelectComponent } from './components/forms/components/student-se
     FormsModule,
     NgbModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-center-center',
+      /*todo: revisar apos adicionar configuracoes de toastr*/
+      positionClass: 'toast-center',
     }),
     HttpClientModule
   ],

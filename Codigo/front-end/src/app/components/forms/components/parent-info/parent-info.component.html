@@ -4,14 +4,14 @@
 
   <div class="d-flex justify-content-between">
     <div class="col-md-6 py-2">
-      <label for="parentFullName">Nome Completo</label>
+      <label for="parentFullName">Nome Completo*</label>
       <input id="parentFullName" type="text" class="form-control"
              [placeholder]="parent.fullName ? parent.fullName : 'Nome completo'"
              [(ngModel)]="parent.fullName" name="studentFullName" required>
     </div>
 
     <div class="col-md-3 py-2">
-      <label for="parentBirthDate">Data de Nascimento</label>
+      <label for="parentBirthDate">Data de Nascimento*</label>
       <input id="parentBirthDate" type="text" class="form-control"
              [placeholder]="parent.birthDate ? parent.birthDate : 'Ex.: dd/mm/aaaa'"
              [(ngModel)]="parent.birthDate" name="parentBirthDate" maxlength="10" appDateFormat required>
@@ -28,14 +28,14 @@
 
   <div class="d-flex justify-content-between">
     <div class="col-md-3 py-2">
-      <label for="parentCpf">CPF</label>
+      <label for="parentCpf">CPF*</label>
       <input id="parentCpf" type="text" class="form-control"
              [placeholder]="parent.cpf ? parent.cpf : 'Ex.: 000.000.000-00'"
              [(ngModel)]="parent.cpf" name="parentCpf" maxlength="14" appCpfFormat required>
     </div>
 
     <div class="col-md-2 py-2">
-      <label for="parentRg">RG</label>
+      <label for="parentRg">RG*</label>
       <input id="parentRg" type="text" class="form-control"
              [placeholder]="parent.rg ? parent.rg : 'Ex.: 00.000.000'"
              [(ngModel)]="parent.rg" name="parentRg" maxlength="10" appRgFormatter required>
@@ -45,34 +45,34 @@
       <label for="parentPhoneNumber">Telefone de Contato</label>
       <input id="parentPhoneNumber" type="tel" class="form-control"
              [placeholder]="parent.phoneNumber ? parent.phoneNumber : 'Ex.: 00 00000-0000'"
-             [(ngModel)]="parent.phoneNumber" name="parentPhoneNumber" maxlength="13" appPhoneNumberFormatter required>
+             [(ngModel)]="parent.phoneNumber" name="parentPhoneNumber" maxlength="13" appPhoneNumberFormatter>
     </div>
 
     <div class="col-md-3 py-2">
       <label for="parentEmail">E-mail</label>
       <input id="parentEmail" type="tel" class="form-control"
              [placeholder]="parent.email ? parent.email : ''"
-             [(ngModel)]="parent.email" name="parentEmail" required>
+             [(ngModel)]="parent.email" name="parentEmail">
     </div>
   </div>
 
   <div class="d-flex justify-content-between">
     <div class="col-md-3 py-2">
-      <label for="parentCityOfResidence">Cidade de Residência</label>
+      <label for="parentCityOfResidence">Cidade de Residência*</label>
       <input id="parentCityOfResidence" type="text" class="form-control"
              [placeholder]="parent.cityOfResidence ? parent.cityOfResidence : ''"
              [(ngModel)]="parent.cityOfResidence" name="parentCityOfResidence" required>
     </div>
 
-    <div class="col-3 py-2">
-      <label for="parentStreetAddress">Endereço da Rua</label>
+    <div class="col-md-3 py-2">
+      <label for="parentStreetAddress">Endereço da Rua*</label>
       <input id="parentStreetAddress" type="text" class="form-control"
              [placeholder]="parent.streetAddress ? parent.streetAddress : ''"
              [(ngModel)]="parent.streetAddress" name="parentStreetAddress" required>
     </div>
 
-    <div class="col-3 py-2">
-      <label for="parentAddressNumber">Número do Endereço</label>
+    <div class="col-md-3 py-2">
+      <label for="parentAddressNumber">Número do Endereço*</label>
       <input id="parentAddressNumber" type="text" class="form-control"
              [placeholder]="parent.addressNumber ? parent.addressNumber : ''"
              [(ngModel)]="parent.addressNumber" name="parentAddressNumber" required>
@@ -82,13 +82,13 @@
       <label for="parentAddressComplement">Complemento</label>
       <input id="parentAddressComplement" type="text" class="form-control"
              [placeholder]="parent.addressComplement ? parent.addressComplement : ''"
-             [(ngModel)]="parent.addressComplement" name="parentAddressComplement" required>
+             [(ngModel)]="parent.addressComplement" name="parentAddressComplement">
     </div>
   </div>
 
   <div class="d-flex justify-content-between">
-    <div class="col-4 py-2">
-      <label for="parentNeighborhood">Bairro</label>
+    <div class="col-md-4 py-2">
+      <label for="parentNeighborhood">Bairro*</label>
       <input id="parentNeighborhood" type="text" class="form-control"
              [placeholder]="parent.neighborhood ? parent.neighborhood : ''"
              [(ngModel)]="parent.neighborhood" name="parentNeighborhood" required>
@@ -102,8 +102,8 @@
       </app-state-select>
     </div>
 
-    <div class="col-md-2 py-2">
-      <label for="parentZipCode">CEP</label>
+    <div class="col-md-3 py-2">
+      <label for="parentZipCode">CEP*</label>
       <input id="parentZipCode" type="text" class="form-control"
              [placeholder]="parent.zipCode ? parent.zipCode : 'Ex.: 00000-000'"
              [(ngModel)]="parent.zipCode" name="parentZipCode" maxlength="9" appZipCodeFormatter required>
@@ -115,13 +115,14 @@
       <label for="parentOccupation">Profissão</label>
       <input id="parentOccupation" type="text" class="form-control"
              [placeholder]="parent.occupation ? parent.occupation : ''"
-             [(ngModel)]="parent.occupation" name="parentOccupation" required>
+             [(ngModel)]="parent.occupation" name="parentOccupation">
     </div>
     <div class="col-md-6 py-2">
       <label for="parentCompany">Empresa</label>
       <input id="parentCompany" type="text" class="form-control"
              [placeholder]="parent.company ? parent.company : ''"
-             [(ngModel)]="parent.company" name="parentCompany" required>
+             [(ngModel)]="parent.company" name="parentCompany">
     </div>
   </div>
+
 </div>

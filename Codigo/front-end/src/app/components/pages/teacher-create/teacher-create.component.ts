@@ -20,6 +20,7 @@ export class TeacherCreateComponent {
   }
 
   createTeacher(): void {
+    this.teacher.salary = this.teacherService.formatCurrency(this.teacher.salary);
     this.teacherService.createTeacher(this.teacher).subscribe();
     this.router.navigate(['/teacher-list']);
   }
