@@ -17,7 +17,7 @@ export class TeacherImp implements Teacher {
   homeState: string;
   registrationDate: string;
   birthDate: string;
-  salary: string;
+  salary: number;
   hireDate: string;
   terminationDate: string;
 
@@ -37,7 +37,7 @@ export class TeacherImp implements Teacher {
     this.homeState = '';
     this.registrationDate = '';
     this.birthDate = '';
-    this.salary = '';
+    this.salary = 0;
     this.hireDate = '';
     this.terminationDate = '';
   }
