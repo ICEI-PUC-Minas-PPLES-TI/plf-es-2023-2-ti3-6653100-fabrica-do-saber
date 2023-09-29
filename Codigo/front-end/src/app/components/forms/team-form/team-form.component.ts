@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Team } from '../../../interfaces/Team';
-import { ConsoleLogger } from '@angular/compiler-cli';
+import {Component, Input} from '@angular/core';
+import {Team} from '../../../interfaces/Team';
 
 @Component({
   selector: 'app-team-form',
@@ -13,6 +12,10 @@ export class TeamFormComponent {
   @Input() title!: string;
 
   constructor() {
+  }
+
+  onStudentChange(newStudent: string): void {
+    this.team.grade = this.formatSelect(newStudent);
   }
 
   formatSelect(select: string): string {

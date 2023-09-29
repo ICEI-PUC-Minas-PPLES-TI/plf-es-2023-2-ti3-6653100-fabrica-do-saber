@@ -22,35 +22,10 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-between">
-        <!-- <div class="col-md-3 py-2">
-            <input id="teamHometown" type="text" class="form-control"
-                [placeholder]="team.hometown ? team.hometown : 'Cidade de nascimento'"
-                [(ngModel)]="team.hometown" name="teamHometown" required>
-        </div>
-        <div class="col-md-3 py-2">
-            <app-state-select [homeState]="team.homeState" (homeStateChange)="onHomeStateChange($event)">
-            </app-state-select>
-        </div> -->
+    <div class="col-md-2 py-2 form-group">
+
+        <app-student-select [student]="team.grade" (studentChange)="onStudentChange($event)">
+        </app-student-select>
     </div>
+
 </div>
-
-<!-- 
-    fullName--
-    cpf--
-    rg--
-    email--
-    phoneNumber--
-    addressNumber--
-    addressComplement--
-    streetAddress--
-    neighborhood--
-    zipCode--
-    cityOfResidence--
-    homeState--
-    birthDate--
-
-    salary--
-    hireDate--
-    terminationDate--
- -->
