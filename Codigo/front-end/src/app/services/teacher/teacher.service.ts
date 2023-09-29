@@ -4,7 +4,6 @@ import {ToastrService} from 'ngx-toastr';
 import {catchError, Observable, tap} from 'rxjs';
 import {API_CONFIG} from '../config';
 import {Teacher} from '../../interfaces/Teacher';
-import {Student} from '../../interfaces/Student';
 
 @Injectable({
   providedIn: 'root'
@@ -68,12 +67,13 @@ export class TeacherService {
       );
   }
 
-  formatCurrency(currency: string): string {
+  formatCurrency(currency: number): number {
 
-    const currencyValueStr: string = currency.split('R$')[1];
-    const currencyValueNum: number = parseFloat(currencyValueStr.replace(',', '.')) * 10;
+    const currencyValueStr: string = currency.toString().replace('R$', '');
+    const cleanedValue: string = currencyValueStr.replace(/\./g, '').replace(',', '.');
 
-    return currencyValueNum.toFixed(2);
+    return parseFloat((parseFloat(cleanedValue) * 10).toFixed(2));
   }
+
 
 }

@@ -14,7 +14,6 @@ export class StudentCreateComponent {
 
   student: Student = new StudentImp();
 
-
   constructor(private router: Router, private studentService: StudentService) {
   }
 
