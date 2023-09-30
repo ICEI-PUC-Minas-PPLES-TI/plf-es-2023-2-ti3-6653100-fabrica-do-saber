@@ -1,6 +1,7 @@
 package com.ti.fabricadosaber.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ti.fabricadosaber.enums.Race;
 import java.util.Set;
@@ -38,7 +39,12 @@ public class Student extends Person {
 	private Long id;
 
 
-	@ManyToOne(fetch = FetchType.EAGER)
+/*	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "team_id", nullable = true, updatable = true)
+	private Team team;*/
+
+	@JsonIdentityReference(alwaysAsId = true)
+	@ManyToOne
 	@JoinColumn(name = "team_id", nullable = true, updatable = true)
 	private Team team;
 
