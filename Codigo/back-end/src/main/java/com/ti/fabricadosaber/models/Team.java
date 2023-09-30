@@ -42,6 +42,7 @@ public class Team {
 
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Student> students = new ArrayList<>();
 
 

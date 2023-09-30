@@ -38,9 +38,8 @@ public class Student extends Person {
 	private Long id;
 
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "team_id", nullable = true, updatable = true)
-	@JsonIgnore
 	private Team team;
 
 	@Column(name = "hometown", length = 45, nullable = false, updatable = true)
