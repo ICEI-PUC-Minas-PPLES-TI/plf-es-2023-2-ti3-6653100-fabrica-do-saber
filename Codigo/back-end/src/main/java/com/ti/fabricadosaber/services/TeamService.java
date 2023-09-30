@@ -1,5 +1,6 @@
 package com.ti.fabricadosaber.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class TeamService {
     @Autowired
     private StudentService studentService;
 
+
     public Team findById(Long id) {
         Optional<Team> team = this.teamRepository.findById(id);
         return team.orElseThrow(() -> new RuntimeException(
@@ -48,26 +50,62 @@ public class TeamService {
         return team.getStudents();
     }
 
+
     @Transactional
     public Team create(Team obj) {
         Teacher teacher = this.teacherService.findById(obj.getTeacher().getId());
         obj.setId(null);
         obj.setTeacher(teacher);
-        obj = this.teamRepository.save(obj);
-        return obj;
 
+        processStudents(obj);
+
+        obj = this.teamRepository.save(obj);
+
+        associateStudents(obj);
+
+        return obj;
     }
 
-    public Team addStudentToTeam(Long teamId, Long studentId) {
-        Team team = findById(teamId);
-        Student student = studentService.findById(studentId);
-        
-        if (student.getTeam() != null) {
-            throw new RuntimeException("Aluno já existe na turma " + team.getClassroom());
+    public void associateStudents(Team obj) {
+        for (Student student : obj.getStudents()) {
+            student.setTeam(obj);
+        }
+    }
+
+
+    public void processStudents (Team obj) {
+
+        if (obj.getStudents() != null && !obj.getStudents().isEmpty()) {
+
+            List<Student> students = new ArrayList<>();
+            for (Student student : obj.getStudents()) {
+                if (student.getId() != null) {
+                    Student existingStudent = studentService.findById(student.getId());
+                    students.add(existingStudent);
+                } else {
+                    throw new RuntimeException("id de estudante inexistente");
+                }
+            }
+            obj.setStudents(students);
+            obj.setNumberStudents(students.size());
+        } else {
+            obj.setNumberStudents(0);
+        }
+    }
+
+
+    public Team addStudentToTeam(Long id, List<Long> idsStudents) {
+        Team team = findById(id);
+
+        for (Long idStudent : idsStudents) {
+            Student student = studentService.findById(idStudent);
+            if (student.getTeam() != null) {
+                throw new RuntimeException("Aluno já existe na turma " + team.getClassroom());
+            }
+            student.setTeam(team);
+            team.getStudents().add(student);
         }
 
-        student.setTeam(team);
-        team.getStudents().add(student);
         team.setNumberStudents(team.getStudents().size());
         return teamRepository.save(team);
     }

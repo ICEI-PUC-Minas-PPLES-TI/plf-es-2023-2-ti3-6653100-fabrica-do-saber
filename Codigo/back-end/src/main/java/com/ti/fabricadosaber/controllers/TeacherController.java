@@ -48,6 +48,8 @@ public class TeacherController {
         return ResponseEntity.ok().body(teams);
     }
 
+
+
     @PostMapping
     public ResponseEntity<Teacher> create(@Valid @RequestBody Teacher obj) {
         this.teacherService.create(obj);

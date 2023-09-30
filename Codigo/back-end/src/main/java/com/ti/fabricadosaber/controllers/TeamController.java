@@ -55,11 +55,15 @@ public class TeamController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/{teamId}/{studentId}")
-    public ResponseEntity<Void> addStudent(@PathVariable Long teamId, @PathVariable Long studentId) {
-        this.teamService.addStudentToTeam(teamId,studentId);
+    @PutMapping("/{Id}/add-students")
+    public ResponseEntity<Void> addStudentsToTeam(
+            @PathVariable Long Id,
+            @RequestBody List<Long> studentIds
+    ) {
+        this.teamService.addStudentToTeam(Id, studentIds);
         return ResponseEntity.noContent().build();
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody Team obj, @PathVariable Long id) {

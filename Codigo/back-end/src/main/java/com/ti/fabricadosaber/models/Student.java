@@ -1,6 +1,7 @@
 package com.ti.fabricadosaber.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ti.fabricadosaber.enums.Race;
 import java.util.Set;
 import com.ti.fabricadosaber.enums.Religion;
@@ -39,6 +40,7 @@ public class Student extends Person {
 
 	@ManyToOne
 	@JoinColumn(name = "team_id", nullable = true, updatable = true)
+	@JsonIgnore
 	private Team team;
 
 	@Column(name = "hometown", length = 45, nullable = false, updatable = true)
