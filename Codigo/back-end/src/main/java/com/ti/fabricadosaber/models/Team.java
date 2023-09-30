@@ -3,8 +3,10 @@ package com.ti.fabricadosaber.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ti.fabricadosaber.enums.Grade;
 
 import jakarta.persistence.*;
@@ -41,9 +43,13 @@ public class Team {
     private Integer numberStudents;
 
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+/*    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Student> students = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();*/
+
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    private List<Student> students;
 
 
     @Column(name = "classroom", length = 45, nullable = false, updatable = true, unique = true)
