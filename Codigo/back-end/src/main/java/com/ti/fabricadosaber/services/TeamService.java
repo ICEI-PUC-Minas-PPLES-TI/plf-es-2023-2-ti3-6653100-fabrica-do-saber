@@ -56,14 +56,25 @@ public class TeamService {
         Teacher teacher = this.teacherService.findById(obj.getTeacher().getId());
         obj.setId(null);
         obj.setTeacher(teacher);
-
         processStudents(obj);
-
         obj = this.teamRepository.save(obj);
-
         associateStudents(obj);
-
         return obj;
+    }
+
+    @Transactional
+    public Team update(Team obj) {
+        Team newObj = findById(obj.getId());
+        newObj.setName(obj.getName());
+        newObj.setClassroom(obj.getClassroom());
+        newObj.setGrade(obj.getGrade());
+        newObj.setTeacher(obj.getTeacher());
+        processStudents(obj);
+        newObj.setNumberStudents(obj.getNumberStudents());
+        newObj.setStudents(obj.getStudents());
+        newObj = this.teamRepository.save(newObj);
+        associateStudents(newObj);
+        return newObj;
     }
 
     public void associateStudents(Team obj) {
@@ -73,23 +84,28 @@ public class TeamService {
     }
 
 
-    public void processStudents (Team obj) {
-
-        if (obj.getStudents() != null && !obj.getStudents().isEmpty()) {
-
-            List<Student> students = new ArrayList<>();
-            for (Student student : obj.getStudents()) {
-                if (student.getId() != null) {
-                    Student existingStudent = studentService.findById(student.getId());
-                    students.add(existingStudent);
-                } else {
-                    throw new RuntimeException("id de estudante inexistente");
-                }
+    public void processStudents(Team obj) {
+        List<Student> students = obj.getStudents();
+        if (students != null && !students.isEmpty()) {
+            List<Student> updatedStudents = new ArrayList<>();
+            for (Student student : students) {
+                Student existingStudent = studentService.findById(student.getId());
+                updateStudent(student);
+                updatedStudents.add(existingStudent);
             }
-            obj.setStudents(students);
-            obj.setNumberStudents(students.size());
+            obj.setStudents(updatedStudents);
+            obj.setNumberStudents(updatedStudents.size());
         } else {
             obj.setNumberStudents(0);
+        }
+    }
+
+
+    public void updateStudent(Student student) {
+        Team team = student.getTeam();
+        if(team != null) {
+            student.getTeam().getStudents().remove(student);
+            student.getTeam().setNumberStudents(student.getTeam().getStudents().size());
         }
     }
 
@@ -99,9 +115,7 @@ public class TeamService {
 
         for (Long idStudent : idsStudents) {
             Student student = studentService.findById(idStudent);
-            if (student.getTeam() != null) {
-                throw new RuntimeException("Aluno já existe na turma " + team.getClassroom());
-            }
+            updateStudent(student);
             student.setTeam(team);
             team.getStudents().add(student);
         }
@@ -110,21 +124,15 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
-    public Team update(Team obj) {
-        Team newObj = findById(obj.getId());
-        String[] ignoreProperties = { "id", "students", "numberStudents" };
-
-        BeanUtils.copyProperties(obj, newObj, ignoreProperties);
-        return this.teamRepository.save(newObj);
-    }
-
     public Team deleteStudent(Long teamId, Long studentId) {
         Team team = findById(teamId);
         Student student = studentService.findById(studentId);
 
-        if(student.getTeam() == null) {
-            throw new RuntimeException("Aluno já foi deletado da turma " + team.getClassroom());
+
+        if(!(team.getStudents().contains(student))) {
+            throw new RuntimeException("Aluno não está vinculado a turma " + team.getName());
         }
+
         student.setTeam(null);
         team.getStudents().remove(student);
         team.setNumberStudents(team.getStudents().size());
