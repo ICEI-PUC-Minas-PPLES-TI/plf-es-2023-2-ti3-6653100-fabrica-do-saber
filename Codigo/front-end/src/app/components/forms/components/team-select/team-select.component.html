@@ -1,0 +1,5 @@
+<select id="inputTeam" class="form-select" (change)="onTeamChange($event)" [(ngModel)]="team" required >
+  <option value="" disabled selected>Turma</option>
+  <!--todo: ajustar value de acordo com id do team (duda esta revisando o back-end)-->
+  <option *ngFor="let team of teams" [ngValue]="team">{{ team.name }}</option>
+</select>

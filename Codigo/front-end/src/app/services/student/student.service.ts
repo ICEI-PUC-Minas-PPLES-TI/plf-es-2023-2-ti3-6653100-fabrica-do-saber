@@ -1,17 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Student} from '../../interfaces/Student';
-import {HttpClient} from '@angular/common/http';
-import {API_CONFIG} from '../config';
-import {catchError, Observable, tap} from 'rxjs';
-import {ToastrService} from 'ngx-toastr';
+import { Injectable } from '@angular/core';
+import { Student } from '../../interfaces/Student';
+import { HttpClient } from '@angular/common/http';
+import { API_CONFIG } from '../config';
+import { catchError, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {
-    this.toastr.toastrConfig.positionClass = 'toastr-center';
+  constructor(private http: HttpClient) {
   }
 
   createStudent(student: Student): Observable<any> {
@@ -44,7 +42,7 @@ export class StudentService {
     return this.http.delete<Student>(`${API_CONFIG.baseUrl}/student/${id}`)
       .pipe(
         tap(response => {
-          console.log('Estudante excluido com sucesso!', response);
+          console.log('Estudante excluído com sucesso!', response);
         }),
         catchError(err => {
           console.log('Erro na exclusão do estudante', err);
