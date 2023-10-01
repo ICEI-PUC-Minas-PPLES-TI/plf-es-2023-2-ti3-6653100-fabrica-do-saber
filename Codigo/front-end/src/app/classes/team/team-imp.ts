@@ -11,6 +11,7 @@ export class TeamImp implements Team {
   grade: string;
   classRoom: string;
   students: Student[];
+  studentId: number[];
   teacher: Teacher;
 
   constructor() {
@@ -20,6 +21,7 @@ export class TeamImp implements Team {
     this.grade = '';
     this.classRoom = '';
     this.students = [];
+    this.studentId = [];
     this.teacher = new TeacherImp();
   }
 }

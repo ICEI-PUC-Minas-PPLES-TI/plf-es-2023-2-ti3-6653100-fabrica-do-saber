@@ -1,4 +1,10 @@
-<select id="inputState" class="form-select" (change)="onStudentsChange($event)" [(ngModel)]="student" required>
-  <option value="" disabled selected>Alunos</option>
+<!-- <select id="inputState" class="selectpicker" (change)="onStudentSelectChange($event)" [(ngModel)]="student" [multiple]="true"
+  required>
+  <option value="" disabled selected>Selecionar alunos</option>
+  <option *ngFor="let student of students" [ngValue]="student.id">{{ student.fullName }}</option>
+</select> -->
+
+<select id="inputState" class="selectpicker" [(ngModel)]="selectedStudentIds" [multiple]="true" required>
+  <option value="" disabled selected>Selecionar alunos</option>
   <option *ngFor="let student of students" [ngValue]="student.id">{{ student.fullName }}</option>
 </select>

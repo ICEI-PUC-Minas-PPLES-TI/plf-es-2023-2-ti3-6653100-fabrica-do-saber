@@ -8,5 +8,6 @@ export interface Team {
     grade: string;
     classRoom: string;
     students: Student[];
+    studentId: number[];
     teacher: Teacher;
 }

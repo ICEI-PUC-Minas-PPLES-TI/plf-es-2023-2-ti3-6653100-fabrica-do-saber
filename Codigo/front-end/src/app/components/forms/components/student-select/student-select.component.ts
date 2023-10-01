@@ -9,8 +9,14 @@ import { Student } from 'src/app/interfaces/Student';
 })
 export class StudentSelectComponent {
 
-  @Input() student !: string;
-  @Output() studentChange: EventEmitter<string> = new EventEmitter<string>();
+  // @Input() student !: string;
+  // @Output() studentChange: EventEmitter<string> = new EventEmitter<string>();
+
+  @Input() selectedStudentIds: number[] = [];
+  @Output() selectedStudentIdsChange: EventEmitter<number[]> = new EventEmitter<number[]>();
+  
+
+  selectedStudents: number[] = [];
 
   students: Student[] = [
     {
@@ -127,8 +133,15 @@ export class StudentSelectComponent {
   ];
 
 
-  onStudentsChange(event: any): void {
-    this.student = event.target.value;
-    this.studentChange.emit(this.student);
+  // onStudentSelectChange(event: any): void {
+  //   this.student = event.target.value;
+  //   this.studentChange.emit(this.student);
+  // }
+
+  onStudentChange(selectedStudentIds: number[]): void {
+    // Handle the selected student IDs here
+    // You can access the selectedStudentIds array
+    console.log(selectedStudentIds);
   }
+  
 }
