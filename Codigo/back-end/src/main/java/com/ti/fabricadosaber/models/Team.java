@@ -51,7 +51,6 @@ public class Team {
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
     private List<Student> students;
 
-
     @Column(name = "classroom", length = 45, nullable = false, updatable = true, unique = true)
     @NotNull
     @NotEmpty

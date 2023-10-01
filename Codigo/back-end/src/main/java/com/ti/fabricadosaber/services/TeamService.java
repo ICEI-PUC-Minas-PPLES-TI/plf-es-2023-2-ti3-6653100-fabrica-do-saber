@@ -3,7 +3,9 @@ package com.ti.fabricadosaber.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -147,6 +149,25 @@ public class TeamService {
         } catch (Exception e) {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
         }
+    }
+
+
+    public TeamResponseDTO convertToTeamResponseDTO(Team team) {
+
+        TeamResponseDTO dto = new TeamResponseDTO();
+        dto.setId(team.getId());
+        dto.setName(team.getName());
+        dto.setGrade(team.getGrade());
+        dto.setNumberStudents(team.getNumberStudents());
+
+        if (team.getStudents() != null) {
+            List<Long> studentIds = team.getStudents().stream()
+                    .map(Student::getId)
+                    .collect(Collectors.toList());
+            dto.setStudentIds(studentIds);
+        }
+
+        return dto;
     }
 
 }
