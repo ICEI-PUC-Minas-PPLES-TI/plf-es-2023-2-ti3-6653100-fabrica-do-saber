@@ -44,9 +44,20 @@ public class TeamController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Team>> listAllTeams() {
+    public ResponseEntity<List<TeamResponseDTO>> listAllTeams() {
         List<Team> teams = this.teamService.listAllTeams();
-        return ResponseEntity.ok().body(teams);
+
+        List<TeamResponseDTO> teamResponseDTOs = teams.stream()
+                .map(this.teamService::convertToTeamResponseDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(teamResponseDTOs);
+    }
+
+    @GetMapping("/{id}/students")
+    public ResponseEntity<List<Student>> listStudents(@PathVariable Long id) {
+        List<Student> students = this.teamService.listStudents(id);
+        return ResponseEntity.ok().body(students);
     }
 
     @GetMapping("/{id}/students")
