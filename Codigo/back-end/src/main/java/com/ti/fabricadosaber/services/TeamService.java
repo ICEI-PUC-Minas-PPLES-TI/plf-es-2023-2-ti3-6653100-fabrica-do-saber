@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,6 @@ public class TeamService {
     @Autowired
     private StudentService studentService;
 
-
     public Team findById(Long id) {
         Optional<Team> team = this.teamRepository.findById(id);
         return team.orElseThrow(() -> new RuntimeException(
@@ -51,7 +49,6 @@ public class TeamService {
 
         return team.getStudents();
     }
-
 
     @Transactional
     public Team create(Team obj) {
@@ -85,32 +82,37 @@ public class TeamService {
         }
     }
 
-
     public void processStudents(Team obj) {
         List<Student> students = obj.getStudents();
         if (students != null && !students.isEmpty()) {
             List<Student> updatedStudents = new ArrayList<>();
             for (Student student : students) {
+
                 Student existingStudent = studentService.findById(student.getId());
+
+                 if (existingStudent.getTeam() != null) {
+                    throw new RuntimeException("Aluno já pertence a turma " + obj.getClassroom());
+                }
+
                 updateStudent(student);
                 updatedStudents.add(existingStudent);
+
+                obj.setStudents(updatedStudents);
+                obj.setNumberStudents(updatedStudents.size());
             }
-            obj.setStudents(updatedStudents);
-            obj.setNumberStudents(updatedStudents.size());
         } else {
             obj.setNumberStudents(0);
         }
     }
 
-
     public void updateStudent(Student student) {
         Team team = student.getTeam();
-        if(team != null) {
+        if (team != null) {
             student.getTeam().getStudents().remove(student);
             student.getTeam().setNumberStudents(student.getTeam().getStudents().size());
+            teamRepository.save(team);
         }
     }
-
 
     public Team addStudentToTeam(Long id, List<Long> idsStudents) {
         Team team = findById(id);
@@ -126,17 +128,20 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
-    public Team deleteStudent(Long teamId, Long studentId) {
+    public Team deleteStudent(Long teamId, List<Long> idsStudent) {
         Team team = findById(teamId);
-        Student student = studentService.findById(studentId);
+        for (Long idStudent : idsStudent) {
 
+            Student student = studentService.findById(idStudent);
+            if (!(team.getStudents().contains(student))) {
+                throw new RuntimeException("Aluno não está vinculado a turma " + team.getName());
+            }
 
-        if(!(team.getStudents().contains(student))) {
-            throw new RuntimeException("Aluno não está vinculado a turma " + team.getName());
+            updateStudent(student);
+            student.setTeam(null);
+            team.getStudents().remove(student);
         }
 
-        student.setTeam(null);
-        team.getStudents().remove(student);
         team.setNumberStudents(team.getStudents().size());
         return teamRepository.save(team);
     }
@@ -150,7 +155,6 @@ public class TeamService {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
         }
     }
-
 
     public TeamResponseDTO convertToTeamResponseDTO(Team team) {
 
