@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { Team } from '../../../interfaces/Team';
-// import { TeamService } from '../../../services/team/team.service';
+import {Component} from '@angular/core';
+import {Team} from '../../../interfaces/Team';
+import {TeamService} from '../../../services/team/team.service';
+import {TeacherService} from '../../../services/teacher/teacher.service';
+import {Teacher} from '../../../interfaces/Teacher';
 
 @Component({
   selector: 'app-team-list',
@@ -13,6 +15,7 @@ export class TeamListComponent {
   /*TeamImp variables*/
   originalTeams: Team[] = [];
   teams: Team[] = [];
+  teachers!: Teacher[];
 
   /*Table variables*/
   tableHeaders: String[] = ['Turma', 'Professor', 'Série', 'Nº de alunos', 'Gerenciar'];
@@ -27,8 +30,8 @@ export class TeamListComponent {
   ];
   filterText!: string;
 
-  // constructor(private teamService: TeamService) {
-  // }
+  constructor(private teamService: TeamService, private teacherService: TeacherService) {
+  }
 
   ngOnInit(): void {
     this.getTeams();
@@ -36,17 +39,22 @@ export class TeamListComponent {
   }
 
   getTeams(): void {
-    // this.teamService.getTeams().subscribe((teams: Team[]): void => {
-    //   this.originalTeams = teams;
-    //   this.teams = [...this.originalTeams];
-    //   this.sortTeamsByName();
-    // });
+    this.teamService.getTeams().subscribe((teams: Team[]): void => {
+      this.originalTeams = teams;
+      this.teams = [...this.originalTeams];
+      this.sortTeamsByName();
+    });
   }
 
   deleteTeam(id: number): void {
-    // this.teamService.deleteTeam(id).subscribe((): void => {
-    //   this.getTeams();
-    // });
+    this.teamService.deleteTeam(id).subscribe((): void => {
+      this.getTeams();
+    });
+  }
+
+  getTeacherName(id: number) {
+
+    return this.teacherService.getTeacherById(id);
   }
 
   filterTeamList(event: Event): void {
@@ -55,7 +63,6 @@ export class TeamListComponent {
     const inputValue: string = searchInput.value.toLowerCase();
 
     this.teams = this.originalTeams.filter((team: Team) => {
-
       const teamFullNameMatch: boolean = team.name.toLowerCase().includes(inputValue);
       return teamFullNameMatch;
     });

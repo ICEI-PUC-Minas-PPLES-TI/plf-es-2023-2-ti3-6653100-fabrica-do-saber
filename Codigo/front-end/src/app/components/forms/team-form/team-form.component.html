@@ -1,41 +1,42 @@
 <h5 class="pt-3 d-flex justify-content-center">{{title}}</h5>
-<!-- Teacher information -->
-<div class="col-12 py-2">
-    <h6>Informações da turma</h6>
-</div>
 
 <div id="team-div">
 
-    <div class="col-12 py-2">
-        <input id="teamFullName" type="text" class="form-control"
-            [placeholder]="team.name ? team.name : 'Nome da turma'" [(ngModel)]="team.name" name="teamName" required>
+  <div class="d-flex justify-content-between">
+    <div class="col-4 py-2">
+      <label for="teamFullName">Nome da Turma*</label>
+      <input id="teamFullName" type="text" class="form-control"
+             [placeholder]="team.name ? team.name : ''" [(ngModel)]="team.name" name="teamFullName" required>
     </div>
 
-    <div class="d-flex justify-content-between">
-        <div class="col-md-8 py-2">
-            <input id="teamGrade" type="text" class="form-control" [placeholder]="team.grade ? team.grade : 'Série'"
-                [(ngModel)]="team.grade" name="teamGrade" required>
-        </div>
-        <div class="col-3 py-2">
-            <input id="team" type="text" class="form-control" [placeholder]="team.classRoom ? team.classRoom : 'Sala'"
-                [(ngModel)]="team.classRoom" name="teamSala" required>
-        </div>
+    <div class="col-md-3 py-2">
+      <label for="teamGrade">Série*</label>
+      <input id="teamGrade" type="text" class="form-control" [placeholder]="team.grade ? team.grade : ''"
+             [(ngModel)]="team.grade" name="teamGrade" required>
     </div>
 
-    <!-- <div class="col-md-4 py-2 form-group">
-        <app-student-select [student]="team.grade" (studentChange)="onStudentChange($event)">
-        </app-student-select>
-    </div> -->
-
-    <div class="col-md-4 py-2 form-group">
-        <app-student-select [(selectedStudentIds)]="teamStudentIds" (studentChange)="onStudentChange(teamStudentIds)">
-        </app-student-select>
-        
+    <div class="col-4 py-2">
+      <label for="teamClassroom">Sala de Aula*</label>
+      <input id="teamClassroom" type="text" class="form-control" [placeholder]="team.classRoom ? team.classRoom : ''"
+             [(ngModel)]="team.classRoom" name="teamClassroom" required>
     </div>
+  </div>
 
-    <div class="col-6 py-2">
-        <input id="team" type="text" class="form-control" [placeholder]="teamStudentIds ? teamStudentIds : 'Alunos'"
-            [(ngModel)]="team.studentId" name="teamStudents" required>
-    </div>
+  <div class="col-md-4 py-2 form-group">
+    <label>Selecione os alunos (shift + mouse / ctrl + mouse) </label>
+    <app-student-select
+      [(selectedStudentIds)]="team.studentsId"
+      (selectedStudentIdsChange)="onselectedStudentIdsChange($event)">
+    </app-student-select>
+  </div>
+
+  <div class="col-6 py-2">
+    <input id="team" type="text" class="form-control" [placeholder]="selectedStudents ? selectedStudents : 'Nenhum aluno selecionado'"
+           [(ngModel)]="team.studentsId" name="teamStudents" [readonly]="true" required>
+  </div>
+
+  <div class="col-12 py-2">
+    <p class="text-muted">* Informações obrigatórias</p>
+  </div>
 
 </div>

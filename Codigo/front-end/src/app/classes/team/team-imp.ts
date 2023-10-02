@@ -7,21 +7,21 @@ export class TeamImp implements Team {
 
   id: number;
   name: string;
-  numberOfStudents: number;
+  numberStudents: number;
   grade: string;
   classRoom: string;
   students: Student[];
-  studentId: number[];
-  teacher: Teacher;
+  studentsId: number[];
+  teacherId: number;
 
   constructor() {
     this.id = 0;
     this.name = '';
-    this.numberOfStudents = 0;
+    this.numberStudents = 0;
     this.grade = '';
     this.classRoom = '';
     this.students = [];
-    this.studentId = [];
-    this.teacher = new TeacherImp();
+    this.studentsId = [];
+    this.teacherId = 0;
   }
 }

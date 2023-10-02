@@ -14,13 +14,11 @@ export class TeamCreateComponent {
 
   team: Team = new TeamImp();
 
-  @ViewChild('showAddressCheckbox') showAddressCheckbox!: ElementRef<HTMLInputElement>;
-
-  // constructor(private router: Router, private toastr: ToastrService, private teamService: TeamService) {
-  // }
+  constructor(private router: Router/*, private teamService: TeamService*/) {
+  }
 
   createTeam(): void {
-    // console.log(this.team);
+    console.log(this.team);
     // this.teamService.createTeam(this.team).subscribe();
   }
 

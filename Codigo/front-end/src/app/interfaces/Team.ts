@@ -4,10 +4,10 @@ import { Teacher } from './Teacher';
 export interface Team {
     id: number;
     name: string;
-    numberOfStudents: number;
+    numberStudents: number;
     grade: string;
     classRoom: string;
     students: Student[];
-    studentId: number[];
-    teacher: Teacher;
+    studentsId: number[];
+    teacherId: number;
 }

@@ -1,76 +1,75 @@
 <section class="container">
-    <h5 class="pt-3">Alunos cadastrados</h5>
-  
-    <!-- Search bar -->
-    <div class="d-flex justify-content-between mt-3 mb-3">
-      <div class="col-md-4">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                 id="search-input"
-                 (input)="filterTeamList($event)">
-        </form>
-      </div>
-  
-      <div class="col-md-4">
-        Ordenar por
-        <div ngbDropdown class="d-inline-block">
-          <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
-                  ngbDropdownToggle>{{filterText}}</button>
-          <ul ngbDropdownMenu>
-            <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item"
-                                                                  (click)="filter.function()">{{filter.name}}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-  
-      <div class="col-md-4">
-        <app-btn-custom
-          [type]="'submit'"
-          [class]="'btn btn-primary'"
-          [innerHtml]="'Cadastrar nova turma'"
-          [routerLink]="'/team-create'"
-        ></app-btn-custom>
+  <h5 class="pt-3">Alunos cadastrados</h5>
+
+  <!-- Search bar -->
+  <div class="d-flex justify-content-between mt-3 mb-3">
+    <div class="col-md-4">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+               id="search-input"
+               (input)="filterTeamList($event)">
+      </form>
+    </div>
+
+    <div class="col-md-4">
+      Ordenar por
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
+                ngbDropdownToggle>{{filterText}}</button>
+        <ul ngbDropdownMenu>
+          <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item"
+                                                                (click)="filter.function()">{{filter.name}}</a>
+          </li>
+        </ul>
       </div>
     </div>
-  
-    <div class="table-responsive">
-      <table class="table no-wrap user-table mb-0">
-        <thead>
+
+    <div class="col-md-4">
+      <app-btn-custom
+        [type]="'submit'"
+        [class]="'btn btn-primary'"
+        [innerHtml]="'Cadastrar nova turma'"
+        [routerLink]="'/team-create'"
+      ></app-btn-custom>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table no-wrap user-table mb-0">
+      <thead>
+      <tr>
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
+          {{ header }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let team of teams">
         <tr>
-          <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
-            {{ header }}
-          </th>
+          <td>
+            <h6 class="text-black">{{ team.name }}</h6>
+          </td>
+          <td>
+            <!--            <span class="text-muted">{{ getTeacherName(team.teacherId) }}</span>-->
+            <!--            <span class="text-muted">{{ getTeacherById(team.teacherId) }}</span>-->
+          </td>
+          <td>
+            <span class="black">{{ team.grade }}</span><br>
+          </td>
+          <td>
+            <span class="text-black">{{team.numberStudents}}</span><br>
+          </td>
+          <td>
+            <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
+                    [routerLink]="button.route ? [button.route, team.id] : null"
+                    (click)="button.function ? button.function(team.id) : null"
+                    title="{{ button.title }}">
+              <i [class]="button.iconClass"></i>
+            </button>
+          </td>
         </tr>
-        </thead>
-        <tbody>
-        <ng-container *ngFor="let team of teams">
-          <tr>
-            <td>
-              <h6 class="text-black">{{ team.name }}</h6>
-            </td>
-            <td>
-              <span class="black">{{ team.teacher.fullName }}</span><br>
-              <span class="text-muted">{{ team.teacher.phoneNumber}}</span>
-            </td>
-            <td>
-              <span class="black">{{ team.grade }}</span><br>
-            </td>
-            <td>
-             <span class="text-black">{{team.numberOfStudents}}</span><br>
-            </td>
-            <td>
-              <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
-                      [routerLink]="button.route ? [button.route, team.id] : null"
-                      (click)="button.function ? button.function(team.id) : null"
-                      title="{{ button.title }}">
-                <i [class]="button.iconClass"></i>
-              </button>
-            </td>
-          </tr>
-        </ng-container>
-        </tbody>
-      </table>
-    </div>
-  </section>
-  
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</section>
