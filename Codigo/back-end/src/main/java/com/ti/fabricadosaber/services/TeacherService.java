@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
+import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,7 +23,7 @@ public class TeacherService {
 
     public Teacher findById(Long id) {
         Optional<Teacher> teacher = this.teacherRepository.findById(id);
-        return teacher.orElseThrow(() -> new RuntimeException(
+        return teacher.orElseThrow(() -> new ObjectNotFoundException(
             "Professor não encontrado! Id: " + id + ", Tipo: " + Teacher.class.getName()));
     }
 
@@ -63,7 +65,7 @@ public class TeacherService {
         try {
             this.teacherRepository.delete(teacher);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
 }

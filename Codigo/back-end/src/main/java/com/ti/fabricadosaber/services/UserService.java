@@ -3,6 +3,8 @@ package com.ti.fabricadosaber.services;
 
 import com.ti.fabricadosaber.models.User;
 import com.ti.fabricadosaber.repositories.UserRepository;
+import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
+import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ public class UserService {
         // lidando com null usando Optional
         Optional<User> user = this.userRepository.findById(id);
 
-        return user.orElseThrow(() -> new RuntimeException(
+        return user.orElseThrow(() -> new ObjectNotFoundException(
                 "Usuário não encontrado! id: " + id + ", Tipo: " + User.class.getName()
         ));
     }
@@ -52,7 +54,7 @@ public class UserService {
         try{
             this.userRepository.delete(user);
         } catch (Exception error) {
-            throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
 

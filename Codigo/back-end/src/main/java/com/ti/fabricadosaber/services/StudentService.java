@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ti.fabricadosaber.models.Parent;
+import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
+import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ public class StudentService {
 
     public Student findById(Long id) {
         Optional<Student> student = this.studentRepository.findById(id);
-        return student.orElseThrow(() -> new RuntimeException(
+        return student.orElseThrow(() -> new ObjectNotFoundException(
                 "Aluno não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
     }
 
@@ -144,7 +146,7 @@ public class StudentService {
 
             }
         } catch (Exception e) {
-            throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
 }

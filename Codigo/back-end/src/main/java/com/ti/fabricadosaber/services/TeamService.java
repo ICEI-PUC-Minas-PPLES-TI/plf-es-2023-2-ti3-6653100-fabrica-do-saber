@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
+import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
+import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class TeamService {
 
     public Team findById(Long id) {
         Optional<Team> team = this.teamRepository.findById(id);
-        return team.orElseThrow(() -> new RuntimeException(
+        return team.orElseThrow(() -> new ObjectNotFoundException(
                 "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
     }
 
@@ -150,7 +152,7 @@ public class TeamService {
         try {
             this.teamRepository.delete(team);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
 
