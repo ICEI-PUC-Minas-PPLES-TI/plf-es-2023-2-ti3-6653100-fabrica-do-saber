@@ -56,9 +56,9 @@ public class TeamService {
         obj.setId(null);
         obj.setTeacher(teacher);
         processStudents(obj);
-        obj = this.teamRepository.save(obj);
-        associateStudents(obj);
-        return obj;
+       obj = this.teamRepository.save(obj);
+       associateStudents(obj);
+       return obj;
     }
 
     @Transactional
@@ -77,8 +77,10 @@ public class TeamService {
     }
 
     public void associateStudents(Team obj) {
-        for (Student student : obj.getStudents()) {
-            student.setTeam(obj);
+        if(obj.getStudents() != null) {
+            for (Student student : obj.getStudents()) {
+                student.setTeam(obj);
+            }
         }
     }
 
