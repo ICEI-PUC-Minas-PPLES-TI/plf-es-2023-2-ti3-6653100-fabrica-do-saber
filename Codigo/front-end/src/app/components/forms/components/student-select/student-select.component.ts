@@ -14,7 +14,7 @@ export class StudentSelectComponent {
 
   @Input() selectedStudentIds: number[] = [];
   @Output() selectedStudentIdsChange: EventEmitter<number[]> = new EventEmitter<number[]>();
-  
+
 
   selectedStudents: number[] = [];
 
@@ -35,6 +35,9 @@ export class StudentSelectComponent {
       neighborhood: "Downtown",
       cityOfResidence: "Springfield",
       zipCode: "12345",
+      team: {
+        id: 0
+      },
       parents: [
         {
           fullName: "Mary Smith",
@@ -91,6 +94,9 @@ export class StudentSelectComponent {
       neighborhood: "Upper East Side",
       cityOfResidence: "New York City",
       zipCode: "10001",
+      team: {
+        id: 0
+      },
       parents: [
         {
           fullName: "David Johnson",
@@ -143,5 +149,5 @@ export class StudentSelectComponent {
     // You can access the selectedStudentIds array
     console.log(selectedStudentIds);
   }
-  
+
 }

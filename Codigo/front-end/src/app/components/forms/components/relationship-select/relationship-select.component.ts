@@ -17,7 +17,7 @@ export class RelationshipSelectComponent {
   ]
 
   onRelationShipChange(event: any): void {
-    console.log(this.relationship)
+    this.relationship = event.target.value;
     this.relationshipStateChange.emit(this.relationship);
   }
 }

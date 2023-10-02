@@ -9,8 +9,8 @@ import { Team } from '../../../../interfaces/Team';
 })
 export class TeamSelectComponent {
 
-  @Input() team!: string;
-  @Output() teamChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() teamId!: number;
+  @Output() teamChange: EventEmitter<number> = new EventEmitter<number>();
 
   teams!: Team[];
 
@@ -28,8 +28,8 @@ export class TeamSelectComponent {
   }
 
   onTeamChange(event: any): void {
-    this.team = event.target.value;
-    this.teamChange.emit(this.team);
+    this.teamId = event.target.value;
+    this.teamChange.emit(this.teamId);
   }
 
 }

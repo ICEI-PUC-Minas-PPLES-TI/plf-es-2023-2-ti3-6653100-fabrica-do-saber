@@ -22,13 +22,12 @@
                [(ngModel)]="student.birthDate" name="studentBirthDate" maxlength="10" appDateFormat required>
       </div>
 
-      <!--todo: trocar fullName para team-->
-      <!--todo: trocar de input para componente select quando team for finalizado no back-end-->
       <div class="col-md-2 py-2">
-        <label for="studentTeam">Turma</label>
-        <input id="studentTeam" type="text" class="form-control"
-               [placeholder]="student.fullName ? student.fullName : ''"
-               [(ngModel)]="student.fullName" name="studentTeam">
+        <span>Turma*</span>
+        <app-team-select
+          [teamId]="student.team.id"
+          (teamChange)="onTeamChange($event)">
+        </app-team-select>
       </div>
     </div>
 
@@ -122,6 +121,7 @@
     <app-parent-info
       [title]="'Responsável 01'"
       [parent]="student.parents[0]"
+
     ></app-parent-info>
 
     <app-parent-info
