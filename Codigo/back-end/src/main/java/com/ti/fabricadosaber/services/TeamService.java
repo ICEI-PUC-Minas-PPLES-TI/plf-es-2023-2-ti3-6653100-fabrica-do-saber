@@ -90,11 +90,7 @@ public class TeamService {
 
                 Student existingStudent = studentService.findById(student.getId());
 
-                 if (existingStudent.getTeam() != null) {
-                    throw new RuntimeException("Aluno já pertence a turma " + obj.getClassroom());
-                }
-
-                updateStudent(student);
+                updateStudent(existingStudent);
                 updatedStudents.add(existingStudent);
 
                 obj.setStudents(updatedStudents);
