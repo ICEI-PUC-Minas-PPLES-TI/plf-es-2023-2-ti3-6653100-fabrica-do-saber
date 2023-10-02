@@ -3,6 +3,8 @@ package com.ti.fabricadosaber.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
+import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,7 +23,7 @@ public class EmployeeService {
 
     public Employee findById(Long id) {
         Optional<Employee> employee = this.employeeRepository.findById(id);
-        return employee.orElseThrow(() -> new RuntimeException(
+        return employee.orElseThrow(() -> new ObjectNotFoundException(
                 "Funcionário não encontrado! id: " + id + ", Tipo: " + Employee.class.getName()));
     }
 
@@ -54,7 +56,7 @@ public class EmployeeService {
         try {
             this.employeeRepository.delete(employee);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
 }
