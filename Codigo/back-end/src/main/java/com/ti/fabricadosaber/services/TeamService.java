@@ -56,9 +56,9 @@ public class TeamService {
         obj.setId(null);
         obj.setTeacher(teacher);
         processStudents(obj);
-       obj = this.teamRepository.save(obj);
-       associateStudents(obj);
-       return obj;
+        obj = this.teamRepository.save(obj);
+        associateStudents(obj);
+        return obj;
     }
 
     @Transactional
@@ -77,7 +77,7 @@ public class TeamService {
     }
 
     public void associateStudents(Team obj) {
-        if(obj.getStudents() != null) {
+        if (obj.getStudents() != null) {
             for (Student student : obj.getStudents()) {
                 student.setTeam(obj);
             }
@@ -161,6 +161,7 @@ public class TeamService {
         dto.setName(team.getName());
         dto.setGrade(team.getGrade());
         dto.setNumberStudents(team.getNumberStudents());
+        dto.setTeacherId(team.getTeacher().getId());
 
         if (team.getStudents() != null) {
             List<Long> studentIds = team.getStudents().stream()
