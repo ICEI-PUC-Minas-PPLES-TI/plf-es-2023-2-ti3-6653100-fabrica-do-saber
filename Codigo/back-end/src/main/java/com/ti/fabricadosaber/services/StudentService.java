@@ -6,14 +6,16 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ti.fabricadosaber.models.Parent;
-import com.ti.fabricadosaber.repositories.ParentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import com.ti.fabricadosaber.models.Student;
+import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.repositories.StudentRepository;
+import com.ti.fabricadosaber.repositories.TeamRepository;
+
 import javax.persistence.EntityNotFoundException;
 import java.util.Set;
 
@@ -23,9 +25,11 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired 
+    private TeamRepository teamRepository;
+
     @Autowired
     private ParentService parentService;
-
 
     public Student findById(Long id) {
         Optional<Student> student = this.studentRepository.findById(id);
@@ -54,14 +58,25 @@ public class StudentService {
     public Student create(Student obj) {
         twoParents(obj);
 
+        Team team = teamRepository.findById(obj.getTeam().getId())
+        .orElseThrow(() -> new RuntimeException(
+                "Turma não encontrada! Id: " + obj.getTeam().getId() + ", Tipo: " + Team.class.getName()));
+
         obj.setId(null);
+        obj.setTeam(team);
         Set<Parent> createdParents = saveParents(obj);
         obj.setParents(createdParents);
         obj.setRegistrationDate(LocalDate.now());
-        return studentRepository.save(obj);
+
+        Student createdStudent = studentRepository.save(obj);
+
+        team.setNumberStudents(team.getStudents().size());
+        teamRepository.save(team);
+
+        return createdStudent;
     }
 
-    public  Set<Parent> saveParents(Student obj) {
+    public Set<Parent> saveParents(Student obj) {
         String[] ignoreProperties = {"id", "registrationDate"};
         Set<Parent> createdParents = new HashSet<>();
 
@@ -108,6 +123,13 @@ public class StudentService {
         Student student = findById(id);
         try {
             this.studentRepository.delete(student);
+            Team team = student.getTeam();
+            if(team != null) {
+                team.getStudents().remove(student);
+                team.setNumberStudents(team.getStudents().size());
+                teamRepository.save(team);
+
+            }
         } catch (Exception e) {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
         }

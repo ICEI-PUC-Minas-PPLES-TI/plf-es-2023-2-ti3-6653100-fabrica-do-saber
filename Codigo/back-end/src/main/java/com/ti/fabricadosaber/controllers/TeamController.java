@@ -60,12 +60,6 @@ public class TeamController {
         return ResponseEntity.ok().body(students);
     }
 
-    @GetMapping("/{id}/students")
-    public ResponseEntity<List<Student>> listStudents(@PathVariable Long id) {
-        List<Student> students = this.teamService.listStudents(id);
-        return ResponseEntity.ok().body(students);
-    }
-
     @PostMapping
     public ResponseEntity<Team> create(@Valid @RequestBody Team obj) {
         this.teamService.create(obj);
@@ -91,9 +85,9 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{teamId}/{studentId}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long teamId, @PathVariable Long studentId) {
-        this.teamService.deleteStudent(teamId, studentId);
+    @DeleteMapping("/{teamId}/delete-students")
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long teamId, @RequestBody List<Long> studentIds) {
+        this.teamService.deleteStudent(teamId, studentIds);
         return ResponseEntity.noContent().build();
     }
 
