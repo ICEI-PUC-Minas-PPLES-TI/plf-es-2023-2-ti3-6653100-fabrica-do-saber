@@ -19,5 +19,6 @@ public class TeamResponseDTO {
     private Grade grade;
     private Integer numberStudents;
     private List<Long> studentIds;
+    private Long teacherId;
 
 }

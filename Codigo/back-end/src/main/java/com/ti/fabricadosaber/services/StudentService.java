@@ -25,7 +25,7 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Autowired 
+    @Autowired
     private TeamRepository teamRepository;
 
     @Autowired
@@ -40,11 +40,10 @@ public class StudentService {
     public List<Student> listAllStudents() {
         try {
             return studentRepository.findAll();
-        } catch(EmptyResultDataAccessException error) {
+        } catch (EmptyResultDataAccessException error) {
             throw new RuntimeException("Nenhum estudante cadastrado", error);
         }
     }
-
 
     public Set<Parent> listParents(Long id) {
         Student student = studentRepository.findById(id)
@@ -53,15 +52,11 @@ public class StudentService {
         return student.getParents();
     }
 
-
     @Transactional
     public Student create(Student obj) {
         twoParents(obj);
 
-        Team team = teamRepository.findById(obj.getTeam().getId())
-        .orElseThrow(() -> new RuntimeException(
-                "Turma não encontrada! Id: " + obj.getTeam().getId() + ", Tipo: " + Team.class.getName()));
-
+        Team team = findTeamById(obj.getTeam().getId());
         obj.setId(null);
         obj.setTeam(team);
         Set<Parent> createdParents = saveParents(obj);
@@ -69,15 +64,13 @@ public class StudentService {
         obj.setRegistrationDate(LocalDate.now());
 
         Student createdStudent = studentRepository.save(obj);
-
-        team.setNumberStudents(team.getStudents().size());
-        teamRepository.save(team);
+        updateTeamStudentCount(team);
 
         return createdStudent;
     }
 
     public Set<Parent> saveParents(Student obj) {
-        String[] ignoreProperties = {"id", "registrationDate"};
+        String[] ignoreProperties = { "id", "registrationDate" };
         Set<Parent> createdParents = new HashSet<>();
 
         Parent currentParent;
@@ -102,29 +95,49 @@ public class StudentService {
         }
     }
 
-
-
     public Student update(Student obj) {
         twoParents(obj);
 
         Student newObj = findById(obj.getId());
-        String[] ignoreProperties = {"id", "registrationDate", "team"};
+        String[] ignoreProperties = { "id", "registrationDate" };
+
+        Team oldTeam = newObj.getTeam();
+        Team newTeam = findTeamById(obj.getTeam().getId());
 
         Set<Parent> updatedParents = saveParents(obj);
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);
         newObj.setParents(updatedParents);
         newObj.setRegistrationDate(LocalDate.now());
+        newObj.setTeam(newTeam);
+
+        if (oldTeam != null && !oldTeam.equals(newTeam)) {
+            oldTeam.getStudents().remove(newObj);
+            updateTeamStudentCount(oldTeam);
+        }
+
+        newTeam.getStudents().add(newObj);
+        updateTeamStudentCount(newTeam);
 
         return studentRepository.save(newObj);
     }
 
+    private Team findTeamById(Long id) {
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
+    }
+
+    private void updateTeamStudentCount(Team team) {
+        team.setNumberStudents(team.getStudents().size());
+        teamRepository.save(team);
+    }
 
     public void delete(Long id) {
         Student student = findById(id);
         try {
             this.studentRepository.delete(student);
             Team team = student.getTeam();
-            if(team != null) {
+            if (team != null) {
                 team.getStudents().remove(student);
                 team.setNumberStudents(team.getStudents().size());
                 teamRepository.save(team);

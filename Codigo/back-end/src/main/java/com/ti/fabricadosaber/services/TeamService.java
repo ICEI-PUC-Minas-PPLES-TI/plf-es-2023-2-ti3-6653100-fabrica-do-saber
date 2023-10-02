@@ -77,8 +77,10 @@ public class TeamService {
     }
 
     public void associateStudents(Team obj) {
-        for (Student student : obj.getStudents()) {
-            student.setTeam(obj);
+        if (obj.getStudents() != null) {
+            for (Student student : obj.getStudents()) {
+                student.setTeam(obj);
+            }
         }
     }
 
@@ -90,11 +92,7 @@ public class TeamService {
 
                 Student existingStudent = studentService.findById(student.getId());
 
-                 if (existingStudent.getTeam() != null) {
-                    throw new RuntimeException("Aluno já pertence a turma " + obj.getClassroom());
-                }
-
-                updateStudent(student);
+                updateStudent(existingStudent);
                 updatedStudents.add(existingStudent);
 
                 obj.setStudents(updatedStudents);
@@ -163,6 +161,7 @@ public class TeamService {
         dto.setName(team.getName());
         dto.setGrade(team.getGrade());
         dto.setNumberStudents(team.getNumberStudents());
+        dto.setTeacherId(team.getTeacher().getId());
 
         if (team.getStudents() != null) {
             List<Long> studentIds = team.getStudents().stream()
