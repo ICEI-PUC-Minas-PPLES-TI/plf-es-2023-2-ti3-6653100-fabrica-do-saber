@@ -16,9 +16,11 @@
     </div>
 
     <div class="col-4 py-2">
-      <label for="teamClassroom">Sala de Aula*</label>
-      <input id="teamClassroom" type="text" class="form-control" [placeholder]="team.classRoom ? team.classRoom : ''"
-             [(ngModel)]="team.classRoom" name="teamClassroom" required>
+      <label>Sala de Aula*</label>
+      <app-teacher-select
+        [teacherId]="team.teacherId"
+        (teacherChange)="onTeacherChange($event)">
+      </app-teacher-select>
     </div>
   </div>
 

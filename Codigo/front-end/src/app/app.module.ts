@@ -41,6 +41,7 @@ import { RelationshipSelectComponent } from './components/forms/components/relat
 import { StudentSelectComponent } from './components/forms/components/student-select/student-select.component';
 import { CurrencyFormatDirective } from './directives/currency-format.directive';
 import { TeamSelectComponent } from './components/forms/components/team-select/team-select.component';
+import { TeacherSelectComponent } from './components/forms/components/teacher-select/teacher-select.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { TeamSelectComponent } from './components/forms/components/team-select/t
     StudentSelectComponent,
     CurrencyFormatDirective,
     TeamSelectComponent,
+    TeacherSelectComponent,
   ],
   imports: [
     BrowserModule,

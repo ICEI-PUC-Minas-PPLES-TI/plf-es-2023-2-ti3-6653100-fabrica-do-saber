@@ -24,6 +24,10 @@ export class TeamFormComponent {
     this.getStudents();
   }
 
+  onTeacherChange(teacherId: number):void {
+    console.log(teacherId)
+  }
+
   getStudents(): void {
     this.studentService.getStudents().subscribe((students: Student[]): void => {
       this.selectedStudents = students

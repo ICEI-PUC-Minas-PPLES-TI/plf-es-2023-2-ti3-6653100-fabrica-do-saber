@@ -1,0 +1,6 @@
+<select id="inputState" class="form-select" (change)="onTeacherChange($event)" [(ngModel)]="teacherId" required >
+  <option *ngFor="let teacher of teachers" [ngValue]="teacher.id">{{ teacher.fullName }}</option>
+</select>
+
+
+
