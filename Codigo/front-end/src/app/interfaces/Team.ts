@@ -1,12 +1,10 @@
-import { Student } from './Student';
-
 export interface Team {
-    id: number;
-    name: string;
-    numberStudents: number;
-    grade: string;
-    classRoom: string;
-    students: Student[];
-    studentsId: number[];
-    teacherId: number;
+  id?: number;
+  name: string;
+  grade: string;
+  classroom: string;
+  numberStudents?: number;
+  /*todo: renomear para studentsIds (front e back-end)*/
+  studentIds: number[];
+  teacherId: number;
 }

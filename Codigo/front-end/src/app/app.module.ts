@@ -42,6 +42,7 @@ import { StudentSelectComponent } from './components/forms/components/student-se
 import { CurrencyFormatDirective } from './directives/currency-format.directive';
 import { TeamSelectComponent } from './components/forms/components/team-select/team-select.component';
 import { TeacherSelectComponent } from './components/forms/components/teacher-select/teacher-select.component';
+import { GradeSelectComponent } from './components/forms/components/grade-select/grade-select.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { TeacherSelectComponent } from './components/forms/components/teacher-se
     CurrencyFormatDirective,
     TeamSelectComponent,
     TeacherSelectComponent,
+    GradeSelectComponent,
   ],
   imports: [
     BrowserModule,

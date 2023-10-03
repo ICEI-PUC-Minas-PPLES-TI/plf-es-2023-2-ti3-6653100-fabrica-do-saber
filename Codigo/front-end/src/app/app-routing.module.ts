@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'teacher-edit/:id', component: TeacherEditComponent },
   { path: 'teacher-list', component: TeacherListComponent },
   { path: 'team-create', component: TeamCreateComponent },
-  { path: 'team-edit', component: TeamEditComponent },
+  { path: 'team-edit/:id', component: TeamEditComponent },
   { path: 'team-list', component: TeamListComponent },
 ];
 

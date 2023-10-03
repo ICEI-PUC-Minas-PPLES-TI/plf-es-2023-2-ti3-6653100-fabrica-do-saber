@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Team} from '../../../interfaces/Team';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TeamService} from '../../../services/team/team.service';
+import {catchError, tap} from 'rxjs';
 
 @Component({
   selector: 'app-team-edit',
@@ -7,4 +11,55 @@ import { Component } from '@angular/core';
 })
 export class TeamEditComponent {
 
+  team !: Team;
+  teamId: number = 0;
+
+  constructor(private route: ActivatedRoute, private teamService: TeamService, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params): void => {
+      const id: number = parseInt(<string>params.get('id'));
+      this.teamId = id;
+      this.getTeamById(id);
+    });
+  }
+
+  getTeamById(id: number): void {
+    this.teamService.getTeamById(id).subscribe((team: Team): void => {
+      this.team = team;
+    });
+  }
+
+  updateTeam(): void {
+    /*todo: deletar apos ajuste do retorno do back-end*/
+    const formattedTeam = this.formatToRequest(this.team);
+    this.teamService.updateTeam(this.teamId, formattedTeam)
+      .pipe(
+        tap((response): void => {
+          this.router.navigate(['/team-list']);
+        }),
+        catchError(err => {
+          throw err;
+        }))
+      .subscribe();
+  }
+
+  cancel(): void {
+    this.router.navigate(['/team-list']);
+  }
+
+  formatToRequest(team: Team) {
+    console.log(team.studentIds);
+
+    return {
+      name: team.name,
+      grade: team.grade,
+      classroom: team.classroom,
+      teacher: {
+        id: team.teacherId
+      },
+      students: team.studentIds.map((studentId: number): { id: number } => ({id: studentId}))
+    };
+  }
 }

@@ -12,7 +12,8 @@ export class TeamService {
   constructor(private http: HttpClient) {
   }
 
-  createTeam(team: Team): Observable<any> {
+  /*todo: mudar apos padronizar requisicoes no back-end (team: any)*/
+  createTeam(team: any): Observable<any> {
     return this.http.post<Team>(`${API_CONFIG.baseUrl}/team`, team)
       .pipe(
         tap(response => {
@@ -25,7 +26,8 @@ export class TeamService {
       );
   }
 
-  updateTeam(id: number, team: Team): Observable<any> {
+  /*todo: mudar apos padronizar requisicoes no back-end (team: any)*/
+  updateTeam(id: number, team: any): Observable<any> {
     return this.http.put<Team>(`${API_CONFIG.baseUrl}/team/${id}`, team)
       .pipe(
         tap(response => {

@@ -17,6 +17,7 @@ public class TeamResponseDTO {
     private Long id;
     private String name;
     private Grade grade;
+    private String classroom;
     private Integer numberStudents;
     private List<Long> studentIds;
     private Long teacherId;

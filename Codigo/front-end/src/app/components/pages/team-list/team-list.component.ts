@@ -3,6 +3,7 @@ import {Team} from '../../../interfaces/Team';
 import {TeamService} from '../../../services/team/team.service';
 import {TeacherService} from '../../../services/teacher/teacher.service';
 import {Teacher} from '../../../interfaces/Teacher';
+import {Student} from '../../../interfaces/Student';
 
 @Component({
   selector: 'app-team-list',
@@ -15,10 +16,9 @@ export class TeamListComponent {
   /*TeamImp variables*/
   originalTeams: Team[] = [];
   teams: Team[] = [];
-  teachers!: Teacher[];
 
   /*Table variables*/
-  tableHeaders: String[] = ['Turma', 'Professor', 'Série', 'Nº de alunos', 'Gerenciar'];
+  tableHeaders: String[] = ['Turma', 'Professor', 'Série', 'Nº de alunos', 'Sala de aula', 'Gerenciar'];
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/team-edit', function: null},
     {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
@@ -26,7 +26,6 @@ export class TeamListComponent {
   ];
   filters = [
     {name: 'ordem alfabética', function: this.sortTeamsByName.bind(this)},
-    {name: 'id', function: this.sortTeamsById.bind(this)}
   ];
   filterText!: string;
 
@@ -46,15 +45,10 @@ export class TeamListComponent {
     });
   }
 
-  deleteTeam(id: number): void {
+  deleteTeam(id: any): void {
     this.teamService.deleteTeam(id).subscribe((): void => {
       this.getTeams();
     });
-  }
-
-  getTeacherName(id: number) {
-
-    return this.teacherService.getTeacherById(id);
   }
 
   filterTeamList(event: Event): void {
@@ -79,19 +73,6 @@ export class TeamListComponent {
       return 0;
     });
     this.updateBtnText(this.sortTeamsByName.name);
-  }
-
-  sortTeamsById(): void {
-    this.teams = this.originalTeams.sort(function (a: Team, b: Team): number {
-      let idA: number = a.id;
-      let idB: number = b.id;
-      if (idA < idB)
-        return -1;
-      if (idA > idB)
-        return 1;
-      return 0;
-    });
-    this.updateBtnText(this.sortTeamsById.name);
   }
 
   updateBtnText(funcName: string) {

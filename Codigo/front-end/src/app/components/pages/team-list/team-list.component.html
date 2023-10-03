@@ -1,5 +1,5 @@
 <section class="container">
-  <h5 class="pt-3">Alunos cadastrados</h5>
+  <h5 class="pt-3">Turmas cadastradas</h5>
 
   <!-- Search bar -->
   <div class="d-flex justify-content-between mt-3 mb-3">
@@ -50,14 +50,17 @@
             <h6 class="text-black">{{ team.name }}</h6>
           </td>
           <td>
-            <!--            <span class="text-muted">{{ getTeacherName(team.teacherId) }}</span>-->
-            <!--            <span class="text-muted">{{ getTeacherById(team.teacherId) }}</span>-->
+            <span class="text-black">Professor</span><br>
+            <span class="text-muted">Professor</span>
           </td>
           <td>
             <span class="black">{{ team.grade }}</span><br>
           </td>
           <td>
-            <span class="text-black">{{team.numberStudents}}</span><br>
+            <span class="black">{{ team.numberStudents }}</span><br>
+          </td>
+          <td>
+            <span class="black">{{ team.classroom }}</span><br>
           </td>
           <td>
             <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"

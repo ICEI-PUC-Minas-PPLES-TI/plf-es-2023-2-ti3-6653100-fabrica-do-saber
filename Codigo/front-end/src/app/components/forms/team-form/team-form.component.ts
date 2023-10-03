@@ -19,13 +19,18 @@ export class TeamFormComponent {
   constructor(private studentService: StudentService) {
   }
 
-  onselectedStudentIdsChange(idArr: number[]): void {
+  onSelectedStudentIdsChange(idArr: number[]): void {
     this.selectedStudentIds = idArr;
+    /*todo: revisar nome da funcao*/
     this.getStudents();
   }
 
   onTeacherChange(teacherId: number):void {
-    console.log(teacherId)
+    this.team.teacherId = parseInt(this.formatSelect(teacherId.toString()));
+  }
+
+  onGrandeChange(grade: string):void {
+    this.team.grade = this.formatSelect(grade);
   }
 
   getStudents(): void {
@@ -35,4 +40,10 @@ export class TeamFormComponent {
         .map(student => student.fullName);
     });
   }
+
+  formatSelect(select: string): string {
+    const parts: string[] = select.split(':');
+    return parts[1].trim();
+  }
+
 }

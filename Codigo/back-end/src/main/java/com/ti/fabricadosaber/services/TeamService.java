@@ -160,6 +160,7 @@ public class TeamService {
         dto.setId(team.getId());
         dto.setName(team.getName());
         dto.setGrade(team.getGrade());
+        dto.setClassroom(team.getClassroom());
         dto.setNumberStudents(team.getNumberStudents());
         dto.setTeacherId(team.getTeacher().getId());
 
