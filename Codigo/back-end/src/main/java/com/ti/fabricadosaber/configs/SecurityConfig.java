@@ -1,6 +1,7 @@
 package com.ti.fabricadosaber.configs;
 
 import com.ti.fabricadosaber.security.JWTAuthenticationFilter;
+import com.ti.fabricadosaber.security.JWTAuthorizationFilter;
 import com.ti.fabricadosaber.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -80,7 +81,7 @@ public class SecurityConfig {
 
 
         http.addFilter(new JWTAuthenticationFilter(this.authenticationManager, this.jwtUtil));
-        /*http.addFilter(new JWTAuthorizationFilter(this.authenticationManager, this.jwtUtil, this.userDetailsService));*/
+        http.addFilter(new JWTAuthorizationFilter(this.authenticationManager, this.jwtUtil, this.userDetailsService));
 
 
 
