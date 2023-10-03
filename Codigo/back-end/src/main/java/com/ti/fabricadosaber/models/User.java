@@ -41,6 +41,7 @@ public class User {
     private String fullName;
 
     @Column(name = "email", length = 45, nullable = false, unique = true)
+    @NotBlank
     @Email(message = "E-mail inválido")
     private String email;
 

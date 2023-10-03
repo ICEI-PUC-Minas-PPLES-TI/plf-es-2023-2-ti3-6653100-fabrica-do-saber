@@ -39,11 +39,19 @@ public class JWTUtil {
             String email = claims.getSubject();
             Date expirationDate = claims.getExpiration();
             Date now = new Date(System.currentTimeMillis());
+
             if(Objects.nonNull(email) && Objects.nonNull(expirationDate) && now.before(expirationDate)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public String getUsername(String token) {
+        Claims claims = getClaims(token);
+        if (Objects.nonNull(claims))
+            return claims.getSubject();
+        return null;
     }
 
 
