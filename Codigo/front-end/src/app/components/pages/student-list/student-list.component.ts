@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
-import { Student } from '../../../interfaces/Student';
-import { StudentService } from '../../../services/student/student.service';
+import {Component} from '@angular/core';
+import {Student} from '../../../interfaces/Student';
+import {StudentService} from '../../../services/student/student.service';
+import {Team} from '../../../interfaces/Team';
+import {TeamService} from '../../../services/team/team.service';
+import {forkJoin, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-student-list',
@@ -12,6 +15,7 @@ export class StudentListComponent {
 
   originalStudents: Student[] = [];
   students: Student[] = [];
+  teams: Team[] = [];
 
   /*Table variables*/
   tableHeaders: String[] = ['Nome', 'Idade', 'Responsável', 'Responsável', 'Turma', 'Data de registro', 'Gerenciar'];
@@ -26,7 +30,7 @@ export class StudentListComponent {
   ];
   filterText!: string;
 
-  constructor(private studentService: StudentService) {
+  constructor(private studentService: StudentService, private teamService: TeamService) {
   }
 
   ngOnInit(): void {
@@ -38,8 +42,24 @@ export class StudentListComponent {
     this.studentService.getStudents().subscribe((students: Student[]): void => {
       this.originalStudents = students;
       this.students = [...this.originalStudents];
+      this.getTeams(this.students);
       this.sortStudentsByName();
     });
+  }
+
+  getTeams(students: Student[]): void {
+    const teamObservables: Observable<Team>[] = students.map((student: Student): Observable<Team> => {
+      return this.teamService.getTeamById(student.team.id);
+    });
+
+    forkJoin(teamObservables).subscribe((teams: Team[]): void => {
+      this.teams = teams;
+    });
+  }
+
+  getTeamName(student: Student): string {
+    const team: Team | undefined = this.teams.find(team => team.id === student.team.id);
+    return team ? team.name : '';
   }
 
   deleteStudent(id: number): void {

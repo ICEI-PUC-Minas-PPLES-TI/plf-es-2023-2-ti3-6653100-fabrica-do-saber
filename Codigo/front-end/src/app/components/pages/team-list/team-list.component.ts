@@ -3,6 +3,7 @@ import {Team} from '../../../interfaces/Team';
 import {TeamService} from '../../../services/team/team.service';
 import {TeacherService} from '../../../services/teacher/teacher.service';
 import {Teacher} from '../../../interfaces/Teacher';
+import {forkJoin, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-team-list',
@@ -46,11 +47,29 @@ export class TeamListComponent {
   }
 
   getTeachers(teams: Team[]): void {
-    teams.map((team: Team): void => {
-      this.teacherService.getTeacherById(team.teacherId).subscribe((teacher: Teacher): void => {
-        this.teachers.push(teacher);
-      });
+    const teacherObservables: Observable<Teacher>[] = teams.map((team: Team) =>
+      this.teacherService.getTeacherById(team.teacherId)
+    );
+
+    forkJoin(teacherObservables).subscribe((teachers: Teacher[]): void => {
+      this.teachers = teachers;
     });
+  }
+
+  getTeacherInfo(team: Team, attribute: string):string {
+
+    const teacher: Teacher | undefined = this.teachers.find(teacher => teacher.id === team.teacherId);
+
+    switch (attribute) {
+      case 'fullName': {
+        return teacher ? teacher.fullName : '';
+      }
+      case 'phoneNumber': {
+        return teacher ? teacher.phoneNumber : '';
+      }
+      default:
+        return '';
+    }
   }
 
   deleteTeam(id: any): void {

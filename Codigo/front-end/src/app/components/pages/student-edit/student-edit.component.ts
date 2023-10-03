@@ -31,11 +31,12 @@ export class StudentEditComponent {
   getStudentById(id: number): void {
     this.studentService.getStudentById(id).subscribe((student: Student): void => {
       /*todo: ajustar de acordo com mudancas do back-end*/
-      if (student.team) {
-        student.team = {id: student.team.id};
-      }
+      // if (student.team) {
+      //   student.team = {id: student.team.id};
+      // }
       this.student = student;
       [this.parent00, this.parent01] = [this.student.parents[0], this.student.parents[1]];
+      console.log(this.student)
     });
   }
 

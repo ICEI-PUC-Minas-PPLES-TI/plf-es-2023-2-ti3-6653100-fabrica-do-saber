@@ -44,15 +44,14 @@
       </tr>
       </thead>
       <tbody>
-      <ng-container *ngFor="let team of teams; let i = index">
+      <ng-container *ngFor="let team of teams">
         <tr>
           <td>
             <h6 class="text-black">{{ team.name }}</h6>
           </td>
           <td>
-            <!--todo: ajustar para dados reais-->
-            <span *ngIf="teachers[i]" class="text-black">{{teachers[i].fullName}}</span><br>
-            <span *ngIf="teachers[i]" class="text-muted">{{teachers[i].phoneNumber}}</span>
+            <span class="text-black">{{getTeacherInfo(team, 'fullName')}}</span><br>
+            <span class="text-muted">{{getTeacherInfo(team, 'phoneNumber')}}</span>
           </td>
           <td>
             <span class="black">{{ team.grade }}</span><br>

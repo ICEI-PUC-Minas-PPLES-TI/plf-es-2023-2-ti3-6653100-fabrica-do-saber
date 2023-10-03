@@ -21,7 +21,6 @@ export class TeamFormComponent {
 
   onSelectedStudentIdsChange(idArr: number[]): void {
     this.selectedStudentIds = idArr;
-    /*todo: revisar nome da funcao*/
     this.getStudents();
   }
 

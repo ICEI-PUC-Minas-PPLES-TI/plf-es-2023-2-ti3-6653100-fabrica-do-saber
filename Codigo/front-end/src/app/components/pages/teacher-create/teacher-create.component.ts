@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {TeacherService} from '../../../services/teacher/teacher.service';
 import {Teacher} from '../../../interfaces/Teacher';
 import {TeacherImp} from '../../../classes/teacher/teacher-imp';
@@ -13,8 +13,6 @@ import {ToastrService} from 'ngx-toastr';
 export class TeacherCreateComponent {
 
   teacher: Teacher = new TeacherImp();
-
-  @ViewChild('showAddressCheckbox') showAddressCheckbox!: ElementRef<HTMLInputElement>;
 
   constructor(private router: Router, private toastr: ToastrService, private teacherService: TeacherService) {
   }
