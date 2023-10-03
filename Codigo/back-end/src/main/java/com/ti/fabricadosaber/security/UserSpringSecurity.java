@@ -16,24 +16,25 @@ import java.util.stream.Collectors;
 @Getter
 public class UserSpringSecurity implements UserDetails {
 
-   private Long id;
-   private String fullName;
-   private String email;
-   private String password;
-   private LocalDate creationDate;
-   private Collection<? extends GrantedAuthority> authorities;
+    private Long id;
+    private String username;
+    private String password;
+    private Collection<? extends GrantedAuthority> authorities;
 
 
-    public UserSpringSecurity(Long id, String fullName, String email, String password, LocalDate creationDate, Set<ProfileEnum> profileEnums) {
+    public UserSpringSecurity(Long id, String username, String password, Set<ProfileEnum> profileEnums) {
         this.id = id;
-        this.fullName = fullName;
-        this.email = email;
+        this.username = username;
         this.password = password;
-        this.creationDate = creationDate;
         this.authorities =
                 profileEnums.stream().map(x -> new SimpleGrantedAuthority(x.getDescription())).collect(Collectors.toList());
     }
 
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
