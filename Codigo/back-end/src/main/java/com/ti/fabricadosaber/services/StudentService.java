@@ -125,7 +125,7 @@ public class StudentService {
 
     private Team findTeamById(Long id) {
         return teamRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(
+                .orElseThrow(() -> new ObjectNotFoundException(
                         "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
     }
 
