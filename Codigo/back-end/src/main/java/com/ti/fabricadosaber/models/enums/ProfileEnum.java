@@ -11,7 +11,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 public enum ProfileEnum {
-    ADMIN(1, "ROLE_ADMIN");
+    ADMIN(1, "ROLE_ADMIN"),
+    USER(2, "ROLE_USER");
 
 
     private Integer code;
