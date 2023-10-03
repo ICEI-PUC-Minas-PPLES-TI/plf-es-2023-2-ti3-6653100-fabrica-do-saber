@@ -3,13 +3,13 @@
     <app-team-form
       *ngIf="team"
       [team]="team"
-      [title]="'Cadastrar nova turma'"
+      [title]="'Editar professor'"
     ></app-team-form>
     <div class="col-12 d-flex justify-content-end">
       <app-btn-custom
         [type]="'submit'"
         [class]="'btn btn-outline-success me-2'"
-        [innerHtml]="'Cadastrar'"
+        [innerHtml]="'Atualizar'"
         (click)="updateTeam()"
       ></app-btn-custom>
       <app-btn-custom

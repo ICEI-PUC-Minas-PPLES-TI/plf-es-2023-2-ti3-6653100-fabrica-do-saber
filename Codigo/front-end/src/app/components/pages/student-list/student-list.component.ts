@@ -10,7 +10,6 @@ import { StudentService } from '../../../services/student/student.service';
 
 export class StudentListComponent {
 
-  /*StudentImp variables*/
   originalStudents: Student[] = [];
   students: Student[] = [];
 

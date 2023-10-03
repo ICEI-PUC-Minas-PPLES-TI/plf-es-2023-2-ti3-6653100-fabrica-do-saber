@@ -23,9 +23,8 @@ export class StudentEditComponent {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params): void => {
-      const id: number = parseInt(<string>params.get('id'));
-      this.studentId = id;
-      this.getStudentById(id);
+      this.studentId = parseInt(<string>params.get('id'));
+      this.getStudentById(this.studentId);
     });
   }
 

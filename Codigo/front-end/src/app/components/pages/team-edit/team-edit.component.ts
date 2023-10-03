@@ -19,9 +19,8 @@ export class TeamEditComponent {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params): void => {
-      const id: number = parseInt(<string>params.get('id'));
-      this.teamId = id;
-      this.getTeamById(id);
+      this.teamId = parseInt(<string>params.get('id'));
+      this.getTeamById(this.teamId);
     });
   }
 

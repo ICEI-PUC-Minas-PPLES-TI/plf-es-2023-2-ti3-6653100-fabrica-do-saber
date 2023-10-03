@@ -3,7 +3,6 @@ import {Team} from '../../../interfaces/Team';
 import {TeamService} from '../../../services/team/team.service';
 import {TeacherService} from '../../../services/teacher/teacher.service';
 import {Teacher} from '../../../interfaces/Teacher';
-import {Student} from '../../../interfaces/Student';
 
 @Component({
   selector: 'app-team-list',
@@ -13,9 +12,9 @@ import {Student} from '../../../interfaces/Student';
 
 export class TeamListComponent {
 
-  /*TeamImp variables*/
-  originalTeams: Team[] = [];
-  teams: Team[] = [];
+  originalTeams!: Team[];
+  teams!: Team[];
+  teachers: Teacher[] = [];
 
   /*Table variables*/
   tableHeaders: String[] = ['Turma', 'Professor', 'Série', 'Nº de alunos', 'Sala de aula', 'Gerenciar'];
@@ -41,7 +40,16 @@ export class TeamListComponent {
     this.teamService.getTeams().subscribe((teams: Team[]): void => {
       this.originalTeams = teams;
       this.teams = [...this.originalTeams];
+      this.getTeachers(this.teams);
       this.sortTeamsByName();
+    });
+  }
+
+  getTeachers(teams: Team[]): void {
+    teams.map((team: Team): void => {
+      this.teacherService.getTeacherById(team.teacherId).subscribe((teacher: Teacher): void => {
+        this.teachers.push(teacher);
+      });
     });
   }
 
@@ -79,5 +87,4 @@ export class TeamListComponent {
     const filter = this.filters.find(filter => filter.function.name.includes(funcName));
     this.filterText = filter ? filter.name : '';
   }
-
 }

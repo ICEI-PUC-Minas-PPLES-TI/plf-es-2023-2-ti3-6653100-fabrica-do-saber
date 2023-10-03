@@ -19,9 +19,8 @@ export class TeacherEditComponent {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params): void => {
-      const id: number = parseInt(<string>params.get('id'));
-      this.teacherId = id;
-      this.getTeacherById(id);
+      this.teacherId = parseInt(<string>params.get('id'));
+      this.getTeacherById(this.teacherId);
     });
   }
 
