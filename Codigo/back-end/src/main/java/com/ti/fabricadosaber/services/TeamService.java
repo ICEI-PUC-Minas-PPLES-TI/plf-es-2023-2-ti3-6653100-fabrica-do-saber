@@ -169,6 +169,7 @@ public class TeamService {
         TeamResponseDTO dto = new TeamResponseDTO();
         dto.setId(team.getId());
         dto.setName(team.getName());
+        dto.setClassroom(team.getClassroom());
         dto.setGrade(team.getGrade());
         dto.setNumberStudents(team.getNumberStudents());
         dto.setTeacherId(team.getTeacher().getId());
