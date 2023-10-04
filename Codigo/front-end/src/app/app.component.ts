@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavigationEnd, Router } from "@angular/router";
+import {Component} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +7,13 @@ import { NavigationEnd, Router } from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'front-end';
+  title: string = 'front-end';
   showHeader: boolean = true;
 
-  // oculta o header na pagina de login, deixei desativado enquanto a autenticacao por JWT nao estiver concluida
   constructor(private router: Router) {
-    router.events.subscribe((event) => {
+    router.events.subscribe((event): void => {
       if (event instanceof NavigationEnd) {
-        // this.showHeader = (event.url == '/login');
+        this.showHeader = (event.url !== '/login');
       }
     });
   }

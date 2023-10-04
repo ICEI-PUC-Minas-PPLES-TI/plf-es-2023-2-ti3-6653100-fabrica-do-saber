@@ -17,7 +17,7 @@ export class HeaderComponent {
 
   isMenuOpen = false;
 
-  toggleMenu() {
+  toggleMenu():void {
     this.isMenuOpen = !this.isMenuOpen;
   }
 }

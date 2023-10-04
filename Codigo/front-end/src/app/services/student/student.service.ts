@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Student } from '../../interfaces/Student';
 import { HttpClient } from '@angular/common/http';
-import { API_CONFIG } from '../config';
+import { API_CONFIG } from '../configs/config';
 import { catchError, Observable, tap } from 'rxjs';
 
 @Injectable({

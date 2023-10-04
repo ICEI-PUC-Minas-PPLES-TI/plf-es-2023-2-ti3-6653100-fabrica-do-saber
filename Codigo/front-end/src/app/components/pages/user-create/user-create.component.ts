@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {User} from '../../../interfaces/User';
 import {UserService} from '../../../services/user/user.service';
+import {UserImp} from '../../../classes/user/user-imp';
 
 @Component({
   selector: 'app-user-create',
@@ -11,7 +12,7 @@ import {UserService} from '../../../services/user/user.service';
 })
 export class UserCreateComponent {
 
-  user: User = {fullName: '', email: '', password: '', createDate: '25/10/2023'};
+  user: User = new UserImp();
 
   constructor(private router: Router, private toastr: ToastrService, private userService: UserService) {
   }
