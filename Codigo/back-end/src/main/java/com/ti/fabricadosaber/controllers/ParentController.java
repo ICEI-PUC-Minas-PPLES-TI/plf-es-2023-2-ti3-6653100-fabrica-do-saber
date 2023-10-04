@@ -20,7 +20,7 @@ public class ParentController {
     @Autowired
     private ParentService parentService;
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @GetMapping("/{id}")
     public ResponseEntity<Parent> findById(@PathVariable Long id) {
 
@@ -29,7 +29,7 @@ public class ParentController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @PostMapping
     @Validated
     public ResponseEntity<Void> create(@Valid @RequestBody Parent obj) {
@@ -44,7 +44,7 @@ public class ParentController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @PutMapping("/{id}")
     @Validated
     public ResponseEntity<Void> update(@Valid @RequestBody Parent obj, @PathVariable Long id) {
@@ -55,7 +55,7 @@ public class ParentController {
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.parentService.delete(id);

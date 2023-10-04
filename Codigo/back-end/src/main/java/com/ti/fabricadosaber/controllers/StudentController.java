@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
+import com.ti.fabricadosaber.models.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,21 +34,28 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @GetMapping
     public ResponseEntity<List<Student>> listAll() {
         List<Student> studentList = this.studentService.listAllStudents();
         return ResponseEntity.ok().body(studentList);
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @GetMapping("/{id}")
     public ResponseEntity<Student> findById(@PathVariable Long id) {
         Student obj = this.studentService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+    @GetMapping("/{id}/responsibles")
+    public ResponseEntity<Set<Parent>> listParents(@PathVariable Long id) {
+        Set<Parent> parents = this.studentService.listParents(id);
+        return ResponseEntity.ok().body(parents);
+    }
+
+
+
     @PostMapping
     @Validated(CreateStudent.class)
     public ResponseEntity<Void> create(@Valid @RequestBody Student obj) {
@@ -57,7 +65,7 @@ public class StudentController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @PutMapping("/{id}")
     @Validated(UpdateStudent.class)
     public ResponseEntity<Void> update(@Valid @RequestBody Student obj, @PathVariable Long id) {
@@ -66,7 +74,7 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.studentService.delete(id);

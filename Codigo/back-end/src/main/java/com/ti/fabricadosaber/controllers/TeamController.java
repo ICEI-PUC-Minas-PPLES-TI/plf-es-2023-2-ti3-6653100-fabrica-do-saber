@@ -32,7 +32,7 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @GetMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> findById(@PathVariable Long id) {
         Team team = teamService.findById(id);
@@ -45,7 +45,7 @@ public class TeamController {
         return ResponseEntity.ok(teamResponseDTO);
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @GetMapping
     public ResponseEntity<List<TeamResponseDTO>> listAllTeams() {
         List<Team> teams = this.teamService.listAllTeams();
@@ -57,14 +57,14 @@ public class TeamController {
         return ResponseEntity.ok().body(teamResponseDTOs);
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @GetMapping("/{id}/students")
     public ResponseEntity<List<Student>> listStudents(@PathVariable Long id) {
         List<Student> students = this.teamService.listStudents(id);
         return ResponseEntity.ok().body(students);
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @PostMapping
     public ResponseEntity<Team> create(@Valid @RequestBody Team obj) {
         this.teamService.create(obj);
@@ -73,7 +73,7 @@ public class TeamController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @PutMapping("/{Id}/add-students")
     public ResponseEntity<Void> addStudentsToTeam(
             @PathVariable Long Id,
@@ -84,7 +84,7 @@ public class TeamController {
     }
 
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody Team obj, @PathVariable Long id) {
         obj.setId(id);
@@ -92,14 +92,14 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @DeleteMapping("/{teamId}/delete-students")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long teamId, @RequestBody List<Long> studentIds) {
         this.teamService.deleteStudent(teamId, studentIds);
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.teamService.delete(id);

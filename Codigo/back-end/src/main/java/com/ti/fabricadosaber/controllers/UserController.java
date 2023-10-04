@@ -20,7 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("ROLE_ADMIN")
+
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) { //retorna uma entidade de resposta
         User obj = this.userService.findById(id);
