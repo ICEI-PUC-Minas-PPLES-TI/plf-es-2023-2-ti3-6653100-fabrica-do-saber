@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,17 +29,20 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Employee> findById(@PathVariable Long id) {
         Employee obj = this.employeeService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
+
     @GetMapping
     public ResponseEntity<List<Employee>> listAllEmployees() {
         List<Employee> employee = employeeService.listAllEmployees();
         return ResponseEntity.ok(employee);
     }
+
 
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody Employee obj) {
@@ -48,12 +52,14 @@ public class EmployeeController {
         return ResponseEntity.created(uri).build();
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody Employee obj, @PathVariable Long id) {
         obj.setId(id);
         this.employeeService.update(obj);
         return ResponseEntity.noContent().build();
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

@@ -5,6 +5,7 @@ import com.ti.fabricadosaber.services.ParentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,6 +20,7 @@ public class ParentController {
     @Autowired
     private ParentService parentService;
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Parent> findById(@PathVariable Long id) {
 
@@ -26,6 +28,7 @@ public class ParentController {
 
         return ResponseEntity.ok().body(obj);
     }
+
 
     @PostMapping
     @Validated
@@ -41,6 +44,7 @@ public class ParentController {
         return ResponseEntity.created(uri).build();
     }
 
+
     @PutMapping("/{id}")
     @Validated
     public ResponseEntity<Void> update(@Valid @RequestBody Parent obj, @PathVariable Long id) {
@@ -50,6 +54,7 @@ public class ParentController {
 
         return ResponseEntity.noContent().build();
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

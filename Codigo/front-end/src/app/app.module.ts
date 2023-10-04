@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -33,6 +33,19 @@ import {CpfFormatDirective} from './directives/cpf-format.directive';
 import {DateFormatDirective} from './directives/date-format.directive';
 import {RgFormatDirective} from './directives/rg-format.directive';
 import {PhoneNumberFormatDirective} from './directives/phone-number-format.directive';
+import {TeamCreateComponent} from './components/pages/team-create/team-create.component';
+import {TeamEditComponent} from './components/pages/team-edit/team-edit.component';
+import {TeamListComponent} from './components/pages/team-list/team-list.component';
+import {TeamFormComponent} from './components/forms/team-form/team-form.component';
+import {
+  RelationshipSelectComponent
+} from './components/forms/components/relationship-select/relationship-select.component';
+import {StudentSelectComponent} from './components/forms/components/student-select/student-select.component';
+import {TeamSelectComponent} from './components/forms/components/team-select/team-select.component';
+import {TeacherSelectComponent} from './components/forms/components/teacher-select/teacher-select.component';
+import {GradeSelectComponent} from './components/forms/components/grade-select/grade-select.component';
+import {CurrencyFormatDirective} from './directives/currency-format.directive';
+import {AuthInterceptor} from './services/configs/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -61,7 +74,17 @@ import {PhoneNumberFormatDirective} from './directives/phone-number-format.direc
     CpfFormatDirective,
     DateFormatDirective,
     RgFormatDirective,
-    PhoneNumberFormatDirective
+    PhoneNumberFormatDirective,
+    TeamCreateComponent,
+    TeamEditComponent,
+    TeamListComponent,
+    TeamFormComponent,
+    RelationshipSelectComponent,
+    StudentSelectComponent,
+    TeamSelectComponent,
+    TeacherSelectComponent,
+    GradeSelectComponent,
+    CurrencyFormatDirective,
   ],
   imports: [
     BrowserModule,
@@ -70,11 +93,18 @@ import {PhoneNumberFormatDirective} from './directives/phone-number-format.direc
     FormsModule,
     NgbModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-center-center',
+      /*todo: revisar apos adicionar configuracoes de toastr*/
+      positionClass: 'toast-center',
     }),
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -9,6 +9,9 @@ import { UserCreateComponent } from './components/pages/user-create/user-create.
 import { TeacherCreateComponent } from './components/pages/teacher-create/teacher-create.component';
 import { TeacherEditComponent } from './components/pages/teacher-edit/teacher-edit.component';
 import { TeacherListComponent } from './components/pages/teacher-list/teacher-list.component';
+import { TeamCreateComponent } from './components/pages/team-create/team-create.component';
+import { TeamEditComponent } from './components/pages/team-edit/team-edit.component';
+import { TeamListComponent } from './components/pages/team-list/team-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,6 +23,9 @@ const routes: Routes = [
   { path: 'teacher-create', component: TeacherCreateComponent },
   { path: 'teacher-edit/:id', component: TeacherEditComponent },
   { path: 'teacher-list', component: TeacherListComponent },
+  { path: 'team-create', component: TeamCreateComponent },
+  { path: 'team-edit/:id', component: TeamEditComponent },
+  { path: 'team-list', component: TeamListComponent },
 ];
 
 @NgModule({

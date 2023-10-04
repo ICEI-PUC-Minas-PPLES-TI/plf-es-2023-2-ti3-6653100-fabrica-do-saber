@@ -15,8 +15,13 @@ export class ParentInfoComponent {
     this.parent.homeState = this.formatSelect(newState);
   }
 
+  onRelationshipStateChange(newRelationship: string): void {
+    this.parent.relationship = this.formatSelect(newRelationship);
+  }
+
   formatSelect(select: string): string {
     const parts: string[] = select.split(':');
     return parts[1].trim();
   }
+
 }

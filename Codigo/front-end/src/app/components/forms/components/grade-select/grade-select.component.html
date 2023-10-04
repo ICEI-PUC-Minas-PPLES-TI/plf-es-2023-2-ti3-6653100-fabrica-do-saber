@@ -1,0 +1,6 @@
+<select id="inputState" class="form-select" (change)="onGradeChange($event)" [(ngModel)]="grade" required >
+  <option *ngFor="let grade of grades" [ngValue]="grade.value">{{ grade.name }}</option>
+</select>
+
+
+

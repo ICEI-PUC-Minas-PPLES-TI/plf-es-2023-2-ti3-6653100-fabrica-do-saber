@@ -10,7 +10,8 @@ export class ZipCodeFormatDirective {
   constructor(private el: ElementRef) {
   }
 
-  @HostListener('input', ['$event']) onInput(event: InputEvent): void {
+  @HostListener('input', ['$event'])
+  onInput(event: InputEvent): void {
 
     const inputElement: HTMLInputElement = this.el.nativeElement as HTMLInputElement;
     let value: string = inputElement.value.replace(/\D/g, '');

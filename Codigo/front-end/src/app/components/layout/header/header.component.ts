@@ -11,12 +11,13 @@ export class HeaderComponent {
     { label: 'Login', link: '/login' },
     { label: 'Alunos Cadastrados', link: '/student-list' },
     { label: 'Professores Cadastrados', link: '/teacher-list' },
+    { label: 'Turmas Cadastrados', link: '/team-list' },
     { label: 'Cadastrar Usuário', link: '/user-create' }
   ];
 
   isMenuOpen = false;
 
-  toggleMenu() {
+  toggleMenu():void {
     this.isMenuOpen = !this.isMenuOpen;
   }
- }
+}

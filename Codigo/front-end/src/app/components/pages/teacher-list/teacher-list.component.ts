@@ -10,28 +10,8 @@ import {TeacherService} from '../../../services/teacher/teacher.service';
 
 export class TeacherListComponent {
 
-  originalTeachers: Teacher[] = [{
-    id: 1,
-    fullName: 'safddsfa',
-    cpf: '24324',
-    rg: '234',
-    email: 'fdgdsfgs',
-    phoneNumber: '324324',
-    addressNumber: '324',
-    addressComplement: '43',
-    streetAddress: 'fdsgfgfg',
-    neighborhood: 'sdfgnfbd',
-    zipCode: '4354',
-    cityOfResidence: 'dsgbfrdgf',
-    homeState: 'dbsffsg',
-    registrationDate: '04/10/2022',
-    birthDate: '13/09/1968',
-
-    salary: '',
-    hireDate: '',
-    terminationDate: ''
-  }];
-  teachers: Teacher[] = [...this.originalTeachers];
+  originalTeachers: Teacher[] = [];
+  teachers: Teacher[] = [];
 
   /*Table variables*/
   tableHeaders: String[] = ['Nome', 'CPF', 'E-mail', 'Telefone', 'Endereço', 'Gerenciar'];
@@ -50,7 +30,7 @@ export class TeacherListComponent {
   }
 
   ngOnInit(): void {
-    // this.getTeachers();
+    this.getTeachers();
     this.filterText = this.filters[0].name;
   }
 

@@ -3,8 +3,10 @@ package com.ti.fabricadosaber.controllers;
 import java.net.URI;
 import java.util.List;
 
+import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.util.stream.Collectors;
 
 import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.models.Team;
@@ -29,17 +32,38 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<Team> findById(@PathVariable Long id) {
-        Team obj = this.teamService.findById(id);
-        return ResponseEntity.ok().body(obj);
+    public ResponseEntity<TeamResponseDTO> findById(@PathVariable Long id) {
+        Team team = teamService.findById(id);
+
+        if (team == null)
+            return ResponseEntity.notFound().build();
+
+        TeamResponseDTO teamResponseDTO = this.teamService.convertToTeamResponseDTO(team);
+
+        return ResponseEntity.ok(teamResponseDTO);
     }
 
+
     @GetMapping
-    public ResponseEntity<List<Team>> listAllTeams() {
+    public ResponseEntity<List<TeamResponseDTO>> listAllTeams() {
         List<Team> teams = this.teamService.listAllTeams();
-        return ResponseEntity.ok().body(teams);
+
+        List<TeamResponseDTO> teamResponseDTOs = teams.stream()
+                .map(this.teamService::convertToTeamResponseDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(teamResponseDTOs);
     }
+
+
+    @GetMapping("/{id}/students")
+    public ResponseEntity<List<Student>> listStudents(@PathVariable Long id) {
+        List<Student> students = this.teamService.listStudents(id);
+        return ResponseEntity.ok().body(students);
+    }
+
 
     @PostMapping
     public ResponseEntity<Team> create(@Valid @RequestBody Team obj) {
@@ -49,12 +73,32 @@ public class TeamController {
         return ResponseEntity.created(uri).build();
     }
 
+
+    @PutMapping("/{Id}/add-students")
+    public ResponseEntity<Void> addStudentsToTeam(
+            @PathVariable Long Id,
+            @RequestBody List<Long> studentIds
+    ) {
+        this.teamService.addStudentToTeam(Id, studentIds);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody Team obj, @PathVariable Long id) {
         obj.setId(id);
         this.teamService.update(obj);
         return ResponseEntity.noContent().build();
     }
+
+
+    @DeleteMapping("/{teamId}/delete-students")
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long teamId, @RequestBody List<Long> studentIds) {
+        this.teamService.deleteStudent(teamId, studentIds);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

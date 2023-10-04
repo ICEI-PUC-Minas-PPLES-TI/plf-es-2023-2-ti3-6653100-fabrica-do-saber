@@ -1,18 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ToastrService} from 'ngx-toastr';
 import {catchError, Observable, tap} from 'rxjs';
-import {API_CONFIG} from '../config';
+import {API_CONFIG} from '../configs/config';
 import {Teacher} from '../../interfaces/Teacher';
-import {Student} from '../../interfaces/Student';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherService {
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {
-    this.toastr.toastrConfig.positionClass = 'toastr-center';
+  constructor(private http: HttpClient) {
   }
 
   createTeacher(teacher: Teacher): Observable<any> {
@@ -20,11 +17,9 @@ export class TeacherService {
       .pipe(
         tap(response => {
           console.log('Professor criado com sucesso!', response);
-          this.toastr.success('Professor criado com sucesso!', 'Sucesso');
         }),
         catchError(err => {
           console.log('Erro na criação do professor', err);
-          this.toastr.error('Erro na criação do professor', 'Erro');
           throw err;
         })
       );
@@ -35,11 +30,9 @@ export class TeacherService {
       .pipe(
         tap(response => {
           console.log('Professor atualizado com sucesso!', response);
-          this.toastr.success('Professor atualizado com sucesso!', 'Sucesso');
         }),
         catchError(err => {
           console.log('Erro na atualização do professor', err);
-          this.toastr.error('Erro na atualização do professor', 'Erro');
           throw err;
         })
       );
@@ -49,12 +42,10 @@ export class TeacherService {
     return this.http.delete<Teacher>(`${API_CONFIG.baseUrl}/teacher/${id}`)
       .pipe(
         tap(response => {
-          console.log('Professor excluido com sucesso!', response);
-          this.toastr.success('Professor excluido com sucesso!', 'Sucesso');
+          console.log('Professor excluído com sucesso!', response);
         }),
         catchError(err => {
           console.log('Erro na exclusão do professor', err);
-          this.toastr.error('Erro na exclusão do professor', 'Erro');
           throw err;
         })
       );
@@ -73,5 +64,14 @@ export class TeacherService {
         })
       );
   }
+
+  formatCurrency(currency: any): number {
+
+    const currencyValueStr: string = currency.toString().replace('R$', '');
+    const cleanedValue: string = currencyValueStr.replace(/\./g, '').replace(',', '.');
+
+    return typeof currency === 'number' ? currency : parseFloat((parseFloat(cleanedValue) * 10).toFixed(2));
+  }
+
 
 }

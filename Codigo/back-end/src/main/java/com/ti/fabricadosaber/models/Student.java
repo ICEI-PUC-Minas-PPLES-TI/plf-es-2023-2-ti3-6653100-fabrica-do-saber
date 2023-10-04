@@ -1,6 +1,8 @@
 package com.ti.fabricadosaber.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ti.fabricadosaber.enums.Race;
 import java.util.Set;
 import com.ti.fabricadosaber.enums.Religion;
@@ -17,6 +19,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@AttributeOverride(name = "cpf", column = @Column(nullable = true))
+@AttributeOverride(name = "phoneNumber", column = @Column(nullable = true))
+@AttributeOverride(name = "rg", column = @Column(nullable = true))
+@AttributeOverride(name = "email", column = @Column(nullable = true))
 public class Student extends Person {
 
 	public static final String TABLE_NAME = "student";
@@ -32,6 +38,12 @@ public class Student extends Person {
 	@Column(name = "id", unique = true)
 	private Long id;
 
+
+/*	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "team_id", nullable = true, updatable = true)
+	private Team team;*/
+
+	@JsonIdentityReference(alwaysAsId = true)
 	@ManyToOne
 	@JoinColumn(name = "team_id", nullable = true, updatable = true)
 	private Team team;

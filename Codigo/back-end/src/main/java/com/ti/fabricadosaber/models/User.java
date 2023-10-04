@@ -1,16 +1,15 @@
 package com.ti.fabricadosaber.models;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ti.fabricadosaber.models.enums.ProfileEnum;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -42,19 +41,35 @@ public class User {
     private String fullName;
 
     @Column(name = "email", length = 45, nullable = false, unique = true)
+    @NotBlank
     @Email(message = "E-mail inválido")
     private String email;
 
 
-    @Column(name = "password", length = 45, nullable = false)
+    @Column(name = "password", length = 100, nullable = false)
     @NotBlank
-    @Size(min = 6, max = 45)
-
+    @Size(min = 6)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Column(name = "create_date", length = 8, nullable = false)
+    @Column(name = "create_date", length = 8, nullable = true)
     @JsonFormat(pattern="dd/MM/yyyy")
     private LocalDate createDate;
+
+    @ElementCollection(fetch = FetchType.EAGER)// Ao buscar o usuário, os perfis sempre vai vir
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @CollectionTable(name = "user_profile")
+    @Column(name = "profile", nullable = false)
+    private Set<Integer> profiles = new HashSet<>();
+
+
+    public Set<ProfileEnum> getProfile() {
+        return this.profiles.stream().map(x -> ProfileEnum.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addProfile(ProfileEnum usuarioEnum) {
+
+        this.profiles.add(usuarioEnum.getCode());
+    }
 
 }

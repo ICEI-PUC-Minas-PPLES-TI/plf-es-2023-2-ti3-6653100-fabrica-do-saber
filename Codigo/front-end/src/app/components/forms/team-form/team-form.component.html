@@ -1,0 +1,52 @@
+<h5 class="pt-3 d-flex justify-content-center">{{title}}</h5>
+
+<div id="team-div">
+
+  <div class="d-flex justify-content-between">
+    <div class="col-3 py-2">
+      <label for="teamFullName">Nome da Turma*</label>
+      <input id="teamFullName" type="text" class="form-control"
+             [placeholder]="team.name ? team.name : ''" [(ngModel)]="team.name" name="teamFullName" required>
+    </div>
+
+    <div class="col-2 py-2">
+      <label for="teamClassroom">Sala de aula*</label>
+      <input id="teamClassroom" type="text" class="form-control" [placeholder]="team.classroom ? team.classroom : ''"
+             [(ngModel)]="team.classroom" name="teamClassroom" required>
+    </div>
+
+    <div class="col-2 py-2">
+      <label>Série*</label>
+      <app-grade-select
+        [grade]="team.grade"
+        (gradeChange)="onGrandeChange($event)">
+      </app-grade-select>
+    </div>
+
+    <div class="col-3 py-2">
+      <label>Professor*</label>
+      <app-teacher-select
+        [teacherId]="team.teacherId"
+        (teacherChange)="onTeacherChange($event)">
+      </app-teacher-select>
+    </div>
+  </div>
+
+  <div class="col-4 py-2 form-group">
+    <label>Selecione os alunos (shift + mouse / ctrl + mouse) </label>
+    <app-student-select
+      [(selectedStudentIds)]="team.studentIds"
+      (selectedStudentIdsChange)="onSelectedStudentIdsChange($event)">
+    </app-student-select>
+  </div>
+
+  <div class="col-6 py-2">
+    <input id="team" type="text" class="form-control" [placeholder]="selectedStudents ? selectedStudents : 'Nenhum aluno selecionado'"
+           [(ngModel)]="selectedStudents" name="teamStudents" [readonly]="true" required>
+  </div>
+
+  <div class="col-12 py-2">
+    <p class="text-muted">* Informações obrigatórias</p>
+  </div>
+
+</div>

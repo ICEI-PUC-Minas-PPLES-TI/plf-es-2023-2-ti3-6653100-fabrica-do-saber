@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Teacher } from '../../../interfaces/Teacher';
-import { ConsoleLogger } from '@angular/compiler-cli';
 
 @Component({
   selector: 'app-teacher-form',
