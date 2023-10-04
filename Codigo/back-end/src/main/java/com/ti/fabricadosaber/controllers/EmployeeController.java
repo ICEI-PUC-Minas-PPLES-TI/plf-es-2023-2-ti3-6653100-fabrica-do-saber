@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,18 +29,21 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @PreAuthorize("ROLE_ADMIN")
     @GetMapping("/{id}")
     public ResponseEntity<Employee> findById(@PathVariable Long id) {
         Employee obj = this.employeeService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
+    @PreAuthorize("ROLE_ADMIN")
     @GetMapping
     public ResponseEntity<List<Employee>> listAllEmployees() {
         List<Employee> employee = employeeService.listAllEmployees();
         return ResponseEntity.ok(employee);
     }
 
+    @PreAuthorize("ROLE_ADMIN")
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody Employee obj) {
         this.employeeService.create(obj);
@@ -48,6 +52,7 @@ public class EmployeeController {
         return ResponseEntity.created(uri).build();
     }
 
+    @PreAuthorize("ROLE_ADMIN")
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody Employee obj, @PathVariable Long id) {
         obj.setId(id);
@@ -55,6 +60,7 @@ public class EmployeeController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.employeeService.delete(id);

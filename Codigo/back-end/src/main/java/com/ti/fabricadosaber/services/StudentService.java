@@ -5,9 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import com.ti.fabricadosaber.models.Employee;
 import com.ti.fabricadosaber.models.Parent;
+import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
+import com.ti.fabricadosaber.utils.SecurityUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,20 +37,27 @@ public class StudentService {
     private ParentService parentService;
 
     public Student findById(Long id) {
-        Optional<Student> student = this.studentRepository.findById(id);
-        return student.orElseThrow(() -> new ObjectNotFoundException(
-                "Aluno não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
+        Student student =
+                this.studentRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                        "Aluno não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
+        return student;
     }
 
     public List<Student> listAllStudents() {
-        try {
-            return studentRepository.findAll();
-        } catch (EmptyResultDataAccessException error) {
-            throw new RuntimeException("Nenhum estudante cadastrado", error);
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
+        List<Student> students = this.studentRepository.findAll();
+        if (students.isEmpty()) {
+            throw new ObjectNotFoundException("Nenhum estudante cadastrado");
         }
+        return students;
     }
 
     public Set<Parent> listParents(Long id) {
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Estudante com o ID " + id + " não encontrado"));
 
@@ -56,8 +66,9 @@ public class StudentService {
 
     @Transactional
     public Student create(Student obj) {
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
         twoParents(obj);
-
         Team team = findTeamById(obj.getTeam().getId());
         obj.setId(null);
         obj.setTeam(team);
@@ -139,7 +150,7 @@ public class StudentService {
         try {
             this.studentRepository.delete(student);
             Team team = student.getTeam();
-            if (team != null) {
+            if (team != null) { //modularizar esse método
                 team.getStudents().remove(student);
                 team.setNumberStudents(team.getStudents().size());
                 teamRepository.save(team);

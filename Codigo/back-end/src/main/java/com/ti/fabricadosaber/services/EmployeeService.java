@@ -1,18 +1,15 @@
 package com.ti.fabricadosaber.services;
 
 import java.util.List;
-import java.util.Optional;
-
+import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
+import com.ti.fabricadosaber.utils.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
 import com.ti.fabricadosaber.models.Employee;
 import com.ti.fabricadosaber.repositories.EmployeeRepository;
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -22,27 +19,38 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public Employee findById(Long id) {
-        Optional<Employee> employee = this.employeeRepository.findById(id);
-        return employee.orElseThrow(() -> new ObjectNotFoundException(
+        Employee employee =
+                this.employeeRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
                 "Funcionário não encontrado! id: " + id + ", Tipo: " + Employee.class.getName()));
+
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
+
+        return employee;
     }
 
     public List<Employee> listAllEmployees() {
-        try {
-            return this.employeeRepository.findAll();
-        } catch (EmptyResultDataAccessException error) {
-            throw new RuntimeException("Nenhum funcionário cadastrado", error);
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
+        List<Employee> employees = this.employeeRepository.findAll();
+        if (employees.isEmpty()) {
+            throw new ObjectNotFoundException("Nenhum funcionário cadastrado");
         }
+        return employees;
     }
+
 
     @Transactional
     public Employee create(Employee obj) {
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
         obj.setId(null);
         obj = this.employeeRepository.save(obj);
         return obj;
     }
 
     public Employee update(Employee obj) {
+
         Employee newObj = findById(obj.getId());
 
         BeanUtils.copyProperties(obj, newObj, "id");
@@ -59,4 +67,7 @@ public class EmployeeService {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
+
+
+
 }

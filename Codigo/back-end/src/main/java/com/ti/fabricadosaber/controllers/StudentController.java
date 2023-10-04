@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,18 +33,21 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @PreAuthorize("ROLE_ADMIN")
     @GetMapping
     public ResponseEntity<List<Student>> listAll() {
         List<Student> studentList = this.studentService.listAllStudents();
         return ResponseEntity.ok().body(studentList);
     }
 
+    @PreAuthorize("ROLE_ADMIN")
     @GetMapping("/{id}")
     public ResponseEntity<Student> findById(@PathVariable Long id) {
         Student obj = this.studentService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
+    @PreAuthorize("ROLE_ADMIN")
     @PostMapping
     @Validated(CreateStudent.class)
     public ResponseEntity<Void> create(@Valid @RequestBody Student obj) {
@@ -53,6 +57,7 @@ public class StudentController {
         return ResponseEntity.created(uri).build();
     }
 
+    @PreAuthorize("ROLE_ADMIN")
     @PutMapping("/{id}")
     @Validated(UpdateStudent.class)
     public ResponseEntity<Void> update(@Valid @RequestBody Student obj, @PathVariable Long id) {
@@ -61,6 +66,7 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.studentService.delete(id);

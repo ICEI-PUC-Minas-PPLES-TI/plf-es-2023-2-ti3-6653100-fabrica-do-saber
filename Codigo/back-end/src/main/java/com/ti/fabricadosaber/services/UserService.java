@@ -8,6 +8,7 @@ import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.AuthorizationException;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
+import com.ti.fabricadosaber.utils.SecurityUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,7 @@ public class UserService {
 
     public User findById(Long id) {
        UserSpringSecurity userSpringSecurity = authenticated();
-       if(!Objects.nonNull(userSpringSecurity)
-               || !userSpringSecurity.hasRole(ProfileEnum.ADMIN)
-               && !id.equals(userSpringSecurity.getId())) {
-           throw new AuthorizationException("Acesso negado!");
-       }
+        SecurityUtils.checkUser(userSpringSecurity);
 
         Optional<User> user = this.userRepository.findById(id);
 
@@ -47,6 +44,7 @@ public class UserService {
                 "Usuário não encontrado! id: " + id + ", Tipo: " + User.class.getName()
         ));
     }
+
 
 
     @Transactional
