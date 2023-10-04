@@ -16,7 +16,7 @@ export class UserService {
     return this.http.post<User>(`${API_CONFIG.baseUrl}/login`, user, {observe: 'response'})
       .pipe(
         tap(response => {
-          const authToken: string | undefined = response.headers.get('Authorization')?.split(' ')[1];
+          const authToken: string | null = response.headers.get('Authorization');
           localStorage.setItem('AuthorizationToken', <string>authToken);
           console.log('Usuario logado com sucesso!', response);
         }),

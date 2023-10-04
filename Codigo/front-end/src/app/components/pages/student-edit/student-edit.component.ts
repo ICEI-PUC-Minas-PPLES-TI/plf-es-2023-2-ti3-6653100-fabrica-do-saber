@@ -36,7 +36,6 @@ export class StudentEditComponent {
 
       this.student = student;
       [this.parent00, this.parent01] = [this.student.parents[0], this.student.parents[1]];
-      console.log(this.student)
     });
   }
 

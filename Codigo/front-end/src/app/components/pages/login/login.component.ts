@@ -19,7 +19,6 @@ export class LoginComponent {
   }
 
   login(): void {
-    console.log(this.user)
     this.userService.login(this.user)
       .pipe(
         tap((response): void => {
