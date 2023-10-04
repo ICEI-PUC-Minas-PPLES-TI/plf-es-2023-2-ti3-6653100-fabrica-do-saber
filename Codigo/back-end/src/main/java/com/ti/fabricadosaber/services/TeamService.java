@@ -6,6 +6,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
+import com.ti.fabricadosaber.security.UserSpringSecurity;
+import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
+import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
+import com.ti.fabricadosaber.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -30,20 +34,26 @@ public class TeamService {
     private StudentService studentService;
 
     public Team findById(Long id) {
-        Optional<Team> team = this.teamRepository.findById(id);
-        return team.orElseThrow(() -> new RuntimeException(
+        Team team = this.teamRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
                 "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
+        return team;
     }
 
     public List<Team> listAllTeams() {
-        try {
-            return teamRepository.findAll();
-        } catch (EmptyResultDataAccessException error) {
-            throw new RuntimeException("Nenhuma turma cadastrada", error);
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
+        List<Team> team = this.teamRepository.findAll();
+        if (team.isEmpty()) {
+            throw new ObjectNotFoundException("Nenhuma turma cadastrada");
         }
+        return team;
     }
 
     public List<Student> listStudents(Long id) {
+        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
         Team team = teamRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Turma com o id " + id + " não encontrada."));
 
@@ -150,7 +160,7 @@ public class TeamService {
         try {
             this.teamRepository.delete(team);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possível excluir pois há entidades relacionadas");
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
 
@@ -159,6 +169,7 @@ public class TeamService {
         TeamResponseDTO dto = new TeamResponseDTO();
         dto.setId(team.getId());
         dto.setName(team.getName());
+        dto.setClassroom(team.getClassroom());
         dto.setGrade(team.getGrade());
         dto.setClassroom(team.getClassroom());
         dto.setNumberStudents(team.getNumberStudents());
