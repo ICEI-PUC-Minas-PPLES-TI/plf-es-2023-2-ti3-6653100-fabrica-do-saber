@@ -1,13 +1,15 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import {Directive, ElementRef, HostListener} from '@angular/core';
 
 @Directive({
   selector: '[appDateFormat]'
 })
 export class DateFormatDirective {
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef) {
+  }
 
-  @HostListener('input', ['$event']) onInput(event: InputEvent): void {
+  @HostListener('input', ['$event'])
+  onInput(event: InputEvent): void {
 
     const inputElement: HTMLInputElement = this.el.nativeElement as HTMLInputElement;
     const value: string = inputElement.value.replace(/\D/g, '');

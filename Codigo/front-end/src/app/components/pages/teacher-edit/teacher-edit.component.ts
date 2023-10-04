@@ -27,11 +27,13 @@ export class TeacherEditComponent {
   getTeacherById(id: number): void {
     this.teacherService.getTeacherById(id).subscribe((teacher: Teacher): void => {
       this.teacher = teacher;
+      console.log(this.teacher)
     });
   }
 
   updateTeacher(): void {
     this.teacher.salary = this.teacherService.formatCurrency(this.teacher.salary);
+    console.log(this.teacher.salary)
     this.teacherService.updateTeacher(this.teacherId, this.teacher)
       .pipe(
         tap((response): void => {

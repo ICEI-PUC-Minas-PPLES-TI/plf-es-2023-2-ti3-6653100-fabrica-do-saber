@@ -1,29 +1,18 @@
-import {Directive, ElementRef, HostListener, Renderer2} from '@angular/core';
+import {Directive, ElementRef, HostListener} from '@angular/core';
 
 @Directive({
   selector: '[appCurrencyFormat]'
 })
 export class CurrencyFormatDirective {
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {
+  constructor(private el: ElementRef) {
   }
 
-  @HostListener('input', ['$event']) onInput(event: InputEvent): void {
-
+  @HostListener('input', ['$event'])
+  onInput(event: Event): void {
     const inputElement: HTMLInputElement = this.el.nativeElement as HTMLInputElement;
-    const value: string = inputElement.value;
-    const numericValue: string = value.replace(/\D/g, '');
-    const numberValue: number = parseFloat(numericValue) / 100;
-    const formattedValue: string = this.formatCurrency(numberValue);
-
-    this.renderer.setProperty(inputElement, 'value', formattedValue);
+    let value: string = inputElement.value.replace(/\D/g, '');
+    value = (Number(value) / 100).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+    inputElement.value = value;
   }
-
-  private formatCurrency(value: number): string {
-    return value.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    });
-  }
-
 }

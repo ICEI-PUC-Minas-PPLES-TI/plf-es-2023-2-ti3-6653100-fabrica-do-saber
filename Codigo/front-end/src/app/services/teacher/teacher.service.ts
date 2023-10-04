@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, tap } from 'rxjs';
-import { API_CONFIG } from '../config';
-import { Teacher } from '../../interfaces/Teacher';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {catchError, Observable, tap} from 'rxjs';
+import {API_CONFIG} from '../config';
+import {Teacher} from '../../interfaces/Teacher';
 
 @Injectable({
   providedIn: 'root'
@@ -65,12 +65,12 @@ export class TeacherService {
       );
   }
 
-  formatCurrency(currency: number): number {
+  formatCurrency(currency: any): number {
 
     const currencyValueStr: string = currency.toString().replace('R$', '');
     const cleanedValue: string = currencyValueStr.replace(/\./g, '').replace(',', '.');
 
-    return parseFloat((parseFloat(cleanedValue) * 10).toFixed(2));
+    return typeof currency === 'number' ? currency : parseFloat((parseFloat(cleanedValue) * 10).toFixed(2));
   }
 
 
