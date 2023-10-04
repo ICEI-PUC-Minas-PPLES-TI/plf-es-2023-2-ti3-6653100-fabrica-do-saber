@@ -33,7 +33,6 @@ export class TeacherEditComponent {
 
   updateTeacher(): void {
     this.teacher.salary = this.teacherService.formatCurrency(this.teacher.salary);
-    console.log(this.teacher.salary)
     this.teacherService.updateTeacher(this.teacherId, this.teacher)
       .pipe(
         tap((response): void => {
