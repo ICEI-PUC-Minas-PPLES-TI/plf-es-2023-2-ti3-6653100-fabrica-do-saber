@@ -65,7 +65,7 @@ public class TeamService {
         Teacher teacher = this.teacherService.findById(obj.getTeacher().getId());
         obj.setId(null);
         obj.setTeacher(teacher);
-        processStudents(obj);
+        sueStudentInCreation(obj);
         obj = this.teamRepository.save(obj);
         associateStudents(obj);
         return obj;
@@ -78,7 +78,8 @@ public class TeamService {
         newObj.setClassroom(obj.getClassroom());
         newObj.setGrade(obj.getGrade());
         newObj.setTeacher(obj.getTeacher());
-        processStudents(obj);
+        //sueStudentInCreation(obj);
+        sueStudentOnUpdate(obj, newObj);
         newObj.setNumberStudents(obj.getNumberStudents());
         newObj.setStudents(obj.getStudents());
         newObj = this.teamRepository.save(newObj);
@@ -94,7 +95,14 @@ public class TeamService {
         }
     }
 
-    public void processStudents(Team obj) {
+    public void sueStudentOnUpdate(Team obj, Team newObj) {
+        sueStudentInCreation(obj);
+        List<Student> studentNewObj = newObj.getStudents();
+        if(studentNewObj != null && obj.getNumberStudents() == 0)
+            studentNewObj.forEach(x -> x.setTeam(null));
+    }
+
+    public void sueStudentInCreation(Team obj) {
         List<Student> students = obj.getStudents();
         if (students != null && !students.isEmpty()) {
             List<Student> updatedStudents = new ArrayList<>();
