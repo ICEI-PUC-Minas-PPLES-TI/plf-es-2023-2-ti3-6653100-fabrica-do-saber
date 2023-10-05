@@ -1,6 +1,38 @@
 @import "~font-awesome/css/font-awesome.css";
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,900&display=swap');
+
+
+:root {
+  --blue: #D6F8F7;
+  --blue-hover: #01C4CA;
+  --blue-active: #83EFF2;
+
+  --green:#F0FFF0;
+  --green-hover: #B8CFAC;
+  --green-active: #DAECD1;
+
+  --pink: #EFB8DC;
+  --pink-hover: #B6207C;
+  --pink-active: #D683B6;
+
+  --black: #000000;
+
+  --input-background: #F2F4FF;
+
+  --title-text: #01C4CA;
+}
+
+.title {
+  font-family: 'Lato', Arial, Helvetica, sans-serif;
+  color: var(--title-text);
+}
+
+.text {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  color: var(--black);
+}
 
 a {
   text-decoration: none;
 }
-
