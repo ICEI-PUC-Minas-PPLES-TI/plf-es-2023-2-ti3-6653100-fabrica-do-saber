@@ -27,6 +27,11 @@ public class UserController {
         return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<User> findCurrentUser() {
+        User obj = this.userService.findCurrentUser();
+        return ResponseEntity.ok().body(obj);
+    }
 
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody User obj) {
@@ -38,9 +43,6 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
-
-
-
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody User obj, @PathVariable Long id) {
         obj.setId(id);
@@ -48,14 +50,10 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.userService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }
