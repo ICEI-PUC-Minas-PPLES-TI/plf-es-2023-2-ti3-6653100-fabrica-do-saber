@@ -45,7 +45,17 @@ public class UserService {
         ));
     }
 
+    public User findCurrentUser() {
 
+        UserSpringSecurity userSpringSecurity = authenticated();
+        SecurityUtils.checkUser(userSpringSecurity);
+
+        Optional<User> user = this.userRepository.findById(userSpringSecurity.getId());
+
+        return user.orElseThrow(() -> new ObjectNotFoundException(
+                "Usuário não encontrado!"
+        ));
+    }
 
     @Transactional
     public User create(User obj) {

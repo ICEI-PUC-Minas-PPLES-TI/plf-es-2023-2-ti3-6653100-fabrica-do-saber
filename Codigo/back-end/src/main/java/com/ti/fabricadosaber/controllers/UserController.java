@@ -27,6 +27,11 @@ public class UserController {
         return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<User> findCurrentUser() {
+        User obj = this.userService.findCurrentUser();
+        return ResponseEntity.ok().body(obj);
+    }
 
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody User obj) {
