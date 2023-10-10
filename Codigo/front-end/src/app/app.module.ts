@@ -45,7 +45,7 @@ import {TeamSelectComponent} from './components/forms/components/team-select/tea
 import {TeacherSelectComponent} from './components/forms/components/teacher-select/teacher-select.component';
 import {GradeSelectComponent} from './components/forms/components/grade-select/grade-select.component';
 import {CurrencyFormatDirective} from './directives/currency-format.directive';
-import {AuthInterceptor} from './services/configs/auth-interceptor';
+import {AuthInterceptor} from './services/auth/auth-interceptor';
 
 @NgModule({
   declarations: [

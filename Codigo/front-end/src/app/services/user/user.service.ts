@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, Observable, tap} from 'rxjs';
-import {API_CONFIG} from '../configs/config';
+import {API_CONFIG} from '../config';
 import {User} from '../../interfaces/User';
+import {AuthService} from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authService: AuthService) {
   }
 
   login(user: User): Observable<any> {
@@ -17,7 +18,7 @@ export class UserService {
       .pipe(
         tap(response => {
           const authToken: string | null = response.headers.get('Authorization');
-          localStorage.setItem('AuthorizationToken', <string>authToken);
+          this.authService.login(<string>authToken);
           console.log('Usuario logado com sucesso!', response);
         }),
         catchError(err => {
