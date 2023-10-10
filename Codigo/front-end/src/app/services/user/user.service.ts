@@ -28,6 +28,12 @@ export class UserService {
       );
   }
 
+  logout(): void {
+    const authService: AuthService = new AuthService();
+    authService.logout();
+    console.log('Usuario deslogado com sucesso!');
+  }
+
 
   createUser(user: User): Observable<any> {
     return this.http.post<User>(`${API_CONFIG.baseUrl}/user`, user)
