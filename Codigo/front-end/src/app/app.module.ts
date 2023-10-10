@@ -46,6 +46,7 @@ import {TeacherSelectComponent} from './components/forms/components/teacher-sele
 import {GradeSelectComponent} from './components/forms/components/grade-select/grade-select.component';
 import {CurrencyFormatDirective} from './directives/currency-format.directive';
 import {AuthInterceptor} from './services/auth/auth-interceptor';
+import { UserPageComponent } from './components/pages/user-page/user-page.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import {AuthInterceptor} from './services/auth/auth-interceptor';
     TeacherSelectComponent,
     GradeSelectComponent,
     CurrencyFormatDirective,
+    UserPageComponent,
   ],
   imports: [
     BrowserModule,

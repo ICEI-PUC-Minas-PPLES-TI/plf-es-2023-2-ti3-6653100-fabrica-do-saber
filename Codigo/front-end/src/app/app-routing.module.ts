@@ -13,10 +13,12 @@ import {TeamCreateComponent} from './components/pages/team-create/team-create.co
 import {TeamEditComponent} from './components/pages/team-edit/team-edit.component';
 import {TeamListComponent} from './components/pages/team-list/team-list.component';
 import {authGuard} from './services/auth/auth.guard';
+import {UserPageComponent} from './components/pages/user-page/user-page.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [authGuard]},
   {path: 'login', component: LoginComponent},
+  {path: 'user-page', component: UserPageComponent},
   {path: 'student-create', component: StudentCreateComponent, canActivate: [authGuard]},
   {path: 'student-edit/:id', component: StudentEditComponent, canActivate: [authGuard]},
   {path: 'student-list', component: StudentListComponent, canActivate: [authGuard]},
