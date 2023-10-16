@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Person {
+public abstract class Person {
 
     @Column(name = "full_name", length = 45, nullable = false, updatable = true)
     @Size(min = 2, max = 100)

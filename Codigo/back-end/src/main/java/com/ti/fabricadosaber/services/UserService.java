@@ -1,6 +1,7 @@
 package com.ti.fabricadosaber.services;
 
 
+import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.User;
 import com.ti.fabricadosaber.models.enums.ProfileEnum;
 import com.ti.fabricadosaber.repositories.UserRepository;
@@ -40,7 +41,7 @@ public class UserService {
 
         Optional<User> user = this.userRepository.findById(id);
 
-        return user.orElseThrow(() -> new ObjectNotFoundException(
+        return user.orElseThrow(() -> new EntityNotFoundException(
                 "Usuário não encontrado! id: " + id + ", Tipo: " + User.class.getName()
         ));
     }
@@ -52,7 +53,7 @@ public class UserService {
 
         Optional<User> user = this.userRepository.findById(userSpringSecurity.getId());
 
-        return user.orElseThrow(() -> new ObjectNotFoundException(
+        return user.orElseThrow(() -> new EntityNotFoundException(
                 "Usuário não encontrado!"
         ));
     }

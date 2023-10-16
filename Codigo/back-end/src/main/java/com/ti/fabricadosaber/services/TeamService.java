@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
+import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
+import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
 import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
@@ -34,7 +36,7 @@ public class TeamService {
     private StudentService studentService;
 
     public Team findById(Long id) {
-        Team team = this.teamRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+        Team team = this.teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
@@ -46,7 +48,7 @@ public class TeamService {
         SecurityUtils.checkUser(userSpringSecurity);
         List<Team> team = this.teamRepository.findAll();
         if (team.isEmpty()) {
-            throw new ObjectNotFoundException("Nenhuma turma cadastrada");
+            throw new EntityNotFoundException("Nenhuma turma cadastrada");
         }
         return team;
     }
@@ -55,7 +57,7 @@ public class TeamService {
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
         Team team = teamRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Turma com o id " + id + " não encontrada."));
+                .orElseThrow(() -> new EntityNotFoundException("Turma com o id " + id + " não encontrada."));
 
         return team.getStudents();
     }
@@ -151,7 +153,7 @@ public class TeamService {
 
             Student student = studentService.findById(idStudent);
             if (!(team.getStudents().contains(student))) {
-                throw new RuntimeException("Aluno não está vinculado a turma " + team.getName());
+                throw new StudenteOnTeamException("Aluno não está vinculado a turma " + team.getName());
             }
 
             updateStudent(student);

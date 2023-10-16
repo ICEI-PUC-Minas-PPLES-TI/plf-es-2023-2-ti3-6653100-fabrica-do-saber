@@ -99,6 +99,7 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler impl
                 request);
     }
 
+    //todo: Exceção feita no pacote exception da camada service
     @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> handleObjectNotFoundException(
@@ -169,6 +170,36 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler impl
 
 
     /*------------OUTRAS EXCEÇÕES - ÍNICIO ------------*/
+
+
+    @ExceptionHandler(TwoParentsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleTwoParentsException(TwoParentsException twoParentsException,
+                                                           WebRequest request) {
+
+        log.error("quantidade inadequada de responsáveis", twoParentsException);
+        return buildErrorResponse(twoParentsException, HttpStatus.BAD_REQUEST, request);
+    }
+
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException entityNotFoundException,
+                                                                WebRequest request) {
+
+        log.error("Entidade nao encontrada", entityNotFoundException);
+        return buildErrorResponse(entityNotFoundException, HttpStatus.NOT_FOUND, request);
+    }
+
+
+    @ExceptionHandler(StudenteOnTeamException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleStudentOnTeamException(StudenteOnTeamException studenteOnTeamException,
+                                                                WebRequest request) {
+
+        log.error("Falha ao remover estudante da equipe", studenteOnTeamException);
+        return buildErrorResponse(studenteOnTeamException, HttpStatus.NOT_FOUND, request);
+    }
 
 
 

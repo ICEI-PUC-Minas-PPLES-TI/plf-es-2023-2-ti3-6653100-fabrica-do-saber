@@ -1,6 +1,8 @@
 package com.ti.fabricadosaber.services;
 
 import java.util.List;
+
+import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
@@ -20,7 +22,7 @@ public class EmployeeService {
 
     public Employee findById(Long id) {
         Employee employee =
-                this.employeeRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                this.employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Funcionário não encontrado! id: " + id + ", Tipo: " + Employee.class.getName()));
 
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
@@ -34,7 +36,7 @@ public class EmployeeService {
         SecurityUtils.checkUser(userSpringSecurity);
         List<Employee> employees = this.employeeRepository.findAll();
         if (employees.isEmpty()) {
-            throw new ObjectNotFoundException("Nenhum funcionário cadastrado");
+            throw new EntityNotFoundException("Nenhum funcionário cadastrado");
         }
         return employees;
     }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.Employee;
 import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
@@ -25,7 +26,7 @@ public class TeacherService {
     private TeacherRepository teacherRepository;
 
     public Teacher findById(Long id) {
-        Teacher teacher = this.teacherRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+        Teacher teacher = this.teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Professor(a) não encontrado(a)! Id: " + id + ", Tipo: " + Teacher.class.getName()));
 
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
@@ -39,7 +40,7 @@ public class TeacherService {
         SecurityUtils.checkUser(userSpringSecurity);
         List<Teacher> teacher = this.teacherRepository.findAll();
         if (teacher.isEmpty()) {
-            throw new ObjectNotFoundException("Nenhum professor(a) cadastrado(a)");
+            throw new EntityNotFoundException("Nenhum professor(a) cadastrado(a)");
         }
         return teacher;
     }
@@ -47,7 +48,7 @@ public class TeacherService {
     public List<Team> listTeams(Long id) {
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
-        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new RuntimeException(
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Id: " + id + " não encontrado"
         ));
 

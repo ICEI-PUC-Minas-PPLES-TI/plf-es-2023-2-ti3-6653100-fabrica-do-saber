@@ -1,11 +1,11 @@
 package com.ti.fabricadosaber.services;
 
+import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.Parent;
 import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.repositories.ParentRepository;
 import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
 import com.ti.fabricadosaber.utils.SecurityUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +22,7 @@ public class ParentService {
     private ParentRepository parentRepository;
 
     public Parent findById(Long id) {
-        Parent parent = this.parentRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+        Parent parent = this.parentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Parente não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);

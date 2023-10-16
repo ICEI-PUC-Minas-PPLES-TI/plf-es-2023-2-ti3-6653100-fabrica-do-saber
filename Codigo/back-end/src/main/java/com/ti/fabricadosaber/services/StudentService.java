@@ -3,9 +3,8 @@ package com.ti.fabricadosaber.services;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-
-import com.ti.fabricadosaber.models.Employee;
+import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
+import com.ti.fabricadosaber.exceptions.TwoParentsException;
 import com.ti.fabricadosaber.models.Parent;
 import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
@@ -14,14 +13,12 @@ import com.ti.fabricadosaber.utils.SecurityUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.repositories.StudentRepository;
 import com.ti.fabricadosaber.repositories.TeamRepository;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Set;
 
 @Service
@@ -38,7 +35,7 @@ public class StudentService {
 
     public Student findById(Long id) {
         Student student =
-                this.studentRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                this.studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                         "Aluno não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
@@ -50,7 +47,7 @@ public class StudentService {
         SecurityUtils.checkUser(userSpringSecurity);
         List<Student> students = this.studentRepository.findAll();
         if (students.isEmpty()) {
-            throw new ObjectNotFoundException("Nenhum estudante cadastrado");
+            throw new EntityNotFoundException("Nenhum estudante cadastrado");
         }
         return students;
     }
@@ -104,7 +101,7 @@ public class StudentService {
 
     public void twoParents(Student obj) {
         if (obj.getParents().size() != 2) {
-            throw new RuntimeException("O estudante deve ter dois responsáveis.");
+            throw new TwoParentsException("O estudante deve ter dois responsáveis.");
         }
     }
 
@@ -136,7 +133,7 @@ public class StudentService {
 
     private Team findTeamById(Long id) {
         return teamRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException(
+                .orElseThrow(() -> new EntityNotFoundException(
                         "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
     }
 
