@@ -7,17 +7,15 @@ import {Component} from '@angular/core';
 })
 export class HeaderComponent {
 
-
   menuItems = [
     {label: 'Página Inicial', link: '/'},
     {label: 'Alunos Cadastrados', link: '/student-list'},
     {label: 'Professores Cadastrados', link: '/teacher-list'},
     {label: 'Turmas Cadastrados', link: '/team-list'},
-    {label: 'Cadastrar Usuário', link: '/user-create'},
     {label: 'Página do usuário', link: '/user-page'}
   ];
 
-  isMenuOpen = false;
+  isMenuOpen:boolean = false;
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;

@@ -34,7 +34,6 @@ export class UserService {
     console.log('Usuario deslogado com sucesso!');
   }
 
-
   createUser(user: User): Observable<any> {
     return this.http.post<User>(`${API_CONFIG.baseUrl}/user`, user)
       .pipe(
@@ -46,5 +45,15 @@ export class UserService {
           throw err;
         })
       );
+  }
+
+  findCurrentUser(): Observable<User> {
+    return this.http.get<User>(`${API_CONFIG.baseUrl}/user/me`)
+      .pipe(
+        catchError(err => {
+          console.log('Erro na obtenção do usuário', err);
+          throw err;
+        })
+      )
   }
 }
