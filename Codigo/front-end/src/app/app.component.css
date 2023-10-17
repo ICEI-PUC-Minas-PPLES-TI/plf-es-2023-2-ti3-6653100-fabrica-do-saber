@@ -1,4 +1,4 @@
 .container-fluid {
-  height: calc(100vh - 70px);
-  background-color: var(--blue)
+  height: calc(100vh - var(--header-height));
+  background-color: var(--blue);
 }
