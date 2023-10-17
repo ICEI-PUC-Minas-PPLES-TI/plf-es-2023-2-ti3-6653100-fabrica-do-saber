@@ -89,5 +89,4 @@ export class TeacherListComponent {
     const filter = this.filters.find(filter => filter.function.name.includes(funcName));
     this.filterText = filter ? filter.name : '';
   }
-
 }

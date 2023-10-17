@@ -7,7 +7,7 @@
   --blue-hover: #01C4CA;
   --blue-active: #83EFF2;
 
-  --green:#F0FFF0;
+  --green: #F0FFF0;
   --green-hover: #B8CFAC;
   --green-active: #DAECD1;
 
@@ -37,3 +37,29 @@
 a {
   text-decoration: none;
 }
+
+@media print {
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  * {
+    font-size: 14px;
+  }
+
+  body, app-btn-custom {
+    visibility: hidden;
+  }
+
+  .printable {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+}
+
