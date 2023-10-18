@@ -8,16 +8,15 @@ import com.ti.fabricadosaber.exceptions.TwoParentsException;
 import com.ti.fabricadosaber.models.Parent;
 import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
 import com.ti.fabricadosaber.utils.SecurityUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.repositories.StudentRepository;
-import com.ti.fabricadosaber.repositories.TeamRepository;
 
 import java.util.Set;
 
@@ -28,10 +27,13 @@ public class StudentService {
     private StudentRepository studentRepository;
 
     @Autowired
-    private TeamRepository teamRepository;
+    @Lazy
+    private TeamService teamService;
+
 
     @Autowired
     private ParentService parentService;
+
 
     public Student findById(Long id) {
         Student student =
@@ -66,7 +68,7 @@ public class StudentService {
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
         twoParents(obj);
-        Team team = findTeamById(obj.getTeam().getId());
+        Team team = this.teamService.findById(obj.getTeam().getId());
         obj.setId(null);
         obj.setTeam(team);
         Set<Parent> createdParents = saveParents(obj);
@@ -74,7 +76,7 @@ public class StudentService {
         obj.setRegistrationDate(LocalDate.now());
 
         Student createdStudent = studentRepository.save(obj);
-        updateTeamStudentCount(team);
+        this.teamService.updateTeamStudentCount(team);
 
         return createdStudent;
     }
@@ -112,7 +114,7 @@ public class StudentService {
         String[] ignoreProperties = { "id", "registrationDate" };
 
         Team oldTeam = newObj.getTeam();
-        Team newTeam = findTeamById(obj.getTeam().getId());
+        Team newTeam = this.teamService.findById(obj.getTeam().getId());
 
         Set<Parent> updatedParents = saveParents(obj);
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);
@@ -122,37 +124,21 @@ public class StudentService {
 
         if (oldTeam != null && !oldTeam.equals(newTeam)) {
             oldTeam.getStudents().remove(newObj);
-            updateTeamStudentCount(oldTeam);
+            this.teamService.updateTeamStudentCount(oldTeam);
         }
 
         newTeam.getStudents().add(newObj);
-        updateTeamStudentCount(newTeam);
+        this.teamService.updateTeamStudentCount(newTeam);
 
         return studentRepository.save(newObj);
     }
 
-    private Team findTeamById(Long id) {
-        return teamRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
-    }
-
-    private void updateTeamStudentCount(Team team) {
-        team.setNumberStudents(team.getStudents().size());
-        teamRepository.save(team);
-    }
 
     public void delete(Long id) {
         Student student = findById(id);
         try {
             this.studentRepository.delete(student);
-            Team team = student.getTeam();
-            if (team != null) { //modularizar esse método
-                team.getStudents().remove(student);
-                team.setNumberStudents(team.getStudents().size());
-                teamRepository.save(team);
-
-            }
+            this.teamService.updateStudent(student);
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }

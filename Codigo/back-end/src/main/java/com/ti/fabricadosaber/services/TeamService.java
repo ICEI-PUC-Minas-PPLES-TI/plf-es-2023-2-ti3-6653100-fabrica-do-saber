@@ -2,7 +2,6 @@ package com.ti.fabricadosaber.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
@@ -10,10 +9,9 @@ import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
 import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
 import com.ti.fabricadosaber.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.ti.fabricadosaber.models.Student;
@@ -29,11 +27,14 @@ public class TeamService {
     @Autowired
     private TeamRepository teamRepository;
 
+
     @Autowired
     private TeacherService teacherService;
 
     @Autowired
+    @Lazy
     private StudentService studentService;
+
 
     public Team findById(Long id) {
         Team team = this.teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
@@ -161,9 +162,16 @@ public class TeamService {
             team.getStudents().remove(student);
         }
 
-        team.setNumberStudents(team.getStudents().size());
-        return teamRepository.save(team);
+        updateTeamStudentCount(team);
+        return team;
     }
+
+
+    public void updateTeamStudentCount(Team team) {
+        team.setNumberStudents(team.getStudents().size());
+        teamRepository.save(team);
+    }
+
 
     public void delete(Long id) {
         Team team = findById(id);

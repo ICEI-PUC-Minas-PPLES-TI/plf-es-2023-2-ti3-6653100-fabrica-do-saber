@@ -2,17 +2,13 @@ package com.ti.fabricadosaber.services;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
-import com.ti.fabricadosaber.models.Employee;
 import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
 import com.ti.fabricadosaber.utils.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.ti.fabricadosaber.models.Teacher;
