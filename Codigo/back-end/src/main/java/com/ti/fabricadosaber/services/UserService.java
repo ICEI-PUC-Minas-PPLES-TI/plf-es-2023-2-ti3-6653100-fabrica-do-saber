@@ -32,8 +32,8 @@ public class UserService {
 
 
     public User findById(Long id) {
-       UserSpringSecurity userSpringSecurity = authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+       UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
+       SecurityUtils.checkUser(userSpringSecurity);
 
         Optional<User> user = this.userRepository.findById(id);
 
@@ -44,7 +44,7 @@ public class UserService {
 
     public User findCurrentUser() {
 
-        UserSpringSecurity userSpringSecurity = authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
 
         Optional<User> user = this.userRepository.findById(userSpringSecurity.getId());
@@ -89,16 +89,6 @@ public class UserService {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
-
-    // Uusuário logado
-    public static UserSpringSecurity authenticated() {
-        try {
-            return (UserSpringSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
 
 
 }

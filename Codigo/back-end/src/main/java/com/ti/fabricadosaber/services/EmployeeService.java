@@ -24,15 +24,16 @@ public class EmployeeService {
                 this.employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Funcionário não encontrado! id: " + id + ", Tipo: " + Employee.class.getName()));
 
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
 
         return employee;
     }
 
     public List<Employee> listAllEmployees() {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
+
         List<Employee> employees = this.employeeRepository.findAll();
         if (employees.isEmpty()) {
             throw new EntityNotFoundException("Nenhum funcionário cadastrado");
@@ -43,8 +44,9 @@ public class EmployeeService {
 
     @Transactional
     public Employee create(Employee obj) {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
+
         obj.setId(null);
         obj = this.employeeRepository.save(obj);
         return obj;

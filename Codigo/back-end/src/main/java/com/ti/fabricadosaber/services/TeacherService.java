@@ -25,15 +25,16 @@ public class TeacherService {
         Teacher teacher = this.teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Professor(a) não encontrado(a)! Id: " + id + ", Tipo: " + Teacher.class.getName()));
 
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
 
         return teacher;
     }
 
     public List<Teacher> listAllTeachers() {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
+
         List<Teacher> teacher = this.teacherRepository.findAll();
         if (teacher.isEmpty()) {
             throw new EntityNotFoundException("Nenhum professor(a) cadastrado(a)");
@@ -42,8 +43,9 @@ public class TeacherService {
     }
 
     public List<Team> listTeams(Long id) {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
+
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Id: " + id + " não encontrado"
         ));
@@ -53,8 +55,9 @@ public class TeacherService {
 
     @Transactional
     public Teacher create(Teacher obj) {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
+
         obj.setId(null);
         obj.setRegistrationDate(LocalDate.now());
         obj = this.teacherRepository.save(obj);

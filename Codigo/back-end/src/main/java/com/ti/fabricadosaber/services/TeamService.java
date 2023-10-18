@@ -39,14 +39,16 @@ public class TeamService {
     public Team findById(Long id) {
         Team team = this.teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
         return team;
     }
 
     public List<Team> listAllTeams() {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
+
         List<Team> team = this.teamRepository.findAll();
         if (team.isEmpty()) {
             throw new EntityNotFoundException("Nenhuma turma cadastrada");
@@ -55,8 +57,9 @@ public class TeamService {
     }
 
     public List<Student> listStudents(Long id) {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
         SecurityUtils.checkUser(userSpringSecurity);
+
         Team team = teamRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Turma com o id " + id + " não encontrada."));
 
