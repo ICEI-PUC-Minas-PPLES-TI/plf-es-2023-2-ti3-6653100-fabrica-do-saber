@@ -6,9 +6,8 @@ import java.util.List;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.TwoParentsException;
 import com.ti.fabricadosaber.models.Parent;
-import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.utils.SecurityUtils;
+import com.ti.fabricadosaber.utils.SecurityUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class StudentService {
 
 
     public Student findById(Long id) {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         Student student =
                 this.studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
@@ -46,7 +45,7 @@ public class StudentService {
     }
 
     public List<Student> listAllStudents() {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         List<Student> students = this.studentRepository.findAll();
         if (students.isEmpty()) {
@@ -56,7 +55,7 @@ public class StudentService {
     }
 
     public Set<Parent> listParents(Long id) {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Estudante com o ID " + id + " não encontrado"));
@@ -66,7 +65,7 @@ public class StudentService {
 
     @Transactional
     public Student create(Student obj) {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         twoParents(obj);
         Team team = this.teamService.findById(obj.getTeam().getId());
@@ -83,7 +82,7 @@ public class StudentService {
     }
 
     public Set<Parent> saveParents(Student obj) {
-        String[] ignoreProperties = { "id", "registrationDate" };
+        String[] ignoreProperties = { "id", "registrationDate", "cpf"};
         Set<Parent> parents = new HashSet<>();
 
         Parent currentParent;

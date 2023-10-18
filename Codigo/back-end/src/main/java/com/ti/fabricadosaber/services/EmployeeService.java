@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.utils.SecurityUtils;
+import com.ti.fabricadosaber.utils.SecurityUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public Employee findById(Long id) {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         Employee employee =
                 this.employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
@@ -31,7 +31,7 @@ public class EmployeeService {
 
     public List<Employee> listAllEmployees() {
 
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         List<Employee> employees = this.employeeRepository.findAll();
         if (employees.isEmpty()) {
@@ -44,7 +44,7 @@ public class EmployeeService {
     @Transactional
     public Employee create(Employee obj) {
 
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         obj.setId(null);
         obj = this.employeeRepository.save(obj);

@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Objects;
 
-public class SecurityUtils {
+public class SecurityUtil {
 
     public static UserSpringSecurity authenticated() {
         try {

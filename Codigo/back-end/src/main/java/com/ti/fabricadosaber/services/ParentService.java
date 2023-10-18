@@ -4,9 +4,8 @@ import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.Parent;
 import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.repositories.ParentRepository;
-import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.utils.SecurityUtils;
+import com.ti.fabricadosaber.utils.SecurityUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class ParentService {
     private ParentRepository parentRepository;
 
     public Parent findById(Long id) {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         Parent parent = this.parentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Parente não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
@@ -41,7 +40,7 @@ public class ParentService {
     @Transactional
     public Parent create(Parent obj) {
 
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         obj.setId(null);
         obj.setRegistrationDate(LocalDate.now());

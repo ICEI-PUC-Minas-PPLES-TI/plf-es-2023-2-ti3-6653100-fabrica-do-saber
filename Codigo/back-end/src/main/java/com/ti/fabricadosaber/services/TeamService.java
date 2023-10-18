@@ -7,9 +7,8 @@ import java.util.stream.Collectors;
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
-import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.utils.SecurityUtils;
+import com.ti.fabricadosaber.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -40,12 +39,12 @@ public class TeamService {
         Team team = this.teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
 
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
         return team;
     }
 
     public List<Team> listAllTeams() {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         List<Team> team = this.teamRepository.findAll();
         if (team.isEmpty()) {
@@ -55,7 +54,7 @@ public class TeamService {
     }
 
     public List<Student> listStudents(Long id) {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         Team team = teamRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Turma com o id " + id + " não encontrada."));
@@ -150,6 +149,7 @@ public class TeamService {
 
     public Team deleteStudent(Long teamId, List<Long> idsStudent) {
         Team team = findById(teamId);
+
         for (Long idStudent : idsStudent) {
 
             Student student = studentService.findById(idStudent);

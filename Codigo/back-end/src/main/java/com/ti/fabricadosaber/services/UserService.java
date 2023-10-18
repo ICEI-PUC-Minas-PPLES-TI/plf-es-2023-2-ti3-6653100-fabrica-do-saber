@@ -7,11 +7,10 @@ import com.ti.fabricadosaber.models.enums.ProfileEnum;
 import com.ti.fabricadosaber.repositories.UserRepository;
 import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.utils.SecurityUtils;
+import com.ti.fabricadosaber.utils.SecurityUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class UserService {
 
 
     public User findById(Long id) {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         Optional<User> user = this.userRepository.findById(id);
 
@@ -43,7 +42,7 @@ public class UserService {
 
     public User findCurrentUser() {
 
-        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
+        UserSpringSecurity userSpringSecurity = SecurityUtil.authenticated();
 
         Optional<User> user = this.userRepository.findById(userSpringSecurity.getId());
 

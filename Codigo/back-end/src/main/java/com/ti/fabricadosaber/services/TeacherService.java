@@ -4,9 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
-import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.utils.SecurityUtils;
+import com.ti.fabricadosaber.utils.SecurityUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +24,13 @@ public class TeacherService {
         Teacher teacher = this.teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Professor(a) não encontrado(a)! Id: " + id + ", Tipo: " + Teacher.class.getName()));
 
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         return teacher;
     }
 
     public List<Teacher> listAllTeachers() {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         List<Teacher> teacher = this.teacherRepository.findAll();
         if (teacher.isEmpty()) {
@@ -41,7 +40,7 @@ public class TeacherService {
     }
 
     public List<Team> listTeams(Long id) {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Id: " + id + " não encontrado"
@@ -52,7 +51,7 @@ public class TeacherService {
 
     @Transactional
     public Teacher create(Teacher obj) {
-        SecurityUtils.checkUser();
+        SecurityUtil.checkUser();
 
         obj.setId(null);
         obj.setRegistrationDate(LocalDate.now());
