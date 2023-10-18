@@ -3,7 +3,6 @@ package com.ti.fabricadosaber.services;
 import java.util.List;
 
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
-import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtils;
 import org.springframework.beans.BeanUtils;
@@ -20,17 +19,19 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public Employee findById(Long id) {
+        SecurityUtils.checkUser();
+
         Employee employee =
                 this.employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Funcionário não encontrado! id: " + id + ", Tipo: " + Employee.class.getName()));
 
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
 
         return employee;
     }
 
     public List<Employee> listAllEmployees() {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+
+        SecurityUtils.checkUser();
 
         List<Employee> employees = this.employeeRepository.findAll();
         if (employees.isEmpty()) {
@@ -42,7 +43,8 @@ public class EmployeeService {
 
     @Transactional
     public Employee create(Employee obj) {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+
+        SecurityUtils.checkUser();
 
         obj.setId(null);
         obj = this.employeeRepository.save(obj);

@@ -22,7 +22,7 @@ public class SecurityUtils {
     }
 
 
-    public static UserSpringSecurity checkUser() {
+    public static void checkUser() {
 
         UserSpringSecurity userSpringSecurity = authenticated();
 
@@ -33,8 +33,6 @@ public class SecurityUtils {
         if(!userIsAdmin(userSpringSecurity))
             throw new AuthorizationException("Acesso negado!");
 
-
-        return userSpringSecurity;
     }
 
 }

@@ -25,13 +25,13 @@ public class TeacherService {
         Teacher teacher = this.teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Professor(a) não encontrado(a)! Id: " + id + ", Tipo: " + Teacher.class.getName()));
 
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        SecurityUtils.checkUser();
 
         return teacher;
     }
 
     public List<Teacher> listAllTeachers() {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        SecurityUtils.checkUser();
 
         List<Teacher> teacher = this.teacherRepository.findAll();
         if (teacher.isEmpty()) {
@@ -41,7 +41,7 @@ public class TeacherService {
     }
 
     public List<Team> listTeams(Long id) {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        SecurityUtils.checkUser();
 
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Id: " + id + " não encontrado"
@@ -52,7 +52,7 @@ public class TeacherService {
 
     @Transactional
     public Teacher create(Teacher obj) {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        SecurityUtils.checkUser();
 
         obj.setId(null);
         obj.setRegistrationDate(LocalDate.now());

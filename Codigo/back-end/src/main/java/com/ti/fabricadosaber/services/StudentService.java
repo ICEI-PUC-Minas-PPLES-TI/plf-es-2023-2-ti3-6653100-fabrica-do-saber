@@ -36,16 +36,17 @@ public class StudentService {
 
 
     public Student findById(Long id) {
+        SecurityUtils.checkUser();
+
         Student student =
                 this.studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                         "Aluno não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
 
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
         return student;
     }
 
     public List<Student> listAllStudents() {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        SecurityUtils.checkUser();
 
         List<Student> students = this.studentRepository.findAll();
         if (students.isEmpty()) {
@@ -55,7 +56,7 @@ public class StudentService {
     }
 
     public Set<Parent> listParents(Long id) {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        SecurityUtils.checkUser();
 
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Estudante com o ID " + id + " não encontrado"));
@@ -65,14 +66,14 @@ public class StudentService {
 
     @Transactional
     public Student create(Student obj) {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        SecurityUtils.checkUser();
 
         twoParents(obj);
         Team team = this.teamService.findById(obj.getTeam().getId());
         obj.setId(null);
         obj.setTeam(team);
-        Set<Parent> createdParents = saveParents(obj);
-        obj.setParents(createdParents);
+        Set<Parent> parents = saveParents(obj);
+        obj.setParents(parents);
         obj.setRegistrationDate(LocalDate.now());
 
         Student createdStudent = studentRepository.save(obj);
@@ -83,11 +84,12 @@ public class StudentService {
 
     public Set<Parent> saveParents(Student obj) {
         String[] ignoreProperties = { "id", "registrationDate" };
-        Set<Parent> createdParents = new HashSet<>();
+        Set<Parent> parents = new HashSet<>();
 
         Parent currentParent;
         for (Parent parent : obj.getParents()) {
             String cpfParent = parent.getCpf();
+
             if (parentService.existsByCpf(cpfParent)) {
                 currentParent = this.parentService.findByCpf(cpfParent);
                 BeanUtils.copyProperties(parent, currentParent, ignoreProperties);
@@ -95,10 +97,10 @@ public class StudentService {
             } else {
                 currentParent = parentService.create(parent);
             }
-            createdParents.add(currentParent);
+            parents.add(currentParent);
         }
 
-        return createdParents;
+        return parents;
     }
 
     public void twoParents(Student obj) {
@@ -111,13 +113,14 @@ public class StudentService {
         twoParents(obj);
 
         Student newObj = findById(obj.getId());
-        String[] ignoreProperties = { "id", "registrationDate" };
+        String[] ignoreProperties = { "id", "registrationDate", "parents" };
 
         Team oldTeam = newObj.getTeam();
         Team newTeam = this.teamService.findById(obj.getTeam().getId());
 
-        Set<Parent> updatedParents = saveParents(obj);
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);
+
+        Set<Parent> updatedParents = saveParents(obj);
         newObj.setParents(updatedParents);
         newObj.setRegistrationDate(LocalDate.now());
         newObj.setTeam(newTeam);

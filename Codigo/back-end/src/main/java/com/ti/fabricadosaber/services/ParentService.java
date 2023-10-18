@@ -21,10 +21,11 @@ public class ParentService {
     private ParentRepository parentRepository;
 
     public Parent findById(Long id) {
+        SecurityUtils.checkUser();
+
         Parent parent = this.parentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Parente não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
 
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
 
         return parent;
     }
@@ -40,7 +41,7 @@ public class ParentService {
     @Transactional
     public Parent create(Parent obj) {
 
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        SecurityUtils.checkUser();
 
         obj.setId(null);
         obj.setRegistrationDate(LocalDate.now());
@@ -50,7 +51,8 @@ public class ParentService {
 
     public Parent update(Parent obj) {
         Parent newObj = findById(obj.getId());
-        String[] ignoredProperties = {"id"};
+        String ignoredProperties = "id";
+
         BeanUtils.copyProperties(obj, newObj, ignoredProperties);
 
         return this.parentRepository.save(newObj);

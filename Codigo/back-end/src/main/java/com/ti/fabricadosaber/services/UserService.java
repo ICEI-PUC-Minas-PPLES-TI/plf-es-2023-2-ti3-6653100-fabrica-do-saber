@@ -32,7 +32,7 @@ public class UserService {
 
 
     public User findById(Long id) {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        SecurityUtils.checkUser();
 
         Optional<User> user = this.userRepository.findById(id);
 
@@ -43,7 +43,7 @@ public class UserService {
 
     public User findCurrentUser() {
 
-        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
+        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
 
         Optional<User> user = this.userRepository.findById(userSpringSecurity.getId());
 
@@ -55,7 +55,6 @@ public class UserService {
     @Transactional
     public User create(User obj) {
         obj.setId(null);
-        // Encriptando a senha:
         obj.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword()));
         obj.setProfiles(Stream.of(ProfileEnum.USER.getCode()).collect(Collectors.toSet()));
         obj.setCreateDate(LocalDate.now());
@@ -63,14 +62,14 @@ public class UserService {
         return obj;
     }
 
-    // Atualizando somente a senha
     @Transactional
     public User update(User obj) {
-        User existingUser = findById(obj.getId()); // Aqui, já verifica usuário ativo
+        User existingUser = findById(obj.getId());
         String[] ignoreProperties = new String[] {"id", "profiles","createDate","password"};
 
-        // Copia as propriedades não nulas do updatedStudent para o existingUser
+
         BeanUtils.copyProperties(obj, existingUser, ignoreProperties);
+
         obj.setProfiles(Stream.of(ProfileEnum.USER.getCode()).collect(Collectors.toSet()));
         existingUser.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword()));
         existingUser.setCreateDate(LocalDate.now());
@@ -80,7 +79,6 @@ public class UserService {
 
     public void delete(Long id) {
         User user = findById(id);
-        // caso a entidade esteja relacionada a outra:
         try{
             this.userRepository.delete(user);
         } catch (Exception error) {
