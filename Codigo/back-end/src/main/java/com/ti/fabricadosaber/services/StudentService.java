@@ -40,14 +40,12 @@ public class StudentService {
                 this.studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                         "Aluno não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
 
-        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
         return student;
     }
 
     public List<Student> listAllStudents() {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
 
         List<Student> students = this.studentRepository.findAll();
         if (students.isEmpty()) {
@@ -57,8 +55,7 @@ public class StudentService {
     }
 
     public Set<Parent> listParents(Long id) {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
 
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Estudante com o ID " + id + " não encontrado"));
@@ -68,8 +65,7 @@ public class StudentService {
 
     @Transactional
     public Student create(Student obj) {
-        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
 
         twoParents(obj);
         Team team = this.teamService.findById(obj.getTeam().getId());

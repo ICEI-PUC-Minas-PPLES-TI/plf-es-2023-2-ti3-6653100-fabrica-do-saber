@@ -22,12 +22,19 @@ public class SecurityUtils {
     }
 
 
-    public static void checkUser(UserSpringSecurity userSpringSecurity) {
+    public static UserSpringSecurity checkUser() {
+
+        UserSpringSecurity userSpringSecurity = authenticated();
+
+
         if(Objects.isNull(userSpringSecurity)) {
             throw new AuthorizationException("Usuário não logado");
         }
         if(!userIsAdmin(userSpringSecurity))
             throw new AuthorizationException("Acesso negado!");
+
+
+        return userSpringSecurity;
     }
 
 }

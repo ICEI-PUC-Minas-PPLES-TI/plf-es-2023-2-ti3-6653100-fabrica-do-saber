@@ -32,8 +32,7 @@ public class UserService {
 
 
     public User findById(Long id) {
-       UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
-       SecurityUtils.checkUser(userSpringSecurity);
+        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
 
         Optional<User> user = this.userRepository.findById(id);
 
@@ -44,8 +43,7 @@ public class UserService {
 
     public User findCurrentUser() {
 
-        UserSpringSecurity userSpringSecurity = SecurityUtils.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+        UserSpringSecurity userSpringSecurity = SecurityUtils.checkUser();
 
         Optional<User> user = this.userRepository.findById(userSpringSecurity.getId());
 
