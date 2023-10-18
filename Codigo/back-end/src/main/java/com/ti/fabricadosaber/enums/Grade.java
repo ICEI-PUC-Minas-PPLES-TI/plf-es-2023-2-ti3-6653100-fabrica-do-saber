@@ -18,4 +18,12 @@ public enum Grade {
         return name;
     }
 
+    public static Grade recoverGrade(String name) {
+        for (Grade grade : values()) {
+            if (grade.getName().equalsIgnoreCase(name)) {
+                return grade;
+            }
+        }
+        throw new IllegalArgumentException("Série não encontrada: " + name);
+    }
 }

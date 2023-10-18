@@ -28,5 +28,14 @@ public enum Race {
             return name;
         }
 
+        public static Race recoverRace(String name){
+
+            for(Race race : values()){
+                if (race.getName().equalsIgnoreCase(name)) {
+                    return race;
+                }
+            }
+            throw new IllegalArgumentException("Raça não encontrada: "+name);
+        }
 
 }
