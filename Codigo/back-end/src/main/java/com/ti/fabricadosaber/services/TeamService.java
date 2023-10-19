@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ti.fabricadosaber.components.StudentOperationComponent;
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
@@ -25,6 +26,9 @@ public class TeamService {
 
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private StudentOperationComponent studentOperationComponent;
 
 
     @Autowired
@@ -67,9 +71,9 @@ public class TeamService {
         Teacher teacher = this.teacherService.findById(obj.getTeacher().getId());
         obj.setId(null);
         obj.setTeacher(teacher);
-        processStudentInCreation(obj);
+        studentOperationComponent.processStudentInCreation(obj);
         obj = this.teamRepository.save(obj);
-        associateStudents(obj);
+        studentOperationComponent.associateStudents(obj);
         return obj;
     }
 
@@ -81,48 +85,16 @@ public class TeamService {
         newObj.setGrade(obj.getGrade());
         newObj.setTeacher(obj.getTeacher());
 
-        processStudentOnUpdate(obj, newObj);
+        studentOperationComponent.processStudentOnUpdate(obj, newObj);
 
         newObj.setNumberStudents(obj.getNumberStudents());
         newObj.setStudents(obj.getStudents());
         newObj = this.teamRepository.save(newObj);
-        associateStudents(newObj);
+        studentOperationComponent.associateStudents(newObj);
         return newObj;
     }
 
-    public void associateStudents(Team obj) {
-        if (obj.getStudents() != null) {
-            for (Student student : obj.getStudents()) {
-                student.setTeam(obj);
-            }
-        }
-    }
 
-    public void processStudentOnUpdate(Team obj, Team newObj) {
-        processStudentInCreation(obj);
-        List<Student> studentNewObj = newObj.getStudents();
-        if(studentNewObj != null && obj.getNumberStudents() == 0)
-            studentNewObj.forEach(x -> x.setTeam(null));
-    }
-
-    public void processStudentInCreation(Team obj) {
-        List<Student> students = obj.getStudents();
-        if (students != null && !students.isEmpty()) {
-            List<Student> updatedStudents = new ArrayList<>();
-            for (Student student : students) {
-
-                Student existingStudent = studentService.findById(student.getId());
-
-                updateStudent(existingStudent);
-                updatedStudents.add(existingStudent);
-
-                obj.setStudents(updatedStudents);
-                obj.setNumberStudents(updatedStudents.size());
-            }
-        } else {
-            obj.setNumberStudents(0);
-        }
-    }
 
     public void updateStudent(Student student) {
         Team team = student.getTeam();
@@ -145,25 +117,6 @@ public class TeamService {
 
         team.setNumberStudents(team.getStudents().size());
         return teamRepository.save(team);
-    }
-
-    public Team deleteStudent(Long teamId, List<Long> idsStudent) {
-        Team team = findById(teamId);
-
-        for (Long idStudent : idsStudent) {
-
-            Student student = studentService.findById(idStudent);
-            if (!(team.getStudents().contains(student))) {
-                throw new StudenteOnTeamException("Aluno não está vinculado a turma " + team.getName());
-            }
-
-            updateStudent(student);
-            student.setTeam(null);
-            team.getStudents().remove(student);
-        }
-
-        updateTeamStudentCount(team);
-        return team;
     }
 
 

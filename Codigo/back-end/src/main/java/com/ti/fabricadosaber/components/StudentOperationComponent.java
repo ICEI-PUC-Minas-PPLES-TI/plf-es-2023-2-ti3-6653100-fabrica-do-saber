@@ -1,4 +1,4 @@
-package com.ti.fabricadosaber.utils;
+package com.ti.fabricadosaber.components;
 
 import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
 import com.ti.fabricadosaber.models.Student;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StudentTeamUtil {
+public class StudentOperationComponent {
 
     @Autowired
     private static StudentService studentService;
@@ -21,7 +21,7 @@ public class StudentTeamUtil {
     private static TeamService teamService;
 
 
-    public static Team deleteStudent(Long teamId, List<Long> idsStudent) {
+/*    public Team deleteStudent(Long teamId, List<Long> idsStudent) {
         Team team = teamService.findById(teamId);
 
         for (Long idStudent : idsStudent) {
@@ -38,7 +38,7 @@ public class StudentTeamUtil {
 
        teamService.updateTeamStudentCount(team);
         return team;
-    }
+    }*/
 
 
     public void processStudentInCreation(Team obj) {
@@ -60,6 +60,13 @@ public class StudentTeamUtil {
         }
     }
 
+    public void processStudentOnUpdate(Team obj, Team newObj) {
+        processStudentInCreation(obj);
+        List<Student> studentNewObj = newObj.getStudents();
+        if(studentNewObj != null && obj.getNumberStudents() == 0)
+            studentNewObj.forEach(x -> x.setTeam(null));
+    }
+
     public void associateStudents(Team obj) {
         if (obj.getStudents() != null) {
             for (Student student : obj.getStudents()) {
@@ -68,12 +75,10 @@ public class StudentTeamUtil {
         }
     }
 
-    public void processStudentOnUpdate(Team obj, Team newObj) {
-        processStudentInCreation(obj);
-        List<Student> studentNewObj = newObj.getStudents();
-        if(studentNewObj != null && obj.getNumberStudents() == 0)
-            studentNewObj.forEach(x -> x.setTeam(null));
-    }
+
+
+
+
 
 
 
