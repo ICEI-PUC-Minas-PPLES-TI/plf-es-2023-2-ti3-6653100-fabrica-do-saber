@@ -85,29 +85,31 @@ public class StudentService {
         this.studentTeamOperation.twoParents(obj);
 
         Student newObj = findById(obj.getId());
-        String[] ignoreProperties = { "id", "registrationDate", "parents" };
+        String[] ignoreProperties = { "id", "registrationDate", "parents", "team"};
+
+        BeanUtils.copyProperties(obj, newObj, ignoreProperties);
 
         Team oldTeam = newObj.getTeam();
         Team newTeam = this.teamService.findById(obj.getTeam().getId());
 
-        BeanUtils.copyProperties(obj, newObj, ignoreProperties);
+        updateOldTeam(oldTeam, newTeam, newObj);
 
         Set<Parent> updatedParents = this.studentTeamOperation.saveParents(obj);
-
-
         newObj.setParents(updatedParents);
         newObj.setRegistrationDate(LocalDate.now());
         newObj.setTeam(newTeam);
-
-        if (oldTeam != null && !oldTeam.equals(newTeam)) {
-            oldTeam.getStudents().remove(newObj);
-            this.teamService.updateTeamStudentCount(oldTeam);
-        }
 
         newTeam.getStudents().add(newObj);
         this.teamService.updateTeamStudentCount(newTeam);
 
         return studentRepository.save(newObj);
+    }
+
+    public void updateOldTeam(Team oldTeam, Team newTeam, Student newObj) {
+        if (oldTeam != null && !oldTeam.equals(newTeam)) {
+            oldTeam.getStudents().remove(newObj);
+            this.teamService.updateTeamStudentCount(oldTeam);
+        }
     }
 
 
