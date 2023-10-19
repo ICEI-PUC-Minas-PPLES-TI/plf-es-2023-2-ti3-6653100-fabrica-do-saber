@@ -88,11 +88,11 @@ public class TeamController {
     }
 
 
- /*   @DeleteMapping("/{teamId}/delete-students")
+    @DeleteMapping("/{teamId}/delete-students")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long teamId, @RequestBody List<Long> studentIds) {
-        this.studentOperationComponent.deleteStudent(teamId, studentIds);
+        this.teamService.deleteStudent(teamId, studentIds);
         return ResponseEntity.noContent().build();
-    }*/
+    }
 
 
     @DeleteMapping("/{id}")

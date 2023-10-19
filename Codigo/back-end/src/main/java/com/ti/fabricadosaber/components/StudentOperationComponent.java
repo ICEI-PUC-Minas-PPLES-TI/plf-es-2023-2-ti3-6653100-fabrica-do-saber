@@ -1,6 +1,5 @@
 package com.ti.fabricadosaber.components;
 
-import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
 import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.services.StudentService;
@@ -20,25 +19,6 @@ public class StudentOperationComponent {
     @Autowired
     private static TeamService teamService;
 
-
-/*    public Team deleteStudent(Long teamId, List<Long> idsStudent) {
-        Team team = teamService.findById(teamId);
-
-        for (Long idStudent : idsStudent) {
-
-            Student student = studentService.findById(idStudent);
-            if (!(team.getStudents().contains(student))) {
-                throw new StudenteOnTeamException("Aluno não está vinculado a turma " + team.getName());
-            }
-
-            teamService.updateStudent(student);
-            student.setTeam(null);
-            team.getStudents().remove(student);
-        }
-
-       teamService.updateTeamStudentCount(team);
-        return team;
-    }*/
 
 
     public void processStudentInCreation(Team obj) {
@@ -74,10 +54,6 @@ public class StudentOperationComponent {
             }
         }
     }
-
-
-
-
 
 
 

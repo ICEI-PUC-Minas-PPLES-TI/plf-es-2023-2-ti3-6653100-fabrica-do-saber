@@ -120,6 +120,26 @@ public class TeamService {
         teamRepository.save(team);
     }
 
+
+    public Team deleteStudent(Long teamId, List<Long> idsStudent) {
+        Team team = findById(teamId);
+
+        for (Long idStudent : idsStudent) {
+
+            Student student = studentService.findById(idStudent);
+            if (!(team.getStudents().contains(student))) {
+                throw new StudenteOnTeamException("Aluno não está vinculado a turma " + team.getName());
+            }
+
+            updateStudent(student);
+            student.setTeam(null);
+            team.getStudents().remove(student);
+        }
+
+        updateTeamStudentCount(team);
+        return team;
+    }
+
     public TeamResponseDTO convertToTeamResponseDTO(Team team) {
 
         TeamResponseDTO dto = new TeamResponseDTO();
