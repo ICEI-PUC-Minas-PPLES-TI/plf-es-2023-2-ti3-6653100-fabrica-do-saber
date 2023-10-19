@@ -33,10 +33,6 @@ public class StudentService {
 
 
     @Autowired
-    private ParentService parentService;
-
-
-    @Autowired
     private ParentOperationComponent parentOperationComponent;
 
     public Student findById(Long id) {
