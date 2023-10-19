@@ -78,15 +78,6 @@ public class TeamController {
     }
 
 
-    @PutMapping("/{Id}/add-students")
-    public ResponseEntity<Void> addStudentsToTeam(
-            @PathVariable Long Id,
-            @RequestBody List<Long> studentIds
-    ) {
-        this.teamService.addStudentToTeam(Id, studentIds);
-        return ResponseEntity.noContent().build();
-    }
-
 
 
     @PutMapping("/{id}")
