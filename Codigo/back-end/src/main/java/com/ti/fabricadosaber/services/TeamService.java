@@ -95,6 +95,14 @@ public class TeamService {
     }
 
 
+    public void delete(Long id) {
+        Team team = findById(id);
+        try {
+            this.teamRepository.delete(team);
+        } catch (Exception e) {
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
+        }
+    }
 
     public void updateStudent(Student student) {
         Team team = student.getTeam();
@@ -105,35 +113,11 @@ public class TeamService {
         }
     }
 
-    public Team addStudentToTeam(Long id, List<Long> idsStudents) {
-        Team team = findById(id);
-
-        for (Long idStudent : idsStudents) {
-            Student student = studentService.findById(idStudent);
-            updateStudent(student);
-            student.setTeam(team);
-            team.getStudents().add(student);
-        }
-
-        team.setNumberStudents(team.getStudents().size());
-        return teamRepository.save(team);
-    }
 
 
     public void updateTeamStudentCount(Team team) {
         team.setNumberStudents(team.getStudents().size());
         teamRepository.save(team);
-    }
-
-
-    public void delete(Long id) {
-        Team team = findById(id);
-
-        try {
-            this.teamRepository.delete(team);
-        } catch (Exception e) {
-            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
-        }
     }
 
     public TeamResponseDTO convertToTeamResponseDTO(Team team) {
