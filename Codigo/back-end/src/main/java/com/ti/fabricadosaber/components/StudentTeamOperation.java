@@ -3,19 +3,29 @@ package com.ti.fabricadosaber.components;
 import com.ti.fabricadosaber.exceptions.TwoParentsException;
 import com.ti.fabricadosaber.models.Parent;
 import com.ti.fabricadosaber.models.Student;
+import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.services.ParentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class ParentOperationComponent {
+public class StudentTeamOperation {
+
 
     @Autowired
     private ParentService parentService;
+
+
+    public void associateStudents(Team obj) {
+        if (obj.getStudents() != null) {
+            for (Student student : obj.getStudents()) {
+                student.setTeam(obj);
+            }
+        }
+    }
 
     public Set<Parent> saveParents(Student obj) {
         String[] ignoreProperties = { "id", "registrationDate", "cpf"};
@@ -44,5 +54,8 @@ public class ParentOperationComponent {
             throw new TwoParentsException("O estudante deve ter dois responsáveis.");
         }
     }
+
+
+
 
 }

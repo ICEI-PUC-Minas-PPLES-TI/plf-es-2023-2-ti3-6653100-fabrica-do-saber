@@ -1,12 +1,10 @@
 package com.ti.fabricadosaber.services;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
 
-import com.ti.fabricadosaber.components.ParentOperationComponent;
+import com.ti.fabricadosaber.components.StudentTeamOperation;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
-import com.ti.fabricadosaber.exceptions.TwoParentsException;
 import com.ti.fabricadosaber.models.Parent;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
@@ -31,9 +29,8 @@ public class StudentService {
     @Lazy
     private TeamService teamService;
 
-
     @Autowired
-    private ParentOperationComponent parentOperationComponent;
+    private StudentTeamOperation studentTeamOperation;
 
     public Student findById(Long id) {
         SecurityUtil.checkUser();
@@ -68,12 +65,12 @@ public class StudentService {
     public Student create(Student obj) {
         SecurityUtil.checkUser();
 
-        this.parentOperationComponent.twoParents(obj);
+        this.studentTeamOperation.twoParents(obj);
 
         Team team = this.teamService.findById(obj.getTeam().getId());
         obj.setId(null);
         obj.setTeam(team);
-        Set<Parent> parents = parentOperationComponent.saveParents(obj);
+        Set<Parent> parents = studentTeamOperation.saveParents(obj);
         obj.setParents(parents);
         obj.setRegistrationDate(LocalDate.now());
 
@@ -85,7 +82,7 @@ public class StudentService {
 
 
     public Student update(Student obj) {
-        parentOperationComponent.twoParents(obj);
+        this.studentTeamOperation.twoParents(obj);
 
         Student newObj = findById(obj.getId());
         String[] ignoreProperties = { "id", "registrationDate", "parents" };
@@ -95,7 +92,8 @@ public class StudentService {
 
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);
 
-        Set<Parent> updatedParents = this.parentOperationComponent.saveParents(obj);
+        Set<Parent> updatedParents = this.studentTeamOperation.saveParents(obj);
+
 
         newObj.setParents(updatedParents);
         newObj.setRegistrationDate(LocalDate.now());

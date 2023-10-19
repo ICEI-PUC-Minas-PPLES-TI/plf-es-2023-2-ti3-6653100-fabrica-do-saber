@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.ti.fabricadosaber.components.StudentOperationComponent;
+import com.ti.fabricadosaber.components.StudentTeamOperation;
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
@@ -28,7 +28,7 @@ public class TeamService {
     private TeamRepository teamRepository;
 
     @Autowired
-    private StudentOperationComponent studentOperationComponent;
+    private StudentTeamOperation studentTeamOperation;
 
 
     @Autowired
@@ -71,9 +71,9 @@ public class TeamService {
         Teacher teacher = this.teacherService.findById(obj.getTeacher().getId());
         obj.setId(null);
         obj.setTeacher(teacher);
-        studentOperationComponent.processStudentInCreation(obj);
+        this.processStudentInCreation(obj);
         obj = this.teamRepository.save(obj);
-        studentOperationComponent.associateStudents(obj);
+        studentTeamOperation.associateStudents(obj);
         return obj;
     }
 
@@ -85,12 +85,12 @@ public class TeamService {
         newObj.setGrade(obj.getGrade());
         newObj.setTeacher(obj.getTeacher());
 
-        studentOperationComponent.processStudentOnUpdate(obj, newObj);
+        this.processStudentOnUpdate(obj, newObj);
 
         newObj.setNumberStudents(obj.getNumberStudents());
         newObj.setStudents(obj.getStudents());
         newObj = this.teamRepository.save(newObj);
-        studentOperationComponent.associateStudents(newObj);
+        studentTeamOperation.associateStudents(newObj);
         return newObj;
     }
 
@@ -104,6 +104,32 @@ public class TeamService {
         }
     }
 
+    public void processStudentInCreation(Team obj) {
+        List<Student> students = obj.getStudents();
+        if (students != null && !students.isEmpty()) {
+            List<Student> updatedStudents = new ArrayList<>();
+            for (Student student : students) {
+
+                Student existingStudent = studentService.findById(student.getId());
+
+                updateStudent(existingStudent);
+                updatedStudents.add(existingStudent);
+
+                obj.setStudents(updatedStudents);
+                obj.setNumberStudents(updatedStudents.size());
+            }
+        } else {
+            obj.setNumberStudents(0);
+        }
+    }
+
+    public void processStudentOnUpdate(Team obj, Team newObj) {
+        processStudentInCreation(obj);
+        List<Student> studentNewObj = newObj.getStudents();
+        if(studentNewObj != null && obj.getNumberStudents() == 0)
+            studentNewObj.forEach(x -> x.setTeam(null));
+    }
+
     public void updateStudent(Student student) {
         Team team = student.getTeam();
         if (team != null) {
@@ -114,14 +140,13 @@ public class TeamService {
     }
 
 
-
     public void updateTeamStudentCount(Team team) {
         team.setNumberStudents(team.getStudents().size());
         teamRepository.save(team);
     }
 
-
-    public Team deleteStudent(Long teamId, List<Long> idsStudent) {
+    // O controller acessa esse método
+    public Team deleteStudentFromTeam(Long teamId, List<Long> idsStudent) {
         Team team = findById(teamId);
 
         for (Long idStudent : idsStudent) {

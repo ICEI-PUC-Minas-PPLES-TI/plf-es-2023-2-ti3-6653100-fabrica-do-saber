@@ -3,11 +3,10 @@ package com.ti.fabricadosaber.controllers;
 import java.net.URI;
 import java.util.List;
 
-import com.ti.fabricadosaber.components.StudentOperationComponent;
+import com.ti.fabricadosaber.components.StudentTeamOperation;
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +33,7 @@ public class TeamController {
     private TeamService teamService;
 
     @Autowired
-    StudentOperationComponent studentOperationComponent;
+    StudentTeamOperation studentOperationComponent;
 
 
     @GetMapping("/{id}")
@@ -90,7 +89,7 @@ public class TeamController {
 
     @DeleteMapping("/{teamId}/delete-students")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long teamId, @RequestBody List<Long> studentIds) {
-        this.teamService.deleteStudent(teamId, studentIds);
+        this.teamService.deleteStudentFromTeam(teamId, studentIds);
         return ResponseEntity.noContent().build();
     }
 
