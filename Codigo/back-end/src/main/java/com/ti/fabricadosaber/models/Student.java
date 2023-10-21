@@ -27,21 +27,10 @@ public class Student extends Person {
 
 	public static final String TABLE_NAME = "student";
 
-	public interface CreateStudent {
-	}
-
-	public interface UpdateStudent {
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true)
 	private Long id;
-
-
-/*	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "team_id", nullable = true, updatable = true)
-	private Team team;*/
 
 	@JsonIdentityReference(alwaysAsId = true)
 	@ManyToOne
@@ -49,11 +38,11 @@ public class Student extends Person {
 	private Team team;
 
 	@Column(name = "hometown", length = 45, nullable = false, updatable = true)
-	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
+	@NotBlank
 	private String hometown;
 
 	@Column(name = "nationality", length = 45, nullable = false, updatable = true)
-	@NotBlank(groups = { CreateStudent.class, UpdateStudent.class })
+	@NotBlank
 	private String nationality;
 
 	@Column(name = "race", length = 45, nullable = false, updatable = true)

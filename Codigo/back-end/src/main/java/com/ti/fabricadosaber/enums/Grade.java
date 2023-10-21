@@ -2,6 +2,7 @@ package com.ti.fabricadosaber.enums;
 
 public enum Grade {
 
+    //todo: O name é só para exibir em interface e não corresponde o valor do enumeration
     PRIMEIRA_SERIE("1º Série"),
     SEGUNDA_SERIE("2º Série"),
     TERCEIRA_SERIE("3º Série"),

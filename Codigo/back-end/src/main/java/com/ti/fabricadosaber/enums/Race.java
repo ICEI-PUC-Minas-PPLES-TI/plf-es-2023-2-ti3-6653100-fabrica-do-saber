@@ -2,33 +2,28 @@ package com.ti.fabricadosaber.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+@JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum Race {
-        @JsonFormat(shape = JsonFormat.Shape.STRING)
-        AMARELO("Amarelo"),
-        @JsonFormat(shape = JsonFormat.Shape.STRING)
-        BRANCO("Branco"),
-        @JsonFormat(shape = JsonFormat.Shape.STRING)
-        INDIGENA("Indígena"),
-        @JsonFormat(shape = JsonFormat.Shape.STRING)
-        PARDO("Pardo"),
-        @JsonFormat(shape = JsonFormat.Shape.STRING)
-        PRETO("Preto"),
-        @JsonFormat(shape = JsonFormat.Shape.STRING)
-        OUTRA("Outra"),
-        @JsonFormat(shape = JsonFormat.Shape.STRING)
-        PREFIRO_NAO_DECLARAR("Prefiro não declarar");
+    AMARELO("Amarelo"),
+    BRANCO("Branco"),
+    INDIGENA("Indígena"),
+    PARDO("Pardo"),
+    PRETO("Preto"),
+    OUTRA("Outra"),
+    PREFIRO_NAO_DECLARAR("Prefiro não declarar");
 
-        private final String name;
+    private final String name;
 
-        Race(String name) {
-            this.name = name;
-        }
+    Race(String name) {
 
-        public String getName() {
-            return name;
-        }
+        this.name = name;
+    }
 
-        public static Race recoverRace(String name){
+    public String getName() {
+        return name;
+    }
+
+    public static Race recoverRace(String name){
 
             for(Race race : values()){
                 if (race.getName().equalsIgnoreCase(name)) {

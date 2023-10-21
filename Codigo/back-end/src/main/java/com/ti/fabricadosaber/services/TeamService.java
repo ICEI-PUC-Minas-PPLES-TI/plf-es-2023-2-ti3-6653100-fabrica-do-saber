@@ -10,6 +10,7 @@ import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
+import java.util.function.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -85,10 +86,13 @@ public class TeamService {
         newObj.setGrade(obj.getGrade());
         newObj.setTeacher(obj.getTeacher());
 
-        this.processStudentOnUpdate(obj, newObj);
+        processStudentOnUpdate(obj, newObj);
+
 
         newObj.setNumberStudents(obj.getNumberStudents());
         newObj.setStudents(obj.getStudents());
+
+
         newObj = this.teamRepository.save(newObj);
         studentTeamOperation.associateStudents(newObj);
         return newObj;
@@ -103,6 +107,28 @@ public class TeamService {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
+
+    public void processStudentOnUpdate(Team obj, Team newObj) {
+        processStudentInCreation(obj);
+        List<Student> students = newObj.getStudents();
+
+        if(students != null) {
+            if(obj.getNumberStudents() != 0) {
+                for (Student student : students) {
+                    if (!obj.getStudents().contains(student))
+                        student.setTeam(null);
+                }
+            } else {
+                Predicate<Student> alwaysTrue = student -> {
+                    student.setTeam(null);
+                    return true;
+                };
+                students.removeIf(alwaysTrue);
+            }
+        }
+
+    }
+
 
     public void processStudentInCreation(Team obj) {
         List<Student> students = obj.getStudents();
@@ -123,12 +149,6 @@ public class TeamService {
         }
     }
 
-    public void processStudentOnUpdate(Team obj, Team newObj) {
-        processStudentInCreation(obj);
-        List<Student> studentNewObj = newObj.getStudents();
-        if(studentNewObj != null && obj.getNumberStudents() == 0)
-            studentNewObj.forEach(x -> x.setTeam(null));
-    }
 
     public void updateStudent(Student student) {
         Team team = student.getTeam();
