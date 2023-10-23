@@ -37,21 +37,26 @@
     </div>
 
     <button type="button" class="btn btn-outline-info "
-                    (click) = printStudentList()
-                    title="button.title">
-              <i class="fa fa-upload"></i>
+            (click)=printStudentList()
+            title="button.title">
+      <i class="fa fa-upload"></i>
     </button>
   </div>
 
   <div class="table-responsive printable">
 
+    <div class="col-12 py-2 hidden printable">
+      <h6>Número de estudantes cadastrados: {{students.length}}</h6>
+    </div>
+
     <table class="table no-wrap user-table mb-0">
       <thead>
       <tr>
-        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders" [class.not-printable]="header === 'Gerenciar'">
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders"
+            [class.not-printable]="header === 'Gerenciar'">
           {{ header }}
         </th>
-        
+
       </tr>
       </thead>
       <tbody>

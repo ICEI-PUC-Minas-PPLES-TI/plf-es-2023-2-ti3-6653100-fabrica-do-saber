@@ -70,6 +70,10 @@ export class StudentListComponent {
       });
   }
 
+  printStudentList(): void {
+    window.print();
+  }
+
   printStudent(student: Student): void {
 
     let newWindow: Window = <Window>window.open(`/student-edit/${student.id}`, '_blank');
@@ -80,7 +84,6 @@ export class StudentListComponent {
         newWindow.close();
       }, 200);
     };
-
   }
 
   filterStudentList(event: Event): void {
@@ -98,10 +101,6 @@ export class StudentListComponent {
     });
   }
 
-  printStudentList(): void {
-    window.print();
-  }
-  
   sortStudentsByName(): void {
     this.students = this.originalStudents.sort(function (a: Student, b: Student): number {
       let nameA: string = a.fullName.toLowerCase();
