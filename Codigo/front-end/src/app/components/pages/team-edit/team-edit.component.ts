@@ -31,7 +31,6 @@ export class TeamEditComponent {
   }
 
   updateTeam(): void {
-    /*todo: deletar apos ajuste do retorno do back-end*/
     const formattedTeam = this.formatToRequest(this.team);
     this.teamService.updateTeam(this.teamId, formattedTeam)
       .pipe(

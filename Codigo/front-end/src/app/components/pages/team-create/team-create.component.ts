@@ -17,7 +17,6 @@ export class TeamCreateComponent {
   }
 
   createTeam(): void {
-    /*todo: deletar apos ajuste do retorno do back-end*/
     const formattedTeam = this.formatToRequest(this.team);
     this.teamService.createTeam(formattedTeam).subscribe();
   }
@@ -26,7 +25,6 @@ export class TeamCreateComponent {
     this.router.navigate(['/team-list']);
   }
 
-  /*todo: deletar funcao apos ajustes no back-end*/
   formatToRequest(team: Team) {
     return {
       name: team.name,
