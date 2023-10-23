@@ -19,3 +19,19 @@ button:not(:disabled) {
   max-width: 150px;
   border-radius: 20px;
 }
+
+@media print {
+
+  .printable {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  .printable .btn {
+    display: none;
+  }
+
+  .not-printable {
+    display: none;
+  }
+}
