@@ -98,6 +98,10 @@ export class StudentListComponent {
     });
   }
 
+  printStudentList(): void {
+    window.print();
+  }
+  
   sortStudentsByName(): void {
     this.students = this.originalStudents.sort(function (a: Student, b: Student): number {
       let nameA: string = a.fullName.toLowerCase();

@@ -74,6 +74,10 @@ export class TeacherListComponent {
     });
   }
 
+  printTeacherList(): void {
+    window.print();
+  }
+
   sortTeachersByName(): void {
     this.teachers = this.originalTeachers.sort(function (a: Teacher, b: Teacher): number {
       let nameA: string = a.fullName.toLowerCase();
