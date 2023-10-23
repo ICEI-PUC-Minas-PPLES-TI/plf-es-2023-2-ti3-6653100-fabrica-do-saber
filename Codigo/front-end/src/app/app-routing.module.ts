@@ -14,6 +14,7 @@ import {TeamEditComponent} from './components/pages/team-edit/team-edit.componen
 import {TeamListComponent} from './components/pages/team-list/team-list.component';
 import {authGuard} from './services/auth/auth.guard';
 import {UserPageComponent} from './components/pages/user-page/user-page.component';
+import {ReportsComponent} from './components/pages/reports/reports.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [authGuard]},
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'team-create', component: TeamCreateComponent, canActivate: [authGuard]},
   {path: 'team-edit/:id', component: TeamEditComponent, canActivate: [authGuard]},
   {path: 'team-list', component: TeamListComponent, canActivate: [authGuard]},
+  {path: 'reports', component: ReportsComponent, canActivate: [authGuard]},
 ];
 
 @NgModule({
