@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {Teacher} from '../../../interfaces/Teacher';
 import {TeacherService} from '../../../services/teacher/teacher.service';
-import {Student} from '../../../interfaces/Student';
 
 @Component({
   selector: 'app-teacher-list',
@@ -44,9 +43,11 @@ export class TeacherListComponent {
   }
 
   deleteTeacher(teacher: Teacher): void {
-    this.teacherService.deleteTeacher(teacher.id).subscribe((): void => {
-      this.getTeachers();
-    });
+    let op: boolean = confirm('Deseja deletar o professor?');
+    if (op)
+      this.teacherService.deleteTeacher(teacher.id).subscribe((): void => {
+        this.getTeachers();
+      });
   }
 
   printTeacher(teacher: Teacher): void {

@@ -40,15 +40,19 @@ export class StudentEditComponent {
   }
 
   updateStudent(): void {
-    this.studentService.updateStudent(this.studentId, this.student)
-      .pipe(
-        tap((response): void => {
-          this.router.navigate(['/student-list']);
-        }),
-        catchError(err => {
-          throw err;
-        }))
-      .subscribe();
+    let op: boolean = confirm('Deseja atualizar o aluno?');
+    if (op) {
+      this.studentService.updateStudent(this.studentId, this.student)
+        .pipe(
+          tap((response): void => {
+            this.router.navigate(['/student-list']);
+          }),
+          catchError(err => {
+            throw err;
+          }))
+        .subscribe();
+      this.router.navigate(['/student-list']);
+    }
   }
 
   cancel(): void {

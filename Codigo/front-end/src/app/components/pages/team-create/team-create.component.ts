@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {TeamService} from '../../../services/team/team.service';
 import {Team} from '../../../interfaces/Team';
 import {TeamImp} from '../../../classes/team/team-imp';
+import {catchError, tap} from 'rxjs';
 
 @Component({
   selector: 'app-team-create',
@@ -18,7 +19,18 @@ export class TeamCreateComponent {
 
   createTeam(): void {
     const formattedTeam = this.formatToRequest(this.team);
-    this.teamService.createTeam(formattedTeam).subscribe();
+    let op: boolean = confirm('Deseja criar a turma?');
+    if (op)
+    this.teamService.createTeam(formattedTeam)
+      .pipe(
+        tap((response): void => {
+          this.router.navigate(['/team-list']);
+        }),
+        catchError(err => {
+          throw err;
+        })
+      )
+      .subscribe();
   }
 
   cancel(): void {

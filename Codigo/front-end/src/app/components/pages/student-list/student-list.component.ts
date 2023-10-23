@@ -63,9 +63,11 @@ export class StudentListComponent {
   }
 
   deleteStudent(student: Student): void {
-    this.studentService.deleteStudent(student.id).subscribe((): void => {
-      this.getStudents();
-    });
+    let op: boolean = confirm('Deseja deletar o aluno?');
+    if (op)
+      this.studentService.deleteStudent(student.id).subscribe((): void => {
+        this.getStudents();
+      });
   }
 
   printStudent(student: Student): void {

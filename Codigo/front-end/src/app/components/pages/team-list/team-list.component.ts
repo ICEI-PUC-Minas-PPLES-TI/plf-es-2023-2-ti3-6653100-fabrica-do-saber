@@ -56,7 +56,7 @@ export class TeamListComponent {
     });
   }
 
-  getTeacherInfo(team: Team, attribute: string):string {
+  getTeacherInfo(team: Team, attribute: string): string {
 
     const teacher: Teacher | undefined = this.teachers.find(teacher => teacher.id === team.teacherId);
 
@@ -73,9 +73,11 @@ export class TeamListComponent {
   }
 
   deleteTeam(id: any): void {
-    this.teamService.deleteTeam(id).subscribe((): void => {
-      this.getTeams();
-    });
+    let op: boolean = confirm('Deseja deletar a turma?');
+    if (op)
+      this.teamService.deleteTeam(id).subscribe((): void => {
+        this.getTeams();
+      });
   }
 
   filterTeamList(event: Event): void {
