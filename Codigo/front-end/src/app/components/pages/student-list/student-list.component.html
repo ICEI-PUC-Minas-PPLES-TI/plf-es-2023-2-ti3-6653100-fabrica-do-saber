@@ -71,7 +71,7 @@
           <td>
             <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
                     [routerLink]="button.route ? [button.route, student.id] : null"
-                    (click)="button.function ? button.function(student.id) : null"
+                    (click)="button.function ? button.function(student) : null"
                     title="{{ button.title }}">
               <i [class]="button.iconClass"></i>
             </button>

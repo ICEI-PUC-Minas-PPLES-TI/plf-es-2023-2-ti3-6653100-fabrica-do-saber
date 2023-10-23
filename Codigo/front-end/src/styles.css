@@ -38,6 +38,10 @@ a {
   text-decoration: none;
 }
 
+.only-printable {
+  display: none;
+}
+
 @media print {
 
   @page {
@@ -46,16 +50,23 @@ a {
   }
 
   * {
-    font-size: 14px;
+    font-size: 13px;
   }
 
-  body, app-btn-custom {
+  body, app-btn-custom, .not-printable {
     visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+
+  .only-printable {
+    display: block;
   }
 
   .printable {
     visibility: visible;
     position: absolute;
+    top: 30px;
     left: 0;
     right: 0;
     margin: auto;
