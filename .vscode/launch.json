@@ -4,6 +4,13 @@
             "type": "java",
             "name": "BackEndApplication",
             "request": "launch",
+            "mainClass": "com.ti.fabricadosaber.BackEndApplication",
+            "projectName": "back-end"
+        },
+        {
+            "type": "java",
+            "name": "BackEndApplication",
+            "request": "launch",
             "mainClass": "com.ti.fabricaDoSaber.BackEndApplication",
             "projectName": "back-end"
         },

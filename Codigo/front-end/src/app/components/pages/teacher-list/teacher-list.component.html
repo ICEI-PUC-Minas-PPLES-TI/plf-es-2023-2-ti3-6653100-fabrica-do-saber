@@ -1,5 +1,8 @@
 <section class="container">
-  <h5 class="pt-3">Professores cadastrados</h5>
+
+  <img src="\assets\img\logo-fabrica-do-saber.png" alt="" class="hidden printable">
+
+  <h5 class="pt-3 printable">Professores cadastrados</h5>
 
   <!-- Search bar -->
   <div class="d-flex justify-content-between mt-3 mb-3">
@@ -34,11 +37,11 @@
     </div>
   </div>
 
-  <div class="table-responsive">
+  <div class="table-responsive printable">
     <table class="table no-wrap user-table mb-0">
       <thead>
       <tr>
-        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders" [class.not-printable]="header === 'Gerenciar'">
           {{ header }}
         </th>
       </tr>

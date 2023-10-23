@@ -20,11 +20,22 @@ button:not(:disabled) {
   border-radius: 20px;
 }
 
+.hidden {
+  display: none;
+  top: 0%;
+  height: 80px;
+}
+
 @media print {
 
   .printable {
     margin-left: 2rem;
     margin-right: 2rem;
+  }
+
+  .hidden {
+    display: flex;
+    margin-top: 20px;
   }
 
   .printable .btn {
@@ -34,4 +45,14 @@ button:not(:disabled) {
   .not-printable {
     display: none;
   }
+
+  .table-responsive {
+    margin-top: 100px;
+  }
+
+  .pt-3 {
+    margin-top: 20px;
+    text-align: center;
+  }
+
 }
