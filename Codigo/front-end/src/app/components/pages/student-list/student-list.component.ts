@@ -79,10 +79,6 @@ export class StudentListComponent {
       }, 200);
     };
 
-    newWindow.onafterprint = () => {
-      console.log('imprimiu');
-    };
-
   }
 
   filterStudentList(event: Event): void {

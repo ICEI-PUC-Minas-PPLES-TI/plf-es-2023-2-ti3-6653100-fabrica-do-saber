@@ -18,7 +18,7 @@
     </div>
 
     <div class="col-md-2 py-2">
-      <span>&nbsp;</span>
+      <label>Relacionamento*</label>
       <app-relationship-select
         [relationship]="parent.relationship"
         (relationshipStateChange)="onRelationshipStateChange($event)">>
@@ -95,7 +95,7 @@
     </div>
 
     <div class="col-md-4 py-2">
-      <span>&nbsp;</span>
+      <label>Estado*</label>
       <app-state-select
         [homeState]="parent.homeState"
         (homeStateChange)="onHomeStateChange($event)">>

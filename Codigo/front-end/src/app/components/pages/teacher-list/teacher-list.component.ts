@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Teacher} from '../../../interfaces/Teacher';
 import {TeacherService} from '../../../services/teacher/teacher.service';
+import {Student} from '../../../interfaces/Student';
 
 @Component({
   selector: 'app-teacher-list',
@@ -17,7 +18,7 @@ export class TeacherListComponent {
   tableHeaders: String[] = ['Nome', 'CPF', 'E-mail', 'Telefone', 'Endereço', 'Gerenciar'];
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/teacher-edit', function: null},
-    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
+    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printTeacher.bind(this)},
     {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteTeacher.bind(this)}
   ];
   filters = [
@@ -42,10 +43,23 @@ export class TeacherListComponent {
     });
   }
 
-  deleteTeacher(id: number): void {
-    this.teacherService.deleteTeacher(id).subscribe((): void => {
+  deleteTeacher(teacher: Teacher): void {
+    this.teacherService.deleteTeacher(teacher.id).subscribe((): void => {
       this.getTeachers();
     });
+  }
+
+  printTeacher(teacher: Teacher): void {
+
+    let newWindow: Window = <Window>window.open(`/teacher-edit/${teacher.id}`, '_blank');
+
+    newWindow.onload = function (): void {
+      setTimeout((): void => {
+        newWindow.print();
+        newWindow.close();
+      }, 200);
+    };
+
   }
 
   filterTeacherList(event: Event): void {
