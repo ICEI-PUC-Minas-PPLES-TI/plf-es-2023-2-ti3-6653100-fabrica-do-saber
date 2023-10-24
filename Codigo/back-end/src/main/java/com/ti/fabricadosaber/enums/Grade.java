@@ -12,10 +12,12 @@ public enum Grade {
     private final String name;
 
     Grade(String name) {
+
         this.name = name;
     }
 
     public String getName() {
+
         return name;
     }
 
