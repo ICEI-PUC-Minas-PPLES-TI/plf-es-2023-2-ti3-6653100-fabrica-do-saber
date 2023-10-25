@@ -59,6 +59,10 @@ a {
     height: 0;
   }
 
+  .not-printable {
+    display: none;
+  }
+
   .only-printable {
     display: block;
   }
