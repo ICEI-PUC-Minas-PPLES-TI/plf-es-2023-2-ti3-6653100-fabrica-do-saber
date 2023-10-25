@@ -32,14 +32,18 @@ export class TeacherEditComponent {
 
   updateTeacher(): void {
     this.teacher.salary = this.teacherService.formatCurrency(this.teacher.salary);
-    this.teacherService.updateTeacher(this.teacherId, this.teacher)
-      .pipe(
-        tap((response): void => {
-        }),
-        catchError(err => {
-          throw err;
-        }))
-      .subscribe();
+    let op: boolean = confirm('Deseja atualizar o professor?');
+    if (op) {
+      this.teacherService.updateTeacher(this.teacherId, this.teacher)
+        .pipe(
+          tap((response): void => {
+          }),
+          catchError(err => {
+            throw err;
+          }))
+        .subscribe();
+      this.router.navigate(['/teacher-list']);
+    }
   }
 
   cancel(): void {

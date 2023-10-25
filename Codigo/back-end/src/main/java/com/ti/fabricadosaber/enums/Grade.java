@@ -2,6 +2,7 @@ package com.ti.fabricadosaber.enums;
 
 public enum Grade {
 
+    //todo: O name é só para exibir em interface e não corresponde o valor do enumeration
     PRIMEIRA_SERIE("1º Série"),
     SEGUNDA_SERIE("2º Série"),
     TERCEIRA_SERIE("3º Série"),
@@ -11,11 +12,21 @@ public enum Grade {
     private final String name;
 
     Grade(String name) {
+
         this.name = name;
     }
 
     public String getName() {
+
         return name;
     }
 
+    public static Grade recoverGrade(String name) {
+        for (Grade grade : values()) {
+            if (grade.getName().equalsIgnoreCase(name)) {
+                return grade;
+            }
+        }
+        throw new IllegalArgumentException("Série não encontrada: " + name);
+    }
 }

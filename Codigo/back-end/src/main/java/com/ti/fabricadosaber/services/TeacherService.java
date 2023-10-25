@@ -2,16 +2,12 @@ package com.ti.fabricadosaber.services;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-import com.ti.fabricadosaber.models.Employee;
-import com.ti.fabricadosaber.security.UserSpringSecurity;
+import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
-import com.ti.fabricadosaber.utils.SecurityUtils;
+import com.ti.fabricadosaber.utils.SecurityUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.ti.fabricadosaber.models.Teacher;
@@ -24,30 +20,29 @@ public class TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;
 
-    public Teacher findById(Long id) {
-        Teacher teacher = this.teacherRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+   public Teacher findById(Long id) {
+        Teacher teacher = this.teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Professor(a) não encontrado(a)! Id: " + id + ", Tipo: " + Teacher.class.getName()));
 
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+        SecurityUtil.checkUser();
 
         return teacher;
     }
 
     public List<Teacher> listAllTeachers() {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+        SecurityUtil.checkUser();
+
         List<Teacher> teacher = this.teacherRepository.findAll();
         if (teacher.isEmpty()) {
-            throw new ObjectNotFoundException("Nenhum professor(a) cadastrado(a)");
+            throw new EntityNotFoundException("Nenhum professor(a) cadastrado(a)");
         }
         return teacher;
     }
 
     public List<Team> listTeams(Long id) {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
-        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new RuntimeException(
+        SecurityUtil.checkUser();
+
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Id: " + id + " não encontrado"
         ));
 
@@ -56,8 +51,8 @@ public class TeacherService {
 
     @Transactional
     public Teacher create(Teacher obj) {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+        SecurityUtil.checkUser();
+
         obj.setId(null);
         obj.setRegistrationDate(LocalDate.now());
         obj = this.teacherRepository.save(obj);

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {StudentService} from '../../../services/student/student.service';
 import {Student} from '../../../interfaces/Student';
 import {Parent} from '../../../interfaces/Parent';
@@ -22,7 +22,7 @@ export class StudentEditComponent {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params): void => {
+    this.route.paramMap.subscribe((params: ParamMap): void => {
       this.studentId = parseInt(<string>params.get('id'));
       this.getStudentById(this.studentId);
     });
@@ -30,7 +30,7 @@ export class StudentEditComponent {
 
   getStudentById(id: number): void {
     this.studentService.getStudentById(id).subscribe((student: Student): void => {
-      /*todo: ajustar de acordo com mudancas do back-end*/
+
       if (student.team)
         student.team = {id: student.team.id};
 
@@ -39,17 +39,20 @@ export class StudentEditComponent {
     });
   }
 
-
   updateStudent(): void {
-    this.studentService.updateStudent(this.studentId, this.student)
-      .pipe(
-        tap((response): void => {
-          this.router.navigate(['/student-list']);
-        }),
-        catchError(err => {
-          throw err;
-        }))
-      .subscribe();
+    let op: boolean = confirm('Deseja atualizar o aluno?');
+    if (op) {
+      this.studentService.updateStudent(this.studentId, this.student)
+        .pipe(
+          tap((response): void => {
+            this.router.navigate(['/student-list']);
+          }),
+          catchError(err => {
+            throw err;
+          }))
+        .subscribe();
+      this.router.navigate(['/student-list']);
+    }
   }
 
   cancel(): void {

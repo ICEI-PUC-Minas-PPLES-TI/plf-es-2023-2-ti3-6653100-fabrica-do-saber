@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, tap } from 'rxjs';
-import { API_CONFIG } from '../configs/config';
+import { API_CONFIG } from '../config';
 import { Team } from '../../interfaces/Team';
 
 @Injectable({
@@ -12,7 +12,6 @@ export class TeamService {
   constructor(private http: HttpClient) {
   }
 
-  /*todo: mudar apos padronizar requisicoes no back-end (team: any)*/
   createTeam(team: any): Observable<any> {
     return this.http.post<Team>(`${API_CONFIG.baseUrl}/team`, team)
       .pipe(
@@ -26,7 +25,6 @@ export class TeamService {
       );
   }
 
-  /*todo: mudar apos padronizar requisicoes no back-end (team: any)*/
   updateTeam(id: number, team: any): Observable<any> {
     return this.http.put<Team>(`${API_CONFIG.baseUrl}/team/${id}`, team)
       .pipe(

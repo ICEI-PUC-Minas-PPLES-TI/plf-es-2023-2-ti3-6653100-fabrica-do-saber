@@ -1,41 +1,34 @@
-<section id="login">
-  <div class="container-fluid">
-    <div class="row d-flex justify-content-center align-items-center">
-      <div class="d-flex justify-content-center col-md-12 col-lg-6">
-        <img src="../../../../assets/img/logo-fabrica-do-saber.png" class="img-fluid" alt="Fábrica do Saber">
-      </div>
-      <div class="card col-lg-4 col-md-12 mb-3">
-        <form class="card-body">
-          <!-- Email input -->
-          <div class="form-group mb-4">
-            <label for="email">Email</label>
-            <input type="email" id="email" class="form-control form-control-lg" placeholder="Digite o seu email" [(ngModel)]="user.email" name="email">
-          </div>
-          <!-- Password input -->
-          <div class="form-group mb-3">
-            <label for="password">Senha</label>
-            <input type="password" id="password" class="form-control form-control-lg" placeholder="Digite a sua senha" [(ngModel)]="user.password" name="password">
-          </div>
+<section id="login" class="container-fluid">
+  <div class="row d-flex justify-content-center align-items-center">
 
-          <div class="d-flex justify-content-between align-items-center">
-            <!-- Checkbox -->
-            <div class="form-check mb-0">
-              <input class="form-check-input me-2" type="checkbox" value="" id="remember-me">
-              <label class="form-check-label" for="remember-me">Lembrar de mim</label>
-            </div>
-            <a href="#" class="text-secondary">Esqueceu a senha?</a>
-          </div>
-
-          <div class="text-center text-lg-end mt-4 pt-2">
-            <app-btn-custom
-              [type]="'submit'"
-              [class]="'btn btn-success btn-lg'"
-              [innerHtml]="'Login'"
-              (click)="login()"
-            ></app-btn-custom>
-          </div>
-        </form>
-      </div>
+    <div class="d-flex justify-content-center col-md-12 col-lg-6">
+      <img src="../../../../assets/img/logo-fabrica-do-saber.png" class="img-fluid" alt="Fábrica do Saber">
     </div>
+
+    <div class="card col-lg-4 col-md-12 mb-3">
+      <form class="card-body">
+        <div class="form-group mb-4">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control form-control-lg" placeholder="Digite o seu email"
+                 [(ngModel)]="user.email" name="email">
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="password">Senha</label>
+          <input type="password" id="password" class="form-control form-control-lg" placeholder="Digite a sua senha"
+                 [(ngModel)]="user.password" name="password">
+        </div>
+
+        <div class="text-center text-lg-end mt-4 pt-2">
+          <app-btn-custom
+            [type]="'submit'"
+            [class]="'btn btn-success btn-lg'"
+            [innerHtml]="'Login'"
+            (click)="login()">
+          </app-btn-custom>
+        </div>
+      </form>
+    </div>
+
   </div>
 </section>

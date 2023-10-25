@@ -33,10 +33,21 @@ public enum State {
     private final String name;
 
     State(String name) {
+
         this.name = name;
     }
 
     public String getName() {
         return name;
+    }
+
+    public static State recoverState(String name){
+
+        for(State state : values()){
+            if (state.getName().equalsIgnoreCase(name)) {
+                return state;
+            }
+        }
+        throw new IllegalArgumentException("Estado invalido: "+name);
     }
 }

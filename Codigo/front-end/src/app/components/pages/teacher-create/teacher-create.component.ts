@@ -4,6 +4,7 @@ import {Teacher} from '../../../interfaces/Teacher';
 import {TeacherImp} from '../../../classes/teacher/teacher-imp';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import {catchError, tap} from 'rxjs';
 
 @Component({
   selector: 'app-teacher-create',
@@ -19,12 +20,21 @@ export class TeacherCreateComponent {
 
   createTeacher(): void {
     this.teacher.salary = this.teacherService.formatCurrency(this.teacher.salary);
-    this.teacherService.createTeacher(this.teacher).subscribe();
-    this.router.navigate(['/teacher-list']);
+    let op: boolean = confirm('Deseja criar o professor?');
+    if (op)
+      this.teacherService.createTeacher(this.teacher)
+        .pipe(
+          tap((response): void => {
+            this.router.navigate(['/teacher-list']);
+          }),
+          catchError(err => {
+            throw err;
+          })
+        )
+        .subscribe();
   }
 
   cancel(): void {
-    this.toastr.error('Ação cancelada');
     this.router.navigate(['/teacher-list']);
   }
 

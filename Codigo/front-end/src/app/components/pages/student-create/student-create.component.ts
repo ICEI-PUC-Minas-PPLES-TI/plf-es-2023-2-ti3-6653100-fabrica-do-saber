@@ -18,15 +18,17 @@ export class StudentCreateComponent {
   }
 
   createStudent(): void {
-    this.studentService.createStudent(this.student)
-      .pipe(
-        tap((response): void => {
-          this.router.navigate(['/student-list']);
-        }),
-        catchError(err => {
-          throw err;
-        }))
-      .subscribe();
+    let op: boolean = confirm('Deseja criar o aluno?');
+    if (op)
+      this.studentService.createStudent(this.student)
+        .pipe(
+          tap((response): void => {
+            this.router.navigate(['/student-list']);
+          }),
+          catchError(err => {
+            throw err;
+          }))
+        .subscribe();
   }
 
   cancel(): void {

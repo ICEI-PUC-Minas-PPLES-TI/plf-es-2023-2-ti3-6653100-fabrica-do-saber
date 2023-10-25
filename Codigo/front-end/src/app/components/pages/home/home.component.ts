@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     {
       title: 'Relatórios',
       imageUrl: '../../../assets/img/relatorios.png',
-      route: ''
+      route: '/reports'
     },
     {
       title: 'Card 6',

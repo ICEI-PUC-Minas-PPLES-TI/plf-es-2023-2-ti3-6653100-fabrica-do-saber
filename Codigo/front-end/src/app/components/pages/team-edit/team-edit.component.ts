@@ -31,17 +31,20 @@ export class TeamEditComponent {
   }
 
   updateTeam(): void {
-    /*todo: deletar apos ajuste do retorno do back-end*/
     const formattedTeam = this.formatToRequest(this.team);
-    this.teamService.updateTeam(this.teamId, formattedTeam)
-      .pipe(
-        tap((response): void => {
-          this.router.navigate(['/team-list']);
-        }),
-        catchError(err => {
-          throw err;
-        }))
-      .subscribe();
+    let op: boolean = confirm('Deseja atualizar a turma?');
+    if (op) {
+      this.teamService.updateTeam(this.teamId, formattedTeam)
+        .pipe(
+          tap((response): void => {
+            this.router.navigate(['/team-list']);
+          }),
+          catchError(err => {
+            throw err;
+          }))
+        .subscribe();
+      this.router.navigate(['/team-list']);
+    }
   }
 
   cancel(): void {

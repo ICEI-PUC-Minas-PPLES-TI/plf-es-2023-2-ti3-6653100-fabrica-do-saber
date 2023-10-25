@@ -17,7 +17,7 @@ export class TeacherListComponent {
   tableHeaders: String[] = ['Nome', 'CPF', 'E-mail', 'Telefone', 'Endereço', 'Gerenciar'];
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/teacher-edit', function: null},
-    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
+    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printTeacher.bind(this)},
     {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteTeacher.bind(this)}
   ];
   filters = [
@@ -42,10 +42,25 @@ export class TeacherListComponent {
     });
   }
 
-  deleteTeacher(id: number): void {
-    this.teacherService.deleteTeacher(id).subscribe((): void => {
-      this.getTeachers();
-    });
+  deleteTeacher(teacher: Teacher): void {
+    let op: boolean = confirm('Deseja deletar o professor?');
+    if (op)
+      this.teacherService.deleteTeacher(teacher.id).subscribe((): void => {
+        this.getTeachers();
+      });
+  }
+
+  printTeacher(teacher: Teacher): void {
+
+    let newWindow: Window = <Window>window.open(`/teacher-edit/${teacher.id}`, '_blank');
+
+    newWindow.onload = function (): void {
+      setTimeout((): void => {
+        newWindow.print();
+        newWindow.close();
+      }, 200);
+    };
+
   }
 
   filterTeacherList(event: Event): void {
@@ -57,6 +72,10 @@ export class TeacherListComponent {
       const studentFullNameMatch: boolean = teacher.fullName.toLowerCase().includes(inputValue);
       return studentFullNameMatch;
     });
+  }
+
+  printTeacherList(): void {
+    window.print();
   }
 
   sortTeachersByName(): void {
@@ -89,5 +108,4 @@ export class TeacherListComponent {
     const filter = this.filters.find(filter => filter.function.name.includes(funcName));
     this.filterText = filter ? filter.name : '';
   }
-
 }

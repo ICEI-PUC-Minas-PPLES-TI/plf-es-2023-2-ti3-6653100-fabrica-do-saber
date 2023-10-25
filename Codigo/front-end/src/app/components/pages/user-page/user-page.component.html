@@ -1,0 +1,38 @@
+<ng-container *ngIf="user">
+
+  <div class="col-12 py-2">
+    <h6>Informações da conta</h6>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-md-6 py-2">
+      <label for="userFullName">Nome do usuário</label>
+      <input id="userFullName" type="text" class="form-control"
+             [placeholder]="user.fullName ? user.fullName : ''"
+             [(ngModel)]="user.fullName" name="userFullName" disabled>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <div class="col-md-6 py-2">
+      <label for="userEmail">E-mail</label>
+      <input id="userEmail" type="text" class="form-control"
+             [placeholder]="user.email ? user.email : ''"
+             [(ngModel)]="user.email" name="userEmail" disabled>
+    </div>
+  </div>
+
+  <app-btn-custom
+    [type]="'submit'"
+    [class]="'btn btn-danger'"
+    [innerHtml]="'Sair da conta'"
+    (click)="logout()"
+  ></app-btn-custom>
+
+  <app-btn-custom
+    [type]="'submit'"
+    [class]="'btn btn-primary'"
+    [innerHtml]="'Cadastrar usuário'"
+    [routerLink]="'/user-create'"
+  ></app-btn-custom>
+</ng-container>

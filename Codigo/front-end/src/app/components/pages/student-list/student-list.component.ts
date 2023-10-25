@@ -21,7 +21,7 @@ export class StudentListComponent {
   tableHeaders: String[] = ['Nome', 'Idade', 'Responsável', 'Responsável', 'Turma', 'Data de registro', 'Gerenciar'];
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit', function: null},
-    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
+    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printStudent.bind(this)},
     {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteStudent.bind(this)}
   ];
   filters = [
@@ -62,10 +62,28 @@ export class StudentListComponent {
     return team ? team.name : '';
   }
 
-  deleteStudent(id: number): void {
-    this.studentService.deleteStudent(id).subscribe((): void => {
-      this.getStudents();
-    });
+  deleteStudent(student: Student): void {
+    let op: boolean = confirm('Deseja deletar o aluno?');
+    if (op)
+      this.studentService.deleteStudent(student.id).subscribe((): void => {
+        this.getStudents();
+      });
+  }
+
+  printStudentList(): void {
+    window.print();
+  }
+
+  printStudent(student: Student): void {
+
+    let newWindow: Window = <Window>window.open(`/student-edit/${student.id}`, '_blank');
+
+    newWindow.onload = function (): void {
+      setTimeout((): void => {
+        newWindow.print();
+        newWindow.close();
+      }, 200);
+    };
   }
 
   filterStudentList(event: Event): void {

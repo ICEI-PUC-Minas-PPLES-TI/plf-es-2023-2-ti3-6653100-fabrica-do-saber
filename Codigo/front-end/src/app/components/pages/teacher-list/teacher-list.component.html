@@ -1,5 +1,8 @@
 <section class="container">
-  <h5 class="pt-3">Professores cadastrados</h5>
+
+  <img src="\assets\img\logo-fabrica-do-saber.png" alt="" class="hidden printable">
+
+  <h5 class="pt-3 printable">Professores cadastrados</h5>
 
   <!-- Search bar -->
   <div class="d-flex justify-content-between mt-3 mb-3">
@@ -24,7 +27,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <app-btn-custom
         [type]="'submit'"
         [class]="'btn btn-primary'"
@@ -32,13 +35,25 @@
         [routerLink]="'/teacher-create'"
       ></app-btn-custom>
     </div>
+
+    <button type="button" class="btn btn-outline-info "
+                    (click) = printTeacherList()
+                    title="button.title">
+              <i class="fa fa-upload"></i>
+    </button>
+
   </div>
 
-  <div class="table-responsive">
+  <div class="col-12 py-2 hidden printable num-prof">
+    <h6>Número de professores cadastrados: {{teachers.length}}</h6>
+  </div>
+
+  <div class="table-responsive printable">
+
     <table class="table no-wrap user-table mb-0">
       <thead>
       <tr>
-        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders" [class.not-printable]="header === 'Gerenciar'">
           {{ header }}
         </th>
       </tr>
@@ -65,7 +80,7 @@
           <td>
             <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
                     [routerLink]="button.route ? [button.route, teacher.id] : null"
-                    (click)="button.function ? button.function(teacher.id) : null"
+                    (click)="button.function ? button.function(teacher) : null"
                     title="{{ button.title }}">
               <i [class]="button.iconClass"></i>
             </button>

@@ -1,24 +1,22 @@
 <section id="list" class="container">
   <form class="container card row py-4">
-      <app-teacher-form
-              [teacher]="teacher"
-              [title]="'Cadastrar novo professor'"
-      ></app-teacher-form>
-      <div class="col-12 d-flex justify-content-end">
-          <app-btn-custom
-                  [type]="'submit'"
-                  [class]="'btn btn-outline-success me-2'"
-                  [innerHtml]="'Cadastrar'"
-                  (click)="createTeacher()"
-          ></app-btn-custom>
-          <app-btn-custom
-                  [type]="'submit'"
-                  [class]="'btn btn-outline-danger'"
-                  [innerHtml]="'Cancelar'"
-                  (click)="cancel()"
-          ></app-btn-custom>
-      </div>
+    <app-teacher-form
+      [teacher]="teacher"
+      [title]="'Cadastrar novo professor'"
+    ></app-teacher-form>
+    <div class="col-12 d-flex justify-content-end">
+      <app-btn-custom
+        [type]="'submit'"
+        [class]="'btn btn-outline-success me-2'"
+        [innerHtml]="'Cadastrar'"
+        (click)="createTeacher()"
+      ></app-btn-custom>
+      <app-btn-custom
+        [type]="'submit'"
+        [class]="'btn btn-outline-danger'"
+        [innerHtml]="'Cancelar'"
+        (click)="cancel()"
+      ></app-btn-custom>
+    </div>
   </form>
 </section>
-
-
