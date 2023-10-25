@@ -20,7 +20,7 @@ public class TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;
 
-    public Teacher findById(Long id) {
+   public Teacher findById(Long id) {
         Teacher teacher = this.teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
             "Professor(a) não encontrado(a)! Id: " + id + ", Tipo: " + Teacher.class.getName()));
 

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ti.fabricadosaber.enums.Race;
 import java.util.Set;
 import com.ti.fabricadosaber.enums.Religion;
+import com.ti.fabricadosaber.enums.State;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

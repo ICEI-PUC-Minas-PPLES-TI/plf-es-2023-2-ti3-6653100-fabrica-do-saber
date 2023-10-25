@@ -1,6 +1,7 @@
 package com.ti.fabricadosaber.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ti.fabricadosaber.enums.State;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -56,7 +57,7 @@ public abstract class Person {
     private String cityOfResidence;
 
     @Column(name = "home_state", length = 45, nullable = false, updatable = true)
-    private String homeState;
+    private State homeState;
 
     @Column(name = "registration_date", length = 10, nullable = false, updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
