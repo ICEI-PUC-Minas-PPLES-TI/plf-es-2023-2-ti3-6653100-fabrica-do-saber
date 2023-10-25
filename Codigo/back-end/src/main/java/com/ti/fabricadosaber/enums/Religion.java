@@ -20,5 +20,13 @@ public enum Religion {
             return name;
         }
 
+        public static Religion recoverReligion(String name){
 
+            for(Religion religion : values()){
+                if (religion.getName().equalsIgnoreCase(name)) {
+                    return religion;
+                }
+            }
+            throw new IllegalArgumentException("Religião não encontrada: "+name);
+        }
 }

@@ -7,7 +7,6 @@ import java.util.Set;
 import com.ti.fabricadosaber.models.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ti.fabricadosaber.models.Student;
-import com.ti.fabricadosaber.models.Student.CreateStudent;
-import com.ti.fabricadosaber.models.Student.UpdateStudent;
 import com.ti.fabricadosaber.services.StudentService;
 
 import jakarta.validation.Valid;
@@ -57,7 +54,6 @@ public class StudentController {
 
 
     @PostMapping
-    @Validated(CreateStudent.class)
     public ResponseEntity<Void> create(@Valid @RequestBody Student obj) {
         this.studentService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -67,7 +63,6 @@ public class StudentController {
 
 
     @PutMapping("/{id}")
-    @Validated(UpdateStudent.class)
     public ResponseEntity<Void> update(@Valid @RequestBody Student obj, @PathVariable Long id) {
         obj.setId(id);
         this.studentService.update(obj);

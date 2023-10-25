@@ -1,10 +1,10 @@
 package com.ti.fabricadosaber.services;
 
 import java.util.List;
-import com.ti.fabricadosaber.security.UserSpringSecurity;
+
+import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
-import com.ti.fabricadosaber.utils.SecurityUtils;
+import com.ti.fabricadosaber.utils.SecurityUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,22 +19,23 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public Employee findById(Long id) {
+        SecurityUtil.checkUser();
+
         Employee employee =
-                this.employeeRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                this.employeeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Funcionário não encontrado! id: " + id + ", Tipo: " + Employee.class.getName()));
 
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
 
         return employee;
     }
 
     public List<Employee> listAllEmployees() {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+
+        SecurityUtil.checkUser();
+
         List<Employee> employees = this.employeeRepository.findAll();
         if (employees.isEmpty()) {
-            throw new ObjectNotFoundException("Nenhum funcionário cadastrado");
+            throw new EntityNotFoundException("Nenhum funcionário cadastrado");
         }
         return employees;
     }
@@ -42,8 +43,9 @@ public class EmployeeService {
 
     @Transactional
     public Employee create(Employee obj) {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+
+        SecurityUtil.checkUser();
+
         obj.setId(null);
         obj = this.employeeRepository.save(obj);
         return obj;

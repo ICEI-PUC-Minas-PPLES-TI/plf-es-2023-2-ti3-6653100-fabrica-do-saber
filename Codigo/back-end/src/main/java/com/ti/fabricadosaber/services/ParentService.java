@@ -1,19 +1,17 @@
 package com.ti.fabricadosaber.services;
 
+import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.Parent;
 import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.repositories.ParentRepository;
-import com.ti.fabricadosaber.security.UserSpringSecurity;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
-import com.ti.fabricadosaber.services.exceptions.ObjectNotFoundException;
-import com.ti.fabricadosaber.utils.SecurityUtils;
+import com.ti.fabricadosaber.utils.SecurityUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Service
 public class ParentService {
@@ -22,10 +20,11 @@ public class ParentService {
     private ParentRepository parentRepository;
 
     public Parent findById(Long id) {
-        Parent parent = this.parentRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+        SecurityUtil.checkUser();
+
+        Parent parent = this.parentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Parente não encontrado! Id: " + id + ", Tipo: " + Student.class.getName()));
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+
 
         return parent;
     }
@@ -40,8 +39,9 @@ public class ParentService {
 
     @Transactional
     public Parent create(Parent obj) {
-        UserSpringSecurity userSpringSecurity = UserService.authenticated();
-        SecurityUtils.checkUser(userSpringSecurity);
+
+        SecurityUtil.checkUser();
+
         obj.setId(null);
         obj.setRegistrationDate(LocalDate.now());
         return this.parentRepository.save(obj);
@@ -50,7 +50,8 @@ public class ParentService {
 
     public Parent update(Parent obj) {
         Parent newObj = findById(obj.getId());
-        String[] ignoredProperties = {"id"};
+        String ignoredProperties = "id";
+
         BeanUtils.copyProperties(obj, newObj, ignoredProperties);
 
         return this.parentRepository.save(newObj);
