@@ -1,9 +1,12 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {StudentService} from '../../../services/student/student.service';
-import {Student} from '../../../interfaces/Student';
-import {Parent} from '../../../interfaces/Parent';
-import {catchError, tap} from 'rxjs';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component } from '@angular/core';
+
+import { catchError, tap } from 'rxjs';
+
+import { Student } from '../../../interfaces/Student';
+import { StudentService } from '../../../services/student/student.service';
+import { Parent } from '../../../interfaces/Parent';
+
 
 @Component({
   selector: 'app-student-edit',
@@ -32,7 +35,7 @@ export class StudentEditComponent {
     this.studentService.getStudentById(id).subscribe((student: Student): void => {
 
       if (student.team)
-        student.team = {id: student.team.id};
+        student.team = { id: student.team.id };
 
       this.student = student;
       [this.parent00, this.parent01] = [this.student.parents[0], this.student.parents[1]];

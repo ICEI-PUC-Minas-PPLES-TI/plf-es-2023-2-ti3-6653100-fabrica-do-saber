@@ -1,4 +1,4 @@
-import {Parent} from './Parent';
+import { Parent } from './Parent';
 
 export interface Student {
   parents: Parent[];

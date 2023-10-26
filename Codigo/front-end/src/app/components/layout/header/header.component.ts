@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -8,14 +8,14 @@ import {Component} from '@angular/core';
 export class HeaderComponent {
 
   menuItems = [
-    {label: 'Página Inicial', link: '/'},
-    {label: 'Alunos Cadastrados', link: '/student-list'},
-    {label: 'Professores Cadastrados', link: '/teacher-list'},
-    {label: 'Turmas Cadastrados', link: '/team-list'},
-    {label: 'Página do usuário', link: '/user-page'}
+    { label: 'Página Inicial', link: '/' },
+    { label: 'Alunos Cadastrados', link: '/student-list' },
+    { label: 'Professores Cadastrados', link: '/teacher-list' },
+    { label: 'Turmas Cadastrados', link: '/team-list' },
+    { label: 'Página do usuário', link: '/user-page' }
   ];
 
-  isMenuOpen:boolean = false;
+  isMenuOpen: boolean = false;
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;

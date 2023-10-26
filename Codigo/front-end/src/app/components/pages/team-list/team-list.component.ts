@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
-import {Team} from '../../../interfaces/Team';
-import {TeamService} from '../../../services/team/team.service';
-import {TeacherService} from '../../../services/teacher/teacher.service';
-import {Teacher} from '../../../interfaces/Teacher';
-import {forkJoin, Observable} from 'rxjs';
+import { Component } from '@angular/core';
+
+import { forkJoin, Observable } from 'rxjs';
+
+import { Team } from '../../../interfaces/Team';
+import { TeamService } from '../../../services/team/team.service';
+import { TeacherService } from '../../../services/teacher/teacher.service';
+import { Teacher } from '../../../interfaces/Teacher';
 
 @Component({
   selector: 'app-team-list',
@@ -20,12 +22,12 @@ export class TeamListComponent {
   /*Table variables*/
   tableHeaders: String[] = ['Turma', 'Professor', 'Série', 'Nº de alunos', 'Sala de aula', 'Gerenciar'];
   buttons = [
-    {iconClass: 'fa fa-edit', title: 'Editar', route: '/team-edit', function: null},
-    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
-    {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteTeam.bind(this)}
+    { iconClass: 'fa fa-edit', title: 'Editar', route: '/team-edit', function: null },
+    { iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null },
+    { iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteTeam.bind(this) }
   ];
   filters = [
-    {name: 'ordem alfabética', function: this.sortTeamsByName.bind(this)},
+    { name: 'ordem alfabética', function: this.sortTeamsByName.bind(this) },
   ];
   filterText!: string;
 

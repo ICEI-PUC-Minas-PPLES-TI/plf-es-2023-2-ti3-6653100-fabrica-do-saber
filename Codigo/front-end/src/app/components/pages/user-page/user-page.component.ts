@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
-import {UserService} from '../../../services/user/user.service';
-import {Router} from '@angular/router';
-import {User} from '../../../interfaces/User';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { User } from '../../../interfaces/User';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-user-page',

@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
-import {Student} from '../../../interfaces/Student';
-import {StudentService} from '../../../services/student/student.service';
-import {Team} from '../../../interfaces/Team';
-import {TeamService} from '../../../services/team/team.service';
-import {forkJoin, Observable} from 'rxjs';
+import { Component } from '@angular/core';
+
+import { forkJoin, Observable } from 'rxjs';
+
+import { Student } from '../../../interfaces/Student';
+import { StudentService } from '../../../services/student/student.service';
+import { Team } from '../../../interfaces/Team';
+import { TeamService } from '../../../services/team/team.service';
 
 @Component({
   selector: 'app-student-list',
@@ -20,13 +22,13 @@ export class StudentListComponent {
   /*Table variables*/
   tableHeaders: String[] = ['Nome', 'Idade', 'Responsável', 'Responsável', 'Turma', 'Data de registro', 'Gerenciar'];
   buttons = [
-    {iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit', function: null},
-    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printStudent.bind(this)},
-    {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteStudent.bind(this)}
+    { iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit', function: null },
+    { iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printStudent.bind(this) },
+    { iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteStudent.bind(this) }
   ];
   filters = [
-    {name: 'ordem alfabética', function: this.sortStudentsByName.bind(this)},
-    {name: 'id', function: this.sortStudentsById.bind(this)}
+    { name: 'ordem alfabética', function: this.sortStudentsByName.bind(this) },
+    { name: 'id', function: this.sortStudentsById.bind(this) }
   ];
   filterText!: string;
 

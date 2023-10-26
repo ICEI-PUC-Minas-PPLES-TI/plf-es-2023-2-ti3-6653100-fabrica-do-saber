@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
-import {Teacher} from '../../../interfaces/Teacher';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TeacherService} from '../../../services/teacher/teacher.service';
-import {catchError, tap} from 'rxjs';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { catchError, tap } from 'rxjs';
+
+import { Teacher } from '../../../interfaces/Teacher';
+import { TeacherService } from '../../../services/teacher/teacher.service';
 
 @Component({
   selector: 'app-teacher-edit',

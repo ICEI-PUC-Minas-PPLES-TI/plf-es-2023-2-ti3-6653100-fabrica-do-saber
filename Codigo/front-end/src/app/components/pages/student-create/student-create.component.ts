@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {StudentService} from '../../../services/student/student.service';
-import {StudentImp} from '../../../classes/student/student-imp';
-import {Student} from '../../../interfaces/Student';
-import {catchError, tap} from 'rxjs';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { catchError, tap } from 'rxjs';
+
+import { StudentService } from '../../../services/student/student.service';
+import { StudentImp } from '../../../classes/student/student-imp';
+import { Student } from '../../../interfaces/Student';
 
 @Component({
   selector: 'app-student-create',
