@@ -1,11 +1,11 @@
 package com.ti.fabricadosaber.enums;
 
 
-public enum Relationship {
+public enum CivilStatus {
     PAI, MAE;
 
-    public static Relationship recoverRelationship(String text) {
-        for (Relationship guard : Relationship.values()) {
+    public static CivilStatus recoverCivilStatus(String text) {
+        for (CivilStatus guard : CivilStatus.values()) {
             if (guard.toString().equalsIgnoreCase(text)) {
                 return guard;
             }

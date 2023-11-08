@@ -1,6 +1,6 @@
 package com.ti.fabricadosaber.models;
 
-import com.ti.fabricadosaber.enums.Relationship;
+import com.ti.fabricadosaber.enums.CivilStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +31,7 @@ public class Parent extends Person {
 
     @Column(name = "relationship", length = 45, nullable = false, updatable = true)
     @Enumerated(EnumType.STRING)
-    private Relationship relationship;
+    private CivilStatus relationship;
 
 }
 

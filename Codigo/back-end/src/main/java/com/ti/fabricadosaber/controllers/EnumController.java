@@ -26,5 +26,19 @@ public class EnumController {
         return ResponseEntity.ok(enumService.recoverRace());
     }
 
-    
+    @GetMapping("/CivilStatus")
+    public ResponseEntity<List<String>> recoverCivilStatus() {
+        return ResponseEntity.ok(enumService.recoverCivilStatus());
+    }
+
+    @GetMapping("/religion")
+    public ResponseEntity<List<String>> recoverReligion() {
+        return ResponseEntity.ok(enumService.recoverReligion());
+    }
+
+        @GetMapping("/state")
+    public ResponseEntity<List<String>> recoverState() {
+        return ResponseEntity.ok(enumService.recoverState());
+    }
+
 }
