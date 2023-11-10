@@ -49,6 +49,7 @@ import { AuthInterceptor } from './services/auth/auth-interceptor';
 import { UserPageComponent } from './components/pages/user-page/user-page.component';
 import { ReportsComponent } from './components/pages/reports/reports.component';
 import { TransactionListComponent } from './components/pages/transaction-list/transaction-list.component';
+import { TransactionFormComponent } from './components/forms/transaction-form/transaction-form.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { TransactionListComponent } from './components/pages/transaction-list/tr
     UserPageComponent,
     ReportsComponent,
     TransactionListComponent,
+    TransactionFormComponent,
   ],
   imports: [
     BrowserModule,
