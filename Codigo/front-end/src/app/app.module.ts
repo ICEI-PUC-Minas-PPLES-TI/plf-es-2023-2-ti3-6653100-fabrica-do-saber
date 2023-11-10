@@ -48,6 +48,7 @@ import { CurrencyFormatDirective } from './directives/currency-format.directive'
 import { AuthInterceptor } from './services/auth/auth-interceptor';
 import { UserPageComponent } from './components/pages/user-page/user-page.component';
 import { ReportsComponent } from './components/pages/reports/reports.component';
+import { TransactionListComponent } from './components/pages/transaction-list/transaction-list.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { ReportsComponent } from './components/pages/reports/reports.component';
     CurrencyFormatDirective,
     UserPageComponent,
     ReportsComponent,
+    TransactionListComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,7 +99,6 @@ import { ReportsComponent } from './components/pages/reports/reports.component';
     FormsModule,
     NgbModule,
     ToastrModule.forRoot({
-      /*todo: revisar apos adicionar configuracoes de toastr*/
       positionClass: 'toast-center',
     }),
     HttpClientModule

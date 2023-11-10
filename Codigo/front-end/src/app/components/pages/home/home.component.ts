@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     {
       title: 'Financeiro',
       imageUrl: '../../../assets/img/financeiro.png',
-      route: ''
+      route: '/transaction-list'
     },
     {
       title: 'Turmas',

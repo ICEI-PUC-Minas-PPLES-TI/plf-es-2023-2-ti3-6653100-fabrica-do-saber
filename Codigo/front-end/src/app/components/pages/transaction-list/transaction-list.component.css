@@ -1,0 +1,22 @@
+
+
+.text-muted {
+  color: #8898aa !important;
+}
+
+[type=button]:not(:disabled),
+[type=reset]:not(:disabled),
+[type=submit]:not(:disabled),
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+.btn-circle {
+  border-radius: 50%;
+  margin-right: 0.5em;
+}
+
+.user-table tbody tr .category-select {
+  max-width: 150px;
+  border-radius: 20px;
+}

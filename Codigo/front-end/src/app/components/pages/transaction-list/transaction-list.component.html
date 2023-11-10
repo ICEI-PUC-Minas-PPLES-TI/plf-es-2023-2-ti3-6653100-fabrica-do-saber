@@ -1,0 +1,68 @@
+<section class="container">
+  <h5 class="pt-3">Financeiro</h5>
+
+  <div class="d-flex justify-content-between pb-4">
+    <div class="card col-md-3 py-2">
+      <p>Receitas</p>
+      <p>R$ {{income.toFixed(2)}}</p>
+    </div>
+
+    <div class="card col-md-3 py-2">
+      <p>Despesas</p>
+      <p>R$ {{outcome.toFixed(2)}}</p>
+    </div>
+
+    <div class="card col-md-3 py-2">
+      <p>Total</p>
+      <p>R$ {{totalBalance.toFixed(2)}}</p>
+    </div>
+
+    <div class="col-md-1 py-2">
+      <app-btn-custom
+        [type]="'submit'"
+        [class]="'btn btn-primary'"
+        [innerHtml]="'+'"
+        [routerLink]="'/team-create'"
+      ></app-btn-custom>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table no-wrap user-table mb-0">
+      <thead>
+      <tr>
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
+          {{ header }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let transaction of transactions">
+        <tr>
+          <td>
+            <h6 class="text-black">{{transaction.description}}</h6>
+          </td>
+          <td>
+            <span class="black">{{transaction.date}}</span><br>
+          </td>
+          <td>
+            <span class="black">{{transaction.category}}</span><br>
+          </td>
+          <td>
+            <span class="black">{{transaction.value}}</span><br>
+          </td>
+          <td>
+            <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
+                    [routerLink]="button.route ? [button.route, transaction.id] : null"
+                    (click)="button.function ? button.function(transaction.id) : null"
+                    title="{{ button.title }}">
+              <i [class]="button.iconClass"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</section>
+
