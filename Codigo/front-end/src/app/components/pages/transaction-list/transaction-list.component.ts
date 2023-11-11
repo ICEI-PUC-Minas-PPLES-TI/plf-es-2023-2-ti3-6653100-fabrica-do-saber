@@ -1,6 +1,8 @@
-import {Component} from '@angular/core';
-import {TransactionService} from '../../../services/transaction/transaction.service';
-import {Transaction} from '../../../interfaces/Transaction';
+import { Component } from '@angular/core';
+import { TransactionService } from '../../../services/transaction/transaction.service';
+import { Transaction } from '../../../interfaces/Transaction';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TransactionFormComponent } from '../../forms/transaction-form/transaction-form.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -10,11 +12,11 @@ import {Transaction} from '../../../interfaces/Transaction';
 export class TransactionListComponent {
 
   tableHeaders: String[] = ['Descrição', 'Data', 'Categoria', 'Valor', 'Gerenciar'];
-  transactions: Transaction[] = [
+  originalTransactions: Transaction[] = [
     {
       id: 2,
       description: 'teste',
-      date: '10/11/2023',
+      date: '30/11/2023',
       financialFlowType: 'income',
       category: 'contas',
       value: 100.39
@@ -22,7 +24,25 @@ export class TransactionListComponent {
     {
       id: 3,
       description: 'teste2',
-      date: '10/11/2023',
+      date: '20/11/2023',
+      financialFlowType: 'outcome',
+      category: 'contas',
+      value: 300.99
+    }
+  ];
+  transactions: Transaction[] = [
+    {
+      id: 2,
+      description: 'teste',
+      date: '30/11/2023',
+      financialFlowType: 'income',
+      category: 'contas',
+      value: 100.39
+    },
+    {
+      id: 3,
+      description: 'teste2',
+      date: '20/11/2023',
       financialFlowType: 'outcome',
       category: 'contas',
       value: 300.99
@@ -33,24 +53,31 @@ export class TransactionListComponent {
   outcome!: number;
   totalBalance !: number;
 
-
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/transaction-edit', function: null},
     {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
     {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteTransaction.bind(this)}
   ];
+  filters = [
+    {name: 'categoria', function: this.sortTransactionsByCategory.bind(this)},
+    {name: 'data', function: this.sortTransactionsByDate.bind(this)}
+  ];
+  filterText!: string;
 
-  constructor(private transactionService: TransactionService) {
+  constructor(private transactionService: TransactionService, private ngbModal: NgbModal) {
   }
 
   ngOnInit(): void {
     this.getTransactions();
     this.calculateTotalBalance();
+    this.filterText = this.filters[0].name;
   }
 
   getTransactions(): void {
     this.transactionService.getTransactions().subscribe((transactions: Transaction[]): void => {
-      this.transactions = transactions;
+      this.originalTransactions = transactions;
+      this.transactions = [...this.originalTransactions];
+      this.sortTransactionsByDate();
     });
   }
 
@@ -66,7 +93,11 @@ export class TransactionListComponent {
     this.income = this.getFinancialFlowTypeTotal(this.financialFlowTypes[0]);
     this.outcome = this.getFinancialFlowTypeTotal(this.financialFlowTypes[1]);
     this.totalBalance = this.income - this.outcome;
-    console.log(this.totalBalance);
+  }
+
+  openModal(): void {
+    this.ngbModal.open(TransactionFormComponent);
+    console.log('teste');
   }
 
   getFinancialFlowTypeTotal(financialFlowType: string): number {
@@ -74,5 +105,50 @@ export class TransactionListComponent {
       .filter((transaction: Transaction): boolean => transaction.financialFlowType.toLowerCase() === financialFlowType.toLowerCase())
       .map((transaction: Transaction) => transaction.value)
       .reduce((total: number, value: number) => total + value, 0);
+  }
+
+  filterTransactionList(event: Event): void {
+
+    const searchInput: HTMLInputElement = event.target as HTMLInputElement;
+    const inputValue: string = searchInput.value.toLowerCase();
+
+    this.transactions = this.originalTransactions.filter((transaction: Transaction) => {
+
+      const descriptionMatch: boolean = transaction.description.toLowerCase().includes(inputValue);
+      const dateMatch: boolean = transaction.date.includes(inputValue);
+
+      return descriptionMatch || dateMatch;
+    });
+  }
+
+  sortTransactionsByDate(): void {
+    this.transactions = this.originalTransactions.sort(function (a: Transaction, b: Transaction): number {
+      let dateA: string = a.date;
+      let dateB: string = b.date;
+      if (dateA < dateB)
+        return -1;
+      if (dateA > dateB)
+        return 1;
+      return 0;
+    });
+    this.updateBtnText(this.sortTransactionsByDate.name);
+  }
+
+  sortTransactionsByCategory(): void {
+    this.transactions = this.originalTransactions.sort(function (a: Transaction, b: Transaction): number {
+      let idA: string = a.category;
+      let idB: string = b.category;
+      if (idA < idB)
+        return -1;
+      if (idA > idB)
+        return 1;
+      return 0;
+    });
+    this.updateBtnText(this.sortTransactionsByCategory.name);
+  }
+
+  updateBtnText(funcName: string): void {
+    const filter = this.filters.find(filter => filter.function.name.includes(funcName));
+    this.filterText = filter ? filter.name : '';
   }
 }

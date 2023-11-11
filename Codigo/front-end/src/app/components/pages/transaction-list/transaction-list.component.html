@@ -22,8 +22,31 @@
         [type]="'submit'"
         [class]="'btn btn-primary'"
         [innerHtml]="'+'"
-        [routerLink]="'/team-create'"
+        (click)="openModal()"
       ></app-btn-custom>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 mb-3">
+    <div class="col-md-4">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Buscar transação" aria-label="Buscar transação"
+               id="search-input"
+               (input)="filterTransactionList($event)">
+      </form>
+    </div>
+
+    <div class="col-md-4">
+      Ordenar por
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
+                ngbDropdownToggle>{{filterText}}</button>
+        <ul ngbDropdownMenu>
+          <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item"
+                                                                (click)="filter.function()">{{filter.name}}</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -64,5 +87,6 @@
       </tbody>
     </table>
   </div>
+
 </section>
 
