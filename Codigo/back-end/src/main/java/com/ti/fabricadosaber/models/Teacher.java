@@ -39,4 +39,6 @@ public class Teacher extends Employee {
     @Column(name = "academic_formation_status", length = 45, nullable = false, updatable = true)
     @Enumerated(EnumType.STRING)
     private AcademicFormationStatus academicFormationStatus;
+
+
 }
