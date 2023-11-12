@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { TransactionService } from '../../../services/transaction/transaction.service';
 import { Transaction } from '../../../interfaces/Transaction';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TransactionFormComponent } from '../../forms/transaction-form/transaction-form.component';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { TransactionCreateComponent } from '../transaction-create/transaction-create.component';
+import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -26,7 +27,7 @@ export class TransactionListComponent {
       description: 'teste2',
       date: '20/11/2023',
       financialFlowType: 'outcome',
-      category: 'contas',
+      category: 'supeta',
       value: 300.99
     }
   ];
@@ -44,7 +45,7 @@ export class TransactionListComponent {
       description: 'teste2',
       date: '20/11/2023',
       financialFlowType: 'outcome',
-      category: 'contas',
+      category: 'supeta',
       value: 300.99
     }
   ];
@@ -54,7 +55,7 @@ export class TransactionListComponent {
   totalBalance !: number;
 
   buttons = [
-    {iconClass: 'fa fa-edit', title: 'Editar', route: '/transaction-edit', function: null},
+    {iconClass: 'fa fa-edit', title: 'Editar', route: null, function: this.updateTransaction.bind(this)},
     {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
     {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteTransaction.bind(this)}
   ];
@@ -82,7 +83,7 @@ export class TransactionListComponent {
   }
 
   deleteTransaction(id: any): void {
-    let op: boolean = confirm('Deseja deletar a transação?');
+    let op: boolean = confirm('Deseja deleter a transação?');
     if (op)
       this.transactionService.deleteTransaction(id).subscribe((): void => {
         this.getTransactions();
@@ -95,9 +96,13 @@ export class TransactionListComponent {
     this.totalBalance = this.income - this.outcome;
   }
 
-  openModal(): void {
-    this.ngbModal.open(TransactionFormComponent);
-    console.log('teste');
+  createTransaction(): void {
+    this.ngbModal.open(TransactionCreateComponent);
+  }
+
+  updateTransaction(id: number): void {
+    const modalRef: NgbModalRef = this.ngbModal.open(TransactionEditComponent);
+    modalRef.componentInstance.transactionId = id;
   }
 
   getFinancialFlowTypeTotal(financialFlowType: string): number {

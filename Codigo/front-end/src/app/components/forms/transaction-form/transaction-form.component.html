@@ -1,6 +1,6 @@
 <form class="student-form">
 
-  <h5 class="pt-3 d-flex justify-content-center not-printable">Nova transação</h5>
+  <h5 class="pt-3 d-flex justify-content-center not-printable">{{title || 'Título da sessão'}}</h5>
 
   <div id="transaction-info">
 
@@ -8,28 +8,29 @@
       <label for="transactionDescription">Descrição*</label>
       <input id="transactionDescription" type="text" class="form-control"
              [placeholder]="transaction.description ? transaction.description : ''"
-             [(ngModel)]="transaction.description" name="studentFullName" required>
+             [(ngModel)]="transaction.description" name="transactionDescription" required>
     </div>
 
     <div class="col-md-12 p-3">
       <label for="transactionDate">Data*</label>
       <input id="transactionDate" type="text" class="form-control"
              [placeholder]="transaction.date ? transaction.date : 'Ex.: dd/mm/aaaa'"
-             [(ngModel)]="transaction.date" name="studentBirthDate" maxlength="10" appDateFormat required>
+             [(ngModel)]="transaction.date" name="transactionDate" maxlength="10" appDateFormat required>
     </div>
 
     <div class="col-md-12 p-3">
-      <label for="transactionCategory">Categoria*</label>
-      <input id="transactionCategory" type="text" class="form-control"
-             [placeholder]="transaction.category ? transaction.category : 'Ex.: dd/mm/aaaa'"
-             [(ngModel)]="transaction.category" name="studentBirthDate" maxlength="10" appDateFormat required>
+      <label>Categoria*</label>
+      <app-category-select
+        [category]="transaction.category"
+        (categoryChange)="onCategoryChange($event)">
+      </app-category-select>
     </div>
 
     <div class="col-md-12 p-3">
       <label for="transactionValue">Valor*</label>
       <input id="transactionValue" type="text" class="form-control"
-             [placeholder]="transaction.value ? transaction.value : 'Ex.: dd/mm/aaaa'"
-             [(ngModel)]="transaction.value" name="studentBirthDate" maxlength="10" appDateFormat required>
+             [placeholder]="transaction.value ? transaction.value : 'R$'"
+             [(ngModel)]="transaction.value" name="transactionValue" appCurrencyFormat required>
     </div>
 
 
@@ -37,21 +38,5 @@
       <p class="text-muted">* Informações obrigatórias</p>
     </div>
 
-    <div class="col-12 d-flex justify-content-end">
-      <app-btn-custom
-        [type]="'submit'"
-        [class]="'btn btn-outline-success me-2'"
-        [innerHtml]="'Cadastrar'"
-        (click)="createTransaction()"
-      ></app-btn-custom>
-      <app-btn-custom
-        [type]="'submit'"
-        [class]="'btn btn-outline-danger'"
-        [innerHtml]="'Cancelar'"
-        (click)="cancel()"
-      ></app-btn-custom>
-    </div>
-
   </div>
-
 </form>

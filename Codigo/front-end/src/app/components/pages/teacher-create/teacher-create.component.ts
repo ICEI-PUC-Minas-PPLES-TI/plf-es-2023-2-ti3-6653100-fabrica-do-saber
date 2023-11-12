@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { catchError, tap } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 
 import { TeacherService } from '../../../services/teacher/teacher.service';
 import { Teacher } from '../../../interfaces/Teacher';
@@ -17,7 +16,7 @@ export class TeacherCreateComponent {
 
   teacher: Teacher = new TeacherImp();
 
-  constructor(private router: Router, private toastr: ToastrService, private teacherService: TeacherService) {
+  constructor(private router: Router, private teacherService: TeacherService) {
   }
 
   createTeacher(): void {

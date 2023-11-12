@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Transaction } from '../../../interfaces/Transaction';
-import { Router } from '@angular/router';
-import { TransactionService } from '../../../services/transaction/transaction.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -10,16 +8,15 @@ import { TransactionService } from '../../../services/transaction/transaction.se
 })
 export class TransactionFormComponent {
 
-  transaction !: Transaction;
+  @Input() transaction!: Transaction;
+  @Input() title!: string;
 
-  constructor(private router: Router, private transactionService: TransactionService) {
+  onCategoryChange(newCategory: string): void {
+    this.transaction.category = this.formatSelect(newCategory);
   }
 
-  createTransaction(): void {
-
-  }
-
-  cancel() : void{
-    this.router.navigate(['/transaction-list']);
+  formatSelect(select: any): any {
+    const parts: string[] = select.split(':');
+    return parts[1].trim();
   }
 }

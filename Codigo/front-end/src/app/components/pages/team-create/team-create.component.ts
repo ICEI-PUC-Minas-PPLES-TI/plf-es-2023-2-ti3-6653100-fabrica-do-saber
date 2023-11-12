@@ -47,7 +47,7 @@ export class TeamCreateComponent {
       teacher: {
         id: team.teacherId
       },
-      students: team.studentIds.map((studentId: number): { id: number } => ({ id: studentId }))
+      students: team.studentIds.map((studentId: number): { id: number } => ({id: studentId}))
     };
   }
 

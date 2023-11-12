@@ -50,6 +50,9 @@ import { UserPageComponent } from './components/pages/user-page/user-page.compon
 import { ReportsComponent } from './components/pages/reports/reports.component';
 import { TransactionListComponent } from './components/pages/transaction-list/transaction-list.component';
 import { TransactionFormComponent } from './components/forms/transaction-form/transaction-form.component';
+import { CategorySelectComponent } from './components/forms/components/category-select/category-select.component';
+import { TransactionCreateComponent } from './components/pages/transaction-create/transaction-create.component';
+import { TransactionEditComponent } from './components/pages/transaction-edit/transaction-edit.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +96,9 @@ import { TransactionFormComponent } from './components/forms/transaction-form/tr
     ReportsComponent,
     TransactionListComponent,
     TransactionFormComponent,
+    CategorySelectComponent,
+    TransactionCreateComponent,
+    TransactionEditComponent,
   ],
   imports: [
     BrowserModule,

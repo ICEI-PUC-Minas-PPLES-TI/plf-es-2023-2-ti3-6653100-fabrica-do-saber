@@ -22,7 +22,7 @@
         [type]="'submit'"
         [class]="'btn btn-primary'"
         [innerHtml]="'+'"
-        (click)="openModal()"
+        (click)="createTransaction()"
       ></app-btn-custom>
     </div>
   </div>
@@ -76,7 +76,6 @@
           </td>
           <td>
             <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
-                    [routerLink]="button.route ? [button.route, transaction.id] : null"
                     (click)="button.function ? button.function(transaction.id) : null"
                     title="{{ button.title }}">
               <i [class]="button.iconClass"></i>

@@ -26,7 +26,7 @@ export class TransactionService {
       );
   }
 
-  updateTransaction(id: number, transaction: Teacher): Observable<any> {
+  updateTransaction(id: number, transaction: Transaction): Observable<any> {
     return this.http.put<Teacher>(`${API_CONFIG.baseUrl}/transaction/${id}`, transaction)
       .pipe(
         tap(response => {
