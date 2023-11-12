@@ -1,5 +1,8 @@
 package com.ti.fabricadosaber.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum State {
 
     ACRE("Acre"),
@@ -32,15 +35,18 @@ public enum State {
 
     private final String name;
 
+
     State(String name) {
 
         this.name = name;
     }
 
+    @JsonValue
     public String getName() {
         return name;
     }
 
+    @JsonCreator
     public static State recoverState(String name){
 
         for(State state : values()){

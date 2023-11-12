@@ -1,5 +1,8 @@
 package com.ti.fabricadosaber.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Grade {
 
     //todo: O name é só para exibir em interface e não corresponde o valor do enumeration
@@ -16,11 +19,13 @@ public enum Grade {
         this.name = name;
     }
 
+    @JsonValue
     public String getName() {
 
         return name;
     }
 
+    @JsonCreator
     public static Grade recoverGrade(String name) {
         for (Grade grade : values()) {
             if (grade.getName().equalsIgnoreCase(name)) {

@@ -1,6 +1,8 @@
 package com.ti.fabricadosaber.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum Race {
@@ -19,10 +21,12 @@ public enum Race {
         this.name = name;
     }
 
+    @JsonValue
     public String getName() {
         return name;
     }
 
+    @JsonCreator
     public static Race recoverRace(String name){
 
             for(Race race : values()){
