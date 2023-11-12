@@ -1,1 +1,91 @@
-<p>vacation-team-list works!</p>
+<section class="container">
+
+  <img src="\assets\img\logo-fabrica-do-saber.png" alt="" class="hidden printable">
+
+  <h5 class="pt-3 printable">Creches de férias cadastradas</h5>
+
+  <!-- Search bar -->
+  <div class="d-flex justify-content-between mt-3 mb-3">
+    <div class="col-md-4">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+               id="search-input"
+               (input)="filterVacationTeamList($event)">
+      </form>
+    </div>
+
+    <div class="col-md-4">
+      Ordenar por
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
+                ngbDropdownToggle>{{filterText}}</button>
+        <ul ngbDropdownMenu>
+          <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item"
+                                                                (click)="filter.function()">{{filter.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <app-btn-custom
+        [type]="'submit'"
+        [class]="'btn btn-primary'"
+        [innerHtml]="'Cadastrar nova turma'"
+        [routerLink]="'/team-create'"
+      ></app-btn-custom>
+    </div>
+
+    <button type="button" class="btn btn-outline-info "
+            (click)=printTeamList()
+            title="button.title">
+      <i class="fa fa-upload"></i>
+    </button>
+  </div>
+
+  <div class="col-12 py-2 hidden printable num-prof">
+    <h6>Número de creches de férias cadastradas: {{vacationTeams.length}}</h6>
+  </div>
+
+  <div class="table-responsive printable">
+    <table class="table no-wrap user-table mb-0">
+      <thead>
+      <tr>
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders" [class.not-printable]="header === 'Gerenciar'">
+          {{ header }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let vacationTeam of vacationTeams">
+        <tr>
+          <td>
+            <h6 class="text-black">{{ vacationTeam.name }}</h6>
+          </td>
+          <td>
+            <span class="text-black">{{getTeacherInfo(vacationTeam, 'fullName')}}</span><br>
+            <span class="text-muted">{{getTeacherInfo(vacationTeam, 'phoneNumber')}}</span>
+          </td>
+          <td>
+            <span class="black">{{ vacationTeam.grade }}</span><br>
+          </td>
+          <td>
+            <span class="black">{{ vacationTeam.numberStudents }}</span><br>
+          </td>
+          <td>
+            <span class="black">{{ vacationTeam.classroom }}</span><br>
+          </td>
+          <td>
+            <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
+                    [routerLink]="button.route ? [button.route, vacationTeam.id] : null"
+                    (click)="button.function ? button.function(vacationTeam) : null"
+                    title="{{ button.title }}">
+              <i [class]="button.iconClass"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+</section>

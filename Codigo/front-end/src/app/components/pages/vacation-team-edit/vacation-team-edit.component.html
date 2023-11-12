@@ -1,1 +1,28 @@
-<p>vacation-team-edit works!</p>
+<img src="\assets\img\logo-fabrica-do-saber.png" alt="" class="hidden printable">
+
+<section id="list" class="container printable">
+  <h5 class="pt-3 printable hidden">Ficha da turma</h5>
+  <form class="container card row py-4">
+    <app-vacation-team-form
+      *ngIf="vacationTeam"
+      [vacationTeam]="vacationTeam"
+      [title]="'Editar creche de férias'"
+    ></app-vacation-team-form>
+    <div class="col-12 d-flex justify-content-end">
+      <app-btn-custom
+        [type]="'submit'"
+        [class]="'btn btn-outline-success me-2'"
+        [innerHtml]="'Atualizar'"
+        (click)="updateVacationTeam()"
+      ></app-btn-custom>
+      <app-btn-custom
+        [type]="'submit'"
+        [class]="'btn btn-outline-danger'"
+        [innerHtml]="'Cancelar'"
+        (click)="cancel()"
+      ></app-btn-custom>
+    </div>
+  </form>
+</section>
+
+

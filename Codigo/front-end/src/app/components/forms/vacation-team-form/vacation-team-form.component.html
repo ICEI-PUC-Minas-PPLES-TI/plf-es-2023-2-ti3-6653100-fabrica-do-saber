@@ -1,1 +1,71 @@
-<p>vacation-team-form works!</p>
+<h5 class="pt-3 d-flex justify-content-center">{{title}}</h5>
+
+<div id="team-div">
+
+  <div class="d-flex justify-content-between">
+    <div class="col-3 py-2">
+      <label for="teamFullName">Nome da Turma*</label>
+      <input id="teamFullName" type="text" class="form-control"
+             [placeholder]="vacationTeam.name ? vacationTeam.name : ''" [(ngModel)]="vacationTeam.name"
+             name="teamFullName" required>
+    </div>
+
+    <div class="col-2 py-2">
+      <label for="teamClassroom">Sala de aula*</label>
+      <input id="teamClassroom" type="text" class="form-control"
+             [placeholder]="vacationTeam.classroom ? vacationTeam.classroom : ''"
+             [(ngModel)]="vacationTeam.classroom" name="teamClassroom" required>
+    </div>
+
+    <div class="col-2 py-2">
+      <label>Série*</label>
+      <app-grade-select
+        [grade]="vacationTeam.grade"
+        (gradeChange)="onGrandeChange($event)">
+      </app-grade-select>
+    </div>
+
+    <div class="col-3 py-2">
+      <label>Professor*</label>
+      <app-teacher-select
+        [teacherId]="vacationTeam.teacherId"
+        (teacherChange)="onTeacherChange($event)">
+      </app-teacher-select>
+    </div>
+  </div>
+
+  <div class="d-flex">
+    <div class="col-2 py-2 mr-2">
+      <label for="vacationTeamStartDate">Data de início*</label>
+      <input id="vacationTeamStartDate" type="text" class="form-control"
+             [placeholder]="vacationTeam.startDate ? vacationTeam.startDate : ''"
+             [(ngModel)]="vacationTeam.startDate" name="vacationTeamStartDate" appDateFormat required>
+    </div>
+
+    <div class="col-2 py-2">
+      <label for="vacationTeamEndDate">Data de término*</label>
+      <input id="vacationTeamEndDate" type="text" class="form-control"
+             [placeholder]="vacationTeam.endDate ? vacationTeam.endDate : ''"
+             [(ngModel)]="vacationTeam.endDate" name="vacationTeamEndDate" appDateFormat required>
+    </div>
+  </div>
+
+  <div class="col-4 py-2 form-group">
+    <label>Selecione os alunos</label>
+    <app-student-select
+      [(selectedStudentIds)]="vacationTeam.studentIds"
+      (selectedStudentIdsChange)="onSelectedStudentIdsChange($event)">
+    </app-student-select>
+  </div>
+
+  <div class="col-6 py-2">
+    <input id="team" type="text" class="form-control"
+           [placeholder]="selectedStudents ? selectedStudents : 'Nenhum aluno selecionado'"
+           [(ngModel)]="selectedStudents" name="teamStudents" [readonly]="true" required>
+  </div>
+
+  <div class="col-12 py-2">
+    <p class="text-muted">* Informações obrigatórias</p>
+  </div>
+
+</div>

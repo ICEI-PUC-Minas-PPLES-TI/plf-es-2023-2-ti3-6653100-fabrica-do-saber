@@ -54,8 +54,6 @@ export class TeamEditComponent {
   }
 
   formatToRequest(team: Team) {
-    console.log(team.studentIds);
-
     return {
       name: team.name,
       grade: team.grade,
