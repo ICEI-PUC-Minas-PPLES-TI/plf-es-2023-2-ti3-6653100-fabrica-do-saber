@@ -12,6 +12,7 @@ export class HeaderComponent {
     {label: 'Alunos Cadastrados', link: '/student-list'},
     {label: 'Professores Cadastrados', link: '/teacher-list'},
     {label: 'Turmas Cadastrados', link: '/team-list'},
+    {label: 'Creches de Férias Cadastradas', link: '/vacation-team-list'},
     {label: 'Página do usuário', link: '/user-page'},
     {label: 'Financeiro', link: '/transaction-list'}
   ];

@@ -53,6 +53,10 @@ import { TransactionFormComponent } from './components/forms/transaction-form/tr
 import { CategorySelectComponent } from './components/forms/components/category-select/category-select.component';
 import { TransactionCreateComponent } from './components/pages/transaction-create/transaction-create.component';
 import { TransactionEditComponent } from './components/pages/transaction-edit/transaction-edit.component';
+import { VacationTeamListComponent } from './components/pages/vacation-team-list/vacation-team-list.component';
+import { VacationTeamCreateComponent } from './components/pages/vacation-team-create/vacation-team-create.component';
+import { VacationTeamEditComponent } from './components/pages/vacation-team-edit/vacation-team-edit.component';
+import { VacationTeamFormComponent } from './components/forms/vacation-team-form/vacation-team-form.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +103,10 @@ import { TransactionEditComponent } from './components/pages/transaction-edit/tr
     CategorySelectComponent,
     TransactionCreateComponent,
     TransactionEditComponent,
+    VacationTeamListComponent,
+    VacationTeamCreateComponent,
+    VacationTeamEditComponent,
+    VacationTeamFormComponent,
   ],
   imports: [
     BrowserModule,
