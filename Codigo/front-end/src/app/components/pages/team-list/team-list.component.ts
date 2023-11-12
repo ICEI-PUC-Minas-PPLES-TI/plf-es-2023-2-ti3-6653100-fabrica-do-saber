@@ -23,7 +23,7 @@ export class TeamListComponent {
   tableHeaders: String[] = ['Turma', 'Professor', 'Série', 'Nº de alunos', 'Sala de aula', 'Gerenciar'];
   buttons = [
     { iconClass: 'fa fa-edit', title: 'Editar', route: '/team-edit', function: null },
-    { iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null },
+    { iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printTeam.bind(this) },
     { iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteTeam.bind(this) }
   ];
   filters = [
@@ -82,6 +82,19 @@ export class TeamListComponent {
       });
   }
 
+  printTeam(team: Team): void {
+
+    let newWindow: Window = <Window>window.open(`/team-edit/${team.id}`, '_blank');
+
+    newWindow.onload = function (): void {
+      setTimeout((): void => {
+        newWindow.print();
+        newWindow.close();
+      }, 200);
+    };
+
+  }
+
   filterTeamList(event: Event): void {
 
     const searchInput: HTMLInputElement = event.target as HTMLInputElement;
@@ -109,5 +122,9 @@ export class TeamListComponent {
   updateBtnText(funcName: string) {
     const filter = this.filters.find(filter => filter.function.name.includes(funcName));
     this.filterText = filter ? filter.name : '';
+  }
+
+  printTeamList() :void {
+    window.print();
   }
 }
