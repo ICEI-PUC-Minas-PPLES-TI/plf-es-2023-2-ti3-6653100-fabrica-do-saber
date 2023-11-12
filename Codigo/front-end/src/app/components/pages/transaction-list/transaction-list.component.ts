@@ -13,47 +13,12 @@ import { TransactionEditComponent } from '../transaction-edit/transaction-edit.c
 export class TransactionListComponent {
 
   tableHeaders: String[] = ['Descrição', 'Data', 'Categoria', 'Valor', 'Gerenciar'];
-  originalTransactions: Transaction[] = [
-    {
-      id: 2,
-      description: 'teste',
-      date: '30/11/2023',
-      financialFlowType: 'income',
-      category: 'contas',
-      value: 100.39
-    },
-    {
-      id: 3,
-      description: 'teste2',
-      date: '20/11/2023',
-      financialFlowType: 'outcome',
-      category: 'supeta',
-      value: 300.99
-    }
-  ];
-  transactions: Transaction[] = [
-    {
-      id: 2,
-      description: 'teste',
-      date: '30/11/2023',
-      financialFlowType: 'income',
-      category: 'contas',
-      value: 100.39
-    },
-    {
-      id: 3,
-      description: 'teste2',
-      date: '20/11/2023',
-      financialFlowType: 'outcome',
-      category: 'supeta',
-      value: 300.99
-    }
-  ];
+  originalTransactions!: Transaction[];
+  transactions!: Transaction[];
   financialFlowTypes: string[] = ['INCOME', 'OUTCOME'];
   income!: number;
   outcome!: number;
   totalBalance !: number;
-
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: null, function: this.updateTransaction.bind(this)},
     {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
