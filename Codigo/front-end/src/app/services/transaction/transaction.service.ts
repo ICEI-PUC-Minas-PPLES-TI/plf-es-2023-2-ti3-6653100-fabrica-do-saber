@@ -65,4 +65,8 @@ export class TransactionService {
         })
       );
   }
+
+  getTotal(): Observable<number> {
+    return this.http.get<number>(`${API_CONFIG.baseUrl}/transaction/total`);
+  }
 }

@@ -15,13 +15,12 @@ export class TransactionListComponent {
   tableHeaders: String[] = ['Descrição', 'Data', 'Categoria', 'Valor', 'Gerenciar'];
   originalTransactions!: Transaction[];
   transactions!: Transaction[];
-  financialFlowTypes: string[] = ['INCOME', 'OUTCOME'];
+  financialFlowTypes: string[] = ['Entrada', 'Saída'];
   income!: number;
   outcome!: number;
   totalBalance !: number;
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: null, function: this.updateTransaction.bind(this)},
-    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
     {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteTransaction.bind(this)}
   ];
   filters = [
@@ -44,6 +43,8 @@ export class TransactionListComponent {
       this.originalTransactions = transactions;
       this.transactions = [...this.originalTransactions];
       this.sortTransactionsByDate();
+      this.income = this.getFinancialFlowTypeTotal(this.financialFlowTypes[0]);
+      this.outcome = this.getFinancialFlowTypeTotal(this.financialFlowTypes[1]);
     });
   }
 
@@ -56,9 +57,9 @@ export class TransactionListComponent {
   }
 
   calculateTotalBalance(): void {
-    this.income = this.getFinancialFlowTypeTotal(this.financialFlowTypes[0]);
-    this.outcome = this.getFinancialFlowTypeTotal(this.financialFlowTypes[1]);
-    this.totalBalance = this.income - this.outcome;
+    this.transactionService.getTotal().subscribe((total: number):void => {
+      this.totalBalance = total;
+    })
   }
 
   createTransaction(): void {
@@ -71,7 +72,7 @@ export class TransactionListComponent {
   }
 
   getFinancialFlowTypeTotal(financialFlowType: string): number {
-    return this.transactions
+    return this.originalTransactions
       .filter((transaction: Transaction): boolean => transaction.financialFlowType.toLowerCase() === financialFlowType.toLowerCase())
       .map((transaction: Transaction) => transaction.value)
       .reduce((total: number, value: number) => total + value, 0);
@@ -92,7 +93,7 @@ export class TransactionListComponent {
   }
 
   sortTransactionsByDate(): void {
-    this.transactions = this.originalTransactions.sort(function (a: Transaction, b: Transaction): number {
+    this.transactions = this.originalTransactions?.sort(function (a: Transaction, b: Transaction): number {
       let dateA: string = a.date;
       let dateB: string = b.date;
       if (dateA < dateB)
@@ -105,7 +106,7 @@ export class TransactionListComponent {
   }
 
   sortTransactionsByCategory(): void {
-    this.transactions = this.originalTransactions.sort(function (a: Transaction, b: Transaction): number {
+    this.transactions = this.originalTransactions?.sort(function (a: Transaction, b: Transaction): number {
       let idA: string = a.category;
       let idB: string = b.category;
       if (idA < idB)

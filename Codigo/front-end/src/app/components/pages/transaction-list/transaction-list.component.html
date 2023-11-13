@@ -4,17 +4,17 @@
   <div class="d-flex justify-content-between pb-4">
     <div class="card col-md-3 py-2">
       <p>Receitas</p>
-      <p>R$ {{income.toFixed(2)}}</p>
+      <p>R$ {{income?.toFixed(2) || 0}}</p>
     </div>
 
     <div class="card col-md-3 py-2">
       <p>Despesas</p>
-      <p>R$ {{outcome.toFixed(2)}}</p>
+      <p>R$ {{outcome?.toFixed(2) || 0}}</p>
     </div>
 
     <div class="card col-md-3 py-2">
       <p>Total</p>
-      <p>R$ {{totalBalance.toFixed(2)}}</p>
+      <p>R$ {{totalBalance?.toFixed(2) || 0}}</p>
     </div>
 
     <div class="col-md-1 py-2">
@@ -76,7 +76,7 @@
           </td>
           <td>
             <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
-                    (click)="button.function ? button.function(transaction.id) : null"
+                    (click)="button.function(transaction.id)"
                     title="{{ button.title }}">
               <i [class]="button.iconClass"></i>
             </button>

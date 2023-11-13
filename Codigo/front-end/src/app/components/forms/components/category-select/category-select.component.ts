@@ -12,14 +12,14 @@ export class CategorySelectComponent {
   @Output() categoryChange: EventEmitter<string> = new EventEmitter<string>();
 
   categories: SelectValue[] = [
-    {name: 'Pagamento funcionário', value: 'PAGAMENTO_FUNCIONARIO'},
-    {name: 'Despesa infraestrutura', value: 'DESPESA_INFRAESTRUTURA'},
-    {name: 'Marketing institucional', value: 'MARKETING_INSTITUCIONAL'},
-    {name: 'Projetos pedagógicos', value: 'PROJETOS_PEDAGOGICOS'},
-    {name: 'Custos administrativos', value: 'CUSTOS_ADMINISTRATIVOS'},
-    {name: 'Eventos escolares', value: 'EVENTOS_ESCOLARES'},
-    {name: 'Serviços de manutenção', value: 'SERVICOS_MANUTENCAO'},
-    {name: 'Compra de material', value: 'COMPRA_MATERIAL'}
+    { name: 'Pagamento aos funcionários', value: 'PAYROLL' },
+    { name: 'Despesas em infraestrutura', value: 'INFRASTRUCTURE_EXPENSE' },
+    { name: 'Marketing institucional', value: 'INSTITUTIONAL_MARKETING' },
+    { name: 'Projetos educacionais', value: 'EDUCATIONAL_PROJECTS' },
+    { name: 'Custos administrativos', value: 'ADMINISTRATIVE_COSTS' },
+    { name: 'Eventos escolares', value: 'SCHOOL_EVENTS' },
+    { name: 'Serviços de manutenção', value: 'MAINTENANCE_SERVICES' },
+    { name: 'Material escolar', value: 'EDUCATIONAL_MATERIAL' }
   ];
 
   onCategoryChange(event: any): void {

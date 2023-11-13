@@ -1,21 +1,18 @@
 package com.ti.fabricadosaber.services;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.ti.fabricadosaber.enums.FinancialFlowType;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.Teacher;
 import com.ti.fabricadosaber.models.Transaction;
 import com.ti.fabricadosaber.repositories.TransactionRepository;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
-
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -78,15 +75,9 @@ public class TransactionService {
 
         BigDecimal total = BigDecimal.ZERO;
 
-        for (Transaction transaction : transactions) {
-            if (transaction.getValue() != null) {
-                if (FinancialFlowType.INPUT.equals(transaction.getFinancialFlowType())) {
-                    total = total.add(BigDecimal.valueOf(transaction.getValue()));
-                } else if (FinancialFlowType.OUTPUT.equals(transaction.getFinancialFlowType())) {
-                    total = total.subtract(BigDecimal.valueOf(transaction.getValue()));
-                }
-            }
-        }
+        for (Transaction transaction : transactions)
+            if (transaction.getValue() != null)
+                total = total.add(BigDecimal.valueOf(transaction.getValue()));
 
         return total;
     }
