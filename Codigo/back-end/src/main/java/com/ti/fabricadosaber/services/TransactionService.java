@@ -70,20 +70,20 @@ public class TransactionService {
     }
 
     public BigDecimal totalTransactions() {
-        List<Transaction> transacoes = transactionRepository.findAll();
+        List<Transaction> transactions = transactionRepository.findAll();
 
-        if (transacoes.isEmpty()) {
+        if (transactions.isEmpty()) {
             return BigDecimal.ZERO;
         }
 
         BigDecimal total = BigDecimal.ZERO;
 
-        for (Transaction transacao : transacoes) {
-            if (transacao.getValue() != null) {
-                if (FinancialFlowType.INPUT.equals(transacao.getFinancialFlowType())) {
-                    total = total.add(BigDecimal.valueOf(transacao.getValue()));
-                } else if (FinancialFlowType.OUTPUT.equals(transacao.getFinancialFlowType())) {
-                    total = total.subtract(BigDecimal.valueOf(transacao.getValue()));
+        for (Transaction transaction : transactions) {
+            if (transaction.getValue() != null) {
+                if (FinancialFlowType.INPUT.equals(transaction.getFinancialFlowType())) {
+                    total = total.add(BigDecimal.valueOf(transaction.getValue()));
+                } else if (FinancialFlowType.OUTPUT.equals(transaction.getFinancialFlowType())) {
+                    total = total.subtract(BigDecimal.valueOf(transaction.getValue()));
                 }
             }
         }
