@@ -28,7 +28,7 @@ public enum AcademicFormationStatus {
                 return formation;
             }
         }
-        throw new IllegalArgumentException("Relação inválida: " + text);
+        throw new IllegalArgumentException("Situação da formação inválida: " + text);
     }
 
 }
