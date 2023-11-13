@@ -43,15 +43,16 @@
     </button>
   </div>
 
-    <div class="col-12 py-2 hidden printable num-prof">
-      <h6>Número de turmas cadastradas: {{teams?.length || 0}}</h6>
-    </div>
+  <div class="col-12 py-2 hidden printable num-prof">
+    <h6>Número de turmas cadastradas: {{teams != undefined ? teams.length : 0}}</h6>
+  </div>
 
   <div class="table-responsive printable">
     <table class="table no-wrap user-table mb-0">
       <thead>
       <tr>
-        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders" [class.not-printable]="header === 'Gerenciar'">
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders"
+            [class.not-printable]="header === 'Gerenciar'">
           {{ header }}
         </th>
       </tr>

@@ -44,7 +44,7 @@
   </div>
 
   <div class="col-12 py-2 hidden printable num-prof">
-    <h6>Número de creches de férias cadastradas: {{vacationTeams?.length || 0}}</h6>
+    <h6>Número de creches de férias cadastradas: {{vacationTeams != undefined ? vacationTeams.length : 0}}</h6>
   </div>
 
   <div class="table-responsive printable">
