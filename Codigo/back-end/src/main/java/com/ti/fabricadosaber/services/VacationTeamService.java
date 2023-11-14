@@ -100,7 +100,7 @@ public class VacationTeamService {
 
 
         newObj = this.vacationTeamRepository.save(newObj);
-        studentTeamOperation.associateStudents(newObj);
+        //studentTeamOperation.associateStudents(newObj);
         return newObj;
     }
 
@@ -156,12 +156,12 @@ public class VacationTeamService {
 
 
     public void updateStudent(Student student) {
-        VacationTeam team = student.getTeam();
-        if (team != null) {
-            student.getTeam().getStudents().remove(student);
-            student.getTeam().setNumberStudents(student.getTeam().getStudents().size());
-            vacationTeamRepository.save(team);
-        }
+        //VacationTeam team = student.getTeam();
+        // if (team != null) {
+        //     student.getTeam().getStudents().remove(student);
+        //     student.getTeam().setNumberStudents(student.getTeam().getStudents().size());
+        //     vacationTeamRepository.save(team);
+        // }
     }
 
 
