@@ -4,6 +4,8 @@ package com.ti.fabricadosaber.models;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ti.fabricadosaber.enums.Race;
+
+import java.util.HashSet;
 import java.util.Set;
 import com.ti.fabricadosaber.enums.Religion;
 import com.ti.fabricadosaber.enums.State;
@@ -37,6 +39,9 @@ public class Student extends Person {
 	@ManyToOne
 	@JoinColumn(name = "team_id", nullable = true, updatable = true)
 	private Team team;
+
+	@ManyToMany(mappedBy = "students")
+	private Set<VacationTeam> vacationTeams = new HashSet<>();
 
 	@Column(name = "hometown", length = 45, nullable = false, updatable = true)
 	@NotBlank
