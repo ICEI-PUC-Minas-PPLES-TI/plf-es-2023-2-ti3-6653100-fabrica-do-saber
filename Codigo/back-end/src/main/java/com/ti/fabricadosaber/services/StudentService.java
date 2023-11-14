@@ -1,11 +1,13 @@
 package com.ti.fabricadosaber.services;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 
 import com.ti.fabricadosaber.components.StudentTeamOperation;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.Parent;
+import com.ti.fabricadosaber.models.VacationTeam;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
 import jakarta.transaction.Transactional;
@@ -31,6 +33,9 @@ public class StudentService {
 
     @Autowired
     private StudentTeamOperation studentTeamOperation;
+
+    @Autowired
+    private VacationTeamService vacationTeamService;
 
     public Student findById(Long id) {
         SecurityUtil.checkUser();
@@ -68,6 +73,8 @@ public class StudentService {
         this.studentTeamOperation.twoParents(obj);
 
         Team team = this.teamService.findById(obj.getTeam().getId());
+
+        associateStudentWithVacationTeam(obj);
         obj.setId(null);
         obj.setTeam(team);
         Set<Parent> parents = studentTeamOperation.saveParents(obj);
@@ -79,6 +86,27 @@ public class StudentService {
 
         return createdStudent;
     }
+
+
+    private void associateStudentWithVacationTeam(Student obj) {
+
+        Set<VacationTeam> vacationTeams = obj.getVacationTeams();
+
+        if(obj.getVacationTeams() != null && !obj.getVacationTeams().isEmpty()) {
+            Set<VacationTeam> managedVacationTeams = new HashSet<>();
+
+            for(VacationTeam vacationTeam : vacationTeams) {
+
+                VacationTeam existsVacationTeam = vacationTeamService.findById(vacationTeam.getId());
+
+                existsVacationTeam.getStudents().add(obj);
+                managedVacationTeams.add(existsVacationTeam);
+
+            }
+            obj.setVacationTeams(managedVacationTeams);
+        }
+    }
+
 
 
     public Student update(Student obj) {

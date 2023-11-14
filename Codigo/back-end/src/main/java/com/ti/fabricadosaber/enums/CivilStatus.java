@@ -22,7 +22,7 @@ public enum CivilStatus {
     @JsonCreator
     public static CivilStatus recoverCivilStatus(String text) {
         for (CivilStatus guard : CivilStatus.values()) {
-            if (guard.toString().equalsIgnoreCase(text)) {
+            if (guard.getCivilStatus().equalsIgnoreCase(text)) {
                 return guard;
             }
         }

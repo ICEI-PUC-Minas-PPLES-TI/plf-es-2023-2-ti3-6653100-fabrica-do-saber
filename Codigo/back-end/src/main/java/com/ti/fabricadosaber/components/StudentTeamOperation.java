@@ -27,6 +27,9 @@ public class StudentTeamOperation {
         }
     }
 
+
+
+
     public Set<Parent> saveParents(Student obj) {
         String[] ignoreProperties = { "id", "registrationDate", "cpf"};
         Set<Parent> parents = new HashSet<>();

@@ -45,11 +45,11 @@ public class VacationTeamService {
 
 
     public VacationTeam findById(Long id) {
-        VacationTeam team = this.vacationTeamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+        VacationTeam vacationTeam = this.vacationTeamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Creche de férias não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
 
         SecurityUtil.checkUser();
-        return team;
+        return vacationTeam;
     }
 
     public List<VacationTeam> listAllVacationTeams() {
@@ -78,9 +78,47 @@ public class VacationTeamService {
         obj.setTeacher(teacher);
         this.processStudentInCreation(obj);
         obj = this.vacationTeamRepository.save(obj);
-        //studentTeamOperation.associateStudents(obj);
+        //this.associateStudents(obj);
         return obj;
     }
+
+   /* public void associateStudents(VacationTeam obj) {
+        if (obj.getStudents() != null) {
+            for (Student student : obj.getStudents()) {
+                student.setTeam(obj);
+            }
+        }
+    }*/
+
+    public void updateVacationTeamStudentCount(VacationTeam vacationTeam) {
+        vacationTeam.setNumberStudents(vacationTeam.getStudents().size());
+        vacationTeamRepository.save(vacationTeam);
+    }
+
+
+    public void processStudentInCreation(VacationTeam obj) {
+        Set<Student> students = obj.getStudents();
+
+        if (students != null && !students.isEmpty()) {
+            Set<Student> updatedStudents = new HashSet<>();
+
+            for (Student student : students) {
+
+                Student existingStudent = studentService.findById(student.getId());
+
+                existingStudent.getVacationTeams().add(obj);
+                updatedStudents.add(existingStudent);
+            }
+
+            obj.setNumberStudents(updatedStudents.size());
+            obj.setStudents(updatedStudents);
+
+        } else {
+            obj.setNumberStudents(0);
+        }
+    }
+
+
 
     @Transactional
     public VacationTeam update(VacationTeam obj) {
@@ -135,24 +173,6 @@ public class VacationTeamService {
 
     }
 
-    public void processStudentInCreation(VacationTeam obj) {
-        Set<Student> students = obj.getStudents();
-        if (students != null && !students.isEmpty()) {
-            Set<Student> updatedStudents = new HashSet<>();
-            for (Student student : students) {
-
-                Student existingStudent = studentService.findById(student.getId());
-
-                updateStudent(existingStudent);
-                updatedStudents.add(existingStudent);
-
-                obj.setStudents(updatedStudents);
-                obj.setNumberStudents(updatedStudents.size());
-            }
-        } else {
-            obj.setNumberStudents(0);
-        }
-    }
 
 
     public void updateStudent(Student student) {
@@ -164,11 +184,6 @@ public class VacationTeamService {
         // }
     }
 
-
-    public void updateTeamStudentCount(VacationTeam team) {
-        team.setNumberStudents(team.getStudents().size());
-        vacationTeamRepository.save(team);
-    }
 
     // O controller acessa esse método
     public VacationTeam deleteStudentFromTeam(Long teamId, List<Long> idsStudent) {
@@ -186,7 +201,7 @@ public class VacationTeamService {
             team.getStudents().remove(student);
         }
 
-        updateTeamStudentCount(team);
+        updateVacationTeamStudentCount(team);
         return team;
     }
 
