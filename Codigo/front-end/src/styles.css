@@ -22,6 +22,8 @@
   --title-text: #01C4CA;
 
   --header-height: 76px;
+
+  --bg-1: "../assets/img/bg/colorbg1.jpg"
 }
 
 .title {

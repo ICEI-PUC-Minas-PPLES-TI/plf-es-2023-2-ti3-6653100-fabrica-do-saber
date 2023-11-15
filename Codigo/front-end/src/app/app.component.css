@@ -1,4 +1,8 @@
 .container-fluid {
   height: calc(100vh - var(--header-height));
   background-color: var(--blue);
+  background-image: url("../assets/img/bg/colorbg1.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  padding-top: 3rem;
 }
