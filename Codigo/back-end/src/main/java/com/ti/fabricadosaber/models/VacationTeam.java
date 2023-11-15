@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "nursery_vacation")
+@Table(name = "vacatiomTeam")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -43,7 +43,7 @@ public class VacationTeam {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name = "name", nullable = false, updatable = true)
+    @Column(name = "name", nullable = true, updatable = true)
     private String name;
 
     @Enumerated(EnumType.STRING)
@@ -55,24 +55,24 @@ public class VacationTeam {
 
     @ManyToMany
     @JoinTable(
-            name = "nurseryVacation_student",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "nurseryVaction_id")
+            name = "vacationTeam_student",
+            joinColumns = @JoinColumn(name = "vacationTeam_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
     )
     private Set<Student> students = new HashSet<>();
 
-    @Column(name = "classroom", length = 45, nullable = false, updatable = true)
+    @Column(name = "classroom", length = 45, nullable = true, updatable = true)
     private String classroom;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    @Column(name = "start_date", length = 10, nullable = false, updatable = true)
+    @Column(name = "start_date", length = 10, nullable = true, updatable = true)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate startDate;
 
-    @Column(name = "end_date", length = 10, nullable = false, updatable = true)
+    @Column(name = "end_date", length = 10, nullable = true, updatable = true)
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate endDate;
 }

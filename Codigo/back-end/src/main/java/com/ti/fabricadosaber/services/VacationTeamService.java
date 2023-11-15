@@ -1,19 +1,18 @@
 package com.ti.fabricadosaber.services;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.ti.fabricadosaber.components.StudentTeamOperation;
-import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
 import java.util.function.Predicate;
+
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.models.Teacher;
 import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.models.VacationTeam;
-import com.ti.fabricadosaber.repositories.TeamRepository;
 import com.ti.fabricadosaber.repositories.VacationTeamRepository;
 import jakarta.transaction.Transactional;
 
@@ -77,9 +75,15 @@ public class VacationTeamService {
         obj.setId(null);
         obj.setTeacher(teacher);
         this.processStudentInCreation(obj);
+        obj.setStartDate(LocalDate.now());
         obj = this.vacationTeamRepository.save(obj);
         //this.associateStudents(obj);
         return obj;
+    }
+
+    @Transactional
+    public VacationTeam save(VacationTeam vacationTeam) {
+        return vacationTeamRepository.save(vacationTeam);
     }
 
    /* public void associateStudents(VacationTeam obj) {
@@ -90,14 +94,26 @@ public class VacationTeamService {
         }
     }*/
 
-    public void updateVacationTeamStudentCount(VacationTeam vacationTeam) {
-        vacationTeam.setNumberStudents(vacationTeam.getStudents().size());
-        vacationTeamRepository.save(vacationTeam);
+
+    public void removeStudentFromAllTeams(Student student) {
+        List<VacationTeam> teams = vacationTeamRepository.findByStudentsContaining(student);
+        for (VacationTeam team : teams) {
+            team.getStudents().remove(student);
+            updateVacationTeamStudentCount(team);
+        }
     }
 
 
+
+
+    public void updateVacationTeamStudentCount(VacationTeam vacationTeam) {
+        int studentCount = vacationTeam.getStudents().size();
+        vacationTeam.setNumberStudents(studentCount);
+    }
+
     public void processStudentInCreation(VacationTeam obj) {
         Set<Student> students = obj.getStudents();
+        obj.setNumberStudents(0);
 
         if (students != null && !students.isEmpty()) {
             Set<Student> updatedStudents = new HashSet<>();
@@ -113,8 +129,6 @@ public class VacationTeamService {
             obj.setNumberStudents(updatedStudents.size());
             obj.setStudents(updatedStudents);
 
-        } else {
-            obj.setNumberStudents(0);
         }
     }
 
