@@ -31,6 +31,7 @@ export class TransactionEditComponent {
   }
 
   updateTransaction(): void {
+    this.transaction.financialFlowType = this.getFinancialFlowType(this.transaction.value);
     let op: boolean = confirm('Deseja atualizar a transação?');
     if (op) {
       this.transactionService.updateTransaction(this.transactionId, this.transaction)
@@ -48,5 +49,9 @@ export class TransactionEditComponent {
 
   cancel(): void {
     this.activeModal.close();
+  }
+
+  getFinancialFlowType(num: number): string {
+    return num > 0? "Entrada" : "Saída";
   }
 }

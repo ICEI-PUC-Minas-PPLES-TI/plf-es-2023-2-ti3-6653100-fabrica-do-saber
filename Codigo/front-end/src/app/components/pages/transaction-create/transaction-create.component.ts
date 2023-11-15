@@ -20,9 +20,7 @@ export class TransactionCreateComponent {
   }
 
   createTransaction(): void {
-    // this.transaction.value = this.teacherService.formatCurrency(this.transaction.value);
     this.transaction.financialFlowType = this.getFinancialFlowType(this.transaction.value);
-    console.log(this.transaction);
     let op: boolean = confirm('Deseja criar a transação?');
     if (op)
       this.transactionService.createTransaction(this.transaction)
