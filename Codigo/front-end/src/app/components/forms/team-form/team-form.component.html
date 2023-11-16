@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <div class="col-4 py-2 form-group">
+  <div class="col-12 py-2 form-group">
     <label>Selecione os alunos</label>
     <app-student-select
       [(selectedStudentIds)]="team.studentIds"
@@ -40,10 +40,10 @@
     </app-student-select>
   </div>
 
-  <div class="col-6 py-2">
+  <!-- <div class="col-6 py-2">
     <input id="team" type="text" class="form-control" [placeholder]="selectedStudents ? selectedStudents : 'Nenhum aluno selecionado'"
            [(ngModel)]="selectedStudents" name="teamStudents" [readonly]="true" required>
-  </div>
+  </div> -->
 
   <div class="col-12 py-2">
     <p class="text-muted">* Informações obrigatórias</p>

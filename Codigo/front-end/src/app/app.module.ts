@@ -57,6 +57,8 @@ import { VacationTeamListComponent } from './components/pages/vacation-team-list
 import { VacationTeamCreateComponent } from './components/pages/vacation-team-create/vacation-team-create.component';
 import { VacationTeamEditComponent } from './components/pages/vacation-team-edit/vacation-team-edit.component';
 import { VacationTeamFormComponent } from './components/forms/vacation-team-form/vacation-team-form.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MultiselectComponent } from './components/forms/components/multiselect/multiselect.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +109,7 @@ import { VacationTeamFormComponent } from './components/forms/vacation-team-form
     VacationTeamCreateComponent,
     VacationTeamEditComponent,
     VacationTeamFormComponent,
+    MultiselectComponent,
   ],
   imports: [
     BrowserModule,
@@ -117,7 +120,8 @@ import { VacationTeamFormComponent } from './components/forms/vacation-team-form
     ToastrModule.forRoot({
       positionClass: 'toast-center',
     }),
-    HttpClientModule
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     {
