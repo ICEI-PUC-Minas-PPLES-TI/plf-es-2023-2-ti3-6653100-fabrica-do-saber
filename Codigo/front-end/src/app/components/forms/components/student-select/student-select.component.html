@@ -8,13 +8,14 @@
 <div class="row">
   <div class="col-md-6">
     <ng-multiselect-dropdown
-      [placeholder]="'Selecionar alunos'"
-      [settings]="dropdownSettings"
-      [data]="students"
-      [(ngModel)]="selectedStudentIds"
-      (onSelect)="addStudents()"
-    >
-    </ng-multiselect-dropdown>
+  [placeholder]="'Selecionar alunos'"
+  [settings]="dropdownSettings"
+  [data]="students"
+  [(ngModel)]="selectedItems"
+  (onSelect)="addStudents()"
+>
+</ng-multiselect-dropdown>
+
   </div>
   
 

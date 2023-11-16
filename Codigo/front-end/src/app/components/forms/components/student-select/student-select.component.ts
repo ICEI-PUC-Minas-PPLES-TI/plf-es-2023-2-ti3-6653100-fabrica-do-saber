@@ -41,11 +41,11 @@ export class StudentSelectComponent implements OnInit {
   }
 
   addStudents(): void {
-    // Emit both the IDs and the actual selected student objects
-    this.selectedStudentIdsChange.emit(this.selectedStudentIds);
-    console.log(this.selectedStudentIds);
-    const selectedStudents = this.students.filter(student => this.selectedStudentIds.includes(student.id));
-    console.log(selectedStudents);
-    this.selectedStudentsChange.emit(selectedStudents);
+    // Map selected students to just the IDs
+    const selectedStudentIds = this.selectedItems.map(student => student.id);
+  
+    // Emit the IDs
+    this.selectedStudentIdsChange.emit(selectedStudentIds);
   }
+  
 }
