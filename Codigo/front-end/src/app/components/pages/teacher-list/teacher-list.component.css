@@ -20,9 +20,27 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
+.btn-upload {
+  border: solid 1px #0d6efd;
+  margin-right: 0.5em;
+  color: #0d6efd;
+}
+
+.btn-upload:hover {
+  color: white;
+  background-color: #0d6efd;
+}
+
 .btn-circle {
   border-radius: 50%;
+  border: solid 1px #0d6efd;
   margin-right: 0.5em;
+  color: #0d6efd;
+}
+
+.btn-circle:hover {
+  color: white;
+  background-color: #0d6efd;
 }
 
 .user-table tbody tr .category-select {
