@@ -11,7 +11,4 @@ import java.util.List;
 @Repository
 public interface VacationTeamRepository extends JpaRepository<VacationTeam, Long> {
 
-    List<VacationTeam> findByStudentsContaining(Student student);
-
-
 }
