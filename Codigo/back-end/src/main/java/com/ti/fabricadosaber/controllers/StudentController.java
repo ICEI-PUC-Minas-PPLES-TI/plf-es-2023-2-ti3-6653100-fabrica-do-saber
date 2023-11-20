@@ -54,13 +54,6 @@ public class StudentController {
     }
 
 
-    @GetMapping("/{id}/vacationteams")
-    public ResponseEntity<Set<VacationTeam>> listVacationTeams(@PathVariable Long id) {
-        Set<VacationTeam> vacationTeams = this.studentService.listVacationTeams(id);
-        return ResponseEntity.ok().body(vacationTeams);
-    }
-
-
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody Student obj) {
         this.studentService.create(obj);
