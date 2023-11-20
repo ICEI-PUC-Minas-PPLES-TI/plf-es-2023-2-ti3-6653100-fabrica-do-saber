@@ -44,6 +44,62 @@ a {
   display: none;
 }
 
+/* Estilização padrão das listas */
+
+.list-container {
+  backdrop-filter: blur(20px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  border-radius: 16px;
+  /* border: 1px solid rgba(255, 255, 255, 0.12); */
+  border-left: 3px solid rgba(255, 255, 255, 0.05);
+  border-top: 2px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0px 8px 24px 0 rgba(0, 0, 0, 0.10);
+  padding-bottom: 1rem;
+}
+
+.table-responsive {
+  border: 1px solid #8898aa4d;
+  border-radius: 10px;
+}
+
+.text-muted {
+  color: #8898aa !important;
+}
+
+[type=button]:not(:disabled),
+[type=reset]:not(:disabled),
+[type=submit]:not(:disabled),
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+.btn-upload {
+  border: solid 1px #0d6efd;
+  margin-right: 0.5em;
+  color: #0d6efd;
+}
+
+.btn-upload:hover {
+  color: white;
+  background-color: #0d6efd;
+  border: solid 1px #0d6efd;
+}
+
+.btn-circle {
+  border-radius: 50%;
+  border: solid 1px #0d6efd;
+  margin-right: 0.5em;
+  color: #0d6efd;
+}
+
+.btn-circle:hover {
+  color: white;
+  background-color: #0d6efd;
+  border: solid 1px #0d6efd;
+}
+
+
+
 @media print {
 
   @page {
