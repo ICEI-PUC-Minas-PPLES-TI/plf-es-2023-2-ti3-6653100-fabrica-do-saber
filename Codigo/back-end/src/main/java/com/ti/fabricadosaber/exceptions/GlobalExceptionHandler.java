@@ -18,7 +18,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.validation.FieldError;
@@ -192,15 +191,34 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler impl
     }
 
 
-    @ExceptionHandler(StudenteOnTeamException.class)
+    @ExceptionHandler(StudentOnTeamException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Object> handleStudentOnTeamException(StudenteOnTeamException studenteOnTeamException,
-                                                                WebRequest request) {
+    public ResponseEntity<Object> handleStudentOnTeamException(StudentOnTeamException studentOnTeamException,
+                                                               WebRequest request) {
 
-        log.error("Falha ao remover estudante da equipe", studenteOnTeamException);
-        return buildErrorResponse(studenteOnTeamException, HttpStatus.NOT_FOUND, request);
+        log.error("Falha ao remover estudante da turma", studentOnTeamException);
+        return buildErrorResponse(studentOnTeamException, HttpStatus.NOT_FOUND, request);
     }
 
+
+    @ExceptionHandler(DataException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleDataException(DataException dataException,
+                                                               WebRequest request) {
+
+        log.error("Data incorreta", dataException);
+        return buildErrorResponse(dataException, HttpStatus.BAD_REQUEST, request);
+    }
+
+
+    @ExceptionHandler(StudentTeamAssociationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleStudentTeamAssociationException(StudentTeamAssociationException studentTeamAssociationException,
+                                                      WebRequest request) {
+
+        log.error("Falha em relacionar aluno em turma", studentTeamAssociationException);
+        return buildErrorResponse(studentTeamAssociationException, HttpStatus.BAD_REQUEST, request);
+    }
 
 
 
