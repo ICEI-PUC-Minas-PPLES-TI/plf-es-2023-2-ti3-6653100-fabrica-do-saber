@@ -1,17 +1,12 @@
 package com.ti.fabricadosaber.models;
 
 import java.time.LocalDate;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ti.fabricadosaber.enums.Grade;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @DiscriminatorValue("vacation")
