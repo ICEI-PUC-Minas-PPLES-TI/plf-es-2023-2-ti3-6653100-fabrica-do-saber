@@ -20,7 +20,7 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
     boolean existsByStudentIdAndTeamIdAndIsActiveTrue(Long studentId, Long teamId);
 
     List<StudentTeamAssociation> findByTeamAndIsActive(Team team, boolean isActive);
-    
+
 
     @Query("SELECT sta FROM StudentTeamAssociation sta JOIN Team t ON sta.id.teamId = t.id WHERE sta.id.studentId = :studentId AND TYPE(t) = Team AND sta.isActive = true")
     Optional<StudentTeamAssociation> findFirstTeamByStudentIdAndIsActiveIsTrue(@Param("studentId") Long studentId);
