@@ -1,36 +1,24 @@
 package com.ti.fabricadosaber.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import com.ti.fabricadosaber.components.StudentTeamOperation;
-import com.ti.fabricadosaber.dto.TeamResponseDTO;
+import java.util.List;
+import java.util.Set;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
-import com.ti.fabricadosaber.exceptions.StudenteOnTeamException;
+import com.ti.fabricadosaber.models.*;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
+import com.ti.fabricadosaber.services.interfaces.TeamOperations;
 import com.ti.fabricadosaber.utils.SecurityUtil;
-import java.util.function.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
-import com.ti.fabricadosaber.models.Student;
-import com.ti.fabricadosaber.models.Teacher;
-import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.repositories.TeamRepository;
-
 import jakarta.transaction.Transactional;
 
 @Service
-public class TeamService {
+public class TeamService implements TeamOperations {
 
     @Autowired
     private TeamRepository teamRepository;
-
-    @Autowired
-    private StudentTeamOperation studentTeamOperation;
-
 
     @Autowired
     private TeacherService teacherService;
@@ -39,7 +27,12 @@ public class TeamService {
     @Lazy
     private StudentService studentService;
 
+    @Autowired
+    @Lazy
+    private StudentTeamAssociationService studentTeamAssociationService;
 
+
+    @Override
     public Team findById(Long id) {
         Team team = this.teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
                 "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
@@ -58,25 +51,102 @@ public class TeamService {
         return team;
     }
 
-    public List<Student> listStudents(Long id) {
+/*    public List<Student> listStudents(Long id) {
         SecurityUtil.checkUser();
 
         Team team = teamRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Turma com o id " + id + " não encontrada."));
 
         return team.getStudents();
-    }
+    }*/
+
+/*    public void associateStudents(Team obj) {
+        if (obj.getStudents() != null) {
+            for (Student student : obj.getStudents()) {
+                student.setTeam(obj);
+            }
+        }
+    }*/
+
 
     @Transactional
     public Team create(Team obj) {
-        Teacher teacher = this.teacherService.findById(obj.getTeacher().getId());
         obj.setId(null);
-        obj.setTeacher(teacher);
-        this.processStudentInCreation(obj);
+        obj.setTeacher(checkTeacher(obj.getTeacher()));
+
         obj = this.teamRepository.save(obj);
-        studentTeamOperation.associateStudents(obj);
+
+        teamStudents(obj);
+
         return obj;
     }
+
+    @Override
+    public Teacher checkTeacher(Teacher teacher) {
+        Teacher existingTeacher = null;
+
+        if(teacher != null)
+            existingTeacher = teacherService.findById(teacher.getId());
+
+        return existingTeacher;
+    }
+
+
+    public void teamStudents(Team obj) {
+
+        Set<Long> studentIds = obj.getStudentIds();
+
+        if(studentIds != null && !studentIds.isEmpty()) {
+
+            for(Long studentId : studentIds) {
+                Student existingStudent = studentService.findById(studentId);
+
+                studentTeamAssociationService.processStudentInTeam(new StudentTeamAssociation(existingStudent, obj));
+            }
+        }
+    }
+
+
+
+
+ /*   public void processStudentInCreation2(Team obj) {
+        Set<Long> studentsIds = obj.getStudentIds();
+
+        if (studentsIds != null && !studentsIds.isEmpty()) {
+
+            for (Long studentId : studentsIds) {
+
+                Student existingStudent = studentService.findById(studentId);
+
+                studentTeamAssociationService.create(new StudentTeamAssociation(existingStudent, obj));
+            }
+            obj.setNumberStudents(studentsIds.size());
+        } else {
+            //  Como a função é auxiliar do método create, não é necessário desativar relação, visto que ele não tem
+            //  nenhuma ainda.
+            obj.setNumberStudents(0);
+        }
+    }
+
+    public void processStudentInCreation(Team obj) {
+        List<Student> students = obj.getStudents();
+
+        if (students != null && !students.isEmpty()) {
+            List<Student> updatedStudents = new ArrayList<>();
+            for (Student student : students) {
+
+                Student existingStudent = studentService.findById(student.getId());
+
+                updateStudent(existingStudent);
+                updatedStudents.add(existingStudent);
+
+                obj.setStudents(updatedStudents);
+                obj.setNumberStudents(updatedStudents.size());
+            }
+        } else {
+            obj.setNumberStudents(0);
+        }
+    }*/
 
     @Transactional
     public Team update(Team obj) {
@@ -86,19 +156,22 @@ public class TeamService {
         newObj.setGrade(obj.getGrade());
         newObj.setTeacher(obj.getTeacher());
 
-        processStudentOnUpdate(obj, newObj);
+        //processStudentOnUpdate(obj, newObj);
 
 
         newObj.setNumberStudents(obj.getNumberStudents());
-        newObj.setStudents(obj.getStudents());
+        //newObj.setStudents(obj.getStudents());
 
 
         newObj = this.teamRepository.save(newObj);
-        studentTeamOperation.associateStudents(newObj);
+
+        //associateStudents(newObj);
+
         return newObj;
     }
 
 
+    @Override
     public void delete(Long id) {
         Team team = findById(id);
         try {
@@ -108,7 +181,9 @@ public class TeamService {
         }
     }
 
-    public void processStudentOnUpdate(Team obj, Team newObj) {
+
+
+  /*  public void processStudentOnUpdate(Team obj, Team newObj) {
         processStudentInCreation(obj);
         List<Student> students = newObj.getStudents();
 
@@ -130,25 +205,6 @@ public class TeamService {
     }
 
 
-    public void processStudentInCreation(Team obj) {
-        List<Student> students = obj.getStudents();
-        if (students != null && !students.isEmpty()) {
-            List<Student> updatedStudents = new ArrayList<>();
-            for (Student student : students) {
-
-                Student existingStudent = studentService.findById(student.getId());
-
-                updateStudent(existingStudent);
-                updatedStudents.add(existingStudent);
-
-                obj.setStudents(updatedStudents);
-                obj.setNumberStudents(updatedStudents.size());
-            }
-        } else {
-            obj.setNumberStudents(0);
-        }
-    }
-
 
     public void updateStudent(Student student) {
         Team team = student.getTeam();
@@ -157,16 +213,17 @@ public class TeamService {
             student.getTeam().setNumberStudents(student.getTeam().getStudents().size());
             teamRepository.save(team);
         }
-    }
+    }*/
 
 
-    public void updateTeamStudentCount(Team team) {
-        team.setNumberStudents(team.getStudents().size());
+    public void updateTeamStudentCount(Team team, Integer studentCount) {
+        team.setNumberStudents(studentCount);
         teamRepository.save(team);
     }
 
+
     // O controller acessa esse método
-    public Team deleteStudentFromTeam(Long teamId, List<Long> idsStudent) {
+  /*  public Team deleteStudentFromTeam(Long teamId, List<Long> idsStudent) {
         Team team = findById(teamId);
 
         for (Long idStudent : idsStudent) {
@@ -181,11 +238,14 @@ public class TeamService {
             team.getStudents().remove(student);
         }
 
-        updateTeamStudentCount(team);
+        //updateTeamStudentCount(team);
         return team;
-    }
+    }*/
 
-    public TeamResponseDTO convertToTeamResponseDTO(Team team) {
+
+
+
+   /* public TeamResponseDTO convertToTeamResponseDTO(Team team) {
 
         TeamResponseDTO dto = new TeamResponseDTO();
         dto.setId(team.getId());
@@ -203,6 +263,6 @@ public class TeamService {
         }
 
         return dto;
-    }
+    }*/
 
 }
