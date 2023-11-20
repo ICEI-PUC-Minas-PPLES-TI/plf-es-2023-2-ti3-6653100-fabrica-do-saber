@@ -1,23 +1,21 @@
 package com.ti.fabricadosaber.services;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
-import com.ti.fabricadosaber.components.StudentTeamOperation;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
-import com.ti.fabricadosaber.models.Parent;
-import com.ti.fabricadosaber.models.VacationTeam;
+import com.ti.fabricadosaber.exceptions.StudentOnTeamException;
+import com.ti.fabricadosaber.exceptions.StudentTeamAssociationException;
+import com.ti.fabricadosaber.exceptions.TwoParentsException;
+import com.ti.fabricadosaber.models.*;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import com.ti.fabricadosaber.models.Student;
-import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.repositories.StudentRepository;
 
 @Service
@@ -30,16 +28,14 @@ public class StudentService {
     @Lazy
     private TeamService teamService;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Autowired
-    private StudentTeamOperation studentTeamOperation;
-
+    private ParentService parentService;
 
     @Autowired
     @Lazy
-    private VacationTeamService vacationTeamService;
+    private StudentTeamAssociationService studentTeamAssociationService;
+
+
 
     public Student findById(Long id) {
         SecurityUtil.checkUser();
@@ -51,10 +47,6 @@ public class StudentService {
         return student;
     }
 
-    @Transactional
-    public Student save(Student student) {
-        return studentRepository.save(student);
-    }
 
     public List<Student> listAllStudents() {
         SecurityUtil.checkUser();
@@ -76,15 +68,6 @@ public class StudentService {
     }
 
 
-    public Set<VacationTeam> listVacationTeams(Long id) {
-
-        SecurityUtil.checkUser();
-
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Estudante com o ID " + id + " não encontrado"));
-
-        return student.getVacationTeams();
-    }
 
 
 
@@ -92,50 +75,70 @@ public class StudentService {
     public Student create(Student obj) {
         SecurityUtil.checkUser();
 
-
-        this.studentTeamOperation.twoParents(obj);
-
-        Team team = this.teamService.findById(obj.getTeam().getId());
-
+        twoParents(obj);
         obj.setId(null);
-        obj.setTeam(team);
 
-        Set<Parent> parents = studentTeamOperation.saveParents(obj);
+
+        Set<Parent> parents = saveParents(obj);
         obj.setParents(parents);
         obj.setRegistrationDate(LocalDate.now());
 
-        Student createdStudent = studentRepository.save(obj);
-        associateStudentWithVacationTeam(obj);
-        this.teamService.updateTeamStudentCount(team);
+       exceptionsOfStudentOnTeam(obj);
+
+       Student createdStudent = studentRepository.save(obj);
+
+       //todo: após persistir, faça a chamada de enrollStudent
+
+        enrollStudent(createdStudent);
 
         return createdStudent;
     }
 
+    public void enrollStudent(Student obj) {
 
+
+        Set<Long> teamIds = obj.getTeamIds();
+
+        for (Long teamId : teamIds) {
+
+            Team existingTeam = teamService.findById(teamId);
+
+            studentTeamAssociationService.processStudentInTeam(new StudentTeamAssociation(obj, existingTeam));
+        }
+    }
+
+    public void exceptionsOfStudentOnTeam(Student obj) {
+        Set<Long> teamIds = obj.getTeamIds();
+        int countTeam = 0;
+
+        for (Long teamId : teamIds) {
+            Team existingTeam = teamService.findById(teamId);
+
+            if(!(existingTeam instanceof VacationTeam))
+                countTeam++;
+
+        }
+        if(countTeam > 1)
+            throw new StudentTeamAssociationException("O estudante só pode se matricular em uma turma por vez");
+
+    }
 
 
     @Transactional
     public Student update(Student obj) {
-        this.studentTeamOperation.twoParents(obj);
+        twoParents(obj);
 
         Student newObj = findById(obj.getId());
-        String[] ignoreProperties = { "id", "registrationDate", "parents", "team"};
+        String[] ignoreProperties = { "id", "registrationDate", "parents", "teamIds"};
 
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);
 
-        Team oldTeam = newObj.getTeam();
-        Team newTeam = this.teamService.findById(obj.getTeam().getId());
+        enrollStudent(obj);
 
-        updateOldTeam(oldTeam, newTeam, newObj);
-        updateVacationTeams(newObj, obj.getVacationTeams()); // relação vacationTeam e student
-
-        Set<Parent> updatedParents = this.studentTeamOperation.saveParents(obj);
+        Set<Parent> updatedParents = saveParents(obj);
         newObj.setParents(updatedParents);
         newObj.setRegistrationDate(LocalDate.now());
-        newObj.setTeam(newTeam);
 
-        newTeam.getStudents().add(newObj);
-        this.teamService.updateTeamStudentCount(newTeam);
 
         return studentRepository.save(newObj);
     }
@@ -143,8 +146,7 @@ public class StudentService {
 
 
 
-    //Todo: Esse método só serve para create
-    public void associateStudentWithVacationTeam(Student obj) {
+  /*  public void associateStudentWithVacationTeam(Student obj) {
         Set<VacationTeam> vacationTeams = obj.getVacationTeams();
 
         if (vacationTeams != null && !vacationTeams.isEmpty()) {
@@ -178,22 +180,12 @@ public class StudentService {
 
             obj.setVacationTeams(managedVacationTeams);
         }
-    }
+    }*/
 
 
 
 
-    /* todo: o método updateVacationTeams serve para update e só consegue cumprir os requisitos 1) e 3).
-
-1) Quando é passado em JSON para requisição PUT de Studant objeto VacatioTeam que já está vinculado ao estudante no banco de dados, o método simplismente ignora.
-
-2) Quando não é passado em JSON para requisição PUT de Studant o objeto VacationTeam que está vinculado ao estudante no banco de dados, o método deleta essa relação completamente do banco de dados. Isso implica que essa relação tem que sumir da tabela intermediária que gerencia a relação n-n entre Studant e VacationTeam. Além disso o número de estudantes da turma tem que ser decrementado.
-
-3) Quando é passado em JSON para requisição PUT de Studant o objeto VacationTeam que não tem vinculação ao estudante no banco de dados, o método cria essa relação e tal relação tem que aparecer na tabela intermediária do banco de dados. Além disso, o número de estudantes da turma tem que ser incrementado.
- */
-
-
-    @Transactional
+  /*  @Transactional
     public void updateVacationTeams(Student student, Set<VacationTeam> updatedVacationTeams) {
         Set<VacationTeam> existingVacationTeams = student.getVacationTeams();
 
@@ -220,14 +212,42 @@ public class StudentService {
 
         // Atualizar as relações na entidade Student
         student.setVacationTeams(updatedVacationTeams);
+    }*/
+
+
+
+/*    public void updateOldTeam(Team oldTeam, Team newTeam, Student newObj) {
+        if (oldTeam != null && !oldTeam.equals(newTeam)) {
+            oldTeam.getStudents().remove(newObj);
+            //this.teamService.updateTeamStudentCount(oldTeam);
+        }
+    }*/
+
+    public Set<Parent> saveParents(Student obj) {
+        String[] ignoreProperties = { "id", "registrationDate", "cpf"};
+        Set<Parent> parents = new HashSet<>();
+
+        Parent currentParent;
+        for (Parent parent : obj.getParents()) {
+            String cpfParent = parent.getCpf();
+
+            if (parentService.existsByCpf(cpfParent)) {
+                currentParent = this.parentService.findByCpf(cpfParent);
+                BeanUtils.copyProperties(parent, currentParent, ignoreProperties);
+                currentParent = this.parentService.update(currentParent);
+            } else {
+                currentParent = parentService.create(parent);
+            }
+            parents.add(currentParent);
+        }
+
+        return parents;
     }
 
 
-
-    public void updateOldTeam(Team oldTeam, Team newTeam, Student newObj) {
-        if (oldTeam != null && !oldTeam.equals(newTeam)) {
-            oldTeam.getStudents().remove(newObj);
-            this.teamService.updateTeamStudentCount(oldTeam);
+    public void twoParents(Student obj) {
+        if (obj.getParents().size() != 2) {
+            throw new TwoParentsException("O estudante deve ter dois responsáveis.");
         }
     }
 
@@ -235,9 +255,8 @@ public class StudentService {
     public void delete(Long id) {
         Student student = findById(id);
         try {
-            vacationTeamService.removeStudentFromAllTeams(student);
             this.studentRepository.delete(student);
-            this.teamService.updateStudent(student);
+            //this.teamService.updateStudent(student);
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
