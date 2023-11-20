@@ -3,7 +3,7 @@ package com.ti.fabricadosaber.controllers;
 import java.net.URI;
 import java.util.List;
 
-import com.ti.fabricadosaber.components.StudentTeamOperation;
+import com.ti.fabricadosaber.services.VacationTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.ti.fabricadosaber.models.VacationTeam;
-import com.ti.fabricadosaber.services.VacationTeamService;
 
 import jakarta.validation.Valid;
 
@@ -30,7 +29,7 @@ public class VacationTeamController {
     private VacationTeamService vacationTeamService;
 
 
-    @GetMapping("/{id}")
+/*    @GetMapping("/{id}")
     public ResponseEntity<VacationTeam> findById(@PathVariable Long id) {
         VacationTeam obj = this.vacationTeamService.findById(id);
         return ResponseEntity.ok().body(obj);
@@ -41,7 +40,7 @@ public class VacationTeamController {
     public ResponseEntity<List<VacationTeam>> listAll() {
         List<VacationTeam> vacationTeamList = this.vacationTeamService.listAllVacationTeams();
         return ResponseEntity.ok().body(vacationTeamList);
-    }
+    }*/
 
 
     @PostMapping
@@ -72,9 +71,9 @@ public class VacationTeamController {
     }
 
 
-    @DeleteMapping("/{id}")
+    /*@DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.vacationTeamService.delete(id);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 }
