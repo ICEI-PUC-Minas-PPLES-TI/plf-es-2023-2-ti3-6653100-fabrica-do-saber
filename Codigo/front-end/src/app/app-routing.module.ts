@@ -19,6 +19,7 @@ import {TransactionListComponent} from './components/pages/transaction-list/tran
 import { VacationTeamCreateComponent } from './components/pages/vacation-team-create/vacation-team-create.component';
 import { VacationTeamEditComponent } from './components/pages/vacation-team-edit/vacation-team-edit.component';
 import { VacationTeamListComponent } from './components/pages/vacation-team-list/vacation-team-list.component';
+import {TransactionChartsComponent} from './components/pages/transaction-charts/transaction-charts.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [authGuard]},
@@ -39,6 +40,7 @@ const routes: Routes = [
   {path: 'vacation-team-list', component: VacationTeamListComponent, canActivate: [authGuard]},
   {path: 'reports', component: ReportsComponent, canActivate: [authGuard]},
   {path: 'transaction-list', component: TransactionListComponent, canActivate: [authGuard]},
+  {path: 'transaction-charts', component: TransactionChartsComponent, canActivate: [authGuard]},
 ];
 
 @NgModule({

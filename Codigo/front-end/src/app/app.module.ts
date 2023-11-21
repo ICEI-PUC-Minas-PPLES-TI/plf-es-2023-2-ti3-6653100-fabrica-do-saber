@@ -59,6 +59,7 @@ import { VacationTeamEditComponent } from './components/pages/vacation-team-edit
 import { VacationTeamFormComponent } from './components/forms/vacation-team-form/vacation-team-form.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MultiselectComponent } from './components/forms/components/multiselect/multiselect.component';
+import { TransactionChartsComponent } from './components/pages/transaction-charts/transaction-charts.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +111,7 @@ import { MultiselectComponent } from './components/forms/components/multiselect/
     VacationTeamEditComponent,
     VacationTeamFormComponent,
     MultiselectComponent,
+    TransactionChartsComponent,
   ],
   imports: [
     BrowserModule,
