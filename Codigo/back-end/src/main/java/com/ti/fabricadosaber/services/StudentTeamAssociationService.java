@@ -67,10 +67,14 @@ public class StudentTeamAssociationService {
         Long teamId = studentTeamAssociation.getTeam().getId();
         boolean isVacationTeam = teamIsVacationTeam(studentTeamAssociation.getTeam());
 
-        if(!enrollStudent && !isVacationTeam)
-            desactivateExistingAssociation(studentId, teamId);
-        else if(enrollStudent && isVacationTeam)
-            desactivateAssociationsInVacationTeam((VacationTeam) studentTeamAssociation.getTeam());
+        if (!enrollStudent)
+            if (!isVacationTeam)
+                desactivateExistingAssociation(studentId, teamId);
+
+         else
+            if (isVacationTeam)
+                desactivateAssociationsInVacationTeam((VacationTeam) studentTeamAssociation.getTeam());
+
 
         create(studentTeamAssociation);
 
