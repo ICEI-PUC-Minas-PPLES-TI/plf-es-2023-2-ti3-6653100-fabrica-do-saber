@@ -4,6 +4,7 @@ import com.ti.fabricadosaber.exceptions.DataException;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.*;
 import com.ti.fabricadosaber.repositories.VacationTeamRepository;
+import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.services.interfaces.TeamOperations;
 import com.ti.fabricadosaber.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,18 +55,29 @@ public class VacationTeamService implements TeamOperations {
 
         obj = this.vacationTeamRepository.save(obj);
 
-        teamStudents(obj);
+        teamStudentsInCreate(obj);
 
         return obj;
 
     }
 
     public VacationTeam update(VacationTeam obj) {
+        VacationTeam newObj = findById(obj.getId());
+        newObj.setName(obj.getName());
+        newObj.setClassroom(obj.getClassroom());
+        newObj.setGrade(obj.getGrade());
+        newObj.setTeacher(checkTeacher(obj.getTeacher()));
+        newObj.setNumberStudents(obj.getNumberStudents());
 
-        return null;
+
+        newObj = this.vacationTeamRepository.save(newObj);
+
+        updateTeamWithStudents(newObj);
+
+        return newObj;
     }
 
-    public void teamStudents(VacationTeam obj) {
+    public void teamStudentsInCreate(VacationTeam obj) {
 
         Set<Long> studentIds = obj.getStudentIds();
 
@@ -78,6 +90,10 @@ public class VacationTeamService implements TeamOperations {
                         false);
             }
         }
+    }
+
+    private void updateTeamWithStudents(Team team) {
+        studentTeamAssociationService.updateTeamOnAssociation(team.getStudentIds(), team);
     }
 
 
@@ -116,12 +132,6 @@ public class VacationTeamService implements TeamOperations {
             throw new DataException("A creche só pode começar de hoje em diante!");
     }
 
-    public void endDateValidate(VacationTeam vacationTeam) {
-        if (LocalDate.now().isAfter(vacationTeam.getEndDate()))
-            throw new DataException("A data de término não pode ser antes de hoje!");
-    }
-
-
 
     public void updateTeamStudentCount(VacationTeam vacationTeam, Integer studentCount) {
         vacationTeam.setNumberStudents(studentCount);
@@ -131,7 +141,12 @@ public class VacationTeamService implements TeamOperations {
 
     @Override
     public void delete(Long id) {
-
+        VacationTeam team = findById(id);
+        try {
+            this.vacationTeamRepository.delete(team);
+        } catch (Exception e) {
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
+        }
     }
 
 

@@ -16,12 +16,6 @@ import java.util.Optional;
 public interface StudentTeamAssociationRepository extends CrudRepository<StudentTeamAssociation,
         StudentTeamAssociation.StudentTeamId> {
 
-
-    boolean existsByStudentIdAndTeamId(Long studentId, Long teamId);
-
-    boolean existsByStudentIdAndTeamIdAndIsActiveTrue(Long studentId, Long teamId);
-
-    // Obter relação no banco
     Optional<StudentTeamAssociation> findByStudentAndTeam(Student student, Team team);
 
     List<StudentTeamAssociation> findByTeamAndIsActive(Team team, boolean isActive);
@@ -34,10 +28,20 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.studentId = :studentId AND sta.isActive = true")
     List<StudentTeamAssociation> findAllActiveAssociationsByStudentId(@Param("studentId") Long studentId);
 
+    @Query("SELECT DISTINCT t FROM StudentTeamAssociation sta JOIN Team t ON sta.id.teamId = t.id WHERE sta.id.studentId = :studentId AND sta.isActive = true")
+    List<Team> findTeamsByStudentId(@Param("studentId") Long studentId);
+
+
+    @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.teamId = :teamId AND sta.isActive = true")
+    List<StudentTeamAssociation> findAllActiveAssociationsByTeamId(@Param("teamId") Long teamId);
+
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.studentId = :studentId AND sta.isActive = false")
     List<StudentTeamAssociation> findAllInactiveAssociationsByStudentId(@Param("studentId") Long studentId);
 
+
+    @Query("SELECT sta FROM StudentTeamAssociation  sta WHERE sta.id.teamId = :teamId AND sta.isActive = false")
+    List<StudentTeamAssociation> findAllInactiveAssociationsByTeamId(@Param("teamId") Long TeamId);
 
     Integer countByTeamAndIsActiveIsTrue(VacationTeam vacationTeam);
 

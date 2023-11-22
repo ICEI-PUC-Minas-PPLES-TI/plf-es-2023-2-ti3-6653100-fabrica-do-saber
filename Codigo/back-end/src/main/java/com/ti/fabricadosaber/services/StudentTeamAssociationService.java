@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,11 +21,15 @@ public class StudentTeamAssociationService {
     @Autowired
     private StudentTeamAssociationRepository studentTeamAssociationRepository;
 
+    private static boolean isVacationTeam;
 
     @Autowired
     @Lazy
     private TeamService teamService;
 
+    @Autowired
+    @Lazy
+    private StudentService studentService;
 
     @Autowired
     @Lazy
@@ -57,82 +58,6 @@ public class StudentTeamAssociationService {
 
         return studentTeamAssociations;
     }
-
-
-
-    // TODO(1): método cadastro de turmas e alunos
-    public StudentTeamAssociation enrollStudentOnTeam(StudentTeamAssociation studentTeamAssociation, boolean enrollStudent) {
-
-        Long studentId = studentTeamAssociation.getStudent().getId();
-        Long teamId = studentTeamAssociation.getTeam().getId();
-        boolean isVacationTeam = teamIsVacationTeam(studentTeamAssociation.getTeam());
-
-        if (!enrollStudent)
-            if (!isVacationTeam)
-                desactivateExistingAssociation(studentId, teamId);
-
-         else
-            if (isVacationTeam)
-                desactivateAssociationsInVacationTeam((VacationTeam) studentTeamAssociation.getTeam());
-
-
-        create(studentTeamAssociation);
-
-        return studentTeamAssociation;
-    }
-
-
-    // TODO(2): atualização dos relacionamentos de um estudante com as turmas
-    public void updateStudentOnAssociation(Set<Long> teamIds, Student student) {
-
-        List<Long> teamIdsList = new ArrayList<>(teamIds);
-        Team team;
-        // Desativar todas as relações que existem no BD e não existe na lista
-        disableById(teamIdsList, student);
-
-        if(teamIds != null && !teamIds.isEmpty()) {
-
-            // Lista dos que estão na lista e não tem no BD (criar novas relações)
-            List<Long> newTeams = findUnrelatedTeamIds(teamIdsList, student);
-
-            if(newTeams != null && !newTeams.isEmpty())
-                for (Long newTeam : newTeams) {
-                    team = teamService.findById(newTeam);
-                    if(teamIsVacationTeam(team))
-                        desactivateAssociationsInVacationTeam((VacationTeam) team);
-                    create(new StudentTeamAssociation(student, team));
-                }
-
-            // Relações que existem na lista e no banco, mas estão inativas.
-            List<Long> updateTeams = findInactiveRelatedTeamIds(teamIdsList, student);
-
-            if(updateTeams != null && !updateTeams.isEmpty()) {
-                for(Long updateTeam : newTeams) {
-                    team = teamService.findById(updateTeam);
-                    Optional<StudentTeamAssociation> existingStudentTeamAssociation =
-                            studentTeamAssociationRepository.findByStudentAndTeam(student,
-                                    team);
-                    if(teamIsVacationTeam(team))
-                        desactivateAssociationsInVacationTeam((VacationTeam) team);
-                    existingStudentTeamAssociation.ifPresent(this::update);
-                }
-            }
-        }
-
-    }
-
-    //TODO(3): atualizar relacionamentos de uma turma com os estudantes dela
-    public void updateTeamOnAssociation(Set<Long> studentIds, Team team) {
-
-        boolean isVacationTeam = teamIsVacationTeam(team);
-
-        if(isVacationTeam) {
-
-        } else {
-
-        }
-    }
-
 
 
     public StudentTeamAssociation create(StudentTeamAssociation studentTeamAssociation) {
@@ -167,9 +92,148 @@ public class StudentTeamAssociationService {
         return studentTeamAssociationSave;
     }
 
-    private void updateCountStudentInTeam(StudentTeamAssociation studentTeamAssociation) {
 
-        if(teamIsVacationTeam(studentTeamAssociation.getTeam())) {
+    // TODO(1): método cadastro de turmas e alunos
+    public StudentTeamAssociation enrollStudentOnTeam(StudentTeamAssociation studentTeamAssociation, boolean enrollStudent) {
+
+        Long studentId = studentTeamAssociation.getStudent().getId();
+        Long teamId = studentTeamAssociation.getTeam().getId();
+        isVacationTeam = teamIsVacationTeam(studentTeamAssociation.getTeam());
+
+
+        if (!enrollStudent)
+            if (!isVacationTeam)
+                disableExistingAssociation(studentId, teamId);
+
+         else
+            if (isVacationTeam)
+                checkTeamDeadline((VacationTeam) studentTeamAssociation.getTeam());
+
+
+        create(studentTeamAssociation);
+
+        return studentTeamAssociation;
+    }
+
+
+
+    // TODO(2): atualização dos relacionamentos de um estudante com as turmas dele
+    public void updateStudentOnAssociation(Set<Long> teamIds, Student student) {
+
+
+            List<Long> teamIdsList = (teamIds != null) ?
+                    new ArrayList<>(teamIds) : Collections.emptyList();
+            Team team;
+
+            // Desativar todas as relações que existem no BD e não existe na lista
+            disableById(teamIdsList, student);
+
+            if(!teamIdsList.isEmpty()) {
+
+            // Lista dos que estão na lista e não tem no BD (criar novas relações)
+            List<Long> newTeams = findUnrelatedTeamIds(teamIdsList, student);
+
+            if(newTeams != null && !newTeams.isEmpty())
+                for (Long newTeam : newTeams) {
+                    team = teamService.findById(newTeam);
+                    if(teamIsVacationTeam(team))
+                        checkTeamDeadline((VacationTeam) team);
+                    create(new StudentTeamAssociation(student, team));
+                }
+
+            // Relações que existem na lista e no banco, mas estão inativas.
+            List<Long> updateTeams = findInactiveRelatedTeamIds(teamIdsList, student);
+
+            if(updateTeams != null && !updateTeams.isEmpty()) {
+                for(Long updateTeam : updateTeams) {
+                    team = teamService.findById(updateTeam);
+                    Optional<StudentTeamAssociation> existingStudentTeamAssociation =
+                            studentTeamAssociationRepository.findByStudentAndTeam(student,
+                                    team);
+                    if(teamIsVacationTeam(team))
+                        checkTeamDeadline((VacationTeam) team);
+                    existingStudentTeamAssociation.ifPresent(this::update);
+                }
+            }
+        }
+
+    }
+
+
+    //TODO(3): atualizar relacionamentos de uma turma (ou creche de férias) com os estudantes dela
+    public void updateTeamOnAssociation(Set<Long> studentIds, Team team) {
+
+        isVacationTeam = teamIsVacationTeam(team);
+
+        if(isVacationTeam)
+            checkTeamDeadline((VacationTeam) team);
+
+        Student student;
+        List<Long> studentIdsList = (studentIds != null) ?
+                new ArrayList<>(studentIds) : Collections.emptyList();
+
+
+        // Desativar todas as relações que existem no banco de dados mas não existem na lista
+        disableById(studentIdsList, team);
+
+        if(!studentIdsList.isEmpty()) {
+
+            List<Long> newStudents = findUnrelatedStudentIds(studentIdsList, team);
+
+            if(newStudents != null && !newStudents.isEmpty()) {
+                for (Long newStudent : newStudents) {
+                    student = studentService.findById(newStudent);
+                    create(new StudentTeamAssociation(student, team));
+                }
+            }
+
+            // Relações que existem na lista e no Banco de Dados, mas estão inativas
+
+            List<Long> updateStudents = findInactiveRelatedTeamIds(studentIdsList, team);
+
+            if(updateStudents != null && !updateStudents.isEmpty()) {
+
+                for (Long updateStudent : updateStudents) {
+                    student = studentService.findById(updateStudent);
+                    Optional<StudentTeamAssociation> existingStudentTeamAssociation =
+                            studentTeamAssociationRepository.findByStudentAndTeam(student,
+                                    team);
+
+                    existingStudentTeamAssociation.ifPresent(this::update);
+
+                }
+
+            }
+        }
+    }
+
+
+
+
+    public List<Long> findInactiveRelatedTeamIds(List<Long> studentIds, Team team) {
+
+        // Ids dos associações que estão inativas
+        List<StudentTeamAssociation> associations =
+                studentTeamAssociationRepository.findAllInactiveAssociationsByTeamId(team.getId());
+
+        //IDs das estudantes que está relacionado com o turma, mas tem relacionamento inativo
+        List<Long> relatedStudentIds = associations.stream()
+                .map(association -> association.getStudent().getId())
+                .toList();
+
+        //IDs de estudantes que tem na lista e tem no banco de dados e que está inativo
+        List<Long> relatedTeam = studentIds.stream()
+                .filter(relatedStudentIds::contains)
+                .collect(Collectors.toList());
+
+        return relatedTeam;
+    }
+
+
+
+    private void updateCountStudentInTeam(StudentTeamAssociation studentTeamAssociation) {
+        isVacationTeam = teamIsVacationTeam(studentTeamAssociation.getTeam());
+        if(isVacationTeam) {
             VacationTeam convertTeam = (VacationTeam) studentTeamAssociation.getTeam();
 
             vacationTeamService.updateTeamStudentCount(convertTeam,
@@ -180,10 +244,10 @@ public class StudentTeamAssociationService {
         }
     }
 
-    private void desactivateExistingAssociation(Long studentId, Long teamId) {
+    private void disableExistingAssociation(Long studentId, Long teamId) {
         Team team = teamService.findById(teamId);
-
-        if (!teamIsVacationTeam(team)) {
+        isVacationTeam = teamIsVacationTeam(team);
+        if (!isVacationTeam) {
             StudentTeamAssociation existingAssociation = studentTeamAssociationRepository.findFirstTeamByStudentIdAndIsActiveIsTrue(studentId)
                     .orElse(null);
 
@@ -196,12 +260,12 @@ public class StudentTeamAssociationService {
     }
 
 
-    public void desactivateAssociationsInVacationTeam(VacationTeam vacationTeam) {
+    public void checkTeamDeadline(VacationTeam vacationTeam) {
         LocalDate currentDate = LocalDate.now();
 
         if (currentDate.isAfter(vacationTeam.getEndDate())) {
 
-            desactivateStudentVacationTeamAssociations(vacationTeam);
+            disableStudentVacationTeamAssociations(vacationTeam);
             vacationTeamService.updateTeamStudentCount(vacationTeam, 0);
             throw new DataException("A creche de férias (ID: " + vacationTeam.getId() +
                     ") já terminou. Data de término: " + vacationTeam.getEndDate());
@@ -209,7 +273,7 @@ public class StudentTeamAssociationService {
         }
     }
 
-    private void desactivateStudentVacationTeamAssociations(VacationTeam vacationTeam) {
+    private void disableStudentVacationTeamAssociations(VacationTeam vacationTeam) {
         List<StudentTeamAssociation> studentAssociations = studentTeamAssociationRepository.findByTeamAndIsActive(vacationTeam, true);
 
         if (!studentAssociations.isEmpty()) {
@@ -222,6 +286,22 @@ public class StudentTeamAssociationService {
         studentTeamAssociationRepository.saveAll(studentAssociations);
     }
 
+
+    public void disableById(List<Long> studentIds, Team team) {
+        List<StudentTeamAssociation> existingAssociations =
+                studentTeamAssociationRepository.findAllActiveAssociationsByTeamId(team.getId());
+
+        for (StudentTeamAssociation association : existingAssociations) {
+
+            if (studentIds == null || studentIds.isEmpty() || !studentIds.contains(association.getStudent().getId())) {
+                association.setIsActive(false);
+                association.setEndDate(LocalDate.now());
+                updateCountStudentInTeam(association);
+            }
+        }
+
+        studentTeamAssociationRepository.saveAll(existingAssociations);
+    }
 
 
     public void disableById(List<Long> teamIds, Student student) {
@@ -239,6 +319,25 @@ public class StudentTeamAssociationService {
         studentTeamAssociationRepository.saveAll(associations);
     }
 
+
+    public List<Long> findUnrelatedStudentIds(List<Long> studentIds, Team team) {
+
+        // Obtém todas as associações ativas da turma
+        List<StudentTeamAssociation> existingAssociations =
+                studentTeamAssociationRepository.findAllActiveAssociationsByTeamId(team.getId());
+
+        //IDs de todos os estudantes que está relacionado com a turma
+        List<Long> relatedStudentIds = existingAssociations.stream()
+                .map(association -> association.getStudent().getId())
+                .toList();
+
+        // Ids de estudantes que tem na lista, mas não tem no banco de dados
+        List<Long> unrelatedStudentIds = studentIds.stream()
+                .filter(studentId -> !relatedStudentIds.contains(studentId))
+                .toList();
+
+        return unrelatedStudentIds;
+    }
 
     public List<Long> findUnrelatedTeamIds(List<Long> teamIds, Student student) {
 
@@ -259,7 +358,7 @@ public class StudentTeamAssociationService {
         return unrelatedTeamIds;
     }
 
-    //find inactive related team ids
+
     public List<Long> findInactiveRelatedTeamIds(List<Long> teamIds, Student student) {
         List<StudentTeamAssociation> associations =
                 studentTeamAssociationRepository.findAllInactiveAssociationsByStudentId(student.getId());
@@ -268,20 +367,27 @@ public class StudentTeamAssociationService {
         //IDs das turmas que está relacionado com inativo
         List<Long> relatedTeamIds = associations.stream()
                 .map(association -> association.getTeam().getId())
-                .collect(Collectors.toList());
+                .toList();
 
         //IDs de turmas que tem na lista e tem no banco de dados
         List<Long> relatedTeam = teamIds.stream()
                 .filter(teamId -> relatedTeamIds.contains(teamId))
                 .collect(Collectors.toList());
 
-        return relatedTeam; //turmas que estão relacionadas ao estudante que estão inativas e na lista passada
+        return relatedTeam;
     }
 
 
     private boolean teamIsVacationTeam(Team team) {
         return team instanceof VacationTeam;
     }
+
+
+    public List<Team> teamsAssociatedWithTheStudent(Student student) {
+        return studentTeamAssociationRepository.findTeamsByStudentId(student.getId());
+    }
+
+
 
 
 }

@@ -29,14 +29,14 @@ public class VacationTeamController {
     private VacationTeamService vacationTeamService;
 
 
-/*    @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<VacationTeam> findById(@PathVariable Long id) {
         VacationTeam obj = this.vacationTeamService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
 
-     @GetMapping
+   /*  @GetMapping
     public ResponseEntity<List<VacationTeam>> listAll() {
         List<VacationTeam> vacationTeamList = this.vacationTeamService.listAllVacationTeams();
         return ResponseEntity.ok().body(vacationTeamList);
@@ -53,27 +53,25 @@ public class VacationTeamController {
 
 
 
-
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody VacationTeam obj, @PathVariable Long id) {
-        
         obj.setId(id);
         this.vacationTeamService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
 
-    @DeleteMapping("/{vacationTeamId}/delete-students")
+/*    @DeleteMapping("/{vacationTeamId}/delete-students")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long vacationTeamId, @RequestBody List<Long> studentIds) {
         
         //this.vacationTeamService.deleteStudentFromVacationTeam(vacationTeamId, studentIds);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 
 
-    /*@DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.vacationTeamService.delete(id);
         return ResponseEntity.noContent().build();
-    }*/
+    }
 }

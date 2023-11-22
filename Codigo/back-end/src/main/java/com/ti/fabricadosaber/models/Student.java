@@ -1,7 +1,6 @@
 package com.ti.fabricadosaber.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.ti.fabricadosaber.enums.Race;
 import java.util.HashSet;
 import java.util.Set;
