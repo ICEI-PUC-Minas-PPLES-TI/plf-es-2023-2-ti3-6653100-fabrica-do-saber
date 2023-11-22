@@ -23,7 +23,7 @@ import lombok.Setter;
 @AttributeOverride(name = "phoneNumber", column = @Column(nullable = true))
 @AttributeOverride(name = "rg", column = @Column(nullable = true))
 @AttributeOverride(name = "email", column = @Column(nullable = true))
-
+@AttributeOverride(name = "registrationDate", column = @Column(nullable = true))
 public class Student extends Person {
 
 	public static final String TABLE_NAME = "student";

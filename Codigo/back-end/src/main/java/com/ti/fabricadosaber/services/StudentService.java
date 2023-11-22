@@ -74,28 +74,24 @@ public class StudentService {
     @Transactional
     public Student create(Student obj) {
         SecurityUtil.checkUser();
+        exceptionsOfStudentOnTeam(obj);
 
         twoParents(obj);
         obj.setId(null);
-
 
         Set<Parent> parents = saveParents(obj);
         obj.setParents(parents);
         obj.setRegistrationDate(LocalDate.now());
 
-       exceptionsOfStudentOnTeam(obj);
-
        Student createdStudent = studentRepository.save(obj);
-
-       //todo: após persistir, faça a chamada de enrollStudent
 
         enrollStudent(createdStudent);
 
         return createdStudent;
     }
 
-    public void enrollStudent(Student obj) {
 
+    public void enrollStudent(Student obj) {
 
         Set<Long> teamIds = obj.getTeamIds();
 
@@ -103,7 +99,8 @@ public class StudentService {
 
             Team existingTeam = teamService.findById(teamId);
 
-            studentTeamAssociationService.processStudentInTeam(new StudentTeamAssociation(obj, existingTeam));
+            studentTeamAssociationService.enrollStudentOnTeam(new StudentTeamAssociation(obj, existingTeam),
+            true);
         }
     }
 
@@ -118,9 +115,9 @@ public class StudentService {
                 countTeam++;
 
         }
+
         if(countTeam > 1)
             throw new StudentTeamAssociationException("O estudante só pode se matricular em uma turma por vez");
-
     }
 
 
@@ -129,18 +126,26 @@ public class StudentService {
         twoParents(obj);
 
         Student newObj = findById(obj.getId());
-        String[] ignoreProperties = { "id", "registrationDate", "parents", "teamIds"};
+        exceptionsOfStudentOnTeam(obj);
 
+        String[] ignoreProperties = { "id", "registrationDate", "parents"};
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);
-
-        enrollStudent(obj);
 
         Set<Parent> updatedParents = saveParents(obj);
         newObj.setParents(updatedParents);
         newObj.setRegistrationDate(LocalDate.now());
 
+        //persistir o objeto atualizado no BD
+        Student saveStudent = studentRepository.save(newObj);
 
-        return studentRepository.save(newObj);
+        // Lidar com a relação
+        updateStudentOnTeam(saveStudent);
+
+        return saveStudent;
+    }
+
+    private void updateStudentOnTeam(Student student) {
+        studentTeamAssociationService.updateStudentOnAssociation(student.getTeamIds(), student);
     }
 
 

@@ -51,6 +51,10 @@ public class TeamService implements TeamOperations {
         return team;
     }
 
+    public List<Team> findAll() {
+        return teamRepository.findAll();
+    }
+
 /*    public List<Student> listStudents(Long id) {
         SecurityUtil.checkUser();
 
@@ -101,7 +105,8 @@ public class TeamService implements TeamOperations {
             for(Long studentId : studentIds) {
                 Student existingStudent = studentService.findById(studentId);
 
-                studentTeamAssociationService.processStudentInTeam(new StudentTeamAssociation(existingStudent, obj));
+                studentTeamAssociationService.enrollStudentOnTeam(new StudentTeamAssociation(existingStudent, obj),
+                        false);
             }
         }
     }

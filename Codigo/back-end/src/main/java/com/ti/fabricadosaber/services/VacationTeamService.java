@@ -42,7 +42,6 @@ public class VacationTeamService implements TeamOperations {
 
     public void checkDate(VacationTeam vacationTeam) {
         dataNotNull(vacationTeam);
-        endDateValidate(vacationTeam);
         startDateValidate(vacationTeam);
         validateDateRange(vacationTeam);
     }
@@ -51,18 +50,18 @@ public class VacationTeamService implements TeamOperations {
 
         obj.setId(null);
         obj.setTeacher(checkTeacher(obj.getTeacher()));
-        checkDate(obj); //validar a data
+        checkDate(obj);
 
         obj = this.vacationTeamRepository.save(obj);
 
         teamStudents(obj);
-
 
         return obj;
 
     }
 
     public VacationTeam update(VacationTeam obj) {
+
         return null;
     }
 
@@ -75,7 +74,8 @@ public class VacationTeamService implements TeamOperations {
             for(Long studentId : studentIds) {
                 Student existingStudent = studentService.findById(studentId);
 
-                studentTeamAssociationService.processStudentInTeam(new StudentTeamAssociation(existingStudent, obj));
+                studentTeamAssociationService.enrollStudentOnTeam(new StudentTeamAssociation(existingStudent, obj),
+                        false);
             }
         }
     }
@@ -90,6 +90,7 @@ public class VacationTeamService implements TeamOperations {
 
         return existingTeacher;
     }
+
 
     public static void validateDateRange(VacationTeam vacationTeam) {
         LocalDate dataInicio = vacationTeam.getStartDate();
