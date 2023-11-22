@@ -1,5 +1,6 @@
 package com.ti.fabricadosaber.repositories;
 
+import com.ti.fabricadosaber.models.Student;
 import com.ti.fabricadosaber.models.StudentTeamAssociation;
 import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.models.VacationTeam;
@@ -15,9 +16,13 @@ import java.util.Optional;
 public interface StudentTeamAssociationRepository extends CrudRepository<StudentTeamAssociation,
         StudentTeamAssociation.StudentTeamId> {
 
+
     boolean existsByStudentIdAndTeamId(Long studentId, Long teamId);
 
     boolean existsByStudentIdAndTeamIdAndIsActiveTrue(Long studentId, Long teamId);
+
+    // Obter relação no banco
+    Optional<StudentTeamAssociation> findByStudentAndTeam(Student student, Team team);
 
     List<StudentTeamAssociation> findByTeamAndIsActive(Team team, boolean isActive);
 

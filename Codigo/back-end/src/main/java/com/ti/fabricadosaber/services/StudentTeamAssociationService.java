@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -101,9 +102,10 @@ public class StudentTeamAssociationService {
 
         if(updateTeams != null && !updateTeams.isEmpty()) {
             for(Long updateTeam : newTeams) {
-                team = teamService.findById(updateTeam);
-                StudentTeamAssociation studentTeamAssociation = new StudentTeamAssociation(student, team);
-                update(studentTeamAssociation);
+                Optional<StudentTeamAssociation> existingStudentTeamAssociation =
+                        studentTeamAssociationRepository.findByStudentAndTeam(student,
+                                teamService.findById(updateTeam));
+                existingStudentTeamAssociation.ifPresent(this::update);
             }
         }
 
