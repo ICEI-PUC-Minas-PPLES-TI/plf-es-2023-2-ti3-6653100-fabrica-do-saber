@@ -87,29 +87,35 @@ public class StudentTeamAssociationService {
 
         List<Long> teamIdsList = new ArrayList<>(teamIds);
         Team team;
-
         // Desativar todas as relações que existem no BD e não existe na lista
         disableById(teamIdsList, student);
 
+        if(teamIds != null && !teamIds.isEmpty()) {
 
-        // Lista dos que estão na lista e não tem no BD (criar novas relações)
-        List<Long> newTeams = findUnrelatedTeamIds(teamIdsList, student);
+            // Lista dos que estão na lista e não tem no BD (criar novas relações)
+            List<Long> newTeams = findUnrelatedTeamIds(teamIdsList, student);
 
+            if(newTeams != null && !newTeams.isEmpty())
+                for (Long newTeam : newTeams) {
+                    team = teamService.findById(newTeam);
+                    if(teamIsVacationTeam(team))
+                        desactivateAssociationsInVacationTeam((VacationTeam) team);
+                    create(new StudentTeamAssociation(student, team));
+                }
 
-        for (Long newTeam : newTeams) {
-            team = teamService.findById(newTeam);
-            create(new StudentTeamAssociation(student, team));
-        }
+            // Relações que existem na lista e no banco, mas estão inativas.
+            List<Long> updateTeams = findInactiveRelatedTeamIds(teamIdsList, student);
 
-        // Relações que existem na lista e no banco, mas estão inativas.
-        List<Long> updateTeams = findInactiveRelatedTeamIds(teamIdsList, student);
-
-        if(updateTeams != null && !updateTeams.isEmpty()) {
-            for(Long updateTeam : newTeams) {
-                Optional<StudentTeamAssociation> existingStudentTeamAssociation =
-                        studentTeamAssociationRepository.findByStudentAndTeam(student,
-                                teamService.findById(updateTeam));
-                existingStudentTeamAssociation.ifPresent(this::update);
+            if(updateTeams != null && !updateTeams.isEmpty()) {
+                for(Long updateTeam : newTeams) {
+                    team = teamService.findById(updateTeam);
+                    Optional<StudentTeamAssociation> existingStudentTeamAssociation =
+                            studentTeamAssociationRepository.findByStudentAndTeam(student,
+                                    team);
+                    if(teamIsVacationTeam(team))
+                        desactivateAssociationsInVacationTeam((VacationTeam) team);
+                    existingStudentTeamAssociation.ifPresent(this::update);
+                }
             }
         }
 
@@ -117,7 +123,14 @@ public class StudentTeamAssociationService {
 
     //TODO(3): atualizar relacionamentos de uma turma com os estudantes dela
     public void updateTeamOnAssociation(Set<Long> studentIds, Team team) {
-        // Fazer código
+
+        boolean isVacationTeam = teamIsVacationTeam(team);
+
+        if(isVacationTeam) {
+
+        } else {
+
+        }
     }
 
 
@@ -167,13 +180,6 @@ public class StudentTeamAssociationService {
         }
     }
 
-    /**
-     * Verificar se o aluno tem relação com uma equipe e desativa-la. Não pode ser chamado quando o id é de um
-     * VacationTeam
-     * @param studentId
-     * @param teamId
-     */
-
     private void desactivateExistingAssociation(Long studentId, Long teamId) {
         Team team = teamService.findById(teamId);
 
@@ -221,17 +227,18 @@ public class StudentTeamAssociationService {
     public void disableById(List<Long> teamIds, Student student) {
         List<StudentTeamAssociation> associations = studentTeamAssociationRepository.findAllActiveAssociationsByStudentId(student.getId());
 
-        if(associations != null && !associations.isEmpty())
-            for (StudentTeamAssociation association : associations) {
-                    if (!teamIds.contains(association.getTeam().getId())) {
-                    association.setIsActive(false);
-                    association.setEndDate(LocalDate.now());
-                    updateCountStudentInTeam(association);
-                }
+        for (StudentTeamAssociation association : associations) {
+
+            if (teamIds == null || teamIds.isEmpty() || !teamIds.contains(association.getTeam().getId())) {
+                association.setIsActive(false);
+                association.setEndDate(LocalDate.now());
+                updateCountStudentInTeam(association);
             }
+        }
 
         studentTeamAssociationRepository.saveAll(associations);
     }
+
 
     public List<Long> findUnrelatedTeamIds(List<Long> teamIds, Student student) {
 
