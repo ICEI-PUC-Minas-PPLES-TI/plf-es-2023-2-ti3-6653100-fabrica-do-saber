@@ -68,6 +68,7 @@ public class VacationTeamService implements TeamOperations {
         newObj.setGrade(obj.getGrade());
         newObj.setTeacher(checkTeacher(obj.getTeacher()));
         newObj.setNumberStudents(newObj.getNumberStudents()); //mesmo no banco
+        checkDate(obj);
 
         newObj = this.vacationTeamRepository.save(newObj);
 
