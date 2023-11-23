@@ -180,18 +180,26 @@ public class StudentTeamAssociationService {
 
             List<Long> newStudents = findUnrelatedStudentIds(studentIdsList, team);
 
+
             if(newStudents != null && !newStudents.isEmpty()) {
+
+                if(!isVacationTeam)
+                    disableStudentAssociationList(newStudents);
+
                 for (Long newStudent : newStudents) {
                     student = studentService.findById(newStudent);
                     create(new StudentTeamAssociation(student, team));
                 }
+
             }
 
             // Relações que existem na lista e no Banco de Dados, mas estão inativas
-
             List<Long> updateStudents = findInactiveRelatedTeamIds(studentIdsList, team);
 
             if(updateStudents != null && !updateStudents.isEmpty()) {
+
+                if(!isVacationTeam)
+                    disableStudentAssociationList(updateStudents);
 
                 for (Long updateStudent : updateStudents) {
                     student = studentService.findById(updateStudent);
@@ -205,7 +213,25 @@ public class StudentTeamAssociationService {
 
             }
         }
+
     }
+
+    // Precisa garantir que ...
+    public void disableStudentAssociationList(List<Long> students) {
+        for (Long student : students) {
+
+            Optional<StudentTeamAssociation> studentTeamAssociationOptional =
+                    studentTeamAssociationRepository.findFirstTeamByStudentIdAndIsActiveIsTrue(student);
+
+            studentTeamAssociationOptional.ifPresent(studentTeamAssociation -> {
+                studentTeamAssociation.setIsActive(false);
+                studentTeamAssociation.setEndDate(LocalDate.now());
+                updateCountStudentInTeam(studentTeamAssociation);
+            });
+        }
+
+    }
+
 
 
 
@@ -287,6 +313,7 @@ public class StudentTeamAssociationService {
     }
 
 
+    // Associações que não estão na lista serão desativadas
     public void disableById(List<Long> studentIds, Team team) {
         List<StudentTeamAssociation> existingAssociations =
                 studentTeamAssociationRepository.findAllActiveAssociationsByTeamId(team.getId());
@@ -331,13 +358,10 @@ public class StudentTeamAssociationService {
                 .map(association -> association.getStudent().getId())
                 .toList();
 
-        // Ids de estudantes que tem na lista, mas não está relacionado no banco
+        // Ids de estudantes que tem na lista, mas não está relacionado com a turma no banco
         List<Long> unrelatedStudentIds = studentIds.stream()
                 .filter(studentId -> !relatedStudentIds.contains(studentId))
                 .toList();
-        // Se tiver na lista studentIds IDs de estudantes que estão relacionados com a turma, mas tem relação
-        // inativa, a lista vai acabar passando e haverá um erro, pois está sendo chamado o create sendo que já
-        // existe a relação no banco que só precisa ser atualizada
 
         return unrelatedStudentIds;
     }
