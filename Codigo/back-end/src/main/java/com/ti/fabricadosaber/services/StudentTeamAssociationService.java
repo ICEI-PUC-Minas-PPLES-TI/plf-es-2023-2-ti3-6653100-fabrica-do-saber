@@ -322,19 +322,22 @@ public class StudentTeamAssociationService {
 
     public List<Long> findUnrelatedStudentIds(List<Long> studentIds, Team team) {
 
-        // Obtém todas as associações ativas da turma
+        // Obtém todas as associações ativas e inativas
         List<StudentTeamAssociation> existingAssociations =
-                studentTeamAssociationRepository.findAllActiveAssociationsByTeamId(team.getId());
+                studentTeamAssociationRepository.findAllAssociationsByTeamId((team.getId()));
 
-        //IDs de todos os estudantes que está relacionado com a turma
+        //IDs de todos os estudantes que está relacionado com a turma de forma ativa ou inativa
         List<Long> relatedStudentIds = existingAssociations.stream()
                 .map(association -> association.getStudent().getId())
                 .toList();
 
-        // Ids de estudantes que tem na lista, mas não tem no banco de dados
+        // Ids de estudantes que tem na lista, mas não está relacionado no banco
         List<Long> unrelatedStudentIds = studentIds.stream()
                 .filter(studentId -> !relatedStudentIds.contains(studentId))
                 .toList();
+        // Se tiver na lista studentIds IDs de estudantes que estão relacionados com a turma, mas tem relação
+        // inativa, a lista vai acabar passando e haverá um erro, pois está sendo chamado o create sendo que já
+        // existe a relação no banco que só precisa ser atualizada
 
         return unrelatedStudentIds;
     }

@@ -116,9 +116,8 @@ public class TeamService implements TeamOperations {
         newObj.setClassroom(obj.getClassroom());
         newObj.setGrade(obj.getGrade());
         newObj.setTeacher(checkTeacher(obj.getTeacher()));
+        newObj.setStudentIds(obj.getStudentIds()); // Objeto que vai vai ter estudantes mudado
 
-
-        newObj.setNumberStudents(obj.getNumberStudents());
 
 
         newObj = this.teamRepository.save(newObj);

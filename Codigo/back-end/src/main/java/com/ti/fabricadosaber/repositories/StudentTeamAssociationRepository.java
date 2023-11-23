@@ -35,6 +35,9 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.teamId = :teamId AND sta.isActive = true")
     List<StudentTeamAssociation> findAllActiveAssociationsByTeamId(@Param("teamId") Long teamId);
 
+    @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.teamId = :teamId")
+    List<StudentTeamAssociation> findAllAssociationsByTeamId(@Param("teamId") Long teamId);
+
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.studentId = :studentId AND sta.isActive = false")
     List<StudentTeamAssociation> findAllInactiveAssociationsByStudentId(@Param("studentId") Long studentId);
