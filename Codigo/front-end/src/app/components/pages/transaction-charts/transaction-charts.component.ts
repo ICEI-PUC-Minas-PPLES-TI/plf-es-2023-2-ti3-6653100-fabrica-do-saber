@@ -2,7 +2,6 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {TransactionService} from '../../../services/transaction/transaction.service';
 import {Transaction} from '../../../interfaces/Transaction';
 import {Chart, ChartConfiguration, registerables} from 'chart.js';
-
 Chart.register(...registerables);
 
 @Component({
@@ -19,6 +18,7 @@ export class TransactionChartsComponent {
   outcome!: number;
   totalBalance !: number;
   months: string[] = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+  categories: string[] = ['Pagamento aos funcionários', 'Despesas em infraestrutura', 'Marketing institucional', 'Projetos educacionais', 'Custos administrativos', 'Eventos escolares', 'Serviços de manutenção', 'Material escolar'];
 
   constructor(private transactionService: TransactionService) {
   }
@@ -68,19 +68,55 @@ export class TransactionChartsComponent {
   private generateCategoryChart(): void {
     const ctx = this.categoryChartRef.nativeElement.getContext('2d');
     const data = {
-      labels: this.months,
+      labels: this.categories,
       datasets: [
         {
-          label: 'Receitas',
-          data: this.getDataArray(this.financialFlowTypes[0]),
+          label: 'Pagamento aos funcionários',
+          data: this.getArrayDataByCategory('Pagamento aos funcionários'),
           borderColor: 'green',
           backgroundColor: 'green',
         },
         {
-          label: 'Despesas',
-          data: this.getDataArray(this.financialFlowTypes[1]),
+          label: 'Despesas em infraestrutura',
+          data: this.getArrayDataByCategory('Despesas em infraestrutura'),
           borderColor: 'red',
           backgroundColor: 'red',
+        },
+        {
+          label: 'Marketing institucional',
+          data: this.getArrayDataByCategory('Marketing institucional'),
+          borderColor: 'blue',
+          backgroundColor: 'blue',
+        },
+        {
+          label: 'Projetos educacionais',
+          data: this.getArrayDataByCategory('Projetos educacionais'),
+          borderColor: 'yellow',
+          backgroundColor: 'yellow',
+        },
+        {
+          label: 'Custos administrativos',
+          data: this.getArrayDataByCategory('Custos administrativos'),
+          borderColor: 'orange',
+          backgroundColor: 'orange',
+        },
+        {
+          label: 'Eventos escolares',
+          data: this.getArrayDataByCategory('Eventos escolares'),
+          borderColor: 'purple',
+          backgroundColor: 'purple',
+        },
+        {
+          label: 'Serviços de manutenção',
+          data: this.getArrayDataByCategory('Serviços de manutenção'),
+          borderColor: 'bronw',
+          backgroundColor: 'bronw',
+        },
+        {
+          label: 'Material escolar',
+          data: this.getArrayDataByCategory('Material escolar'),
+          borderColor: 'grey',
+          backgroundColor: 'grey',
         }
       ]
     };
@@ -96,6 +132,19 @@ export class TransactionChartsComponent {
         }
       },
     } as ChartConfiguration);
+  }
+
+  getArrayDataByCategory(category: string): number[] {
+    let total: number[] = Array.from({length: 8}, (): number => 0);
+    this.originalTransactions
+      .filter((transaction: Transaction): boolean => {
+        const transactionCategory: string = transaction.category;
+        return transactionCategory === category;
+      })
+      .forEach((transaction: Transaction): void => {
+        total[this.categories.indexOf(transaction.category)] += transaction.value;
+      });
+    return total;
   }
 
   getDataArray(financialFlowType: string): number[] {
