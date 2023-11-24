@@ -1,5 +1,5 @@
 .container-fluid {
-  height: 100vh;
+  min-height: 100%;
   background-color: var(--blue);
   background-image: url("../assets/img/bg/colorbg1.jpg");
   background-size: cover;
