@@ -24,7 +24,7 @@ public class TeamService implements TeamOperations {
     private TeacherService teacherService;
 
     @Autowired
-    @Lazy
+    //@Lazy
     private StudentService studentService;
 
     @Autowired

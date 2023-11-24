@@ -24,15 +24,15 @@ public class StudentTeamAssociationService {
     private static boolean isVacationTeam;
 
     @Autowired
-    @Lazy
+    //@Lazy
     private TeamService teamService;
 
     @Autowired
-    @Lazy
+    //@Lazy
     private StudentService studentService;
 
     @Autowired
-    @Lazy
+    //@Lazy
     private VacationTeamService vacationTeamService;
 
 

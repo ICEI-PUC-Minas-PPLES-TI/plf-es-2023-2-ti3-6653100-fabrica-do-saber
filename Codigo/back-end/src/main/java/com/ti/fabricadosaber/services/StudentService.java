@@ -23,15 +23,16 @@ public class StudentService {
     private StudentRepository studentRepository;
 
     @Autowired
-    @Lazy
-    private TeamService teamService;
-
-    @Autowired
     private ParentService parentService;
 
     @Autowired
     @Lazy
+    private TeamService teamService;
+
+    @Autowired
+    @Lazy
     private StudentTeamAssociationService studentTeamAssociationService;
+
 
 
 

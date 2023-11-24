@@ -24,7 +24,7 @@ public class VacationTeamService implements TeamOperations {
 
 
     @Autowired
-    @Lazy
+    //@Lazy
     private StudentService studentService;
 
     @Autowired
