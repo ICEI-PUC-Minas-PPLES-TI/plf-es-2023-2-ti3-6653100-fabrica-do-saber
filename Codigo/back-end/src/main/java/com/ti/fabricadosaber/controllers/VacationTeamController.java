@@ -22,7 +22,7 @@ import com.ti.fabricadosaber.models.VacationTeam;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/vacationTeam")
+@RequestMapping("/vacation-team")
 @Validated
 public class VacationTeamController {
     
