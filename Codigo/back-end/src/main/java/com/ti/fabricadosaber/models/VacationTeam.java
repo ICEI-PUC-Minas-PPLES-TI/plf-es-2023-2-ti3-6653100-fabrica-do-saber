@@ -17,11 +17,11 @@ import lombok.Setter;
 public class VacationTeam extends Team{
 
     @Column(name = "start_date", length = 10, nullable = true, updatable = true)
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate startDate;
 
     @Column(name = "end_date", length = 10, nullable = true, updatable = true)
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate endDate;
 
 

@@ -1,5 +1,7 @@
 package com.ti.fabricadosaber.services;
 
+import com.ti.fabricadosaber.dto.TeamResponseDTO;
+import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.DataException;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.*;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -24,7 +27,6 @@ public class VacationTeamService implements TeamOperations {
 
 
     @Autowired
-    //@Lazy
     private StudentService studentService;
 
     @Autowired
@@ -40,6 +42,21 @@ public class VacationTeamService implements TeamOperations {
         SecurityUtil.checkUser();
         return team;
     }
+
+
+    public VacationTeamResponseDTO findByIdDTO(Long id) {
+        VacationTeam vacationTeam = this.vacationTeamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+                "Creche de férias não encontrada! Id: " + id + ", Tipo: " + VacationTeam.class.getName()));
+        SecurityUtil.checkUser();
+
+        List<Long> studentIds = studentTeamAssociationService.findStudentIdsByVacationTeamId(id);
+
+        VacationTeamResponseDTO teamResponseDTO = convertToTeamResponseDTO(vacationTeam, studentIds);
+
+        return teamResponseDTO;
+    }
+
+
 
     public void checkDate(VacationTeam vacationTeam) {
         dataNotNull(vacationTeam);
@@ -147,6 +164,23 @@ public class VacationTeamService implements TeamOperations {
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
+    }
+
+
+    public VacationTeamResponseDTO convertToTeamResponseDTO(VacationTeam team, List<Long> studentIds) {
+
+        VacationTeamResponseDTO dto = new VacationTeamResponseDTO();
+        dto.setId(team.getId());
+        dto.setName(team.getName());
+        dto.setClassroom(team.getClassroom());
+        dto.setGrade(team.getGrade());
+        dto.setNumberStudents(team.getNumberStudents());
+        dto.setTeacherId(team.getTeacher().getId());
+        dto.setStudentIds(studentIds);
+        dto.setStartDate(team.getStartDate());
+        dto.setEndDate(team.getEndDate());
+
+        return dto;
     }
 
 

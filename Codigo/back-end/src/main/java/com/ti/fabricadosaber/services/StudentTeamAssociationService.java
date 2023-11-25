@@ -24,15 +24,12 @@ public class StudentTeamAssociationService {
     private static boolean isVacationTeam;
 
     @Autowired
-    //@Lazy
     private TeamService teamService;
 
     @Autowired
-    //@Lazy
     private StudentService studentService;
 
     @Autowired
-    //@Lazy
     private VacationTeamService vacationTeamService;
 
 
@@ -413,6 +410,17 @@ public class StudentTeamAssociationService {
     public List<Team> teamsAssociatedWithTheStudent(Student student) {
         return studentTeamAssociationRepository.findTeamsByStudentId(student.getId());
     }
+
+
+    public List<Long> findStudentIdsByTeamId(Long teamId) {
+        return studentTeamAssociationRepository.findActiveStudentIdsByTeamId(teamId);
+    }
+
+
+    public List<Long> findStudentIdsByVacationTeamId(Long vacationTeamId) {
+        return studentTeamAssociationRepository.findActiveStudentIdsByVacationTeamId(vacationTeamId);
+    }
+
 
 
 

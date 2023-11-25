@@ -3,6 +3,8 @@ package com.ti.fabricadosaber.services;
 
 import java.util.List;
 import java.util.Set;
+
+import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.models.*;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
@@ -24,7 +26,6 @@ public class TeamService implements TeamOperations {
     private TeacherService teacherService;
 
     @Autowired
-    //@Lazy
     private StudentService studentService;
 
     @Autowired
@@ -40,6 +41,20 @@ public class TeamService implements TeamOperations {
         SecurityUtil.checkUser();
         return team;
     }
+
+    public TeamResponseDTO findByIdDTO(Long id) {
+        Team team = this.teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+                "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
+        SecurityUtil.checkUser();
+
+        List<Long> studentIds = studentTeamAssociationService.findStudentIdsByTeamId(id);
+
+        TeamResponseDTO teamResponseDTO = convertToTeamResponseDTO(team, studentIds);
+
+        return teamResponseDTO;
+    }
+
+
 
     public List<Team> listAllTeams() {
         SecurityUtil.checkUser();
@@ -154,7 +169,7 @@ public class TeamService implements TeamOperations {
 
 
 
-   /* public TeamResponseDTO convertToTeamResponseDTO(Team team) {
+    public TeamResponseDTO convertToTeamResponseDTO(Team team, List<Long> studentIds) {
 
         TeamResponseDTO dto = new TeamResponseDTO();
         dto.setId(team.getId());
@@ -163,15 +178,13 @@ public class TeamService implements TeamOperations {
         dto.setGrade(team.getGrade());
         dto.setNumberStudents(team.getNumberStudents());
         dto.setTeacherId(team.getTeacher().getId());
-
-        if (team.getStudents() != null) {
-            List<Long> studentIds = team.getStudents().stream()
-                    .map(Student::getId)
-                    .collect(Collectors.toList());
-            dto.setStudentIds(studentIds);
-        }
+        dto.setStudentIds(studentIds);
 
         return dto;
-    }*/
+    }
+
+
+
+
 
 }

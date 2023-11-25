@@ -3,6 +3,7 @@ package com.ti.fabricadosaber.controllers;
 import java.net.URI;
 import java.util.List;
 
+import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.services.VacationTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,8 @@ public class VacationTeamController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<VacationTeam> findById(@PathVariable Long id) {
-        VacationTeam obj = this.vacationTeamService.findById(id);
+    public ResponseEntity<VacationTeamResponseDTO> findById(@PathVariable Long id) {
+        VacationTeamResponseDTO obj = this.vacationTeamService.findByIdDTO(id);
         return ResponseEntity.ok().body(obj);
     }
 

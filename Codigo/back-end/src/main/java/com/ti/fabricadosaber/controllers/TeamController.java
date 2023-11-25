@@ -46,8 +46,8 @@ public class TeamController {
     }*/
 
     @GetMapping("/{id}")
-    public ResponseEntity<Team> findById(@PathVariable Long id) {
-        Team obj = this.teamService.findById(id);
+    public ResponseEntity<TeamResponseDTO> findById(@PathVariable Long id) {
+        TeamResponseDTO obj = this.teamService.findByIdDTO(id);
         return ResponseEntity.ok().body(obj);
     }
 

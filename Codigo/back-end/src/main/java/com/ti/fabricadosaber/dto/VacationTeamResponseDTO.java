@@ -3,6 +3,7 @@ package com.ti.fabricadosaber.dto;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ti.fabricadosaber.enums.Grade;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,12 @@ public class VacationTeamResponseDTO {
     private Integer numberStudents;
     private List<Long> studentIds;
     private Long teacherId;
+
+
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate startDate;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate endDate;
 }
