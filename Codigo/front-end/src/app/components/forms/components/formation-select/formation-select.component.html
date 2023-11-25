@@ -1,0 +1,3 @@
+<select id="inputAcademicFormationStatus" class="form-select" (change)="onAcademicFormationStatusChange($event)" [(ngModel)]="academicFormationStatus" required >
+  <option *ngFor="let academicFormationStatus of academicFormationStatusArr" [ngValue]="academicFormationStatus.value">{{ academicFormationStatus.name }}</option>
+</select>

@@ -18,6 +18,10 @@ export class TeacherFormComponent {
     this.teacher.homeState = this.formatSelect(newState);
   }
 
+  onaAcademicFormationStatus(newStatus: string): void {
+    this.teacher.academicFormationStatus = this.formatSelect(newStatus);
+  }
+
   formatSelect(select: string): string {
     const parts: string[] = select.split(':');
     return parts[1].trim();

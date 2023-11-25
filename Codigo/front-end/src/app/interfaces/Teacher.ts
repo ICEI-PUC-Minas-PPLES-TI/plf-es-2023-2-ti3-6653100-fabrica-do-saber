@@ -17,4 +17,6 @@ export interface Teacher {
   salary: number;
   hireDate: string;
   terminationDate: string;
+  academicFormation: string;
+  academicFormationStatus: string;
 }
