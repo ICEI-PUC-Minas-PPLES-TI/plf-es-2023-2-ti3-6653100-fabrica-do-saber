@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.*;
 
 import com.ti.fabricadosaber.dto.StudentResponseDTO;
+import com.ti.fabricadosaber.dto.TeamAndVacationTeamDTO;
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
+import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.StudentTeamAssociationException;
 import com.ti.fabricadosaber.exceptions.TwoParentsException;
@@ -30,6 +32,10 @@ public class StudentService {
     @Autowired
     @Lazy
     private TeamService teamService;
+
+    @Autowired
+    @Lazy
+    private VacationTeamService vacationTeamService;
 
     @Autowired
     @Lazy
@@ -82,6 +88,8 @@ public class StudentService {
 
 
     public TeamResponseDTO findTeamActive(Long id) {
+        Student student = findById(id);
+        SecurityUtil.checkUser();
         Team team = studentTeamAssociationService.findTeamOfStudent(id);
 
         if(team == null) {
@@ -92,6 +100,57 @@ public class StudentService {
 
         return teamService.convertToTeamResponseDTO(team,studentsIds);
     }
+
+
+    public List<VacationTeamResponseDTO> findVacationTeamActive(Long id) {
+        Student student = findById(id);
+        List<VacationTeam> vacationTeams = studentTeamAssociationService.findVacationTeamOfStudent(id);
+
+        if(vacationTeams.isEmpty())
+            throw new EntityNotFoundException("O estudante não está ativo em nenhuma creche de férias");
+
+        List<VacationTeamResponseDTO> vacationTeamResponseDTOS = new ArrayList<>();
+
+        for (VacationTeam vacationTeam : vacationTeams) {
+            List<Long> studentsIds = studentTeamAssociationService.findStudentIdsByVacationTeamId(vacationTeam.getId());
+            VacationTeamResponseDTO vacationTeamResponseDTO =
+                    vacationTeamService.convertToTeamResponseDTO(vacationTeam, studentsIds);
+            vacationTeamResponseDTOS.add(vacationTeamResponseDTO);
+        }
+
+
+        return vacationTeamResponseDTOS;
+    }
+
+    public List<TeamAndVacationTeamDTO> findTeamsAndVacationTeams(Long id) {
+        Student student = findById(id);
+
+        List<Team> teams = studentTeamAssociationService.findTeamAndVacationTeamOfStudent(id);
+
+        if(teams.isEmpty()) {
+            throw new EntityNotFoundException("O Aluno de id: " + id + " não está cadastrado em nenhuma turma ou " +
+                    "creche de férias");
+        }
+
+        List<TeamAndVacationTeamDTO> teamAndVacationTeamDTOS = new ArrayList<>();
+
+        for (Team team : teams) {
+
+            List<Long> studentsIds = studentTeamAssociationService.findStudentsIdsByTeamAndVacationTeamId(team.getId());
+
+            TeamAndVacationTeamDTO teamAndVacationTeamDTO = convertToTeamsAndVacationTeamsResponseDTO(team,
+                    studentsIds);
+
+            teamAndVacationTeamDTOS.add(teamAndVacationTeamDTO);
+        }
+
+
+        return teamAndVacationTeamDTOS;
+
+    }
+
+
+
 
 
 
@@ -246,6 +305,32 @@ public class StudentService {
         dto.setHomeState(student.getHomeState());
         dto.setParents(student.getParents());
         dto.setTeamIds(teamIds);
+
+        return dto;
+    }
+
+    public TeamAndVacationTeamDTO convertToTeamsAndVacationTeamsResponseDTO(Team team, List<Long> studentIds) {
+
+        TeamAndVacationTeamDTO dto = new TeamAndVacationTeamDTO();
+        dto.setId(team.getId());
+        dto.setName(team.getName());
+        dto.setClassroom(team.getClassroom());
+        dto.setGrade(team.getGrade());
+        dto.setNumberStudents(team.getNumberStudents());
+        dto.setTeacher(team.getTeacher());
+        dto.setStudentIds(studentIds);
+
+        if(team instanceof VacationTeam) {
+            VacationTeam convertTeamForVacationTeam = (VacationTeam) team;
+            dto.setStartDate(convertTeamForVacationTeam.getStartDate());
+            dto.setEndDate(convertTeamForVacationTeam.getEndDate());
+            dto.setType("VacationTeam");
+        } else {
+            dto.setStartDate(null);
+            dto.setEndDate(null);
+            dto.setType("Team");
+        }
+
 
         return dto;
     }

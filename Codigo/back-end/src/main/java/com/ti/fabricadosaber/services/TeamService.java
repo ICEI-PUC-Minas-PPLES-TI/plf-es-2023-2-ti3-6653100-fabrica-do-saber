@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
+import com.ti.fabricadosaber.exceptions.StudentTeamAssociationException;
 import com.ti.fabricadosaber.models.*;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.services.interfaces.TeamOperations;
@@ -80,9 +81,10 @@ public class TeamService implements TeamOperations {
 
 
         public List<Student> listStudents(Long id) {
-        SecurityUtil.checkUser();
-
         Team team = findById(id);
+
+        if(team instanceof VacationTeam)
+            throw new StudentTeamAssociationException("Nenhuma turma cadastrada com id: " + id);
 
         List<Student> students = studentTeamAssociationService.findStudentsActiveOnTeam(id);
 

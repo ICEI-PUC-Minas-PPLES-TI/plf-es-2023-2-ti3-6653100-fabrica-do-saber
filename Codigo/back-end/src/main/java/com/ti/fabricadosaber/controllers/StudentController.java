@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.ti.fabricadosaber.dto.StudentResponseDTO;
+import com.ti.fabricadosaber.dto.TeamAndVacationTeamDTO;
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
+import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.models.Parent;
 import com.ti.fabricadosaber.models.VacationTeam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,19 @@ public class StudentController {
         return ResponseEntity.ok().body(obj);
     }
 
+
+    @GetMapping("/{id}/active-vacation-teams")
+    public ResponseEntity<List<VacationTeamResponseDTO>> findVacationTeamActive(@PathVariable Long id) {
+        List<VacationTeamResponseDTO> obj = this.studentService.findVacationTeamActive(id);
+        return ResponseEntity.ok().body(obj);
+    }
+
+
+    @GetMapping("/{id}/active-all-teams")
+    public ResponseEntity<List<TeamAndVacationTeamDTO>> findTeamsActive(@PathVariable Long id) {
+        List<TeamAndVacationTeamDTO> obj = this.studentService.findTeamsAndVacationTeams(id);
+        return ResponseEntity.ok().body(obj);
+    }
 
     @GetMapping("/{id}/responsibles")
     public ResponseEntity<Set<Parent>> listParents(@PathVariable Long id) {

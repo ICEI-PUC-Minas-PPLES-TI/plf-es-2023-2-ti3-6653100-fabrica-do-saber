@@ -20,9 +20,10 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
 
     List<StudentTeamAssociation> findByTeamAndIsActive(Team team, boolean isActive);
 
-    // Achar IDs de estudante de uma turma
+
     @Query("SELECT sta.id.studentId FROM StudentTeamAssociation sta JOIN Team t ON sta.id.teamId = t.id WHERE t.id = :teamId AND TYPE(t) = Team AND sta.isActive = true")
     List<Long> findActiveStudentIdsByTeamId(@Param("teamId") Long teamId);
+
 
     @Query("SELECT t FROM StudentTeamAssociation sta " +
             "JOIN Team t ON sta.team.id = t.id " +
@@ -30,11 +31,18 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
     List<Team> findActiveTeamsByStudentId(@Param("studentId") Long studentId);
 
 
-    //Retornar o único Team ativo
+
     @Query("SELECT t FROM StudentTeamAssociation sta " +
             "JOIN Team t ON sta.team.id = t.id " +
             "WHERE sta.id.studentId = :studentId AND sta.isActive = true AND TYPE(t) = Team")
     Team findActiveTeamByStudentId(@Param("studentId") Long studentId);
+
+
+
+    @Query("SELECT t FROM StudentTeamAssociation sta " +
+            "JOIN Team t ON sta.team.id = t.id " +
+            "WHERE sta.id.studentId = :studentId AND sta.isActive = true AND TYPE(t) = VacationTeam")
+    List<VacationTeam> findActiveVacationTeamByStudentId(@Param("studentId") Long studentId);
 
 
 
@@ -49,6 +57,11 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
     @Query("SELECT sta.id.studentId FROM StudentTeamAssociation sta JOIN Team t ON sta.id.teamId = t.id WHERE t.id = " +
             ":teamId AND TYPE(t) = VacationTeam AND sta.isActive = true")
     List<Long> findActiveStudentIdsByVacationTeamId(@Param("teamId") Long teamId);
+
+    @Query("SELECT sta.id.studentId FROM StudentTeamAssociation sta " +
+            "JOIN Team t ON sta.id.teamId = t.id " +
+            "WHERE t.id = :teamId AND sta.isActive = true")
+    List<Long> findActiveStudentIdsByTeamIdAndType(@Param("teamId") Long teamId);
 
 
 
@@ -71,6 +84,12 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
             "JOIN Team t ON sta.team.id = t.id " +
             "WHERE t.id = :teamId AND TYPE(t) = Team AND sta.isActive = true")
     List<Student> findActiveStudentsByTeamId(@Param("teamId") Long teamId);
+
+    @Query("SELECT sta.student FROM StudentTeamAssociation sta " +
+            "JOIN Team t ON sta.team.id = t.id " +
+            "WHERE t.id = :teamId AND TYPE(t) = VacationTeam AND sta.isActive = true")
+    List<Student> findActiveStudentsByVacationTeamId(@Param("teamId") Long teamId);
+
 
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.teamId = :teamId")

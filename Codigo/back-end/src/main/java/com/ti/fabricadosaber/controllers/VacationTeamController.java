@@ -3,6 +3,7 @@ package com.ti.fabricadosaber.controllers;
 import java.net.URI;
 import java.util.List;
 
+import com.ti.fabricadosaber.dto.StudentResponseDTO;
 import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.services.VacationTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +38,11 @@ public class VacationTeamController {
     }
 
 
-   /*  @GetMapping
-    public ResponseEntity<List<VacationTeam>> listAll() {
-        List<VacationTeam> vacationTeamList = this.vacationTeamService.listAllVacationTeams();
-        return ResponseEntity.ok().body(vacationTeamList);
-    }*/
+     @GetMapping("/{id}/students")
+    public ResponseEntity<List<StudentResponseDTO>> listStudents(@PathVariable Long id) {
+        List<StudentResponseDTO> studentList = this.vacationTeamService.listStudents(id);
+        return ResponseEntity.ok().body(studentList);
+    }
 
 
     @PostMapping
