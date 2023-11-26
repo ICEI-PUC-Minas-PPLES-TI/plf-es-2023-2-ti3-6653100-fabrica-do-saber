@@ -13,18 +13,10 @@ public enum FinancialFlowType {
         this.flow = flow;
     }
 
-    @JsonValue
+
     public String getFlowType() {
         return flow;
     }
 
-    @JsonCreator
-    public static FinancialFlowType recoverFlow(String text) {
-        for (FinancialFlowType flow : FinancialFlowType.values()) {
-            if (flow.toString().equalsIgnoreCase(text)) {
-                return flow;
-            }
-        }
-        throw new IllegalArgumentException("Fluxo financeiro inválido: " + text);
-    }
+
 }

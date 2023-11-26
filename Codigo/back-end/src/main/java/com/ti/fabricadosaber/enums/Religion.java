@@ -19,19 +19,9 @@ public enum Religion {
             this.name = name;
         }
 
-        @JsonValue
+
         public String getName() {
             return name;
         }
 
-        @JsonCreator
-        public static Religion recoverReligion(String name){
-
-            for(Religion religion : values()){
-                if (religion.getName().equalsIgnoreCase(name)) {
-                    return religion;
-                }
-            }
-            throw new IllegalArgumentException("Religião não encontrada: "+name);
-        }
 }

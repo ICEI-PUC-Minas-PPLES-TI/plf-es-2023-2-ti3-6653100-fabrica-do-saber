@@ -41,19 +41,9 @@ public enum State {
         this.name = name;
     }
 
-    @JsonValue
+
     public String getName() {
         return name;
     }
 
-    @JsonCreator
-    public static State recoverState(String name){
-
-        for(State state : values()){
-            if (state.getName().equalsIgnoreCase(name)) {
-                return state;
-            }
-        }
-        throw new IllegalArgumentException("Estado invalido: "+name);
-    }
 }
