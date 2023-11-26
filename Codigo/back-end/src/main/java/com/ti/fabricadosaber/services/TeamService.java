@@ -1,6 +1,7 @@
 package com.ti.fabricadosaber.services;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -43,8 +44,8 @@ public class TeamService implements TeamOperations {
     }
 
     public TeamResponseDTO findByIdDTO(Long id) {
-        Team team = this.teamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
-                "Turma não encontrada! Id: " + id + ", Tipo: " + Team.class.getName()));
+        Team team = findById(id);
+
         SecurityUtil.checkUser();
 
         List<Long> studentIds = studentTeamAssociationService.findStudentIdsByTeamId(id);
@@ -56,30 +57,41 @@ public class TeamService implements TeamOperations {
 
 
 
-    public List<Team> listAllTeams() {
+    public List<TeamResponseDTO> listAllTeams() {
         SecurityUtil.checkUser();
 
-        List<Team> team = this.teamRepository.findAll();
-        if (team.isEmpty()) {
+        List<Team> teams = this.teamRepository.findAllTeams();
+        List<TeamResponseDTO> teamDTO = new ArrayList<>();
+
+        for (Team team : teams) {
+            List<Long> studentIds = studentTeamAssociationService.findStudentIdsByTeamId(team.getId());
+            TeamResponseDTO teamResponseDTO = convertToTeamResponseDTO(team, studentIds);
+            teamDTO.add(teamResponseDTO);
+        }
+
+        if (teamDTO.isEmpty()) {
             throw new EntityNotFoundException("Nenhuma turma cadastrada");
         }
-        return team;
-    }
 
-    public List<Team> findAll() {
-        return teamRepository.findAll();
+        return teamDTO;
     }
 
 
 
-    /*    public List<Student> listStudents(Long id) {
+
+        public List<Student> listStudents(Long id) {
         SecurityUtil.checkUser();
 
-        Team team = teamRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Turma com o id " + id + " não encontrada."));
+        Team team = findById(id);
 
-        return team.getStudents();
-    }*/
+        List<Student> students = studentTeamAssociationService.findStudentsActiveOnTeam(id);
+
+        if(students.isEmpty()) {
+            throw new EntityNotFoundException("Nenhum aluno está ativo na turma");
+        }
+
+        return students;
+    }
 
 
 

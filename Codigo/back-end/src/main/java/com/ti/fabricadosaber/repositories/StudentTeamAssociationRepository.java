@@ -20,8 +20,30 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
 
     List<StudentTeamAssociation> findByTeamAndIsActive(Team team, boolean isActive);
 
+    // Achar IDs de estudante de uma turma
     @Query("SELECT sta.id.studentId FROM StudentTeamAssociation sta JOIN Team t ON sta.id.teamId = t.id WHERE t.id = :teamId AND TYPE(t) = Team AND sta.isActive = true")
     List<Long> findActiveStudentIdsByTeamId(@Param("teamId") Long teamId);
+
+    @Query("SELECT t FROM StudentTeamAssociation sta " +
+            "JOIN Team t ON sta.team.id = t.id " +
+            "WHERE sta.id.studentId = :studentId AND sta.isActive = true")
+    List<Team> findActiveTeamsByStudentId(@Param("studentId") Long studentId);
+
+
+    //Retornar o único Team ativo
+    @Query("SELECT t FROM StudentTeamAssociation sta " +
+            "JOIN Team t ON sta.team.id = t.id " +
+            "WHERE sta.id.studentId = :studentId AND sta.isActive = true AND TYPE(t) = Team")
+    Team findActiveTeamByStudentId(@Param("studentId") Long studentId);
+
+
+
+    //Ids dos Team e VacationTeam
+    @Query("SELECT t.id FROM StudentTeamAssociation sta " +
+            "JOIN Team t ON sta.team.id = t.id " +
+            "WHERE sta.id.studentId = :studentId AND sta.isActive = true")
+    List<Long> findActiveTeamIdsByStudentId(@Param("studentId") Long studentId);
+
 
 
     @Query("SELECT sta.id.studentId FROM StudentTeamAssociation sta JOIN Team t ON sta.id.teamId = t.id WHERE t.id = " +
@@ -44,6 +66,12 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.teamId = :teamId AND sta.isActive = true")
     List<StudentTeamAssociation> findAllActiveAssociationsByTeamId(@Param("teamId") Long teamId);
+
+    @Query("SELECT sta.student FROM StudentTeamAssociation sta " +
+            "JOIN Team t ON sta.team.id = t.id " +
+            "WHERE t.id = :teamId AND TYPE(t) = Team AND sta.isActive = true")
+    List<Student> findActiveStudentsByTeamId(@Param("teamId") Long teamId);
+
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.teamId = :teamId")
     List<StudentTeamAssociation> findAllAssociationsByTeamId(@Param("teamId") Long teamId);

@@ -19,19 +19,10 @@ public enum Category {
         this.description = description;
     }
 
-    @JsonValue
+
     public String getDescription() {
         return description;
     }
 
-    @JsonCreator
-    public static Category recoverCategory(String description) {
-        for (Category category : Category.values()) {
-            if (category.getDescription().equals(description)) {
-                return category;
-            }
-        }
-        throw new IllegalArgumentException("Categoria desconhecida " + description);
-    }
 }
 

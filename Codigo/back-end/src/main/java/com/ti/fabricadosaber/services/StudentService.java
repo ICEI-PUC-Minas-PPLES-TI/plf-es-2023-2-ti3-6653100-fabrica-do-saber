@@ -3,6 +3,8 @@ package com.ti.fabricadosaber.services;
 import java.time.LocalDate;
 import java.util.*;
 
+import com.ti.fabricadosaber.dto.StudentResponseDTO;
+import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.StudentTeamAssociationException;
 import com.ti.fabricadosaber.exceptions.TwoParentsException;
@@ -46,16 +48,54 @@ public class StudentService {
         return student;
     }
 
+    public StudentResponseDTO findByIdDTO(Long id) {
+        Student student = findById(id);
 
-    public List<Student> listAllStudents() {
+        SecurityUtil.checkUser();
+
+        List<Long> teamId = studentTeamAssociationService.findTeamsAndVacationTeams(id);
+
+
+        StudentResponseDTO studentResponseDTO = convertToStudentResponseDTO(student, teamId);
+
+        return studentResponseDTO;
+    }
+
+
+    public List<StudentResponseDTO> listAllStudents() {
         SecurityUtil.checkUser();
 
         List<Student> students = this.studentRepository.findAll();
-        if (students.isEmpty()) {
+        List<StudentResponseDTO> studentResponseDTOS = new ArrayList<>();
+
+        if(students.isEmpty())
             throw new EntityNotFoundException("Nenhum estudante cadastrado");
+
+        for (Student student : students) {
+            List<Long> teamId = studentTeamAssociationService.findTeamsAndVacationTeams(student.getId());
+            StudentResponseDTO studentResponseDTO = convertToStudentResponseDTO(student, teamId);
+            studentResponseDTOS.add(studentResponseDTO);
         }
-        return students;
+
+        return studentResponseDTOS;
     }
+
+
+    public TeamResponseDTO findTeamActive(Long id) {
+        Team team = studentTeamAssociationService.findTeamOfStudent(id);
+
+        if(team == null) {
+            throw new EntityNotFoundException("O estudante não está ativo em nenhuma turma");
+        }
+
+        List<Long> studentsIds = studentTeamAssociationService.findStudentIdsByTeamId(team.getId());
+
+        return teamService.convertToTeamResponseDTO(team,studentsIds);
+    }
+
+
+
+
 
     public Set<Parent> listParents(Long id) {
         SecurityUtil.checkUser();
@@ -192,6 +232,22 @@ public class StudentService {
         for (Team team : teamsAssociated) {
             teamService.updateTeamStudentCount(team, team.getNumberStudents() - 1);
         }
+    }
+
+
+    public StudentResponseDTO convertToStudentResponseDTO(Student student, List<Long> teamIds) {
+
+        StudentResponseDTO dto = new StudentResponseDTO();
+        dto.setId(student.getId());
+        dto.setHometown(student.getHometown());
+        dto.setRace(student.getRace());
+        dto.setNationality(student.getNationality());
+        dto.setReligion(student.getReligion());
+        dto.setHomeState(student.getHomeState());
+        dto.setParents(student.getParents());
+        dto.setTeamIds(teamIds);
+
+        return dto;
     }
 
 

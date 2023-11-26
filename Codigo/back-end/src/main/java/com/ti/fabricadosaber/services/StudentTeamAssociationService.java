@@ -445,13 +445,23 @@ public class StudentTeamAssociationService {
         return studentTeamAssociationRepository.findActiveStudentIdsByTeamId(teamId);
     }
 
+    public List<Long> findTeamsAndVacationTeams(Long studentId) {
+        return studentTeamAssociationRepository.findActiveTeamIdsByStudentId(studentId);
+    }
+
 
     public List<Long> findStudentIdsByVacationTeamId(Long vacationTeamId) {
         return studentTeamAssociationRepository.findActiveStudentIdsByVacationTeamId(vacationTeamId);
     }
 
+    public Team findTeamOfStudent(Long studentId) {
+        return studentTeamAssociationRepository.findActiveTeamByStudentId(studentId);
+    }
 
 
+    public List<Student> findStudentsActiveOnTeam(Long teamId) {
+        return studentTeamAssociationRepository.findActiveStudentsByTeamId(teamId);
+    }
 
 
 }

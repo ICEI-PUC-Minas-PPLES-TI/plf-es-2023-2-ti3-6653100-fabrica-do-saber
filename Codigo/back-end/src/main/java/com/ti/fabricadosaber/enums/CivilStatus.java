@@ -14,18 +14,9 @@ public enum CivilStatus {
         this.civilStatus = civilStatus;
     }
 
-    @JsonValue
+
     public String getCivilStatus() {
         return civilStatus;
     }
 
-    @JsonCreator
-    public static CivilStatus recoverCivilStatus(String text) {
-        for (CivilStatus guard : CivilStatus.values()) {
-            if (guard.getCivilStatus().equalsIgnoreCase(text)) {
-                return guard;
-            }
-        }
-        throw new IllegalArgumentException("Relação inválida: " + text);
-    }
 }

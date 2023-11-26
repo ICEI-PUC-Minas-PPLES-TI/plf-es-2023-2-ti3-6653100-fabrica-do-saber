@@ -28,6 +28,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/team")
 @Validated
 public class TeamController {
+
     @Autowired
     private TeamService teamService;
 
@@ -52,23 +53,18 @@ public class TeamController {
     }
 
 
-/*    @GetMapping
+    @GetMapping
     public ResponseEntity<List<TeamResponseDTO>> listAllTeams() {
-        List<Team> teams = this.teamService.listAllTeams();
-
-        List<TeamResponseDTO> teamResponseDTOs = teams.stream()
-                .map(this.teamService::convertToTeamResponseDTO)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok().body(teamResponseDTOs);
-    }*/
+        List<TeamResponseDTO> teams = this.teamService.listAllTeams();
+        return ResponseEntity.ok().body(teams);
+    }
 
 
-  /*  @GetMapping("/{id}/students")
+    @GetMapping("/{id}/students")
     public ResponseEntity<List<Student>> listStudents(@PathVariable Long id) {
         List<Student> students = this.teamService.listStudents(id);
         return ResponseEntity.ok().body(students);
-    }*/
+    }
 
 
     @PostMapping
