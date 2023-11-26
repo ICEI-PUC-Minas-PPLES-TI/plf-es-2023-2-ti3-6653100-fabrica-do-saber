@@ -2,6 +2,7 @@ package com.ti.fabricadosaber.dto;
 
 import com.ti.fabricadosaber.enums.Race;
 import com.ti.fabricadosaber.enums.Religion;
+import com.ti.fabricadosaber.enums.State;
 import com.ti.fabricadosaber.models.Parent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class StudentResponseDTO {
     private String hometown;
     private String nationality;
     private Race race;
+    private State homeState;
     private Religion religion;
     private Set<Parent> parents;
 }

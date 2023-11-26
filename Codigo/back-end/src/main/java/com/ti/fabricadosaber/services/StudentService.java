@@ -243,6 +243,7 @@ public class StudentService {
         dto.setRace(student.getRace());
         dto.setNationality(student.getNationality());
         dto.setReligion(student.getReligion());
+        dto.setHomeState(student.getHomeState());
         dto.setParents(student.getParents());
         dto.setTeamIds(teamIds);
 
