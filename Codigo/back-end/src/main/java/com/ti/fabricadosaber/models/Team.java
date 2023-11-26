@@ -1,8 +1,7 @@
 package com.ti.fabricadosaber.models;
 
-import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.util.HashSet;
+import java.util.Set;
 import com.ti.fabricadosaber.enums.Grade;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Team")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("team")
+@Table(name = "team")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -25,6 +27,9 @@ public class Team {
 	@Column(name = "id", unique = true)
     private Long id;
 
+    @Transient
+    private Set<Long> studentIds = new HashSet<>();
+
     @Column(name = "name", nullable = false, updatable = true)
     private String name;
 
@@ -35,14 +40,11 @@ public class Team {
     @Column(name = "number_students", nullable = true, updatable = true)
     private Integer numberStudents;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Student> students;
-
     @Column(name = "classroom", length = 45, nullable = false, updatable = true)
     private String classroom;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JoinColumn(name = "teacher_id")
-    private Teacher teacher; 
+    private Teacher teacher;
+
 }

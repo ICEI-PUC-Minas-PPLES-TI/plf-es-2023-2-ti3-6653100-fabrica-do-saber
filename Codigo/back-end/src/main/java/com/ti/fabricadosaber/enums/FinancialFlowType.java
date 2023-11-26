@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum FinancialFlowType {
-
     INPUT("Entrada"),
     OUTPUT("Saída");
 
@@ -22,7 +21,7 @@ public enum FinancialFlowType {
     @JsonCreator
     public static FinancialFlowType recoverFlow(String text) {
         for (FinancialFlowType flow : FinancialFlowType.values()) {
-            if (flow.getFlowType().equalsIgnoreCase(text)) {
+            if (flow.toString().equalsIgnoreCase(text)) {
                 return flow;
             }
         }

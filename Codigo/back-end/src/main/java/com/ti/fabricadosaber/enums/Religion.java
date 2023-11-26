@@ -1,5 +1,8 @@
 package com.ti.fabricadosaber.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Religion {
         CANDOMBLE("Candomblé"),
         CATOLICISMO("Catolicismo"),
@@ -16,10 +19,12 @@ public enum Religion {
             this.name = name;
         }
 
+        @JsonValue
         public String getName() {
             return name;
         }
 
+        @JsonCreator
         public static Religion recoverReligion(String name){
 
             for(Religion religion : values()){

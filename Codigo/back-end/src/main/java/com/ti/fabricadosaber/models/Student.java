@@ -1,12 +1,10 @@
 package com.ti.fabricadosaber.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ti.fabricadosaber.enums.Race;
+import java.util.HashSet;
 import java.util.Set;
 import com.ti.fabricadosaber.enums.Religion;
-import com.ti.fabricadosaber.enums.State;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -24,6 +22,7 @@ import lombok.Setter;
 @AttributeOverride(name = "phoneNumber", column = @Column(nullable = true))
 @AttributeOverride(name = "rg", column = @Column(nullable = true))
 @AttributeOverride(name = "email", column = @Column(nullable = true))
+@AttributeOverride(name = "registrationDate", column = @Column(nullable = true))
 public class Student extends Person {
 
 	public static final String TABLE_NAME = "student";
@@ -33,10 +32,8 @@ public class Student extends Person {
 	@Column(name = "id", unique = true)
 	private Long id;
 
-	@JsonIdentityReference(alwaysAsId = true)
-	@ManyToOne
-	@JoinColumn(name = "team_id", nullable = true, updatable = true)
-	private Team team;
+	@Transient
+	private Set<Long> teamIds = new HashSet<>();
 
 	@Column(name = "hometown", length = 45, nullable = false, updatable = true)
 	@NotBlank

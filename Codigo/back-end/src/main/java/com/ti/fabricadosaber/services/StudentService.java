@@ -1,11 +1,12 @@
 package com.ti.fabricadosaber.services;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
-import com.ti.fabricadosaber.components.StudentTeamOperation;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
-import com.ti.fabricadosaber.models.Parent;
+import com.ti.fabricadosaber.exceptions.StudentTeamAssociationException;
+import com.ti.fabricadosaber.exceptions.TwoParentsException;
+import com.ti.fabricadosaber.models.*;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
 import jakarta.transaction.Transactional;
@@ -13,11 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import com.ti.fabricadosaber.models.Student;
-import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.repositories.StudentRepository;
-
-import java.util.Set;
 
 @Service
 public class StudentService {
@@ -26,11 +23,18 @@ public class StudentService {
     private StudentRepository studentRepository;
 
     @Autowired
+    private ParentService parentService;
+
+    @Autowired
     @Lazy
     private TeamService teamService;
 
     @Autowired
-    private StudentTeamOperation studentTeamOperation;
+    @Lazy
+    private StudentTeamAssociationService studentTeamAssociationService;
+
+
+
 
     public Student findById(Long id) {
         SecurityUtil.checkUser();
@@ -41,6 +45,7 @@ public class StudentService {
 
         return student;
     }
+
 
     public List<Student> listAllStudents() {
         SecurityUtil.checkUser();
@@ -61,54 +66,112 @@ public class StudentService {
         return student.getParents();
     }
 
+
+
     @Transactional
     public Student create(Student obj) {
         SecurityUtil.checkUser();
+        exceptionsOfStudentOnTeam(obj);
 
-        this.studentTeamOperation.twoParents(obj);
-
-        Team team = this.teamService.findById(obj.getTeam().getId());
+        twoParents(obj);
         obj.setId(null);
-        obj.setTeam(team);
-        Set<Parent> parents = studentTeamOperation.saveParents(obj);
+
+        Set<Parent> parents = saveParents(obj);
         obj.setParents(parents);
         obj.setRegistrationDate(LocalDate.now());
 
-        Student createdStudent = studentRepository.save(obj);
-        this.teamService.updateTeamStudentCount(team);
+       Student createdStudent = studentRepository.save(obj);
+
+        enrollStudent(createdStudent);
 
         return createdStudent;
     }
 
 
-    public Student update(Student obj) {
-        this.studentTeamOperation.twoParents(obj);
+    public void enrollStudent(Student obj) {
 
-        Student newObj = findById(obj.getId());
-        String[] ignoreProperties = { "id", "registrationDate", "parents", "team"};
+        Set<Long> teamIds = obj.getTeamIds();
 
-        BeanUtils.copyProperties(obj, newObj, ignoreProperties);
+        for (Long teamId : teamIds) {
 
-        Team oldTeam = newObj.getTeam();
-        Team newTeam = this.teamService.findById(obj.getTeam().getId());
+            Team existingTeam = teamService.findById(teamId);
 
-        updateOldTeam(oldTeam, newTeam, newObj);
-
-        Set<Parent> updatedParents = this.studentTeamOperation.saveParents(obj);
-        newObj.setParents(updatedParents);
-        newObj.setRegistrationDate(LocalDate.now());
-        newObj.setTeam(newTeam);
-
-        newTeam.getStudents().add(newObj);
-        this.teamService.updateTeamStudentCount(newTeam);
-
-        return studentRepository.save(newObj);
+            studentTeamAssociationService.enrollStudentOnTeam(new StudentTeamAssociation(obj, existingTeam),
+            true);
+        }
     }
 
-    public void updateOldTeam(Team oldTeam, Team newTeam, Student newObj) {
-        if (oldTeam != null && !oldTeam.equals(newTeam)) {
-            oldTeam.getStudents().remove(newObj);
-            this.teamService.updateTeamStudentCount(oldTeam);
+    public void exceptionsOfStudentOnTeam(Student obj) {
+        Set<Long> teamIds = obj.getTeamIds();
+        int countTeam = 0;
+
+        for (Long teamId : teamIds) {
+            Team existingTeam = teamService.findById(teamId);
+
+            if(!(existingTeam instanceof VacationTeam))
+                countTeam++;
+
+        }
+
+        if(countTeam > 1)
+            throw new StudentTeamAssociationException("O estudante só pode se matricular em uma turma por vez");
+    }
+
+
+    @Transactional
+    public Student update(Student obj) {
+        twoParents(obj);
+
+        Student newObj = findById(obj.getId());
+        exceptionsOfStudentOnTeam(obj);
+
+        String[] ignoreProperties = { "id", "registrationDate", "parents"};
+        BeanUtils.copyProperties(obj, newObj, ignoreProperties);
+
+        Set<Parent> updatedParents = saveParents(obj);
+        newObj.setParents(updatedParents);
+        newObj.setRegistrationDate(LocalDate.now());
+
+        //persistir o objeto atualizado no BD
+        Student saveStudent = studentRepository.save(newObj);
+
+        // Lidar com a relação
+        updateStudentOnTeam(saveStudent);
+
+        return saveStudent;
+    }
+
+    private void updateStudentOnTeam(Student student) {
+        studentTeamAssociationService.updateStudentOnAssociation(student.getTeamIds(), student);
+    }
+
+
+
+    public Set<Parent> saveParents(Student obj) {
+        String[] ignoreProperties = { "id", "registrationDate", "cpf"};
+        Set<Parent> parents = new HashSet<>();
+
+        Parent currentParent;
+        for (Parent parent : obj.getParents()) {
+            String cpfParent = parent.getCpf();
+
+            if (parentService.existsByCpf(cpfParent)) {
+                currentParent = this.parentService.findByCpf(cpfParent);
+                BeanUtils.copyProperties(parent, currentParent, ignoreProperties);
+                currentParent = this.parentService.update(currentParent);
+            } else {
+                currentParent = parentService.create(parent);
+            }
+            parents.add(currentParent);
+        }
+
+        return parents;
+    }
+
+
+    public void twoParents(Student obj) {
+        if (obj.getParents().size() != 2) {
+            throw new TwoParentsException("O estudante deve ter dois responsáveis.");
         }
     }
 
@@ -116,10 +179,20 @@ public class StudentService {
     public void delete(Long id) {
         Student student = findById(id);
         try {
+            updateNumberStudentsAfterStudentDeletion(student);
             this.studentRepository.delete(student);
-            this.teamService.updateStudent(student);
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
+
+
+    public void updateNumberStudentsAfterStudentDeletion(Student student) {
+        List<Team> teamsAssociated = studentTeamAssociationService.teamsAssociatedWithTheStudent(student);
+        for (Team team : teamsAssociated) {
+            teamService.updateTeamStudentCount(team, team.getNumberStudents() - 1);
+        }
+    }
+
+
 }

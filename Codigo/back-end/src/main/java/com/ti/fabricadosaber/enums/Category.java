@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Category {
-
     PAYROLL("Pagamento aos funcionários"),
     INFRASTRUCTURE_EXPENSE("Despesas em infraestrutura"),
     INSTITUTIONAL_MARKETING("Marketing institucional"),
@@ -35,3 +34,4 @@ public enum Category {
         throw new IllegalArgumentException("Categoria desconhecida " + description);
     }
 }
+

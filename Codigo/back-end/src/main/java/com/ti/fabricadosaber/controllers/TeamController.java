@@ -3,7 +3,6 @@ package com.ti.fabricadosaber.controllers;
 import java.net.URI;
 import java.util.List;
 
-import com.ti.fabricadosaber.components.StudentTeamOperation;
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,11 +31,9 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
-    @Autowired
-    StudentTeamOperation studentOperationComponent;
 
 
-    @GetMapping("/{id}")
+/*    @GetMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> findById(@PathVariable Long id) {
         Team team = teamService.findById(id);
 
@@ -46,10 +43,16 @@ public class TeamController {
         TeamResponseDTO teamResponseDTO = this.teamService.convertToTeamResponseDTO(team);
 
         return ResponseEntity.ok(teamResponseDTO);
+    }*/
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TeamResponseDTO> findById(@PathVariable Long id) {
+        TeamResponseDTO obj = this.teamService.findByIdDTO(id);
+        return ResponseEntity.ok().body(obj);
     }
 
 
-    @GetMapping
+/*    @GetMapping
     public ResponseEntity<List<TeamResponseDTO>> listAllTeams() {
         List<Team> teams = this.teamService.listAllTeams();
 
@@ -58,14 +61,14 @@ public class TeamController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok().body(teamResponseDTOs);
-    }
+    }*/
 
 
-    @GetMapping("/{id}/students")
+  /*  @GetMapping("/{id}/students")
     public ResponseEntity<List<Student>> listStudents(@PathVariable Long id) {
         List<Student> students = this.teamService.listStudents(id);
         return ResponseEntity.ok().body(students);
-    }
+    }*/
 
 
     @PostMapping
@@ -87,11 +90,11 @@ public class TeamController {
     }
 
 
-    @DeleteMapping("/{teamId}/delete-students")
+ /*   @DeleteMapping("/{teamId}/delete-students")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long teamId, @RequestBody List<Long> studentIds) {
         this.teamService.deleteStudentFromTeam(teamId, studentIds);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 
 
     @DeleteMapping("/{id}")
