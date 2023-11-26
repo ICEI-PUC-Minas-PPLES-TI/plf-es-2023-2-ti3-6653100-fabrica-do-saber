@@ -169,9 +169,20 @@ public class StudentTeamAssociationService {
         List<Long> studentIdsList = (studentIds != null) ?
                 new ArrayList<>(studentIds) : Collections.emptyList();
 
-
+        checkNullOrEmpty(studentIdsList, team);
         // Desativar todas as relações que existem no banco de dados mas não existem na lista
         disableById(studentIdsList, team);
+
+        if(studentIds == null || studentIds.isEmpty()) {
+            if (isVacationTeam) {
+                VacationTeam convertTeam = (VacationTeam) team;
+                vacationTeamService.updateTeamStudentCount(convertTeam,
+                        studentTeamAssociationRepository.countByTeamAndIsActiveIsTrue(convertTeam));
+            } else {
+                teamService.updateTeamStudentCount(team,
+                        studentTeamAssociationRepository.countByTeamAndIsActiveIsTrue(team));
+            }
+        }
 
         if(!studentIdsList.isEmpty()) {
 
@@ -211,6 +222,20 @@ public class StudentTeamAssociationService {
             }
         }
 
+    }
+
+    public void checkNullOrEmpty(List<Long> studentIds, Team team) {
+
+        if(studentIds == null || studentIds.isEmpty()) {
+            if (isVacationTeam) {
+                VacationTeam convertTeam = (VacationTeam) team;
+                vacationTeamService.updateTeamStudentCount(convertTeam,
+                        studentTeamAssociationRepository.countByTeamAndIsActiveIsTrue(convertTeam));
+            } else {
+                teamService.updateTeamStudentCount(team,
+                        studentTeamAssociationRepository.countByTeamAndIsActiveIsTrue(team));
+            }
+        }
     }
 
     // Precisa garantir que ...
@@ -312,6 +337,8 @@ public class StudentTeamAssociationService {
 
     // Associações que não estão na lista serão desativadas
     public void disableById(List<Long> studentIds, Team team) {
+
+        boolean isVacationTeam = teamIsVacationTeam(team);
         List<StudentTeamAssociation> existingAssociations =
                 studentTeamAssociationRepository.findAllActiveAssociationsByTeamId(team.getId());
 
@@ -324,8 +351,10 @@ public class StudentTeamAssociationService {
             }
         }
 
+
         studentTeamAssociationRepository.saveAll(existingAssociations);
     }
+
 
 
     public void disableById(List<Long> teamIds, Student student) {
