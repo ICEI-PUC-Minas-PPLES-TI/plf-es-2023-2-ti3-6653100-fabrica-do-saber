@@ -63,13 +63,6 @@ public class VacationTeamController {
     }
 
 
-/*    @DeleteMapping("/{vacationTeamId}/delete-students")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long vacationTeamId, @RequestBody List<Long> studentIds) {
-        
-        //this.vacationTeamService.deleteStudentFromVacationTeam(vacationTeamId, studentIds);
-        return ResponseEntity.noContent().build();
-    }*/
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

@@ -9,7 +9,6 @@ import com.ti.fabricadosaber.models.VacationTeam;
 import com.ti.fabricadosaber.repositories.StudentTeamAssociationRepository;
 import com.ti.fabricadosaber.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
