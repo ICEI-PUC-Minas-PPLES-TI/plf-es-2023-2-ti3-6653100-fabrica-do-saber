@@ -32,7 +32,7 @@
         [type]="'submit'"
         [class]="'btn btn-primary'"
         [innerHtml]="'Cadastrar nova creche de férias'"
-        [routerLink]="'/team-create'"
+        [routerLink]="'/vacation-team-create'"
       ></app-btn-custom>
     </div>
 
@@ -70,7 +70,7 @@
             <span class="black">{{ vacationTeam.grade }}</span><br>
           </td>
           <td>
-            <span class="black">{{ vacationTeam.numberStudents }}</span><br>
+            <span class="black">{{ vacationTeam.numberStudents ? vacationTeam.numberStudents : '0' }}</span><br>
           </td>
           <td>
             <span class="black">{{ vacationTeam.classroom }}</span><br>

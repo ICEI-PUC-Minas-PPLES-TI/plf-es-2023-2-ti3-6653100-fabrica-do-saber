@@ -4,6 +4,7 @@ import { TeacherService } from '../../../services/teacher/teacher.service';
 import { forkJoin, Observable } from 'rxjs';
 import { VacationTeamService } from '../../../services/vacation-team/vacation-team.service';
 import { VacationTeam } from '../../../interfaces/Vacation-team';
+import { Team } from '../../../interfaces/Team';
 
 @Component({
   selector: 'app-vacation-team-list',
@@ -71,10 +72,11 @@ export class VacationTeamListComponent {
     }
   }
 
-  deleteTeam(id: any): void {
+  deleteTeam(team: VacationTeam): void {
+    const teamId: number = <number>team.id;
     let op: boolean = confirm('Deseja deletar a creche de férias?');
     if (op)
-      this.vacationTeamService.deleteVacationTeam(id).subscribe((): void => {
+      this.vacationTeamService.deleteVacationTeam(teamId).subscribe((): void => {
         this.getVacationTeams();
       });
   }

@@ -47,7 +47,7 @@ export class VacationTeamCreateComponent {
       teacher: {
         id: vacationTeam.teacherId
       },
-      students: vacationTeam.studentIds.map((studentId: number): { id: number } => ({id: studentId}))
+      studentIds: vacationTeam.studentIds.map((studentId: number) => studentId)
     };
   }
 
