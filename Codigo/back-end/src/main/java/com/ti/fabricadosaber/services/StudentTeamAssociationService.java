@@ -142,7 +142,9 @@ public class StudentTeamAssociationService {
 
             if(updateTeams != null && !updateTeams.isEmpty()) {
                 for(Long updateTeam : updateTeams) {
+
                     team = teamService.findById(updateTeam);
+
                     Optional<StudentTeamAssociation> existingStudentTeamAssociation =
                             studentTeamAssociationRepository.findByStudentAndTeam(student,
                                     team);
@@ -393,8 +395,8 @@ public class StudentTeamAssociationService {
 
     public List<Long> findUnrelatedTeamIds(List<Long> teamIds, Student student) {
 
-        // Obtém todas as associações ativas do estudante
-        List<StudentTeamAssociation> associations = studentTeamAssociationRepository.findAllActiveAssociationsByStudentId(student.getId());
+        // Obtém todas as associações ativas e inativas do estudante
+        List<StudentTeamAssociation> associations = studentTeamAssociationRepository.findAllAssociationsByStudentId(student.getId());
 
 
         // IDs das turmas que está relacionado com o estudante
@@ -477,6 +479,11 @@ public class StudentTeamAssociationService {
     public List<Team> findTeamAndVacationTeamOfStudent(Long studentId) {
         return studentTeamAssociationRepository.findActiveTeamsByStudentId(studentId);
     }
+
+    public List<StudentTeamAssociation> findAllAssociationsByStudent(Long studentId) {
+        return studentTeamAssociationRepository.findAllAssociationsByStudentId(studentId);
+    }
+
 
 
 }

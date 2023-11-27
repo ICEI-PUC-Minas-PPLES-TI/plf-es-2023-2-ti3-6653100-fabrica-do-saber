@@ -231,6 +231,7 @@ public class StudentService {
         newObj.setParents(updatedParents);
         newObj.setRegistrationDate(LocalDate.now());
 
+
         //persistir o objeto atualizado no BD
         Student saveStudent = studentRepository.save(newObj);
 
