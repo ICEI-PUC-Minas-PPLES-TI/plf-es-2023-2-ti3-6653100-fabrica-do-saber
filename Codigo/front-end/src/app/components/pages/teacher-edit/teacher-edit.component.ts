@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { catchError, tap } from 'rxjs';
-
 import { Teacher } from '../../../interfaces/Teacher';
 import { TeacherService } from '../../../services/teacher/teacher.service';
 
@@ -34,6 +32,7 @@ export class TeacherEditComponent {
 
   updateTeacher(): void {
     this.teacher.salary = this.teacherService.formatCurrency(this.teacher.salary);
+    console.log(this.teacher)
     let op: boolean = confirm('Deseja atualizar o professor?');
     if (op) {
       this.teacherService.updateTeacher(this.teacherId, this.teacher)

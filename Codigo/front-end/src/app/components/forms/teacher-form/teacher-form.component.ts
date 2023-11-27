@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Teacher } from '../../../interfaces/Teacher';
 
 @Component({
@@ -18,8 +18,16 @@ export class TeacherFormComponent {
     this.teacher.homeState = this.formatSelect(newState);
   }
 
-  onaAcademicFormationStatus(newStatus: string): void {
+  onAcademicFormationStatus(newStatus: string): void {
     this.teacher.academicFormationStatus = this.formatSelect(newStatus);
+  }
+
+  formatStr(str: string) {
+    return str
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toUpperCase()
+      .replace(/\s+/g, '_');
   }
 
   formatSelect(select: string): string {
