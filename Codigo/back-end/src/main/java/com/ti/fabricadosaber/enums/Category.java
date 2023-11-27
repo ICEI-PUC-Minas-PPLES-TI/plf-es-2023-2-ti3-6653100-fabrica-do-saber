@@ -4,25 +4,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Category {
-    PAYROLL("Pagamento aos funcionários"),
-    INFRASTRUCTURE_EXPENSE("Despesas em infraestrutura"),
-    INSTITUTIONAL_MARKETING("Marketing institucional"),
-    EDUCATIONAL_PROJECTS("Projetos educacionais"),
-    ADMINISTRATIVE_COSTS("Custos administrativos"),
-    SCHOOL_EVENTS("Eventos escolares"),
-    MAINTENANCE_SERVICES("Serviços de manutenção"),
-    EDUCATIONAL_MATERIAL("Material escolar");
 
-    private final String description;
+    PAYROLL,
+    INFRASTRUCTURE_EXPENSE,
+    INSTITUTIONAL_MARKETING,
+    EDUCATIONAL_PROJECTS,
+    ADMINISTRATIVE_COSTS,
+    SCHOOL_EVENTS,
+    MAINTENANCE_SERVICES,
+    EDUCATIONAL_MATERIAL
 
-    Category(String description) {
-        this.description = description;
-    }
-
-
-    public String getDescription() {
-        return description;
-    }
 
 }
 

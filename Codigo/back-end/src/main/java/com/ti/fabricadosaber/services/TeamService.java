@@ -12,6 +12,7 @@ import com.ti.fabricadosaber.models.*;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.services.interfaces.TeamOperations;
 import com.ti.fabricadosaber.utils.SecurityUtil;
+import jakarta.persistence.DiscriminatorValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -194,6 +195,7 @@ public class TeamService implements TeamOperations {
         dto.setNumberStudents(team.getNumberStudents());
         dto.setTeacherId(team.getTeacher().getId());
         dto.setStudentIds(studentIds);
+        dto.setType(team.getClass().getAnnotation(DiscriminatorValue.class).value());
 
         return dto;
     }

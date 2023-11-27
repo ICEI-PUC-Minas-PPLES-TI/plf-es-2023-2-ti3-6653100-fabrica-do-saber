@@ -1,8 +1,5 @@
 package com.ti.fabricadosaber.services;
 
-import java.time.LocalDate;
-import java.util.*;
-
 import com.ti.fabricadosaber.dto.StudentResponseDTO;
 import com.ti.fabricadosaber.dto.TeamAndVacationTeamDTO;
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
@@ -11,6 +8,7 @@ import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
 import com.ti.fabricadosaber.exceptions.StudentTeamAssociationException;
 import com.ti.fabricadosaber.exceptions.TwoParentsException;
 import com.ti.fabricadosaber.models.*;
+import com.ti.fabricadosaber.repositories.StudentRepository;
 import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
 import jakarta.transaction.Transactional;
@@ -18,7 +16,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import com.ti.fabricadosaber.repositories.StudentRepository;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class StudentService {
@@ -40,8 +43,6 @@ public class StudentService {
     @Autowired
     @Lazy
     private StudentTeamAssociationService studentTeamAssociationService;
-
-
 
 
     public Student findById(Long id) {
@@ -74,7 +75,7 @@ public class StudentService {
         List<Student> students = this.studentRepository.findAll();
         List<StudentResponseDTO> studentResponseDTOS = new ArrayList<>();
 
-        if(students.isEmpty())
+        if (students.isEmpty())
             throw new EntityNotFoundException("Nenhum estudante cadastrado");
 
         for (Student student : students) {
@@ -92,13 +93,13 @@ public class StudentService {
         SecurityUtil.checkUser();
         Team team = studentTeamAssociationService.findTeamOfStudent(id);
 
-        if(team == null) {
+        if (team == null) {
             throw new EntityNotFoundException("O estudante não está ativo em nenhuma turma");
         }
 
         List<Long> studentsIds = studentTeamAssociationService.findStudentIdsByTeamId(team.getId());
 
-        return teamService.convertToTeamResponseDTO(team,studentsIds);
+        return teamService.convertToTeamResponseDTO(team, studentsIds);
     }
 
 
@@ -106,7 +107,7 @@ public class StudentService {
         Student student = findById(id);
         List<VacationTeam> vacationTeams = studentTeamAssociationService.findVacationTeamOfStudent(id);
 
-        if(vacationTeams.isEmpty())
+        if (vacationTeams.isEmpty())
             throw new EntityNotFoundException("O estudante não está ativo em nenhuma creche de férias");
 
         List<VacationTeamResponseDTO> vacationTeamResponseDTOS = new ArrayList<>();
@@ -127,7 +128,7 @@ public class StudentService {
 
         List<Team> teams = studentTeamAssociationService.findTeamAndVacationTeamOfStudent(id);
 
-        if(teams.isEmpty()) {
+        if (teams.isEmpty()) {
             throw new EntityNotFoundException("O Aluno de id: " + id + " não está cadastrado em nenhuma turma ou " +
                     "creche de férias");
         }
@@ -150,12 +151,6 @@ public class StudentService {
     }
 
 
-
-
-
-
-
-
     public Set<Parent> listParents(Long id) {
         SecurityUtil.checkUser();
 
@@ -164,7 +159,6 @@ public class StudentService {
 
         return student.getParents();
     }
-
 
 
     @Transactional
@@ -179,7 +173,7 @@ public class StudentService {
         obj.setParents(parents);
         obj.setRegistrationDate(LocalDate.now());
 
-       Student createdStudent = studentRepository.save(obj);
+        Student createdStudent = studentRepository.save(obj);
 
         enrollStudent(createdStudent);
 
@@ -196,7 +190,7 @@ public class StudentService {
             Team existingTeam = teamService.findById(teamId);
 
             studentTeamAssociationService.enrollStudentOnTeam(new StudentTeamAssociation(obj, existingTeam),
-            true);
+                    true);
         }
     }
 
@@ -207,12 +201,12 @@ public class StudentService {
         for (Long teamId : teamIds) {
             Team existingTeam = teamService.findById(teamId);
 
-            if(!(existingTeam instanceof VacationTeam))
+            if (!(existingTeam instanceof VacationTeam))
                 countTeam++;
 
         }
 
-        if(countTeam > 1)
+        if (countTeam > 1)
             throw new StudentTeamAssociationException("O estudante só pode se matricular em uma turma por vez");
     }
 
@@ -224,7 +218,7 @@ public class StudentService {
         Student newObj = findById(obj.getId());
         exceptionsOfStudentOnTeam(obj);
 
-        String[] ignoreProperties = { "id", "registrationDate", "parents"};
+        String[] ignoreProperties = {"id", "registrationDate", "parents"};
         BeanUtils.copyProperties(obj, newObj, ignoreProperties);
 
         Set<Parent> updatedParents = saveParents(obj);
@@ -246,9 +240,8 @@ public class StudentService {
     }
 
 
-
     public Set<Parent> saveParents(Student obj) {
-        String[] ignoreProperties = { "id", "registrationDate", "cpf"};
+        String[] ignoreProperties = {"id", "registrationDate", "cpf"};
         Set<Parent> parents = new HashSet<>();
 
         Parent currentParent;
@@ -313,6 +306,15 @@ public class StudentService {
         dto.setHomeState(student.getHomeState());
         dto.setParents(student.getParents());
         dto.setTeamIds(teamIds);
+        dto.setFullName(student.getFullName());
+        dto.setBirthDate(student.getBirthDate());
+        dto.setCityOfResidence(student.getCityOfResidence());
+        dto.setStreetAddress(student.getStreetAddress());
+        dto.setAddressComplement(student.getAddressComplement());
+        dto.setAddressNumber(student.getAddressNumber());
+        dto.setNeighborhood(student.getNeighborhood());
+        dto.setZipCode(student.getZipCode());
+        dto.setRegistrationDate(student.getRegistrationDate());
 
         return dto;
     }
@@ -328,7 +330,7 @@ public class StudentService {
         dto.setTeacher(team.getTeacher());
         dto.setStudentIds(studentIds);
 
-        if(team instanceof VacationTeam) {
+        if (team instanceof VacationTeam) {
             VacationTeam convertTeamForVacationTeam = (VacationTeam) team;
             dto.setStartDate(convertTeamForVacationTeam.getStartDate());
             dto.setEndDate(convertTeamForVacationTeam.getEndDate());
