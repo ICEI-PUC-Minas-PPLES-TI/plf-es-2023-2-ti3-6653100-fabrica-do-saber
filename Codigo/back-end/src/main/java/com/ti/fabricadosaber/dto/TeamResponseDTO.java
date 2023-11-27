@@ -21,5 +21,6 @@ public class TeamResponseDTO {
     private Integer numberStudents;
     private List<Long> studentIds;
     private Long teacherId;
+    private String type;
 
 }
