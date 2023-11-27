@@ -34,18 +34,6 @@ public class TeamController {
 
 
 
-/*    @GetMapping("/{id}")
-    public ResponseEntity<TeamResponseDTO> findById(@PathVariable Long id) {
-        Team team = teamService.findById(id);
-
-        if (team == null)
-            return ResponseEntity.notFound().build();
-
-        TeamResponseDTO teamResponseDTO = this.teamService.convertToTeamResponseDTO(team);
-
-        return ResponseEntity.ok(teamResponseDTO);
-    }*/
-
     @GetMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> findById(@PathVariable Long id) {
         TeamResponseDTO obj = this.teamService.findByIdDTO(id);
@@ -85,12 +73,6 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
-
- /*   @DeleteMapping("/{teamId}/delete-students")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long teamId, @RequestBody List<Long> studentIds) {
-        this.teamService.deleteStudentFromTeam(teamId, studentIds);
-        return ResponseEntity.noContent().build();
-    }*/
 
 
     @DeleteMapping("/{id}")

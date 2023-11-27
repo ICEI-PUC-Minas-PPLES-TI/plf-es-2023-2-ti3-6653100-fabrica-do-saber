@@ -1,23 +1,21 @@
 package com.ti.fabricadosaber.dto;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ti.fabricadosaber.enums.Grade;
-
 import com.ti.fabricadosaber.models.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class VacationTeamResponseDTO {
-    
+public class TeamAndVacationTeamDTO {
     private Long id;
     private String name;
     private String classroom;
@@ -25,6 +23,7 @@ public class VacationTeamResponseDTO {
     private Integer numberStudents;
     private List<Long> studentIds;
     private Teacher teacher;
+    private String type;
 
 
 

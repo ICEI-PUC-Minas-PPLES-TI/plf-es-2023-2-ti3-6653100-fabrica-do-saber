@@ -1,6 +1,7 @@
 package com.ti.fabricadosaber.services;
 
-import com.ti.fabricadosaber.dto.TeamResponseDTO;
+
+import com.ti.fabricadosaber.dto.StudentResponseDTO;
 import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.DataException;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -45,15 +47,34 @@ public class VacationTeamService implements TeamOperations {
 
 
     public VacationTeamResponseDTO findByIdDTO(Long id) {
-        VacationTeam vacationTeam = this.vacationTeamRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
-                "Creche de férias não encontrada! Id: " + id + ", Tipo: " + VacationTeam.class.getName()));
-        SecurityUtil.checkUser();
+        VacationTeam vacationTeam = findById(id);
 
         List<Long> studentIds = studentTeamAssociationService.findStudentIdsByVacationTeamId(id);
 
         VacationTeamResponseDTO teamResponseDTO = convertToTeamResponseDTO(vacationTeam, studentIds);
 
         return teamResponseDTO;
+    }
+
+    public List<StudentResponseDTO> listStudents(Long id) {
+        VacationTeam vacationTeam = findById(id);
+
+        List<Student> students = studentTeamAssociationService.findStudentsActiveOnVacationTeam(id);
+
+        if(students.isEmpty()) {
+            throw new EntityNotFoundException("Nenhum aluno está ativo na creche de férias");
+        }
+
+        List<StudentResponseDTO> studentResponseDTOS = new ArrayList<>();
+
+        for (Student student: students) {
+            List<Long> teamIds = studentTeamAssociationService.findTeamsAndVacationTeams(student.getId());
+            StudentResponseDTO studentResponseDTO = studentService.convertToStudentResponseDTO(student, teamIds);
+            studentResponseDTOS.add(studentResponseDTO);
+        }
+
+
+        return studentResponseDTOS;
     }
 
 
@@ -176,7 +197,7 @@ public class VacationTeamService implements TeamOperations {
         dto.setClassroom(team.getClassroom());
         dto.setGrade(team.getGrade());
         dto.setNumberStudents(team.getNumberStudents());
-        dto.setTeacherId(team.getTeacher().getId());
+        dto.setTeacher(team.getTeacher());
         dto.setStudentIds(studentIds);
         dto.setStartDate(team.getStartDate());
         dto.setEndDate(team.getEndDate());
