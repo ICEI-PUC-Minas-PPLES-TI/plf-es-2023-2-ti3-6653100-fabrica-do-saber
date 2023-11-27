@@ -496,6 +496,13 @@ public class StudentTeamAssociationService {
         }
     }
 
+    public void deleteStudent(Long studentId) {
+        List<StudentTeamAssociation> studentTeamAssociations = findAllAssociationsByStudent(studentId);
+        for (StudentTeamAssociation studentTeamAssociation : studentTeamAssociations) {
+            delete(studentTeamAssociation.getId());
+        }
+    }
+
 
 
 }

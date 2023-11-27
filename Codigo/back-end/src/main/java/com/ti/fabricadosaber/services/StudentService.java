@@ -280,11 +280,7 @@ public class StudentService {
         Student student = findById(id);
         try {
             updateNumberStudentsAfterStudentDeletion(student);
-            List<StudentTeamAssociation> studentTeamAssociations =
-                    studentTeamAssociationService.findAllAssociationsByStudent(id);
-            for (StudentTeamAssociation studentTeamAssociation : studentTeamAssociations) {
-                studentTeamAssociationService.delete(studentTeamAssociation.getId());
-            }
+            studentTeamAssociationService.deleteStudent(id);
             this.studentRepository.delete(student);
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
