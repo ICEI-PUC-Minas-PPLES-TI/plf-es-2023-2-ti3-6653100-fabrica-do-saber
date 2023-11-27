@@ -231,6 +231,7 @@ public class StudentService {
         newObj.setParents(updatedParents);
         newObj.setRegistrationDate(LocalDate.now());
 
+
         //persistir o objeto atualizado no BD
         Student saveStudent = studentRepository.save(newObj);
 
@@ -279,6 +280,7 @@ public class StudentService {
         Student student = findById(id);
         try {
             updateNumberStudentsAfterStudentDeletion(student);
+            studentTeamAssociationService.deleteStudent(id);
             this.studentRepository.delete(student);
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
@@ -288,8 +290,14 @@ public class StudentService {
 
     public void updateNumberStudentsAfterStudentDeletion(Student student) {
         List<Team> teamsAssociated = studentTeamAssociationService.teamsAssociatedWithTheStudent(student);
+
         for (Team team : teamsAssociated) {
-            teamService.updateTeamStudentCount(team, team.getNumberStudents() - 1);
+
+            if (team instanceof VacationTeam) {
+                vacationTeamService.updateTeamStudentCount((VacationTeam) team,team.getNumberStudents() - 1);
+            } else {
+                teamService.updateTeamStudentCount(team, team.getNumberStudents() - 1);
+            }
         }
     }
 

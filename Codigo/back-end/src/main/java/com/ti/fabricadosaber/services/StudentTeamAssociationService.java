@@ -7,6 +7,7 @@ import com.ti.fabricadosaber.models.StudentTeamAssociation;
 import com.ti.fabricadosaber.models.Team;
 import com.ti.fabricadosaber.models.VacationTeam;
 import com.ti.fabricadosaber.repositories.StudentTeamAssociationRepository;
+import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -142,7 +143,9 @@ public class StudentTeamAssociationService {
 
             if(updateTeams != null && !updateTeams.isEmpty()) {
                 for(Long updateTeam : updateTeams) {
+
                     team = teamService.findById(updateTeam);
+
                     Optional<StudentTeamAssociation> existingStudentTeamAssociation =
                             studentTeamAssociationRepository.findByStudentAndTeam(student,
                                     team);
@@ -393,8 +396,8 @@ public class StudentTeamAssociationService {
 
     public List<Long> findUnrelatedTeamIds(List<Long> teamIds, Student student) {
 
-        // Obtém todas as associações ativas do estudante
-        List<StudentTeamAssociation> associations = studentTeamAssociationRepository.findAllActiveAssociationsByStudentId(student.getId());
+        // Obtém todas as associações ativas e inativas do estudante
+        List<StudentTeamAssociation> associations = studentTeamAssociationRepository.findAllAssociationsByStudentId(student.getId());
 
 
         // IDs das turmas que está relacionado com o estudante
@@ -436,7 +439,7 @@ public class StudentTeamAssociationService {
 
 
     public List<Team> teamsAssociatedWithTheStudent(Student student) {
-        return studentTeamAssociationRepository.findTeamsByStudentId(student.getId());
+        return studentTeamAssociationRepository.findDistinctActiveTeamsByStudentId(student.getId());
     }
 
 
@@ -447,6 +450,7 @@ public class StudentTeamAssociationService {
     public List<Long> findTeamsAndVacationTeams(Long studentId) {
         return studentTeamAssociationRepository.findActiveTeamIdsByStudentId(studentId);
     }
+
 
 
     public List<Long> findStudentIdsByVacationTeamId(Long vacationTeamId) {
@@ -477,6 +481,28 @@ public class StudentTeamAssociationService {
     public List<Team> findTeamAndVacationTeamOfStudent(Long studentId) {
         return studentTeamAssociationRepository.findActiveTeamsByStudentId(studentId);
     }
+
+    public List<StudentTeamAssociation> findAllAssociationsByStudent(Long studentId) {
+        return studentTeamAssociationRepository.findAllAssociationsByStudentId(studentId);
+    }
+
+
+    public void delete(StudentTeamAssociation.StudentTeamId id) {
+        StudentTeamAssociation studentTeamAssociation = findById(id);
+        try {
+            this.studentTeamAssociationRepository.delete(studentTeamAssociation);
+        } catch (Exception e) {
+            throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
+        }
+    }
+
+    public void deleteStudent(Long studentId) {
+        List<StudentTeamAssociation> studentTeamAssociations = findAllAssociationsByStudent(studentId);
+        for (StudentTeamAssociation studentTeamAssociation : studentTeamAssociations) {
+            delete(studentTeamAssociation.getId());
+        }
+    }
+
 
 
 }

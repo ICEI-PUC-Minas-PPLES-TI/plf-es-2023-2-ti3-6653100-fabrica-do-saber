@@ -2,6 +2,7 @@ package com.ti.fabricadosaber.services;
 
 
 import com.ti.fabricadosaber.dto.StudentResponseDTO;
+import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.exceptions.DataException;
 import com.ti.fabricadosaber.exceptions.EntityNotFoundException;
@@ -75,6 +76,26 @@ public class VacationTeamService implements TeamOperations {
 
 
         return studentResponseDTOS;
+    }
+
+
+    public List<VacationTeamResponseDTO> listAllTeams() {
+        SecurityUtil.checkUser();
+
+        List<VacationTeam> vacationTeamsteams = this.vacationTeamRepository.findAllTeams();
+        List<VacationTeamResponseDTO> teamDTO = new ArrayList<>();
+
+        for (VacationTeam team : vacationTeamsteams) {
+            List<Long> studentIds = studentTeamAssociationService.findStudentIdsByTeamId(team.getId());
+            VacationTeamResponseDTO teamResponseDTO = convertToTeamResponseDTO(team, studentIds);
+            teamDTO.add(teamResponseDTO);
+        }
+
+        if (teamDTO.isEmpty()) {
+            throw new EntityNotFoundException("Nenhuma creche de férias cadastrada");
+        }
+
+        return teamDTO;
     }
 
 

@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import com.ti.fabricadosaber.dto.StudentResponseDTO;
+import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.services.VacationTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,12 @@ public class VacationTeamController {
     public ResponseEntity<VacationTeamResponseDTO> findById(@PathVariable Long id) {
         VacationTeamResponseDTO obj = this.vacationTeamService.findByIdDTO(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<VacationTeamResponseDTO>> listAllTeams() {
+        List<VacationTeamResponseDTO> teams = this.vacationTeamService.listAllTeams();
+        return ResponseEntity.ok().body(teams);
     }
 
 

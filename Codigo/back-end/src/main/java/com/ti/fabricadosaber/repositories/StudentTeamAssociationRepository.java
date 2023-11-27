@@ -31,6 +31,12 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
     List<Team> findActiveTeamsByStudentId(@Param("studentId") Long studentId);
 
 
+    @Query("SELECT DISTINCT t FROM StudentTeamAssociation sta " +
+            "LEFT JOIN Team t ON sta.team.id = t.id " +
+            "LEFT JOIN VacationTeam vt ON sta.team.id = vt.id " +
+            "WHERE sta.id.studentId = :studentId AND sta.isActive = true")
+    List<Team> findDistinctActiveTeamsByStudentId(@Param("studentId") Long studentId);
+
 
     @Query("SELECT t FROM StudentTeamAssociation sta " +
             "JOIN Team t ON sta.team.id = t.id " +
@@ -45,8 +51,8 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
     List<VacationTeam> findActiveVacationTeamByStudentId(@Param("studentId") Long studentId);
 
 
-
     //Ids dos Team e VacationTeam
+
     @Query("SELECT t.id FROM StudentTeamAssociation sta " +
             "JOIN Team t ON sta.team.id = t.id " +
             "WHERE sta.id.studentId = :studentId AND sta.isActive = true")
@@ -73,9 +79,6 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.studentId = :studentId AND sta.isActive = true")
     List<StudentTeamAssociation> findAllActiveAssociationsByStudentId(@Param("studentId") Long studentId);
 
-    @Query("SELECT DISTINCT t FROM StudentTeamAssociation sta JOIN Team t ON sta.id.teamId = t.id WHERE sta.id.studentId = :studentId AND sta.isActive = true")
-    List<Team> findTeamsByStudentId(@Param("studentId") Long studentId);
-
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.teamId = :teamId AND sta.isActive = true")
     List<StudentTeamAssociation> findAllActiveAssociationsByTeamId(@Param("teamId") Long teamId);
@@ -94,6 +97,9 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.teamId = :teamId")
     List<StudentTeamAssociation> findAllAssociationsByTeamId(@Param("teamId") Long teamId);
+
+    @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.student.id = :studentId")
+    List<StudentTeamAssociation> findAllAssociationsByStudentId(@Param("studentId") Long studentId);
 
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.studentId = :studentId AND sta.isActive = false")
