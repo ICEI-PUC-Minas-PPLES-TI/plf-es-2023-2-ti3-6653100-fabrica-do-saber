@@ -6,4 +6,5 @@ export interface Team {
   numberStudents?: number;
   studentIds: number[];
   teacherId: number;
+  type: string;
 }

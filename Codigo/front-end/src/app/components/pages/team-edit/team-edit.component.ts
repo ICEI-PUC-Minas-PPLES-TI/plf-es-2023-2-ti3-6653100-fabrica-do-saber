@@ -34,6 +34,7 @@ export class TeamEditComponent {
 
   updateTeam(): void {
     const formattedTeam = this.formatToRequest(this.team);
+    console.log(formattedTeam)
     let op: boolean = confirm('Deseja atualizar a turma?');
     if (op) {
       this.teamService.updateTeam(this.teamId, formattedTeam)
@@ -61,7 +62,7 @@ export class TeamEditComponent {
       teacher: {
         id: team.teacherId
       },
-      students: team.studentIds.map((studentId: number): { id: number } => ({ id: studentId }))
+      studentIds: team.studentIds.map((studentId: number) => studentId)
     };
   }
 }

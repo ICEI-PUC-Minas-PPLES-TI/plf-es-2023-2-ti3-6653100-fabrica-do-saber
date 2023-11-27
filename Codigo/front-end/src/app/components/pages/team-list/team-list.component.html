@@ -68,10 +68,10 @@
             <span class="text-muted">{{getTeacherInfo(team, 'phoneNumber')}}</span>
           </td>
           <td>
-            <span class="black">{{ team.grade }}</span><br>
+            <span class="black">{{ getGradeName(team.grade) }}</span><br>
           </td>
           <td>
-            <span class="black">{{ team.numberStudents }}</span><br>
+            <span class="black">{{ team.numberStudents? team.numberStudents : '0'  }}</span><br>
           </td>
           <td>
             <span class="black">{{ team.classroom }}</span><br>
