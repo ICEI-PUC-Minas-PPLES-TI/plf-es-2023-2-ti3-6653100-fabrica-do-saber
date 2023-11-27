@@ -12,11 +12,11 @@ export class GradeSelectComponent {
   @Output() gradeChange: EventEmitter<string> = new EventEmitter<string>;
 
   grades: SelectValue[] = [
-    {name: '1° Série', value: '1 Série'},
-    {name: '2° Série', value: '2 Série'},
-    {name: '3° Série', value: '3 Série'},
-    {name: '4° Série', value: '4 Série'},
-    {name: '5° Série', value: '5 Série'}
+    {name: '1° Série', value: 'PRIMEIRA_SERIE'},
+    {name: '2° Série', value: 'SEGUNDA_SERIE'},
+    {name: '3° Série', value: 'TERCEIRA_SERIE'},
+    {name: '4° Série', value: 'QUARTA_SERIE'},
+    {name: '5° Série', value: 'QUINTA_SERIE'}
   ];
 
   onGradeChange(event: any): void {

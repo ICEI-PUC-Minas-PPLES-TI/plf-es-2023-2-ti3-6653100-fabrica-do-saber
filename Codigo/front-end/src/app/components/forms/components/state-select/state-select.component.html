@@ -1,6 +1,6 @@
 <select id="inputState" class="form-select" (change)="onStateChange($event)" [(ngModel)]="homeState" required >
   <option value="" disabled selected>Estado</option>
-  <option *ngFor="let state of states" [ngValue]="state.name">{{ state.name }}</option>
+  <option *ngFor="let state of states" [ngValue]="state.value">{{ state.name }}</option>
 </select>
 
 

@@ -12,8 +12,8 @@ export class FormationSelectComponent {
   @Output() academicFormationStatusChange: EventEmitter<string> = new EventEmitter<string>;
 
   academicFormationStatusArr: SelectValue[] = [
-    {name: 'Cursando', value: 'Cursando'},
-    {name: 'Concluído', value: 'Concluído'}
+    {name: 'Cursando', value: 'CURSANDO'},
+    {name: 'Concluído', value: 'CONCLUIDO'}
   ];
 
   onAcademicFormationStatusChange(event: any): void {
