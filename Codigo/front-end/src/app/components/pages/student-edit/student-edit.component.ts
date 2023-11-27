@@ -6,6 +6,8 @@ import { catchError, tap } from 'rxjs';
 import { Student } from '../../../interfaces/Student';
 import { StudentService } from '../../../services/student/student.service';
 import { Parent } from '../../../interfaces/Parent';
+import { Team } from '../../../interfaces/Team';
+import { TeamService } from '../../../services/team/team.service';
 
 
 @Component({
@@ -21,7 +23,7 @@ export class StudentEditComponent {
   parent00!: Parent;
   parent01!: Parent;
 
-  constructor(private route: ActivatedRoute, private studentService: StudentService, private router: Router) {
+  constructor(private route: ActivatedRoute, private studentService: StudentService, private router: Router, private teamService: TeamService) {
   }
 
   ngOnInit(): void {
@@ -34,8 +36,8 @@ export class StudentEditComponent {
   getStudentById(id: number): void {
     this.studentService.getStudentById(id).subscribe((student: Student): void => {
 
-      if (student.team)
-        student.team = { id: student.team.id };
+      // if (student.team)
+      //   student.team = { id: student.team.id };
 
       this.student = student;
       [this.parent00, this.parent01] = [this.student.parents[0], this.student.parents[1]];

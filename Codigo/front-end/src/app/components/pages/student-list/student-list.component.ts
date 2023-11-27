@@ -22,13 +22,13 @@ export class StudentListComponent {
   /*Table variables*/
   tableHeaders: String[] = ['Nome', 'Idade', 'Responsável', 'Responsável', 'Turma', 'Data de registro', 'Gerenciar'];
   buttons = [
-    { iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit', function: null },
-    { iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printStudent.bind(this) },
-    { iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteStudent.bind(this) }
+    {iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit', function: null},
+    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printStudent.bind(this)},
+    {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteStudent.bind(this)}
   ];
   filters = [
-    { name: 'ordem alfabética', function: this.sortStudentsByName.bind(this) },
-    { name: 'id', function: this.sortStudentsById.bind(this) }
+    {name: 'ordem alfabética', function: this.sortStudentsByName.bind(this)},
+    {name: 'id', function: this.sortStudentsById.bind(this)}
   ];
   filterText!: string;
 
@@ -42,6 +42,7 @@ export class StudentListComponent {
 
   getStudents(): void {
     this.studentService.getStudents().subscribe((students: Student[]): void => {
+      console.log(students)
       this.originalStudents = students;
       this.students = [...this.originalStudents];
       this.getTeams(this.students);
@@ -51,7 +52,7 @@ export class StudentListComponent {
 
   getTeams(students: Student[]): void {
     const teamObservables: Observable<Team>[] = students.map((student: Student): Observable<Team> => {
-      return this.teamService.getTeamById(student.team.id);
+      return this.studentService.getActiveTeam(student.id);
     });
 
     forkJoin(teamObservables).subscribe((teams: Team[]): void => {
@@ -59,9 +60,12 @@ export class StudentListComponent {
     });
   }
 
-  getTeamName(student: Student): string {
-    const team: Team | undefined = this.teams.find(team => team.id === student.team.id);
-    return team ? team.name : '';
+  getTeamName(student: Student): string | undefined {
+    let teamName: Team | undefined;
+    this.studentService.getActiveTeam(student.id).subscribe((t:Team) => {
+      teamName = this.teams.find((team: Team):boolean => team.id === t.id);
+    })
+    return teamName?.name;
   }
 
   deleteStudent(student: Student): void {

@@ -2,9 +2,7 @@ import { Parent } from './Parent';
 
 export interface Student {
   parents: Parent[];
-  team: {
-    id: number
-  },
+  teamIds: number[]
   id: number;
   fullName: string;
   registrationDate: string;

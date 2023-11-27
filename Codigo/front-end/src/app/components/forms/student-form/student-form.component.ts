@@ -1,21 +1,29 @@
-import {Component, Input} from '@angular/core';
-import {Student} from '../../../interfaces/Student';
+import { Component, Input, OnInit } from '@angular/core';
+import { Student } from '../../../interfaces/Student';
+import { Team } from '../../../interfaces/Team';
+import { StudentService } from '../../../services/student/student.service';
+import { TeamService } from '../../../services/team/team.service';
 
 @Component({
   selector: 'app-student-form',
   templateUrl: './student-form.component.html',
   styleUrls: ['./student-form.component.css']
 })
-export class StudentFormComponent {
+export class StudentFormComponent implements OnInit {
 
   @Input() student!: Student;
   @Input() title!: string;
+  studentTeamId!: number;
 
-  constructor() {
+  constructor(private studentService: StudentService, private teamService: TeamService) {
+  }
+
+  ngOnInit(): void {
+    this.getTeam();
   }
 
   onTeamChange(newTeam: number): void {
-    this.student.team.id = parseInt(this.formatSelect(newTeam));
+    this.updateTeam(parseInt(this.formatSelect(newTeam)));
   }
 
   onHomeStateChange(newState: string): void {
@@ -28,6 +36,30 @@ export class StudentFormComponent {
 
   onRaceChange(newRace: string): void {
     this.student.race = this.formatSelect(newRace);
+  }
+
+  getTeam(): void {
+    this.studentService.getActiveTeam(this.student.id).subscribe((team: Team): void => {
+      if (team.id)
+        this.studentTeamId = team.id;
+    });
+  }
+
+  updateTeam(newTeam: number): void {
+    if (this.student.teamIds.length > 0) {
+      this.studentService.getAllTeams(this.student.id).subscribe((teams: Team[]):void => {
+        this.studentService.getActiveTeam(this.student.id).subscribe((team: Team):void => {
+          teams.forEach((t: Team): void => {
+            if (t.id)
+              if (t.id === team.id) {
+                this.student.teamIds.splice(this.student.teamIds.indexOf(t.id), 1);
+                this.student.teamIds.push(newTeam);
+              }
+          });
+        });
+      });
+    } else
+      this.student.teamIds.push(newTeam);
   }
 
   formatSelect(select: any): any {

@@ -1,13 +1,11 @@
-import {Student} from '../../interfaces/Student';
-import {Parent} from '../../interfaces/Parent';
-import {ParentsImp} from '../parent/parents-imp';
+import { Student } from '../../interfaces/Student';
+import { Parent } from '../../interfaces/Parent';
+import { ParentsImp } from '../parent/parents-imp';
 
 export class StudentImp implements Student {
 
   parents: Parent[] = [];
-  team: {
-    id: number
-  };
+  teamIds: number[];
   id: number;
   fullName: string;
   registrationDate: string;
@@ -26,9 +24,7 @@ export class StudentImp implements Student {
 
   constructor() {
     this.parents = [new ParentsImp(), new ParentsImp()];
-    this.team = {
-      id: 0
-    };
+    this.teamIds = [];
     this.id = 0;
     this.fullName = '';
     this.registrationDate = '';
