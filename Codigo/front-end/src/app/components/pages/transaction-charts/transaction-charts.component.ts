@@ -13,12 +13,22 @@ export class TransactionChartsComponent {
 
   originalTransactions!: Transaction[];
   transactions!: Transaction[];
-  financialFlowTypes: string[] = ['Entrada', 'Saída'];
+  financialFlowTypes: string[] = ['INPUT', 'OUTPUT'];
   income!: number;
   outcome!: number;
   totalBalance !: number;
   months: string[] = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  categories: string[] = ['Pagamento aos funcionários', 'Despesas em infraestrutura', 'Marketing institucional', 'Projetos educacionais', 'Custos administrativos', 'Eventos escolares', 'Serviços de manutenção', 'Material escolar'];
+  // categories: string[] = ['Pagamento aos funcionários', 'Despesas em infraestrutura', 'Marketing institucional', 'Projetos educacionais', 'Custos administrativos', 'Eventos escolares', 'Serviços de manutenção', 'Material escolar'];
+  categories: string[] = [
+    'PAYROLL',
+    'INFRASTRUCTURE_EXPENSE',
+    'INSTITUTIONAL_MARKETING',
+    'EDUCATIONAL_PROJECTS',
+    'ADMINISTRATIVE_COSTS',
+    'SCHOOL_EVENTS',
+    'MAINTENANCE_SERVICES',
+    'EDUCATIONAL_MATERIAL',
+  ];
 
   constructor(private transactionService: TransactionService) {
   }
@@ -71,50 +81,50 @@ export class TransactionChartsComponent {
       labels: this.categories,
       datasets: [
         {
-          label: 'Pagamento aos funcionários',
-          data: this.getArrayDataByCategory('Pagamento aos funcionários'),
+          label: 'PAYROLL',
+          data: this.getArrayDataByCategory('PAYROLL'),
           borderColor: 'green',
           backgroundColor: 'green',
         },
         {
-          label: 'Despesas em infraestrutura',
-          data: this.getArrayDataByCategory('Despesas em infraestrutura'),
+          label: 'INFRASTRUCTURE_EXPENSE',
+          data: this.getArrayDataByCategory('INFRASTRUCTURE_EXPENSE'),
           borderColor: 'red',
           backgroundColor: 'red',
         },
         {
-          label: 'Marketing institucional',
-          data: this.getArrayDataByCategory('Marketing institucional'),
+          label: 'INSTITUTIONAL_MARKETING',
+          data: this.getArrayDataByCategory('INSTITUTIONAL_MARKETING'),
           borderColor: 'blue',
           backgroundColor: 'blue',
         },
         {
-          label: 'Projetos educacionais',
-          data: this.getArrayDataByCategory('Projetos educacionais'),
+          label: 'EDUCATIONAL_PROJECTS',
+          data: this.getArrayDataByCategory('EDUCATIONAL_PROJECTS'),
           borderColor: 'yellow',
           backgroundColor: 'yellow',
         },
         {
-          label: 'Custos administrativos',
-          data: this.getArrayDataByCategory('Custos administrativos'),
+          label: 'ADMINISTRATIVE_COSTS',
+          data: this.getArrayDataByCategory('ADMINISTRATIVE_COSTS'),
           borderColor: 'orange',
           backgroundColor: 'orange',
         },
         {
-          label: 'Eventos escolares',
-          data: this.getArrayDataByCategory('Eventos escolares'),
+          label: 'SCHOOL_EVENTS',
+          data: this.getArrayDataByCategory('SCHOOL_EVENTS'),
           borderColor: 'purple',
           backgroundColor: 'purple',
         },
         {
-          label: 'Serviços de manutenção',
-          data: this.getArrayDataByCategory('Serviços de manutenção'),
+          label: 'MAINTENANCE_SERVICES',
+          data: this.getArrayDataByCategory('MAINTENANCE_SERVICES'),
           borderColor: 'bronw',
           backgroundColor: 'bronw',
         },
         {
-          label: 'Material escolar',
-          data: this.getArrayDataByCategory('Material escolar'),
+          label: 'EDUCATIONAL_MATERIAL',
+          data: this.getArrayDataByCategory('EDUCATIONAL_MATERIAL'),
           borderColor: 'grey',
           backgroundColor: 'grey',
         }

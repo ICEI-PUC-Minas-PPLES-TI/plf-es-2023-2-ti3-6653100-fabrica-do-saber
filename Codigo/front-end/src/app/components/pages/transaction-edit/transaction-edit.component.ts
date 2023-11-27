@@ -52,6 +52,6 @@ export class TransactionEditComponent {
   }
 
   getFinancialFlowType(num: number): string {
-    return num > 0? "Entrada" : "Saída";
+    return num > 0? "INPUT" : "OUTPUT";
   }
 }

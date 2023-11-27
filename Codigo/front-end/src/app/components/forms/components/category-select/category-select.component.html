@@ -1,4 +1,4 @@
 <select id="inputCategory" class="form-select" (change)="onCategoryChange($event)" [(ngModel)]="category" required>
   <option value="" disabled selected>Categoria</option>
-  <option *ngFor="let category of categories" [ngValue]="category.name">{{ category.name }}</option>
+  <option *ngFor="let category of categories" [ngValue]="category.value">{{ category.name }}</option>
 </select>
