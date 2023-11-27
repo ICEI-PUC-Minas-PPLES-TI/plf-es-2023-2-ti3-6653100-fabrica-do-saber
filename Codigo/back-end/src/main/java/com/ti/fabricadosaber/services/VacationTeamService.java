@@ -218,7 +218,7 @@ public class VacationTeamService implements TeamOperations {
         dto.setClassroom(team.getClassroom());
         dto.setGrade(team.getGrade());
         dto.setNumberStudents(team.getNumberStudents());
-        dto.setTeacher(team.getTeacher());
+        dto.setTeacherId(team.getTeacher().getId());
         dto.setStudentIds(studentIds);
         dto.setStartDate(team.getStartDate());
         dto.setEndDate(team.getEndDate());
