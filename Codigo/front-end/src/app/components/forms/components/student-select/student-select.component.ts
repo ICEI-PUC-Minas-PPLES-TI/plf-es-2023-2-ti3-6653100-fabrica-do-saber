@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Student } from 'src/app/interfaces/Student';
-import { StudentService } from '../../../../services/student/student.service';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { TeamService } from '../../../../services/team/team.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Student} from 'src/app/interfaces/Student';
+import {StudentService} from '../../../../services/student/student.service';
+import {IDropdownSettings} from 'ng-multiselect-dropdown';
+import {TeamService} from '../../../../services/team/team.service';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {VacationTeamService} from '../../../../services/vacation-team/vacation-team.service';
 
 @Component({
   selector: 'app-student-select',
@@ -16,6 +17,7 @@ export class StudentSelectComponent implements OnInit {
   selectedItems: Student[] = [];
   dropdownSettings: IDropdownSettings = {};
   teamId!: number;
+  teamType!: string;
 
   @Input() selectedStudentIds: number[] = [];
   @Output() selectedStudentIdsChange: EventEmitter<number[]> = new EventEmitter<number[]>();
@@ -23,7 +25,7 @@ export class StudentSelectComponent implements OnInit {
 
   students: Student[] = [];
 
-  constructor(private studentService: StudentService, private teamService: TeamService, private route: ActivatedRoute) {
+  constructor(private studentService: StudentService, private teamService: TeamService, private vacationTeamService: VacationTeamService, private route: ActivatedRoute) {
     this.dropdownSettings = {
       idField: 'id',
       textField: 'fullName',
@@ -36,7 +38,10 @@ export class StudentSelectComponent implements OnInit {
     this.getAllStudents();
     this.route.paramMap.subscribe((params: ParamMap): void => {
       this.teamId = parseInt(<string>params.get('id'));
-      this.getStudents(this.teamId);
+      this.route.url.subscribe((url) => {
+        this.teamType = url[0].path;
+        this.getStudents(this.teamId, this.teamType);
+      });
     });
   }
 
@@ -47,10 +52,15 @@ export class StudentSelectComponent implements OnInit {
     });
   }
 
-  getStudents(id: number) {
-    this.teamService.getStudents(id).subscribe((students: Student[]) => {
-      this.selectedItems = students;
-    })
+  getStudents(id: number, teamType: string): void {
+    if (teamType.includes('vacation'))
+      this.vacationTeamService.getStudents(id).subscribe((students: Student[]): void => {
+        this.selectedItems = students;
+      });
+    else
+      this.teamService.getStudents(id).subscribe((students: Student[]): void => {
+        this.selectedItems = students;
+      });
   }
 
   updateStudents(): void {
