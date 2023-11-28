@@ -272,7 +272,7 @@ public class StudentService {
     public void delete(Long id) {
         Student student = findById(id);
         try {
-            updateNumberStudentsAfterStudentDeletion(student);
+            updateNumberStudentsBeforeStudentDeletion(student);
             studentTeamAssociationService.deleteStudent(id);
             this.studentRepository.delete(student);
         } catch (Exception e) {
@@ -281,7 +281,7 @@ public class StudentService {
     }
 
 
-    public void updateNumberStudentsAfterStudentDeletion(Student student) {
+    public void updateNumberStudentsBeforeStudentDeletion(Student student) {
         List<Team> teamsAssociated = studentTeamAssociationService.teamsAssociatedWithTheStudent(student);
 
         for (Team team : teamsAssociated) {

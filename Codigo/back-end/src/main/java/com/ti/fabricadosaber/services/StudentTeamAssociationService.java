@@ -504,5 +504,26 @@ public class StudentTeamAssociationService {
     }
 
 
+    public void deleteTeam (Long teamId) {
+        List<StudentTeamAssociation> teamAssociations =
+                studentTeamAssociationRepository.findAllAssociationsForTeamById(teamId);
+        for(StudentTeamAssociation teamAssociation : teamAssociations) {
+            delete(teamAssociation.getId());
+        }
+    }
+
+
+    public void deleteVacationTeam (Long teamId) {
+        List<StudentTeamAssociation> teamAssociations =
+                studentTeamAssociationRepository.findAllAssociationsForVacationTeamById(teamId);
+        for(StudentTeamAssociation teamAssociation : teamAssociations) {
+            delete(teamAssociation.getId());
+        }
+    }
+
+
+
+
+
 
 }

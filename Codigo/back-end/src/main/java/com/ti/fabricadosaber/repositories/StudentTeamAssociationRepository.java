@@ -94,9 +94,17 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
     List<Student> findActiveStudentsByVacationTeamId(@Param("teamId") Long teamId);
 
 
+    // Listar todas as associações (ativas e inativas) para Team específico
+    @Query("SELECT sta FROM StudentTeamAssociation sta JOIN Team t ON sta.team.id = t.id WHERE t.id = :teamId AND TYPE(t) = Team")
+    List<StudentTeamAssociation> findAllAssociationsForTeamById(@Param("teamId") Long teamId);
+
+    // Listar todas as associações (ativas e inativas) para VacationTeam específico
+    @Query("SELECT sta FROM StudentTeamAssociation sta JOIN Team t ON sta.team.id = t.id WHERE t.id = :vacationTeamId AND TYPE(t) = VacationTeam")
+    List<StudentTeamAssociation> findAllAssociationsForVacationTeamById(@Param("vacationTeamId") Long vacationTeamId);
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.id.teamId = :teamId")
     List<StudentTeamAssociation> findAllAssociationsByTeamId(@Param("teamId") Long teamId);
+
 
     @Query("SELECT sta FROM StudentTeamAssociation sta WHERE sta.student.id = :studentId")
     List<StudentTeamAssociation> findAllAssociationsByStudentId(@Param("studentId") Long studentId);

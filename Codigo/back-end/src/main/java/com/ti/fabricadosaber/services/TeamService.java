@@ -168,6 +168,7 @@ public class TeamService implements TeamOperations {
     public void delete(Long id) {
         Team team = findById(id);
         try {
+            studentTeamAssociationService.deleteTeam(id);
             this.teamRepository.delete(team);
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
