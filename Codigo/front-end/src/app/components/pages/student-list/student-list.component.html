@@ -60,7 +60,7 @@
       </tr>
       </thead>
       <tbody>
-      <ng-container *ngFor="let student of students">
+      <ng-container *ngFor="let student of students; index as i">
         <tr>
           <td>
             <h6 class="text-black">{{ student.fullName }}</h6>
@@ -78,7 +78,7 @@
             <span class="text-muted">{{ student.parents[1].fullName}}</span>
           </td>
           <td>
-            <span class="text-black">{{ 'getTeamName(student) '}}</span><br>
+            <span class="text-black">{{ student.race }}</span><br>
           </td>
           <td>
             <span class="text-black">{{student.registrationDate}}</span><br>

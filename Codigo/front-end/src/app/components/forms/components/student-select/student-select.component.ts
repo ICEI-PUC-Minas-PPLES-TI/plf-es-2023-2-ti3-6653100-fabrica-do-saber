@@ -53,9 +53,8 @@ export class StudentSelectComponent implements OnInit {
     })
   }
 
-  addStudents(): void {
+  updateStudents(): void {
     const selectedStudentIds = this.selectedItems.map(student => student.id);
     this.selectedStudentIdsChange.emit(selectedStudentIds);
   }
-
 }

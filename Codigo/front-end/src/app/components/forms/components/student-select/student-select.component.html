@@ -5,7 +5,8 @@
       [settings]="dropdownSettings"
       [data]="students"
       [(ngModel)]="selectedItems"
-      (onSelect)="addStudents()"
+      (onSelect)="updateStudents()"
+      (onDeSelect)="updateStudents()"
     >
     </ng-multiselect-dropdown>
   </div>

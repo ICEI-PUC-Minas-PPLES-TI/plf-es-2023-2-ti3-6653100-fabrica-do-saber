@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { forkJoin, Observable } from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 
-import { Student } from '../../../interfaces/Student';
-import { StudentService } from '../../../services/student/student.service';
-import { Team } from '../../../interfaces/Team';
-import { TeamService } from '../../../services/team/team.service';
+import {Student} from '../../../interfaces/Student';
+import {StudentService} from '../../../services/student/student.service';
+import {Team} from '../../../interfaces/Team';
+import {TeamService} from '../../../services/team/team.service';
 
 @Component({
   selector: 'app-student-list',
@@ -18,9 +18,10 @@ export class StudentListComponent {
   originalStudents: Student[] = [];
   students: Student[] = [];
   teams: Team[] = [];
+  teamsNames!: string[];
 
   /*Table variables*/
-  tableHeaders: String[] = ['Nome', 'Idade', 'Responsável', 'Responsável', 'Turma', 'Data de registro', 'Gerenciar'];
+  tableHeaders: String[] = ['Nome', 'Idade', 'Responsável', 'Responsável', 'Raça', 'Data de registro', 'Gerenciar'];
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit', function: null},
     {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printStudent.bind(this)},
@@ -42,7 +43,6 @@ export class StudentListComponent {
 
   getStudents(): void {
     this.studentService.getStudents().subscribe((students: Student[]): void => {
-      console.log(students)
       this.originalStudents = students;
       this.students = [...this.originalStudents];
       this.getTeams(this.students);
@@ -60,12 +60,15 @@ export class StudentListComponent {
     });
   }
 
-  getTeamName(student: Student): string | undefined {
-    let teamName: Team | undefined;
-    this.studentService.getActiveTeam(student.id).subscribe((t:Team) => {
-      teamName = this.teams.find((team: Team):boolean => team.id === t.id);
-    })
-    return teamName?.name;
+  getTeamsNames(students: Student[]): string {
+    this.teamsNames = new Array(students.length);
+    let index: number = 0;
+    students.forEach((student: Student): void => {
+      this.studentService.getActiveTeam(student.id).subscribe((t: Team): void => {
+        this.teamsNames[index++] = t.name;
+      });
+    });
+    return 'teamName?.name';
   }
 
   deleteStudent(student: Student): void {
