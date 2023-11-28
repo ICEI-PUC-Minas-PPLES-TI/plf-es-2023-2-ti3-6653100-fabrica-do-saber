@@ -203,6 +203,7 @@ public class VacationTeamService implements TeamOperations {
     public void delete(Long id) {
         VacationTeam team = findById(id);
         try {
+            studentTeamAssociationService.deleteVacationTeam(id);
             this.vacationTeamRepository.delete(team);
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
