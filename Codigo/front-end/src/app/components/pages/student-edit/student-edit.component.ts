@@ -46,6 +46,7 @@ export class StudentEditComponent {
 
   updateStudent(): void {
     let op: boolean = confirm('Deseja atualizar o aluno?');
+    console.log(this.student)
     if (op) {
       this.studentService.updateStudent(this.studentId, this.student)
         .pipe(

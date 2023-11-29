@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Student } from '../../../interfaces/Student';
-import { Team } from '../../../interfaces/Team';
-import { StudentService } from '../../../services/student/student.service';
-import { TeamService } from '../../../services/team/team.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {Student} from '../../../interfaces/Student';
+import {Team} from '../../../interfaces/Team';
+import {StudentService} from '../../../services/student/student.service';
+import {TeamService} from '../../../services/team/team.service';
+import {VacationTeam} from '../../../interfaces/Vacation-team';
 
 @Component({
   selector: 'app-student-form',
@@ -46,9 +47,20 @@ export class StudentFormComponent implements OnInit {
   }
 
   updateTeam(newTeam: number): void {
-    if (this.student.teamIds.length > 0) {
-      this.studentService.getAllTeams(this.student.id).subscribe((teams: Team[]):void => {
-        this.studentService.getActiveTeam(this.student.id).subscribe((team: Team):void => {
+    if (this.student.teamIds.length == 0)
+      this.student.teamIds.push(newTeam);
+
+    if (this.student.teamIds.length == 1) {
+      this.studentService.getActiveVacationTeams(this.student.id).subscribe((vacationTeam: VacationTeam[]) => {
+        console.log(this.student.teamIds[0] === vacationTeam[0].id);
+        if (vacationTeam[0].id === this.student.teamIds[0])
+          this.student.teamIds.push(newTeam);
+      });
+    }
+
+    if (this.student.teamIds.length > 1) {
+      this.studentService.getAllTeams(this.student.id).subscribe((teams: Team[]): void => {
+        this.studentService.getActiveTeam(this.student.id).subscribe((team: Team): void => {
           teams.forEach((t: Team): void => {
             if (t.id)
               if (t.id === team.id) {
@@ -58,8 +70,7 @@ export class StudentFormComponent implements OnInit {
           });
         });
       });
-    } else
-      this.student.teamIds.push(newTeam);
+    }
   }
 
   formatSelect(select: any): any {
