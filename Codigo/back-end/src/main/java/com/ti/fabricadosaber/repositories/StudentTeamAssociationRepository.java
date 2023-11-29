@@ -121,14 +121,6 @@ public interface StudentTeamAssociationRepository extends CrudRepository<Student
 
     Integer countByTeamAndIsActiveIsTrue(Team team);
 
-    // Contar a quantidade de relações ativas para um Team
-
-    @Query("SELECT COUNT(sta) FROM StudentTeamAssociation sta JOIN Team t ON sta.team.id = t.id WHERE t.id = :teamId AND sta.isActive = true AND TYPE(t) = Team")
-    Integer countActiveAssociationsForTeam(@Param("teamId") Long teamId);
-
-    // Contar a quantidade de relações ativas para um VacationTeam
-    @Query("SELECT COUNT(sta) FROM StudentTeamAssociation sta JOIN Team t ON sta.team.id = t.id WHERE t.id = :vacationTeamId AND sta.isActive = true AND TYPE(t) = VacationTeam")
-    Integer countActiveAssociationsForVacationTeam(@Param("vacationTeamId") Long vacationTeamId);
 
 }
 
