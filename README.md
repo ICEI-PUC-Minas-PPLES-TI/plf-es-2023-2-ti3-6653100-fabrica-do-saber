@@ -1,7 +1,7 @@
 <hr>
 <br>
 <h3 align="center">
-<img width="400px" src="logo-fabrica-do-saber.png">
+<img width="400px" src="logo-fabrica-do-saber.jpg">
 </h3>
 <br>
 <p align="center">
