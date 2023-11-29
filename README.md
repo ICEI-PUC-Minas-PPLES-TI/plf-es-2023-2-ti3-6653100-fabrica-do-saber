@@ -99,9 +99,9 @@ A aplicação vai estar rodando em <http://localhost:8080/>.
 
 **Usuário de teste**
 
-Por motivos de segurança, a criação do usuário administrador não é feita pelo navegador. Para criar um usuário inicial,
-é necessário fazer uma requisição de `POST` para o endpoint `http://localhost:8080/user`. Após isso, é necessário alterar
-o seu perfil (no banco de dados), para `tipo 1`.
+Por motivos de segurança, a criação do primeiro usuário administrador não é feita pelo navegador. Para criar um usuário
+inicial, é necessário fazer uma requisição de `POST` para o endpoint `http://localhost:8080/user`. Após isso, é
+necessário alterar o seu perfil (no banco de dados), para `tipo 1`.
 
 O modelo do JSON que deve ser enviado na requisição POST é ilustrado abaixo:
 
