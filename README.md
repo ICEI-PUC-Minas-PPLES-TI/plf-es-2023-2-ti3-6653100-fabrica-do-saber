@@ -57,6 +57,8 @@ recursos significativos.
 
 - Backend
 
+    - [Java](https://www.java.com/pt-BR/)
+    - [Lombok](https://projectlombok.org/)
     - [Spring Boot](https://spring.io/projects/spring-boot)
     - [Spring Security](https://spring.io/projects/spring-security)
 
