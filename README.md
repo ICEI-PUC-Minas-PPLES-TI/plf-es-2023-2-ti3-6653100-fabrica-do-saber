@@ -87,18 +87,34 @@ A instalação do Angular CLI pode ser acessada [aqui](https://angular.io/cli).
 - Passo 3.2: acesse a pasta front-end pelo CMD: `cd Codigo/front-end/`;
 - Passo 3.4: iniciar aplicação frontend: `npm start`
 
+A aplicação vai estar rodando em <http://localhost:4200/>.
+
 **Passo 04: iniciar back-end via linha de comando**
 
 - Passo 4.1: acesse a pasta clonada no **Passo 01** pelo CMD: `cd plf-es-2023-2-ti3-6653100-fabrica-do-saber`;
 - Passo 4.2: acesse a pasta back-end pelo CMD: `cd Codigo/back-end/`;
 - Passo 4.4: iniciar aplicação frontend: `mvn spring-boot:run`
 
-A aplicação vai estar rodando em <http://localhost:4200/>.
+A aplicação vai estar rodando em <http://localhost:8080/>.
 
 **Usuário de teste**
 
-- Login: admin@email.com
-- Senha: 123456
+Por motivos de segurança, a criação do usuário administrador não é feita pelo navegador. Para criar um usuário inicial,
+é necessário fazer uma requisição de `POST` para o endpoint `http://localhost:8080/user`. Após isso, é necessário alterar
+o seu perfil (no banco de dados), para `tipo 1`.
+
+O modelo do JSON que deve ser enviado na requisição POST é ilustrado abaixo:
+
+```
+{
+"fullName": "Usuário administrador",
+"email": "admin@email.com",
+"password": "admin123456"
+}
+```
+
+Feito isso, será possível acessar todas as funcionalidades da aplicação e, se desejar criar um novo usuário, basta
+efetuar o login no site com o usuário previamente criado, e criar um novo usuário na página do usuário.
 
 ## Histórico de versões
 
