@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { TransactionService } from '../../../services/transaction/transaction.service';
-import { Transaction } from '../../../interfaces/Transaction';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TransactionCreateComponent } from '../transaction-create/transaction-create.component';
-import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
+import {Component} from '@angular/core';
+import {TransactionService} from '../../../services/transaction/transaction.service';
+import {Transaction} from '../../../interfaces/Transaction';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {TransactionCreateComponent} from '../transaction-create/transaction-create.component';
+import {TransactionEditComponent} from '../transaction-edit/transaction-edit.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -27,7 +27,42 @@ export class TransactionListComponent {
     {name: 'categoria', function: this.sortTransactionsByCategory.bind(this)},
     {name: 'data', function: this.sortTransactionsByDate.bind(this)}
   ];
+
   filterText!: string;
+  ptCategories = [
+    {
+      pt: 'Pagamento aos funcionários',
+      en: 'PAYROLL'
+    },
+    {
+      pt: 'Despesas em infraestrutura',
+      en: 'INFRASTRUCTURE_EXPENSE'
+    },
+    {
+      pt: 'Marketing institucional',
+      en: 'INSTITUTIONAL_MARKETING'
+    },
+    {
+      pt: 'Projetos educacionais',
+      en: 'EDUCATIONAL_PROJECTS'
+    },
+    {
+      pt: 'Custos administrativos',
+      en: 'ADMINISTRATIVE_COSTS'
+    },
+    {
+      pt: 'Eventos escolares',
+      en: 'SCHOOL_EVENTS'
+    },
+    {
+      pt: 'Custos de manutenção',
+      en: 'MAINTENANCE_SERVICES'
+    },
+    {
+      pt: 'Material escolar',
+      en: 'EDUCATIONAL_MATERIAL'
+    },
+  ];
 
   constructor(private transactionService: TransactionService, private ngbModal: NgbModal) {
   }
@@ -36,6 +71,10 @@ export class TransactionListComponent {
     this.getTransactions();
     this.calculateTotalBalance();
     this.filterText = this.filters[0].name;
+  }
+
+  getPtCategoryName(enCategory: string) {
+    return this.ptCategories.find(item => item.en === enCategory)?.pt;
   }
 
   getTransactions(): void {
@@ -57,9 +96,9 @@ export class TransactionListComponent {
   }
 
   calculateTotalBalance(): void {
-    this.transactionService.getTotal().subscribe((total: number):void => {
+    this.transactionService.getTotal().subscribe((total: number): void => {
       this.totalBalance = total;
-    })
+    });
   }
 
   createTransaction(): void {
