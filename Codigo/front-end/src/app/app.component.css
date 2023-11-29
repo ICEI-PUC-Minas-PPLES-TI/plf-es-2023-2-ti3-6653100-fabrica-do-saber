@@ -1,7 +1,8 @@
 .container-fluid {
   min-height: 100vh;
   background-color: var(--blue);
-  background-image: url("../assets/img/bg/colorbg1.jpg");
+  /* background-image: url("../assets/img/bg/colorbg1.jpg"); */
+  background-color: #A3E7E6;
   background-size: cover;
   background-attachment: fixed;
 }

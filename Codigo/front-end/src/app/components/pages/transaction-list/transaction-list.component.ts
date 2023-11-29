@@ -15,7 +15,7 @@ export class TransactionListComponent {
   tableHeaders: String[] = ['Descrição', 'Data', 'Categoria', 'Valor', 'Gerenciar'];
   originalTransactions!: Transaction[];
   transactions!: Transaction[];
-  financialFlowTypes: string[] = ['Entrada', 'Saída'];
+  financialFlowTypes: string[] = ['INPUT', 'OUTPUT'];
   income!: number;
   outcome!: number;
   totalBalance !: number;

@@ -34,9 +34,9 @@ export class HomeComponent implements OnInit {
       route: '/reports'
     },
     {
-      title: 'Card 6',
-      imageUrl: '',
-      route: ''
+      title: 'Creche de Férias',
+      imageUrl: '../../../assets/img/ferias.png',
+      route: '/vacation-team-list'
     }
   ];
 

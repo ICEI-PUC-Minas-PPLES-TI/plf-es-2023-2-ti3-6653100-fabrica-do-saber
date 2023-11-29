@@ -8,10 +8,10 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
 
   menuItems = [
-    {label: 'Página Inicial', link: '/'},
+    {label: 'Início', link: '/'},
     {label: 'Alunos Cadastrados', link: '/student-list'},
     {label: 'Professores Cadastrados', link: '/teacher-list'},
-    {label: 'Turmas Cadastrados', link: '/team-list'},
+    {label: 'Turmas Cadastradas', link: '/team-list'},
     {label: 'Creches de Férias Cadastradas', link: '/vacation-team-list'},
     {label: 'Página do usuário', link: '/user-page'},
     {label: 'Financeiro', link: '/transaction-list'}

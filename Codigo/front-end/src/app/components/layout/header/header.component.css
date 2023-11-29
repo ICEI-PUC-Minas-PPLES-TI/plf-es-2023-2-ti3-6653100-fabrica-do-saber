@@ -1,9 +1,20 @@
 .navbar {
   min-height: var(--header-height);
   width: 100%;
-  background-image: url("../../../../assets/img/bg/colorbg1.jpg");
+  /* background-image: url("../../../../assets/img/bg/Artboard1.png"); */
+  /* background-color: #A3E7E6; */
   background-position: center 730px;
   background-size: 125%;
   border-bottom: 2px solid rgb(99, 99, 99);
   margin-bottom: 3rem;
+  font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+}
+
+.nav-link {
+  height: 70px;
+  /* border: solid blue 3px; */
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100%;
 }
