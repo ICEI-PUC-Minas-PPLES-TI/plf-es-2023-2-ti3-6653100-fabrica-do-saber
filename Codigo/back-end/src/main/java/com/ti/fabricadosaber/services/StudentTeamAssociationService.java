@@ -45,18 +45,6 @@ public class StudentTeamAssociationService {
     }
 
 
-    public List<StudentTeamAssociation> listAll() {
-
-        List<StudentTeamAssociation> studentTeamAssociations = (List<StudentTeamAssociation>) this.studentTeamAssociationRepository.findAll();
-
-        if (studentTeamAssociations.isEmpty()) {
-            throw new EntityNotFoundException("Nenhuma relação entre Turma e Estudante encontrada!");
-        }
-
-        return studentTeamAssociations;
-    }
-
-
     public StudentTeamAssociation create(StudentTeamAssociation studentTeamAssociation) {
 
         studentTeamAssociation.setStartDate(LocalDate.now());
