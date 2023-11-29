@@ -77,6 +77,10 @@ export class StudentService {
     return this.http.get<Team>(`${API_CONFIG.baseUrl}/student/${id}/active-team`);
   }
 
+  getActiveVacationTeams(id: number): Observable<VacationTeam[]> {
+    return this.http.get<VacationTeam[]>(`${API_CONFIG.baseUrl}/student/${id}/active-vacation-teams`);
+  }
+
   getVacationTeams(id: number): Observable<VacationTeam[]> {
     return this.http.get<VacationTeam[]>(`${API_CONFIG.baseUrl}/student/${id}/vacation-team`);
   }
