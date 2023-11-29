@@ -52,7 +52,6 @@ export class StudentFormComponent implements OnInit {
 
     if (this.student.teamIds.length == 1) {
       this.studentService.getActiveVacationTeams(this.student.id).subscribe((vacationTeam: VacationTeam[]) => {
-        console.log(this.student.teamIds[0] === vacationTeam[0].id);
         if (vacationTeam[0].id === this.student.teamIds[0])
           this.student.teamIds.push(newTeam);
       });
