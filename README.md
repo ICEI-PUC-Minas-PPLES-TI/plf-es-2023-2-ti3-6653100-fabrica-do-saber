@@ -63,6 +63,7 @@ recursos significativos.
 - Database:
 
     - [MySQL](https://www.mysql.com/)
+    - [HeideSql](https://www.heidisql.com/)
 
 ---
 
