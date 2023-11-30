@@ -85,7 +85,7 @@ A instalação do Angular CLI pode ser acessada [aqui](https://angular.io/cli).
 
 - Passo 3.1: acesse a pasta clonada no **Passo 01** pelo CMD: `cd plf-es-2023-2-ti3-6653100-fabrica-do-saber`;
 - Passo 3.2: acesse a pasta front-end pelo CMD: `cd Codigo/front-end/`;
-- Passo 3.4: iniciar aplicação frontend: `npm start`
+- Passo 3.3: iniciar aplicação frontend: `npm start`
 
 A aplicação vai estar rodando em <http://localhost:4200/>.
 
@@ -93,7 +93,7 @@ A aplicação vai estar rodando em <http://localhost:4200/>.
 
 - Passo 4.1: acesse a pasta clonada no **Passo 01** pelo CMD: `cd plf-es-2023-2-ti3-6653100-fabrica-do-saber`;
 - Passo 4.2: acesse a pasta back-end pelo CMD: `cd Codigo/back-end/`;
-- Passo 4.4: iniciar aplicação frontend: `mvn spring-boot:run`
+- Passo 4.3: iniciar aplicação frontend: `mvn spring-boot:run`
 
 A aplicação vai estar rodando em <http://localhost:8080/>.
 
