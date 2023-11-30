@@ -111,6 +111,10 @@ button:not(:disabled) {
     font-size: 13px;
   }
 
+  .list-container {
+  background: rgb(0, 0, 0, 0);
+  }
+
   body, app-btn-custom, .not-printable {
     visibility: hidden;
     width: 0;
