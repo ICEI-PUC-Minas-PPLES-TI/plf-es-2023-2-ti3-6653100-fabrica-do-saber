@@ -1,7 +1,8 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {TransactionService} from '../../../services/transaction/transaction.service';
-import {Transaction} from '../../../interfaces/Transaction';
-import {Chart, ChartConfiguration, registerables} from 'chart.js';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { TransactionService } from '../../../services/transaction/transaction.service';
+import { Transaction } from '../../../interfaces/Transaction';
+import { Chart, ChartConfiguration, registerables } from 'chart.js';
+
 Chart.register(...registerables);
 
 @Component({
@@ -29,6 +30,8 @@ export class TransactionChartsComponent {
     'MAINTENANCE_SERVICES',
     'EDUCATIONAL_MATERIAL',
   ];
+  @ViewChild('TransactionChart') transactionChartRef!: ElementRef;
+  @ViewChild('CategoryChart') categoryChartRef!: ElementRef;
 
   constructor(private transactionService: TransactionService) {
   }
@@ -36,117 +39,6 @@ export class TransactionChartsComponent {
   ngOnInit(): void {
     this.getTransactions();
     this.calculateTotalBalance();
-  }
-
-  @ViewChild('TransactionChart') transactionChartRef!: ElementRef;
-
-  private generateTransactionChart(): void {
-    const ctx = this.transactionChartRef.nativeElement.getContext('2d');
-    const data = {
-      labels: this.months,
-      datasets: [
-        {
-          label: 'Receitas',
-          data: this.getDataArray(this.financialFlowTypes[0]),
-          borderColor: 'green',
-          backgroundColor: 'green',
-        },
-        {
-          label: 'Despesas',
-          data: this.getDataArray(this.financialFlowTypes[1]),
-          borderColor: 'red',
-          backgroundColor: 'red',
-        }
-      ]
-    };
-    new Chart(ctx, {
-      type: 'bar',
-      data: data,
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      },
-    } as ChartConfiguration);
-  }
-
-  @ViewChild('CategoryChart') categoryChartRef!: ElementRef;
-
-  private generateCategoryChart(): void {
-    const ctx = this.categoryChartRef.nativeElement.getContext('2d');
-    const data = {
-      labels: this.categories,
-      datasets: [
-        {
-          label: 'Pagamento aos funcionários',
-          data: this.getArrayDataByCategory('PAYROLL'),
-          borderColor: 'green',
-          backgroundColor: 'green',
-        },
-        {
-          label: 'Despesas em infraestrutura',
-          data: this.getArrayDataByCategory('INFRASTRUCTURE_EXPENSE'),
-          borderColor: 'red',
-          backgroundColor: 'red',
-        },
-        {
-          label: 'Marketing institucional',
-          data: this.getArrayDataByCategory('INSTITUTIONAL_MARKETING'),
-          borderColor: 'blue',
-          backgroundColor: 'blue',
-        },
-        {
-          label: 'Projetos educacionais',
-          data: this.getArrayDataByCategory('EDUCATIONAL_PROJECTS'),
-          borderColor: 'yellow',
-          backgroundColor: 'yellow',
-        },
-        {
-          label: 'Custos administrativos',
-          data: this.getArrayDataByCategory('ADMINISTRATIVE_COSTS'),
-          borderColor: 'orange',
-          backgroundColor: 'orange',
-        },
-        {
-          label: 'Eventos escolares',
-          data: this.getArrayDataByCategory('SCHOOL_EVENTS'),
-          borderColor: 'purple',
-          backgroundColor: 'purple',
-        },
-        {
-          label: 'Custos de manutenção',
-          data: this.getArrayDataByCategory('MAINTENANCE_SERVICES'),
-          borderColor: 'bronw',
-          backgroundColor: 'bronw',
-        },
-        {
-          label: 'Material escolar',
-          data: this.getArrayDataByCategory('EDUCATIONAL_MATERIAL'),
-          borderColor: 'grey',
-          backgroundColor: 'grey',
-        }
-      ]
-    };
-    new Chart(ctx, {
-      type: 'bar',
-      data: data,
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          },
-          x : {
-            ticks: {
-              display: false
-            }
-          }
-        },
-      },
-    } as ChartConfiguration);
   }
 
   getArrayDataByCategory(category: string): number[] {
@@ -207,5 +99,122 @@ export class TransactionChartsComponent {
       .filter((transaction: Transaction): boolean => transaction.financialFlowType.toLowerCase() === financialFlowType.toLowerCase())
       .map((transaction: Transaction) => transaction.value)
       .reduce((total: number, value: number) => total + value, 0);
+  }
+
+  private generateTransactionChart(): void {
+    const ctx = this.transactionChartRef.nativeElement.getContext('2d');
+    const data = {
+      labels: this.months,
+      datasets: [
+        {
+          label: 'Receitas',
+          data: this.getDataArray(this.financialFlowTypes[0]),
+          borderColor: 'green',
+          backgroundColor: 'green',
+          borderRadius: Number(3),
+        },
+        {
+          label: 'Despesas',
+          data: this.getDataArray(this.financialFlowTypes[1]),
+          borderColor: 'red',
+          backgroundColor: 'red',
+          borderRadius: Number(3),
+        }
+      ]
+    };
+    new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
+    } as ChartConfiguration);
+  }
+
+  private generateCategoryChart(): void {
+    const ctx = this.categoryChartRef.nativeElement.getContext('2d');
+    const data = {
+      labels: this.categories,
+      datasets: [
+        {
+          label: 'Pagamento aos funcionários',
+          data: this.getArrayDataByCategory('PAYROLL'),
+          borderColor: 'green',
+          backgroundColor: 'green',
+          borderRadius: Number(3),
+        },
+        {
+          label: 'Despesas em infraestrutura',
+          data: this.getArrayDataByCategory('INFRASTRUCTURE_EXPENSE'),
+          borderColor: 'red',
+          backgroundColor: 'red',
+          borderRadius: Number(3),
+        },
+        {
+          label: 'Marketing institucional',
+          data: this.getArrayDataByCategory('INSTITUTIONAL_MARKETING'),
+          borderColor: 'blue',
+          backgroundColor: 'blue',
+          borderRadius: Number(3),
+        },
+        {
+          label: 'Projetos educacionais',
+          data: this.getArrayDataByCategory('EDUCATIONAL_PROJECTS'),
+          borderColor: 'yellow',
+          backgroundColor: 'yellow',
+          borderRadius: Number(3),
+        },
+        {
+          label: 'Custos administrativos',
+          data: this.getArrayDataByCategory('ADMINISTRATIVE_COSTS'),
+          borderColor: 'orange',
+          backgroundColor: 'orange',
+          borderRadius: Number(3),
+        },
+        {
+          label: 'Eventos escolares',
+          data: this.getArrayDataByCategory('SCHOOL_EVENTS'),
+          borderColor: 'purple',
+          backgroundColor: 'purple',
+          borderRadius: Number(3),
+        },
+        {
+          label: 'Custos de manutenção',
+          data: this.getArrayDataByCategory('MAINTENANCE_SERVICES'),
+          borderColor: 'bronw',
+          backgroundColor: 'bronw',
+          borderRadius: Number(3),
+        },
+        {
+          label: 'Material escolar',
+          data: this.getArrayDataByCategory('EDUCATIONAL_MATERIAL'),
+          borderColor: 'grey',
+          backgroundColor: 'grey',
+          borderRadius: Number(3),
+        }
+      ]
+    };
+    new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          },
+          x: {
+            ticks: {
+              display: false
+            }
+          }
+        },
+      },
+    } as ChartConfiguration);
   }
 }
