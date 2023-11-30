@@ -8,6 +8,7 @@ import com.ti.fabricadosaber.services.exceptions.DataBindingViolationException;
 import com.ti.fabricadosaber.utils.SecurityUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.ti.fabricadosaber.models.Teacher;
@@ -19,6 +20,10 @@ import jakarta.transaction.Transactional;
 public class TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    @Lazy
+    private TeamService teamService;
 
    public Teacher findById(Long id) {
         Teacher teacher = this.teacherRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
@@ -69,11 +74,21 @@ public class TeacherService {
 
     public void delete(Long id) {
         Teacher teacher = findById(id);
-
         try {
+            removeTeacherFromTeam(teacher);
             this.teacherRepository.delete(teacher);
         } catch (Exception e) {
             throw new DataBindingViolationException("Não é possível excluir pois há entidades relacionadas");
         }
     }
+
+    public void removeTeacherFromTeam (Teacher teacher) {
+       List<Team> teams = teacher.getTeams();
+       teams.forEach(x -> teamService.teacherExcluded(x));
+    }
+
+
+
 }
+
+

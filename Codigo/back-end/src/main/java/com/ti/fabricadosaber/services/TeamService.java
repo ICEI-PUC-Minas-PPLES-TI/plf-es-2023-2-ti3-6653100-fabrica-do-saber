@@ -136,7 +136,11 @@ public class TeamService implements TeamOperations {
         }
     }
 
-
+    public void teacherExcluded(Team team) {
+        Team teamWithoutStudent  = findById(team.getId());
+        teamWithoutStudent.setTeacher(null);
+        teamRepository.save(teamWithoutStudent);
+    }
 
 
     @Transactional
