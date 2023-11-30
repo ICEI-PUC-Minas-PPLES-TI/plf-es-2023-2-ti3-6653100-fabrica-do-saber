@@ -198,7 +198,12 @@ public class TeamService implements TeamOperations {
         dto.setGrade(team.getGrade());
         dto.setClassroom(team.getClassroom());
         dto.setNumberStudents(team.getNumberStudents());
-        dto.setTeacherId(team.getTeacher().getId());
+
+        if(team.getTeacher() == null)
+            dto.setTeacherId(null);
+        else
+            dto.setTeacherId(team.getTeacher().getId());
+
         dto.setStudentIds(studentIds);
         dto.setType(team.getClass().getAnnotation(DiscriminatorValue.class).value());
 
