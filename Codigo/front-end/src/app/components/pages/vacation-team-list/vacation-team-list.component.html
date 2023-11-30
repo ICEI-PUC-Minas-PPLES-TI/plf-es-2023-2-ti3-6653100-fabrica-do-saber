@@ -67,7 +67,7 @@
             <span class="text-muted">{{getTeacherInfo(vacationTeam, 'phoneNumber')}}</span>
           </td>
           <td>
-            <span class="black">{{ vacationTeam.grade }}</span><br>
+            <span class="black">{{ getGradeName(vacationTeam.grade) }}</span><br>
           </td>
           <td>
             <span class="black">{{ vacationTeam.numberStudents ? vacationTeam.numberStudents : '0' }}</span><br>

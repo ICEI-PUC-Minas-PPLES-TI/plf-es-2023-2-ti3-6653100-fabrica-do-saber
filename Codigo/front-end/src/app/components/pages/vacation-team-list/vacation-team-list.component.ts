@@ -28,8 +28,34 @@ export class VacationTeamListComponent {
     {name: 'ordem alfabética', function: this.sortVacationTeamsByName.bind(this)},
   ];
   filterText!: string;
+  grades = [
+    {
+      pt: '1º Série',
+      en: 'PRIMEIRA_SERIE'
+    },
+    {
+      pt: '2º Série',
+      en: 'SEGUNDA_SERIE'
+    },
+    {
+      pt: '3º Série',
+      en: 'TERCEIRA_SERIE'
+    },
+    {
+      pt: '4º Série',
+      en: 'QUARTA_SERIE'
+    },
+    {
+      pt: '5º Série',
+      en: 'QUINTA_SERIE'
+    }
+  ];
 
   constructor(private vacationTeamService: VacationTeamService, private teacherService: TeacherService) {
+  }
+
+  getGradeName(grande: string) {
+    return this.grades.find(item => item.en === grande)?.pt;
   }
 
   ngOnInit(): void {
