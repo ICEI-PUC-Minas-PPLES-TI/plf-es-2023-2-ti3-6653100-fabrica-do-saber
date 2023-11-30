@@ -13,9 +13,9 @@ INSERT IGNORE INTO fabricadosaber.transaction VALUES (12, 'EDUCATIONAL_PROJECTS'
 INSERT IGNORE INTO fabricadosaber.transaction VALUES (13, 'ADMINISTRATIVE_COSTS', '2023-12-31', 'Cartão de Débito', 'INPUT', 190);
 INSERT IGNORE INTO fabricadosaber.transaction VALUES (14, 'SCHOOL_EVENTS', '2023-11-25', 'Transferência Bancária', 'OUTPUT', 160);
 
---        senha utilizadas na encriptacao: admin123456
+--        senha utilizadas na encriptacao: admin123456 e user123456
 INSERT IGNORE INTO fabricadosaber.user VALUES (1, '2023-11-25', "admin@email.com", "administrator", "$2a$10$MPwDDc6gsgGHpc.rQ8Cea.Q/3evYk/tzBq7nUEkZIU./VxCYcNufW" );
 INSERT IGNORE INTO fabricadosaber.user_profile VALUES (1, 1);
-INSERT IGNORE INTO fabricadosaber.user VALUES (2, '2023-11-25', "user@email.com", "usuario", "$2a$10$MPwDDc6gsgGHpc.rQ8Cea.Q/3evYk/tzBq7nUEkZIU./VxCYcNufW" );
+INSERT IGNORE INTO fabricadosaber.user VALUES (2, '2023-11-25', "user@email.com", "usuario", "$2a$10$Tbbo8EMq1C9Ou5jpet4qd.Pr1AhxZXmAPYEwChM3MgIbcxp7ULTfS" );
 INSERT IGNORE INTO fabricadosaber.user_profile VALUES (2, 1);
 
