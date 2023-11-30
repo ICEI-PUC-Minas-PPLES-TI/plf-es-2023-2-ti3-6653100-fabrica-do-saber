@@ -2,19 +2,19 @@
   <h5 class="pt-3">Financeiro</h5>
 
   <div class="d-flex justify-content-between pb-4">
-    <div class="card col-md-3 py-2">
+    <div class="card col-md-3 py-2 transaction-card">
       <p>Receitas</p>
-      <p>R$ {{income != undefined ? income.toFixed(2) : 0}}</p>
+      <p class="income">R$ {{income != undefined ? income.toFixed(2) : 0}}</p>
     </div>
 
-    <div class="card col-md-3 py-2">
+    <div class="card col-md-3 py-2 transaction-card">
       <p>Despesas</p>
-      <p>R$ {{outcome != undefined ? outcome.toFixed(2) : 0}}</p>
+      <p class="outcome">R$ {{outcome != undefined ? outcome.toFixed(2) : 0}}</p>
     </div>
 
-    <div class="card col-md-3 py-2">
-      <p>Total</p>
-      <p>R$ {{totalBalance != undefined ? totalBalance.toFixed(2) : 0}}</p>
+    <div class="card col-md-3 py-2 transaction-card">
+      <p>Saldo atual</p>
+      <p class="total">R$ {{totalBalance != undefined ? totalBalance.toFixed(2) : 0}}</p>
     </div>
 
     <div class="col-md-1 py-2">

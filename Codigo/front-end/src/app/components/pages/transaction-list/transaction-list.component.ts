@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {TransactionService} from '../../../services/transaction/transaction.service';
-import {Transaction} from '../../../interfaces/Transaction';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {TransactionCreateComponent} from '../transaction-create/transaction-create.component';
-import {TransactionEditComponent} from '../transaction-edit/transaction-edit.component';
+import { Component } from '@angular/core';
+import { TransactionService } from '../../../services/transaction/transaction.service';
+import { Transaction } from '../../../interfaces/Transaction';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { TransactionCreateComponent } from '../transaction-create/transaction-create.component';
+import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -126,8 +126,9 @@ export class TransactionListComponent {
 
       const descriptionMatch: boolean = transaction.description.toLowerCase().includes(inputValue);
       const dateMatch: boolean = transaction.date.includes(inputValue);
+      const categoryMatch: boolean | undefined = this.getPtCategoryName(transaction.category)?.toLowerCase().includes(inputValue);
 
-      return descriptionMatch || dateMatch;
+      return descriptionMatch || dateMatch || categoryMatch;
     });
   }
 
