@@ -19,7 +19,6 @@ export class TransactionChartsComponent {
   outcome!: number;
   totalBalance !: number;
   months: string[] = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  // categories: string[] = ['Pagamento aos funcionários', 'Despesas em infraestrutura', 'Marketing institucional', 'Projetos educacionais', 'Custos administrativos', 'Eventos escolares', 'Serviços de manutenção', 'Material escolar'];
   categories: string[] = [
     'PAYROLL',
     'INFRASTRUCTURE_EXPENSE',
