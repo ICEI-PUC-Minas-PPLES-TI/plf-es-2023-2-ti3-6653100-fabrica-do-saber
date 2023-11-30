@@ -1,14 +1,17 @@
 .navbar {
   min-height: var(--header-height);
   width: 100%;
-  /* background-image: url("../../../../assets/img/bg/Artboard1.png"); */
-  /* background-color: #A3E7E6; */
+  backdrop-filter: blur(100px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
   background-position: center 730px;
   background-size: 125%;
-  border-bottom: 2px solid rgb(99, 99, 99);
+  border-bottom: 1px solid rgb(99, 99, 99);
   margin-bottom: 3rem;
   font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
 }
+
+/* Additional styles if needed */
+
 
 .nav-link {
   height: 70px;
