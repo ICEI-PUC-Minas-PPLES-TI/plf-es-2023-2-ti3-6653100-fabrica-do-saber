@@ -73,9 +73,9 @@ export class VacationTeamListComponent {
   }
 
   getTeachers(vacationTeams: VacationTeam[]): void {
-    const teacherObservables: Observable<Teacher>[] = vacationTeams.map((vacationTeam: VacationTeam) =>
-      this.teacherService.getTeacherById(vacationTeam.teacherId)
-    );
+    const teacherObservables: Observable<Teacher>[] = vacationTeams
+      .filter(vacationTeam => vacationTeam.teacherId !== null)
+      .map((vacationTeam: VacationTeam) => this.teacherService.getTeacherById(vacationTeam.teacherId as number));
 
     forkJoin(teacherObservables).subscribe((teachers: Teacher[]): void => {
       this.teachers = teachers;

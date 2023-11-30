@@ -51,19 +51,22 @@ export class TeamListComponent {
     this.teamService.getTeams().subscribe((teams: Team[]): void => {
       this.originalTeams = teams;
       this.teams = [...this.originalTeams];
+      console.log(teams)
       this.getTeachers(this.teams);
       this.sortTeamsByName();
     });
   }
 
   getTeachers(teams: Team[]): void {
-    const teacherObservables: Observable<Teacher>[] = teams.map((team: Team) =>
-      this.teacherService.getTeacherById(team.teacherId)
-    );
+    const teacherObservables: Observable<Teacher>[] = teams
+      .filter(team => team.teacherId !== null)
+      .map((team: Team) => this.teacherService.getTeacherById(team.teacherId as number));
+
     forkJoin(teacherObservables).subscribe((teachers: Teacher[]): void => {
       this.teachers = teachers;
     });
   }
+
 
   getGradeName(value: string): string | undefined {
     return this.grades.find((item: SelectValue): boolean => item.value === value)?.name;

@@ -21,7 +21,6 @@ export class TeamCreateComponent {
 
   createTeam(): void {
     const formattedTeam = this.formatToRequest(this.team);
-    console.log(formattedTeam)
     let op: boolean = confirm('Deseja criar a turma?');
     if (op)
       this.teamService.createTeam(formattedTeam)
