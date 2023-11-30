@@ -81,49 +81,49 @@ export class TransactionChartsComponent {
       labels: this.categories,
       datasets: [
         {
-          label: 'PAYROLL',
+          label: 'Pagamento aos funcionários',
           data: this.getArrayDataByCategory('PAYROLL'),
           borderColor: 'green',
           backgroundColor: 'green',
         },
         {
-          label: 'INFRASTRUCTURE_EXPENSE',
+          label: 'Despesas em infraestrutura',
           data: this.getArrayDataByCategory('INFRASTRUCTURE_EXPENSE'),
           borderColor: 'red',
           backgroundColor: 'red',
         },
         {
-          label: 'INSTITUTIONAL_MARKETING',
+          label: 'Marketing institucional',
           data: this.getArrayDataByCategory('INSTITUTIONAL_MARKETING'),
           borderColor: 'blue',
           backgroundColor: 'blue',
         },
         {
-          label: 'EDUCATIONAL_PROJECTS',
+          label: 'Projetos educacionais',
           data: this.getArrayDataByCategory('EDUCATIONAL_PROJECTS'),
           borderColor: 'yellow',
           backgroundColor: 'yellow',
         },
         {
-          label: 'ADMINISTRATIVE_COSTS',
+          label: 'Custos administrativos',
           data: this.getArrayDataByCategory('ADMINISTRATIVE_COSTS'),
           borderColor: 'orange',
           backgroundColor: 'orange',
         },
         {
-          label: 'SCHOOL_EVENTS',
+          label: 'Eventos escolares',
           data: this.getArrayDataByCategory('SCHOOL_EVENTS'),
           borderColor: 'purple',
           backgroundColor: 'purple',
         },
         {
-          label: 'MAINTENANCE_SERVICES',
+          label: 'Custos de manutenção',
           data: this.getArrayDataByCategory('MAINTENANCE_SERVICES'),
           borderColor: 'bronw',
           backgroundColor: 'bronw',
         },
         {
-          label: 'EDUCATIONAL_MATERIAL',
+          label: 'Material escolar',
           data: this.getArrayDataByCategory('EDUCATIONAL_MATERIAL'),
           borderColor: 'grey',
           backgroundColor: 'grey',
@@ -138,8 +138,13 @@ export class TransactionChartsComponent {
         scales: {
           y: {
             beginAtZero: true
+          },
+          x : {
+            ticks: {
+              display: false
+            }
           }
-        }
+        },
       },
     } as ChartConfiguration);
   }
