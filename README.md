@@ -100,7 +100,7 @@ A aplicação vai estar rodando em <http://localhost:8080/>.
 **Usuário de teste**
 
 ```
-nome: administrados
+nome: administrador
 email: admin@email.com
 senha: admin123456
 ```
