@@ -28,7 +28,7 @@
   </div>
 
   <div class="d-flex justify-content-between mt-3 mb-3">
-    <div class="col-md-4">
+    <div class="col-md-4 not-printable">
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Buscar transação" aria-label="Buscar transação"
                id="search-input"
@@ -36,7 +36,7 @@
       </form>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 not-printable">
       Ordenar por
       <div ngbDropdown class="d-inline-block">
         <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
@@ -64,7 +64,7 @@
     <table class="table no-wrap user-table mb-0">
       <thead>
       <tr>
-        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders">
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders" [class.not-printable]="header === 'Gerenciar'">
           {{ header }}
         </th>
       </tr>
