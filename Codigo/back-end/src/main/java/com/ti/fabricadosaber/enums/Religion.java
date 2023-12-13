@@ -1,5 +1,8 @@
 package com.ti.fabricadosaber.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Religion {
         CANDOMBLE("Candomblé"),
         CATOLICISMO("Catolicismo"),
@@ -16,17 +19,9 @@ public enum Religion {
             this.name = name;
         }
 
+
         public String getName() {
             return name;
         }
 
-        public static Religion recoverReligion(String name){
-
-            for(Religion religion : values()){
-                if (religion.getName().equalsIgnoreCase(name)) {
-                    return religion;
-                }
-            }
-            throw new IllegalArgumentException("Religião não encontrada: "+name);
-        }
 }

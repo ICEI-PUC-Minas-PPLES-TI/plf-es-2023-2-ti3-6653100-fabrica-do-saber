@@ -4,9 +4,15 @@ import java.net.URI;
 import java.util.List;
 import java.util.Set;
 
+import com.ti.fabricadosaber.dto.StudentResponseDTO;
+import com.ti.fabricadosaber.dto.TeamAndVacationTeamDTO;
+import com.ti.fabricadosaber.dto.TeamResponseDTO;
+import com.ti.fabricadosaber.dto.VacationTeamResponseDTO;
 import com.ti.fabricadosaber.models.Parent;
+import com.ti.fabricadosaber.models.VacationTeam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,15 +39,35 @@ public class StudentController {
 
 
     @GetMapping
-    public ResponseEntity<List<Student>> listAll() {
-        List<Student> studentList = this.studentService.listAllStudents();
+    public ResponseEntity<List<StudentResponseDTO>> listAll() {
+        List<StudentResponseDTO> studentList = this.studentService.listAllStudents();
         return ResponseEntity.ok().body(studentList);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> findById(@PathVariable Long id) {
-        Student obj = this.studentService.findById(id);
+    public ResponseEntity<StudentResponseDTO> findById(@PathVariable Long id) {
+        StudentResponseDTO obj = this.studentService.findByIdDTO(id);
+        return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping("/{id}/active-team")
+    public ResponseEntity<TeamResponseDTO> findTeamActive(@PathVariable Long id) {
+        TeamResponseDTO obj = this.studentService.findTeamActive(id);
+        return ResponseEntity.ok().body(obj);
+    }
+
+
+    @GetMapping("/{id}/active-vacation-teams")
+    public ResponseEntity<List<VacationTeamResponseDTO>> findVacationTeamActive(@PathVariable Long id) {
+        List<VacationTeamResponseDTO> obj = this.studentService.findVacationTeamActive(id);
+        return ResponseEntity.ok().body(obj);
+    }
+
+
+    @GetMapping("/{id}/active-all-teams")
+    public ResponseEntity<List<TeamAndVacationTeamDTO>> findTeamsActive(@PathVariable Long id) {
+        List<TeamAndVacationTeamDTO> obj = this.studentService.findTeamsAndVacationTeams(id);
         return ResponseEntity.ok().body(obj);
     }
 
@@ -50,7 +76,6 @@ public class StudentController {
         Set<Parent> parents = this.studentService.listParents(id);
         return ResponseEntity.ok().body(parents);
     }
-
 
 
     @PostMapping

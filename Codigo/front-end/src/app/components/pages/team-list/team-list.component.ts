@@ -1,9 +1,12 @@
-import {Component} from '@angular/core';
-import {Team} from '../../../interfaces/Team';
-import {TeamService} from '../../../services/team/team.service';
-import {TeacherService} from '../../../services/teacher/teacher.service';
-import {Teacher} from '../../../interfaces/Teacher';
-import {forkJoin, Observable} from 'rxjs';
+import { Component } from '@angular/core';
+
+import { forkJoin, Observable } from 'rxjs';
+
+import { Team } from '../../../interfaces/Team';
+import { TeamService } from '../../../services/team/team.service';
+import { TeacherService } from '../../../services/teacher/teacher.service';
+import { Teacher } from '../../../interfaces/Teacher';
+import { SelectValue } from '../../../interfaces/SelectValue';
 
 @Component({
   selector: 'app-team-list',
@@ -16,12 +19,19 @@ export class TeamListComponent {
   originalTeams!: Team[];
   teams!: Team[];
   teachers: Teacher[] = [];
+  grades: SelectValue[] = [
+    {name: '1° Série', value: 'PRIMEIRA_SERIE'},
+    {name: '2° Série', value: 'SEGUNDA_SERIE'},
+    {name: '3° Série', value: 'TERCEIRA_SERIE'},
+    {name: '4° Série', value: 'QUARTA_SERIE'},
+    {name: '5° Série', value: 'QUINTA_SERIE'}
+  ];
 
   /*Table variables*/
   tableHeaders: String[] = ['Turma', 'Professor', 'Série', 'Nº de alunos', 'Sala de aula', 'Gerenciar'];
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/team-edit', function: null},
-    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: null},
+    {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printTeam.bind(this)},
     {iconClass: 'fa fa-trash', title: 'Excluir', route: null, function: this.deleteTeam.bind(this)}
   ];
   filters = [
@@ -41,24 +51,29 @@ export class TeamListComponent {
     this.teamService.getTeams().subscribe((teams: Team[]): void => {
       this.originalTeams = teams;
       this.teams = [...this.originalTeams];
+      console.log(teams)
       this.getTeachers(this.teams);
       this.sortTeamsByName();
     });
   }
 
   getTeachers(teams: Team[]): void {
-    const teacherObservables: Observable<Teacher>[] = teams.map((team: Team) =>
-      this.teacherService.getTeacherById(team.teacherId)
-    );
+    const teacherObservables: Observable<Teacher>[] = teams
+      .filter(team => team.teacherId !== null)
+      .map((team: Team) => this.teacherService.getTeacherById(team.teacherId as number));
 
     forkJoin(teacherObservables).subscribe((teachers: Teacher[]): void => {
       this.teachers = teachers;
     });
   }
 
-  getTeacherInfo(team: Team, attribute: string): string {
 
-    const teacher: Teacher | undefined = this.teachers.find(teacher => teacher.id === team.teacherId);
+  getGradeName(value: string): string | undefined {
+    return this.grades.find((item: SelectValue): boolean => item.value === value)?.name;
+  }
+
+  getTeacherInfo(team: Team, attribute: string): string {
+    const teacher: Teacher | undefined = this.teachers.find((teacher: Teacher): boolean => teacher.id === team.teacherId);
 
     switch (attribute) {
       case 'fullName': {
@@ -72,16 +87,29 @@ export class TeamListComponent {
     }
   }
 
-  deleteTeam(id: any): void {
+  deleteTeam(team: Team): void {
+    const teamId: number = <number>team.id;
     let op: boolean = confirm('Deseja deletar a turma?');
     if (op)
-      this.teamService.deleteTeam(id).subscribe((): void => {
+      this.teamService.deleteTeam(teamId).subscribe((): void => {
         this.getTeams();
       });
   }
 
-  filterTeamList(event: Event): void {
+  printTeam(team: Team): void {
 
+    let newWindow: Window = <Window>window.open(`/team-edit/${team.id}`, '_blank');
+
+    newWindow.onload = function (): void {
+      setTimeout((): void => {
+        newWindow.print();
+        newWindow.close();
+      }, 200);
+    };
+
+  }
+
+  filterTeamList(event: Event): void {
     const searchInput: HTMLInputElement = event.target as HTMLInputElement;
     const inputValue: string = searchInput.value.toLowerCase();
 
@@ -104,8 +132,12 @@ export class TeamListComponent {
     this.updateBtnText(this.sortTeamsByName.name);
   }
 
-  updateBtnText(funcName: string) {
+  updateBtnText(funcName: string): void {
     const filter = this.filters.find(filter => filter.function.name.includes(funcName));
     this.filterText = filter ? filter.name : '';
+  }
+
+  printTeamList(): void {
+    window.print();
   }
 }

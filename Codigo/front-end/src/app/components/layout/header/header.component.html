@@ -1,11 +1,14 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+
+
+<nav class="navbar navbar-expand-lg bg-opacity-10 text-dark fw-bold">
   <div class="container-fluid">
     <a class="navbar-brand" href="/"><img src="../../../../assets/img/logo-fabrica-do-saber.png" height="50px"/></a>
-    <button class="navbar-toggler" type="button" (click)="toggleMenu()">
+    <button class="navbar-toggler not-printable" type="button" (click)="toggleMenu()">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" [ngClass]="{'show': isMenuOpen}" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse nav-div" [ngClass]="{'show': isMenuOpen}" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-aut">
         <li *ngFor="let menuItem of menuItems" class="nav-item">
           <a class="nav-link" [routerLink]="menuItem.link">{{ menuItem.label }}</a>
         </li>

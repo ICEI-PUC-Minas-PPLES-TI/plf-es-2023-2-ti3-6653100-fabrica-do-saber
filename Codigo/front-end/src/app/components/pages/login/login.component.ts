@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import {User} from '../../../interfaces/User';
-import {UserImp} from '../../../classes/user/user-imp';
-import {UserService} from '../../../services/user/user.service';
-import {catchError, tap} from 'rxjs';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+
+import { catchError, tap } from 'rxjs';
+
+import { User } from '../../../interfaces/User';
+import { UserImp } from '../../../classes/user/user-imp';
+import { UserService } from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-login',

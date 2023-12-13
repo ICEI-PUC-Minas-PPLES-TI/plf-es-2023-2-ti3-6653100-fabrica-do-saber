@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
+
+import {forkJoin, Observable} from 'rxjs';
+
 import {Student} from '../../../interfaces/Student';
 import {StudentService} from '../../../services/student/student.service';
 import {Team} from '../../../interfaces/Team';
 import {TeamService} from '../../../services/team/team.service';
-import {forkJoin, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-student-list',
@@ -16,9 +18,10 @@ export class StudentListComponent {
   originalStudents: Student[] = [];
   students: Student[] = [];
   teams: Team[] = [];
+  teamsNames!: string[];
 
   /*Table variables*/
-  tableHeaders: String[] = ['Nome', 'Idade', 'Responsável', 'Responsável', 'Turma', 'Data de registro', 'Gerenciar'];
+  tableHeaders: String[] = ['Nome', 'Idade', 'Responsável', 'Responsável', 'Raça', 'Data de registro', 'Gerenciar'];
   buttons = [
     {iconClass: 'fa fa-edit', title: 'Editar', route: '/student-edit', function: null},
     {iconClass: 'fa fa-upload', title: 'Imprimir', route: null, function: this.printStudent.bind(this)},
@@ -49,7 +52,7 @@ export class StudentListComponent {
 
   getTeams(students: Student[]): void {
     const teamObservables: Observable<Team>[] = students.map((student: Student): Observable<Team> => {
-      return this.teamService.getTeamById(student.team.id);
+      return this.studentService.getActiveTeam(student.id);
     });
 
     forkJoin(teamObservables).subscribe((teams: Team[]): void => {
@@ -57,9 +60,15 @@ export class StudentListComponent {
     });
   }
 
-  getTeamName(student: Student): string {
-    const team: Team | undefined = this.teams.find(team => team.id === student.team.id);
-    return team ? team.name : '';
+  getTeamsNames(students: Student[]): string {
+    this.teamsNames = new Array(students.length);
+    let index: number = 0;
+    students.forEach((student: Student): void => {
+      this.studentService.getActiveTeam(student.id).subscribe((t: Team): void => {
+        this.teamsNames[index++] = t.name;
+      });
+    });
+    return 'teamName?.name';
   }
 
   deleteStudent(student: Student): void {

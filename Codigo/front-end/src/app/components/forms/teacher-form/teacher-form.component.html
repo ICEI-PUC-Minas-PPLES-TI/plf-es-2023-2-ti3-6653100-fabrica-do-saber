@@ -2,7 +2,7 @@
 
   <h5 class="pt-3 d-flex justify-content-center not-printable">{{title || 'Título da sessão'}}</h5>
 
-  <div class="col-12 py-2 not-printable">
+  <div class="col-12 py-2">
     <h6>Informações do professor</h6>
   </div>
 
@@ -128,7 +128,24 @@
         <label for="teacherSalary">Salário*</label>
         <input id="teacherSalary" type="text" class="form-control"
                [placeholder]="teacher.salary ? teacher.salary : 'R$'" [(ngModel)]="teacher.salary"
-               name="teacherSalary" appCurrencyFormat  required>
+               name="teacherSalary" appCurrencyFormat required>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <div class="col-5 py-2">
+        <label for="teacherHireDate">Formação*</label>
+        <input id="teacherAcademicFormation" type="text" class="form-control"
+               [placeholder]="teacher.academicFormation ? teacher.academicFormation : 'Ex.: Psicologia'"
+               [(ngModel)]="teacher.academicFormation" name="teacherAcademicFormation" required>
+      </div>
+
+      <div class="col-5 py-2">
+        <label for="teacherHireDate">Status da formação*</label>
+        <app-formation-select
+          [academicFormationStatus]="teacher.academicFormationStatus"
+          (academicFormationStatusChange)="onAcademicFormationStatus($event)">
+        </app-formation-select>
       </div>
     </div>
   </div>

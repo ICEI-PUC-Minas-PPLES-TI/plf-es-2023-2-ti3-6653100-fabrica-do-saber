@@ -22,8 +22,13 @@ export class TeamSelectComponent {
   }
 
   getTeams(): void {
+    const teamsArr: Team[] = [];
     this.teamService.getTeams().subscribe((teams: Team[]): void => {
-      this.teams = teams;
+      teams.forEach((t: Team): void => {
+        if (t.type === 'team')
+          teamsArr.push(t);
+      });
+      this.teams = teamsArr;
     });
   }
 

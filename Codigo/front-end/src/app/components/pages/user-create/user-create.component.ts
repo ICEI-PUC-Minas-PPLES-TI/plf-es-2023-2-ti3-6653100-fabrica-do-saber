@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {User} from '../../../interfaces/User';
-import {UserService} from '../../../services/user/user.service';
-import {UserImp} from '../../../classes/user/user-imp';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { ToastrService } from 'ngx-toastr';
+
+import { User } from '../../../interfaces/User';
+import { UserService } from '../../../services/user/user.service';
+import { UserImp } from '../../../classes/user/user-imp';
 
 @Component({
   selector: 'app-user-create',

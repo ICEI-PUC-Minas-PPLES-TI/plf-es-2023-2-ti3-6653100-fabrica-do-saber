@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-btn-custom',
@@ -10,5 +10,7 @@ export class BtnCustomComponent {
   @Input() type: string = 'button';
   @Input() class: string = '';
   @Input() innerHtml: string = '';
+
+  
 
 }

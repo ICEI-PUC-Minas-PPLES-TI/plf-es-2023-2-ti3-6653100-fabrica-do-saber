@@ -1,0 +1,42 @@
+<form class="student-form">
+
+  <h5 class="pt-3 d-flex justify-content-center not-printable">{{title || 'Título da sessão'}}</h5>
+
+  <div id="transaction-info">
+
+    <div class="col-md-12 p-3">
+      <label for="transactionDescription">Descrição*</label>
+      <input id="transactionDescription" type="text" class="form-control"
+             [placeholder]="transaction.description ? transaction.description : ''"
+             [(ngModel)]="transaction.description" name="transactionDescription" required>
+    </div>
+
+    <div class="col-md-12 p-3">
+      <label for="transactionDate">Data*</label>
+      <input id="transactionDate" type="text" class="form-control"
+             [placeholder]="transaction.date ? transaction.date : 'Ex.: dd/mm/aaaa'"
+             [(ngModel)]="transaction.date" name="transactionDate" maxlength="10" appDateFormat required>
+    </div>
+
+    <div class="col-md-12 p-3">
+      <label>Categoria*</label>
+      <app-category-select
+        [category]="transaction.category"
+        (categoryChange)="onCategoryChange($event)">
+      </app-category-select>
+    </div>
+
+    <div class="col-md-12 p-3">
+      <label for="transactionValue">Valor*</label>
+      <input id="transactionValue" type="text" class="form-control"
+             [placeholder]="transaction.value ? transaction.value : 'R$'"
+             [(ngModel)]="transaction.value" name="transactionValue" required>
+    </div>
+
+
+    <div class="col-12 p-3 not-printable">
+      <p class="text-muted">* Informações obrigatórias</p>
+    </div>
+
+  </div>
+</form>

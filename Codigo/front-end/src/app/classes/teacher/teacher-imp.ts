@@ -20,6 +20,8 @@ export class TeacherImp implements Teacher {
   salary: number;
   hireDate: string;
   terminationDate: string;
+  academicFormation: string;
+  academicFormationStatus: string;
 
   constructor() {
     this.id = 0;
@@ -40,5 +42,7 @@ export class TeacherImp implements Teacher {
     this.salary = 0;
     this.hireDate = '';
     this.terminationDate = '';
+    this.academicFormation = '';
+    this.academicFormationStatus = '';
   }
 }

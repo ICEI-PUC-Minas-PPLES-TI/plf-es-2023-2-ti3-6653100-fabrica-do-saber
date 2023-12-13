@@ -15,11 +15,16 @@ import {TeamListComponent} from './components/pages/team-list/team-list.componen
 import {authGuard} from './services/auth/auth.guard';
 import {UserPageComponent} from './components/pages/user-page/user-page.component';
 import {ReportsComponent} from './components/pages/reports/reports.component';
+import {TransactionListComponent} from './components/pages/transaction-list/transaction-list.component';
+import { VacationTeamCreateComponent } from './components/pages/vacation-team-create/vacation-team-create.component';
+import { VacationTeamEditComponent } from './components/pages/vacation-team-edit/vacation-team-edit.component';
+import { VacationTeamListComponent } from './components/pages/vacation-team-list/vacation-team-list.component';
+import {TransactionChartsComponent} from './components/pages/transaction-charts/transaction-charts.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [authGuard]},
   {path: 'login', component: LoginComponent},
-  {path: 'user-page', component: UserPageComponent},
+  {path: 'user-page', component: UserPageComponent, canActivate: [authGuard]},
   {path: 'student-create', component: StudentCreateComponent, canActivate: [authGuard]},
   {path: 'student-edit/:id', component: StudentEditComponent, canActivate: [authGuard]},
   {path: 'student-list', component: StudentListComponent, canActivate: [authGuard]},
@@ -30,7 +35,12 @@ const routes: Routes = [
   {path: 'team-create', component: TeamCreateComponent, canActivate: [authGuard]},
   {path: 'team-edit/:id', component: TeamEditComponent, canActivate: [authGuard]},
   {path: 'team-list', component: TeamListComponent, canActivate: [authGuard]},
+  {path: 'vacation-team-create', component: VacationTeamCreateComponent, canActivate: [authGuard]},
+  {path: 'vacation-team-edit/:id', component: VacationTeamEditComponent, canActivate: [authGuard]},
+  {path: 'vacation-team-list', component: VacationTeamListComponent, canActivate: [authGuard]},
   {path: 'reports', component: ReportsComponent, canActivate: [authGuard]},
+  {path: 'transaction-list', component: TransactionListComponent, canActivate: [authGuard]},
+  {path: 'transaction-charts', component: TransactionChartsComponent, canActivate: [authGuard]},
 ];
 
 @NgModule({

@@ -1,4 +1,6 @@
 # Divulgação: Apresentação do Projeto
 
-Nesta pasta inclua arquivos de slides que foram produzidos para apresentações do projeto e de seus resultados.
+* `/Apresentacao` - Diretório com apresentações do projeto
+    * **Fábrica do saber - rev.01** : Revisão 01 da apresentação do projeto
+    * **Fábrica do saber - rev.02** : Revisão 02 da apresentação do projeto
 

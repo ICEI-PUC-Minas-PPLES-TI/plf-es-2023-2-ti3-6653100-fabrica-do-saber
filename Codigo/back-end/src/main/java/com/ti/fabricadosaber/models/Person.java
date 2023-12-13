@@ -57,6 +57,7 @@ public abstract class Person {
     private String cityOfResidence;
 
     @Column(name = "home_state", length = 45, nullable = false, updatable = true)
+    @Enumerated(EnumType.STRING)
     private State homeState;
 
     @Column(name = "registration_date", length = 10, nullable = false, updatable = false)

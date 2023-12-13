@@ -1,6 +1,8 @@
 package com.ti.fabricadosaber.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum Race {
@@ -23,14 +25,6 @@ public enum Race {
         return name;
     }
 
-    public static Race recoverRace(String name){
 
-            for(Race race : values()){
-                if (race.getName().equalsIgnoreCase(name)) {
-                    return race;
-                }
-            }
-            throw new IllegalArgumentException("Raça não encontrada: "+name);
-        }
 
 }

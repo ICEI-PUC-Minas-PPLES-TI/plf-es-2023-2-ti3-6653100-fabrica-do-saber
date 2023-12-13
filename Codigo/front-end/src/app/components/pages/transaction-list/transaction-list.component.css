@@ -1,0 +1,26 @@
+
+
+.user-table tbody tr .category-select {
+  max-width: 150px;
+  border-radius: 20px;
+}
+
+.transaction-card {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+  text-transform: uppercase;
+}
+
+.income {
+  color:mediumseagreen;
+}
+
+.outcome {
+  color:indianred;
+}
+
+.total {
+  color:cornflowerblue;
+}

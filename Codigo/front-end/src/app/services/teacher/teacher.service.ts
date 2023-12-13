@@ -1,8 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {catchError, Observable, tap} from 'rxjs';
-import {API_CONFIG} from '../config';
-import {Teacher} from '../../interfaces/Teacher';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { catchError, Observable, tap } from 'rxjs';
+
+import { API_CONFIG } from '../config';
+import { Teacher } from '../../interfaces/Teacher';
 
 @Injectable({
   providedIn: 'root'

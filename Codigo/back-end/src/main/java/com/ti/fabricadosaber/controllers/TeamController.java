@@ -3,7 +3,6 @@ package com.ti.fabricadosaber.controllers;
 import java.net.URI;
 import java.util.List;
 
-import com.ti.fabricadosaber.components.StudentTeamOperation;
 import com.ti.fabricadosaber.dto.TeamResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,35 +28,23 @@ import jakarta.validation.Valid;
 @RequestMapping("/team")
 @Validated
 public class TeamController {
+
     @Autowired
     private TeamService teamService;
 
-    @Autowired
-    StudentTeamOperation studentOperationComponent;
 
 
     @GetMapping("/{id}")
     public ResponseEntity<TeamResponseDTO> findById(@PathVariable Long id) {
-        Team team = teamService.findById(id);
-
-        if (team == null)
-            return ResponseEntity.notFound().build();
-
-        TeamResponseDTO teamResponseDTO = this.teamService.convertToTeamResponseDTO(team);
-
-        return ResponseEntity.ok(teamResponseDTO);
+        TeamResponseDTO obj = this.teamService.findByIdDTO(id);
+        return ResponseEntity.ok().body(obj);
     }
 
 
     @GetMapping
     public ResponseEntity<List<TeamResponseDTO>> listAllTeams() {
-        List<Team> teams = this.teamService.listAllTeams();
-
-        List<TeamResponseDTO> teamResponseDTOs = teams.stream()
-                .map(this.teamService::convertToTeamResponseDTO)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok().body(teamResponseDTOs);
+        List<TeamResponseDTO> teams = this.teamService.listAllTeams();
+        return ResponseEntity.ok().body(teams);
     }
 
 
@@ -86,12 +73,6 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
-
-    @DeleteMapping("/{teamId}/delete-students")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Long teamId, @RequestBody List<Long> studentIds) {
-        this.teamService.deleteStudentFromTeam(teamId, studentIds);
-        return ResponseEntity.noContent().build();
-    }
 
 
     @DeleteMapping("/{id}")

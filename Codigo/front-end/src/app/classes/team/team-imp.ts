@@ -1,4 +1,4 @@
-import {Team} from '../../interfaces/Team';
+import { Team } from '../../interfaces/Team';
 
 export class TeamImp implements Team {
 
@@ -9,6 +9,7 @@ export class TeamImp implements Team {
   numberStudents?: number;
   studentIds: number[];
   teacherId: number;
+  type: string;
 
   constructor() {
     this.id = 0;
@@ -18,5 +19,6 @@ export class TeamImp implements Team {
     this.numberStudents = 0;
     this.studentIds = [];
     this.teacherId = 0;
+    this.type = '';
   }
 }

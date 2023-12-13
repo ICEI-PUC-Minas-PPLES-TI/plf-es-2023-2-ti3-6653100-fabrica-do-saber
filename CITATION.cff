@@ -1,31 +1,30 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title: 
+title: Fábrica do Saber
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: Lage da Costa
+    given-names: Guilherme
+  - family-names: Perez Monteiro
+    given-names: João Gabriel
+  - family-names: Cabral Soares
+    given-names: Lucas
+  - family-names: Amaral Munitz
+    given-names: Maria Eduarda
+  - family-names: Lagares Stahlberg
+    given-names: Vitor
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Alonso Veloso
+    given-names: Eveline
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Amaral Baroni de Carvalho
+    given-names: Juliana
 keywords:
-  - 
-  - 
-repository-code: 
+  - Escola
+  - Creche
+  - Gerenciamento
+repository-code: https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2023-2-ti3-6653100-fabrica-do-saber
 license: CC-BY-4.0
 version: 1.0.0
 date-released: 2022-07-14

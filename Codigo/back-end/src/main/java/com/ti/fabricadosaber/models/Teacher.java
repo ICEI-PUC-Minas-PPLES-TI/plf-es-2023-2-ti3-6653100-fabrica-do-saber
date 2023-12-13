@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ti.fabricadosaber.enums.AcademicFormationStatus;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,4 +31,14 @@ public class Teacher extends Employee {
     @OneToMany(mappedBy = "teacher")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Team> teams = new ArrayList<Team>();
+
+    @Column(name = "academic_formation", length = 45, nullable = false, updatable = true)
+    @NotBlank
+    private String academicFormation;
+
+    @Column(name = "academic_formation_status", length = 45, nullable = false, updatable = true)
+    @Enumerated(EnumType.STRING)
+    private AcademicFormationStatus academicFormationStatus;
+
+
 }

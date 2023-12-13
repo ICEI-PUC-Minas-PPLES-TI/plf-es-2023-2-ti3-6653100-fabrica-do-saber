@@ -1,3 +1,32 @@
 .navbar {
   min-height: var(--header-height);
+  width: 100%;
+  backdrop-filter: blur(100px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
+  background-position: center 730px;
+  background-size: 125%;
+  border-bottom: 1px solid rgb(99, 99, 99);
+  margin-bottom: 3rem;
+  font-family: 'Montserrat', sans-serif; /* Use Montserrat font */
+}
+
+/* Additional styles if needed */
+
+
+.nav-link {
+  height: 70px;
+  /* border: solid blue 3px; */
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: 100%;
+}
+
+.nav-div {
+
+  justify-content: center;
+  width: 100%;
+  margin-right: 50px;
 }

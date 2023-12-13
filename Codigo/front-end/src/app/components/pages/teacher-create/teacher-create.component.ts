@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
-import {TeacherService} from '../../../services/teacher/teacher.service';
-import {Teacher} from '../../../interfaces/Teacher';
-import {TeacherImp} from '../../../classes/teacher/teacher-imp';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
-import {catchError, tap} from 'rxjs';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { catchError, tap } from 'rxjs';
+
+import { TeacherService } from '../../../services/teacher/teacher.service';
+import { Teacher } from '../../../interfaces/Teacher';
+import { TeacherImp } from '../../../classes/teacher/teacher-imp';
 
 @Component({
   selector: 'app-teacher-create',
@@ -15,7 +16,7 @@ export class TeacherCreateComponent {
 
   teacher: Teacher = new TeacherImp();
 
-  constructor(private router: Router, private toastr: ToastrService, private teacherService: TeacherService) {
+  constructor(private router: Router, private teacherService: TeacherService) {
   }
 
   createTeacher(): void {

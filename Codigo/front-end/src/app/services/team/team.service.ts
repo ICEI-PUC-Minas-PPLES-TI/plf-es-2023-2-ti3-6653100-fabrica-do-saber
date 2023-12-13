@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { catchError, Observable, tap } from 'rxjs';
+
 import { API_CONFIG } from '../config';
 import { Team } from '../../interfaces/Team';
+import { Student } from '../../interfaces/Student';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +66,10 @@ export class TeamService {
           throw err;
         })
       );
+  }
+
+  getStudents(id: number): Observable<Student[]> {
+    return this.http.get<Student[]>(`${API_CONFIG.baseUrl}/team/${id}/students`);
   }
 
 }

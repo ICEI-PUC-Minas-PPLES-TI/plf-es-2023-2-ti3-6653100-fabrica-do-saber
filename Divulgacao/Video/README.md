@@ -1,4 +1,6 @@
 # Divulgação: Vídeo do Projeto
 
-Nesta pasta inclua arquivos de vídeo produzidos para divulgação do projeto e seus resutados.
+
+* `/Video` - Diretório com apresentações do projeto
+    * **Fábrica do saber - Vídeo de apresentação** : Vídeo de apresentação do projeto
 

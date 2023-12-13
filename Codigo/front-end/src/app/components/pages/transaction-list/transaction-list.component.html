@@ -1,0 +1,110 @@
+<section class="container list-container">
+  <h5 class="pt-3">Financeiro</h5>
+
+  <div class="d-flex justify-content-between pb-4">
+    <div class="card col-md-3 py-2 transaction-card">
+      <p>Receitas</p>
+      <p class="income">R$ {{income != undefined ? income.toFixed(2) : 0}}</p>
+    </div>
+
+    <div class="card col-md-3 py-2 transaction-card">
+      <p>Despesas</p>
+      <p class="outcome">R$ {{outcome != undefined ? outcome.toFixed(2) : 0}}</p>
+    </div>
+
+    <div class="card col-md-3 py-2 transaction-card">
+      <p>Saldo atual</p>
+      <p class="total">R$ {{totalBalance != undefined ? totalBalance.toFixed(2) : 0}}</p>
+    </div>
+
+    <div class="col-md-1 py-2">
+      <app-btn-custom
+      class="w-50"
+        [type]="'submit'"
+        [class]="'btn btn-primary'"
+        [innerHtml]="'+'"
+        (click)="createTransaction()"
+      ></app-btn-custom>
+      
+      <button type="button" class="btn btn-outline-info btn-upload mt-3"
+                    (click) = printTransactionList()
+                    title="button.title">
+              <i class="fa fa-upload"></i>
+    </button>
+    </div>
+
+    
+  </div>
+
+  <div class="d-flex justify-content-between mt-3 mb-3">
+    <div class="col-md-4 not-printable">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Buscar transação" aria-label="Buscar transação"
+               id="search-input"
+               (input)="filterTransactionList($event)">
+      </form>
+    </div>
+
+    <div class="col-md-4 not-printable">
+      Ordenar por
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic"
+                ngbDropdownToggle>{{filterText}}</button>
+        <ul ngbDropdownMenu>
+          <li ngbDropdownItem *ngFor="let filter of filters"><a class="dropdown-item"
+                                                                (click)="filter.function()">{{filter.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <app-btn-custom
+        [type]="'submit'"
+        [class]="'btn btn-outline-primary'"
+        [innerHtml]="'Gráficos'"
+        [routerLink]="'/transaction-charts'"
+      ></app-btn-custom>
+    </div>
+
+  </div>
+
+  <div class="table-responsive">
+    <table class="table no-wrap user-table mb-0">
+      <thead>
+      <tr>
+        <th scope="col" class="border-0 font-medium" *ngFor="let header of tableHeaders" [class.not-printable]="header === 'Gerenciar'">
+          {{ header }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let transaction of transactions">
+        <tr>
+          <td>
+            <h6 class="text-black">{{transaction.description}}</h6>
+          </td>
+          <td>
+            <span class="black">{{transaction.date}}</span><br>
+          </td>
+          <td>
+            <span class="black">{{getPtCategoryName(transaction.category)}}</span><br>
+          </td>
+          <td>
+            <span class="black">R$ {{transaction.value}}</span><br>
+          </td>
+          <td>
+            <button *ngFor="let button of buttons" type="button" class="btn btn-outline-info btn-circle"
+                    (click)="button.function(transaction.id)"
+                    title="{{ button.title }}">
+              <i [class]="button.iconClass"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+

@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
-import {Team} from '../../../interfaces/Team';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TeamService} from '../../../services/team/team.service';
-import {catchError, tap} from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+
+import { catchError, tap } from 'rxjs';
+
+import { Team } from '../../../interfaces/Team';
+import { TeamService } from '../../../services/team/team.service';
 
 @Component({
   selector: 'app-team-edit',
@@ -52,8 +54,6 @@ export class TeamEditComponent {
   }
 
   formatToRequest(team: Team) {
-    console.log(team.studentIds);
-
     return {
       name: team.name,
       grade: team.grade,
@@ -61,7 +61,7 @@ export class TeamEditComponent {
       teacher: {
         id: team.teacherId
       },
-      students: team.studentIds.map((studentId: number): { id: number } => ({id: studentId}))
+      studentIds: team.studentIds.map((studentId: number) => studentId)
     };
   }
 }
