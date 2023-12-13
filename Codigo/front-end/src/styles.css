@@ -102,6 +102,9 @@ button:not(:disabled) {
   display: none;
 }
 
+
+
+
 @media print {
 
   @page {
@@ -139,6 +142,24 @@ button:not(:disabled) {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .container.card {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
+  .row {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
+  .container {
+    max-width: 100%;
+  }
+
+  .specific-container {
+    margin-top: -2rem !important;
   }
 
 }
