@@ -7,7 +7,7 @@
     <button class="navbar-toggler not-printable" type="button" (click)="toggleMenu()">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" [ngClass]="{'show': isMenuOpen}" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse nav-div" [ngClass]="{'show': isMenuOpen}" id="navbarSupportedContent">
       <ul class="navbar-nav mr-aut">
         <li *ngFor="let menuItem of menuItems" class="nav-item">
           <a class="nav-link" [routerLink]="menuItem.link">{{ menuItem.label }}</a>

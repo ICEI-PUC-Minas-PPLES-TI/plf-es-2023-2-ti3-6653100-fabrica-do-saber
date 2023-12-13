@@ -9,12 +9,13 @@ export class HeaderComponent {
 
   menuItems = [
     {label: 'Início', link: '/'},
-    {label: 'Alunos Cadastrados', link: '/student-list'},
-    {label: 'Professores Cadastrados', link: '/teacher-list'},
-    {label: 'Turmas Cadastradas', link: '/team-list'},
-    {label: 'Creches de Férias Cadastradas', link: '/vacation-team-list'},
+    {label: 'Alunos', link: '/student-list'},
+    {label: 'Professores', link: '/teacher-list'},
+    {label: 'Turmas', link: '/team-list'},
+    {label: 'Creches de Férias', link: '/vacation-team-list'},
+    {label: 'Financeiro', link: '/transaction-list'},
     {label: 'Página do usuário', link: '/user-page'},
-    {label: 'Financeiro', link: '/transaction-list'}
+    
   ];
 
   isMenuOpen: boolean = false;
