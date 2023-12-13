@@ -103,8 +103,6 @@ button:not(:disabled) {
 }
 
 
-
-
 @media print {
 
   @page {
@@ -130,12 +128,14 @@ button:not(:disabled) {
   }
 
   .not-printable {
-    display: none;
+    display: none !important;
   }
 
   .navbar {
+    display: flex;
     border-bottom: 1px solid rgb(173, 173, 173) !important;
     margin-bottom: 2rem !important;
+    justify-content: center;
   }
 
   .only-printable {

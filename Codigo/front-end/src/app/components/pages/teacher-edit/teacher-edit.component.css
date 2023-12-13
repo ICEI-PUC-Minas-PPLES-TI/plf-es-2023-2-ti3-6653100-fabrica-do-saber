@@ -4,36 +4,3 @@
     height: 80px;
 }
 
-@media print {
-
-    .printable {
-        margin-left: 2rem;
-        margin-right: 2rem;
-    }
-
-    .hidden {
-        display: flex;
-        margin-top: 20px;
-    }
-
-    .printable .btn {
-        display: none;
-    }
-
-    .not-printable {
-        display: none;
-    }
-
-    .pt-3 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: -55px;
-    }
-
-
-    .container {
-        margin-top: 50px;
-    }
-
-}

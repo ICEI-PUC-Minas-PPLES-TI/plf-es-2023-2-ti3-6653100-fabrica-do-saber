@@ -1,6 +1,6 @@
+import { Transaction } from './../../../interfaces/Transaction';
 import { Component } from '@angular/core';
 import { TransactionService } from '../../../services/transaction/transaction.service';
-import { Transaction } from '../../../interfaces/Transaction';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TransactionCreateComponent } from '../transaction-create/transaction-create.component';
 import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
@@ -93,6 +93,10 @@ export class TransactionListComponent {
       this.transactionService.deleteTransaction(id).subscribe((): void => {
         this.getTransactions();
       });
+  }
+
+  printTransactionList(): void {
+    window.print();
   }
 
   calculateTotalBalance(): void {
