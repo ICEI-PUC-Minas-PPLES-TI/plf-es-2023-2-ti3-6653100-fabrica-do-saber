@@ -1,13 +1,13 @@
-<app-btn-custom
-  [type]="'submit'"
-  [class]="'btn btn-outline-primary'"
-  [innerHtml]="'Relatório de estudantes'"
-  (click)="printStudentList()"
-></app-btn-custom>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
 
-<app-btn-custom
-  [type]="'submit'"
-  [class]="'btn btn-outline-primary'"
-  [innerHtml]="'Relatório de professores'"
-  (click)="printTeacherList()"
-></app-btn-custom>
+<div class="container mt-6">
+  <div class="row">
+    <div class="col-md col-lg mb-4" *ngFor="let card of cards">
+      <div class="card {{ card.name }}" (click)="card && card.click()">
+        <h5 class="card-title">{{ card.title }}</h5>
+        <img src="{{ card.imageUrl }}" class="card-img-top" alt="{{ card.title }}">
+      </div>
+    </div>
+  </div>
+</div>
+
