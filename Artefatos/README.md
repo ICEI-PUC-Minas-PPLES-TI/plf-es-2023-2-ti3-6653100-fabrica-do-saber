@@ -24,9 +24,6 @@ Este diretório mantém os artefatos do projeto.
         * **diag-caso-de-uso.asta**: Diagrama de caso de uso descritivo em formato `.asta`
         * **diagrama-de-classe.pdf**: Diagrama de classes em formato `.pdf`
         * **diagrama-de-classe.asta**: Diagrama de classes em formato `.asta`
-    * `/doc_e-book_sprinti` - Diretório com o e-Book da Sprinti
-        * **e-book-sprinti.pdf** : e-Book Sprinti
-        * **imagens** : Imagens utilizadas no e-Book Sprinti
     * `/interfaces_usuario` - Diretório com as interfaces de usuário elaboradas
         * **Interface_usuario_cadastro_aluno.pdf** : Interface de usuário - cadastro de aluno
         * **Interface_usuario_cadastro_creche_ferias.pdf** : Interface de usuário - cadastro de creche de férias
