@@ -1,17 +1,31 @@
 INSERT IGNORE INTO fabricadosaber.transaction VALUES (1, 'PAYROLL', '2023-01-01', 'Cartao', 'INPUT', 100);
-INSERT IGNORE INTO fabricadosaber.transaction VALUES (2, 'INFRASTRUCTURE_EXPENSE', '2023-02-15', 'Dinheiro', 'OUTPUT', 200);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (2, 'INFRASTRUCTURE_EXPENSE', '2023-02-15', 'Dinheiro', 'OUTPUT', -200);
 INSERT IGNORE INTO fabricadosaber.transaction VALUES (3, 'INSTITUTIONAL_MARKETING', '2023-03-20', 'Cheque', 'INPUT', 150);
-INSERT IGNORE INTO fabricadosaber.transaction VALUES (4, 'EDUCATIONAL_PROJECTS', '2023-04-05', 'Transferência Bancária', 'OUTPUT', 120);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (4, 'EDUCATIONAL_PROJECTS', '2023-04-05', 'Transferência Bancária', 'OUTPUT', -120);
 INSERT IGNORE INTO fabricadosaber.transaction VALUES (5, 'ADMINISTRATIVE_COSTS', '2023-05-10', 'Boleto', 'INPUT', 180);
-INSERT IGNORE INTO fabricadosaber.transaction VALUES (6, 'SCHOOL_EVENTS', '2023-06-15', 'Pix', 'OUTPUT', 90);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (6, 'SCHOOL_EVENTS', '2023-06-15', 'Pix', 'OUTPUT', -90);
 INSERT IGNORE INTO fabricadosaber.transaction VALUES (7, 'MAINTENANCE_SERVICES', '2023-07-20', 'Cartão de Crédito', 'INPUT', 250);
-INSERT IGNORE INTO fabricadosaber.transaction VALUES (8, 'EDUCATIONAL_MATERIAL', '2023-08-25', 'TED', 'OUTPUT', 300);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (8, 'EDUCATIONAL_MATERIAL', '2023-08-25', 'TED', 'OUTPUT', -300);
 INSERT IGNORE INTO fabricadosaber.transaction VALUES (9, 'PAYROLL', '2023-09-30', 'Dinheiro', 'INPUT', 180);
-INSERT IGNORE INTO fabricadosaber.transaction VALUES (10, 'INFRASTRUCTURE_EXPENSE', '2023-10-05', 'Transferência Bancária', 'OUTPUT', 120);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (10, 'INFRASTRUCTURE_EXPENSE', '2023-10-05', 'Transferência Bancária', 'OUTPUT', -120);
 INSERT IGNORE INTO fabricadosaber.transaction VALUES (11, 'INSTITUTIONAL_MARKETING', '2023-11-10', 'Boleto', 'INPUT', 220);
-INSERT IGNORE INTO fabricadosaber.transaction VALUES (12, 'EDUCATIONAL_PROJECTS', '2023-12-15', 'Pix', 'OUTPUT', 130);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (12, 'EDUCATIONAL_PROJECTS', '2023-12-15', 'Pix', 'OUTPUT', -130);
 INSERT IGNORE INTO fabricadosaber.transaction VALUES (13, 'ADMINISTRATIVE_COSTS', '2023-12-31', 'Cartão de Débito', 'INPUT', 190);
-INSERT IGNORE INTO fabricadosaber.transaction VALUES (14, 'SCHOOL_EVENTS', '2023-11-25', 'Transferência Bancária', 'OUTPUT', 160);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (14, 'SCHOOL_EVENTS', '2023-11-25', 'Transferência Bancária', 'OUTPUT', -160);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (15, 'EDUCATIONAL_MATERIAL', '2023-01-15', 'Pix', 'INPUT', 120);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (16, 'PAYROLL', '2023-02-28', 'Cheque', 'OUTPUT', -180);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (17, 'INFRASTRUCTURE_EXPENSE', '2023-03-10', 'Transferência Bancária', 'INPUT', 250);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (18, 'INSTITUTIONAL_MARKETING', '2023-04-20', 'Boleto', 'OUTPUT', -140);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (19, 'EDUCATIONAL_PROJECTS', '2023-05-05', 'Cartão de Crédito', 'INPUT', 200);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (20, 'ADMINISTRATIVE_COSTS', '2023-06-10', 'TED', 'OUTPUT', -300);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (21, 'SCHOOL_EVENTS', '2023-07-15', 'Dinheiro', 'INPUT', 160);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (22, 'MAINTENANCE_SERVICES', '2023-08-20', 'Transferência Bancária', 'OUTPUT', -120);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (23, 'PAYROLL', '2023-09-30', 'Pix', 'INPUT', 180);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (24, 'INFRASTRUCTURE_EXPENSE', '2023-10-05', 'Boleto', 'OUTPUT', -220);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (25, 'INSTITUTIONAL_MARKETING', '2023-11-10', 'Cartão de Débito', 'INPUT', 190);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (26, 'EDUCATIONAL_PROJECTS', '2023-12-15', 'Transferência Bancária', 'OUTPUT', -130);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (27, 'ADMINISTRATIVE_COSTS', '2023-12-31', 'Dinheiro', 'INPUT', 240);
+INSERT IGNORE INTO fabricadosaber.transaction VALUES (28, 'SCHOOL_EVENTS', '2023-11-25', 'TED', 'OUTPUT', -170);
 
 --        senha utilizadas na encriptacao: admin123456 e user123456
 INSERT IGNORE INTO fabricadosaber.user VALUES (1, '2023-11-25', "admin@email.com", "administrator", "$2a$10$MPwDDc6gsgGHpc.rQ8Cea.Q/3evYk/tzBq7nUEkZIU./VxCYcNufW" );
