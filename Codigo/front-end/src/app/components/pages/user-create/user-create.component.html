@@ -1,16 +1,16 @@
 <section id="createUser" class="container">
 
-    <h5 class="pt-3 d-flex justify-content-center">Novo Usuário</h5>
-
     <div class="d-flex justify-content-center">
         <form class="container card row col-4 py-3">
 
-            <div class="col-sm-12">
+          <h5 class="pt-3 d-flex justify-content-center mb-4">Novo Usuário</h5>
+
+            <div class="col-sm-12 py-2">
                 <input type="text" class="form-control" id="inputFullName" placeholder="Nome completo"
                        [(ngModel)]="user.fullName" name="inputFullName">
             </div>
 
-            <div class="col-sm-12">
+            <div class="col-sm-12 py-2">
                 <input type="email" class="form-control" id="inputEmail" placeholder="E-mail" [(ngModel)]="user.email"
                        name="inputEmail">
             </div>
