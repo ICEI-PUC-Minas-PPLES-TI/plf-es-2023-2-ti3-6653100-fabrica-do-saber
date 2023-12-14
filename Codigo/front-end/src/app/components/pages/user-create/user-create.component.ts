@@ -21,6 +21,8 @@ export class UserCreateComponent {
 
   createUser() {
     this.userService.createUser(this.user).subscribe();
+    alert("Usuário criado com sucesso!");
+    this.router.navigate(['/user-page']);
   }
 
   cancel() {
